@@ -1,0 +1,1206 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性 · 逐字稿</title><meta name='description' content='自动驾驶老将 Brad Templeton 与主持人 Harry 复盘 2025 年 Waymo 在旧金山的大规模瘫痪：时间线、根因（远程协助 teleoperation 成为瓶颈）、与 Cruise 的透明度对比、监管角色，以及 outage 如何重塑公众对 robotaxi 可靠性的认知。'><meta property='og:title' content='从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性 · 逐字稿'><meta property='og:description' content='自动驾驶老将 Brad Templeton 与主持人 Harry 复盘 2025 年 Waymo 在旧金山的大规模瘫痪：时间线、根因（远程协助 teleoperation 成为瓶颈）、与 Cruise 的透明度对比、监管角色，以及 outage 如何重塑公众对 robotaxi 可靠性的认知。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/lessons-from-the-great-waymo-outage" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Podcast</div><h1>从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</h1><p class="sub">中英对照逐字稿 · Lessons from the Great Waymo Outage of 2025</p><div class="tags"><span class="tag">⏱ 54:35</span><span class="tag">Brad Templeton（自动驾驶领域资深顾问，曾为 Waymo、Zoox、Cruise、Starship 提供早期咨询；Robocars.com 作者、Forbes 自动驾驶专栏作家）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">Autonomy</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">Robotaxi</span><span class="chip" onclick="wbJumpKw(this)">Brad Templeton</span><span class="chip" onclick="wbJumpKw(this)">大瘫痪</span><span class="chip" onclick="wbJumpKw(this)">Outage</span><span class="chip" onclick="wbJumpKw(this)">远程协助</span><span class="chip" onclick="wbJumpKw(this)">Teleoperation</span><span class="chip" onclick="wbJumpKw(this)">远程运营</span><span class="chip" onclick="wbJumpKw(this)">Cruise</span><span class="chip" onclick="wbJumpKw(this)">透明度</span><span class="chip" onclick="wbJumpKw(this)">Transparency</span><span class="chip" onclick="wbJumpKw(this)">监管</span><span class="chip" onclick="wbJumpKw(this)">Regulator</span><span class="chip" onclick="wbJumpKw(this)">公共认知</span><span class="chip" onclick="wbJumpKw(this)">Public perception</span><span class="chip" onclick="wbJumpKw(this)">边缘案例</span><span class="chip" onclick="wbJumpKw(this)">Edge case</span><span class="chip" onclick="wbJumpKw(this)">Harry Campbell</span><span class="chip" onclick="wbJumpKw(this)">可靠性</span><span class="chip" onclick="wbJumpKw(this)">Reliability</span><span class="chip" onclick="wbJumpKw(this)">The Driverless Digest</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4></nav><main class="content"><p class="seg" id="seg-1"><span class="ts">[00:00 – 00:23]</span><div class="seg-body">
+<p class="en">The law is treated as a four-way stop, and Waymo&#x27;s know that. Now, I&#x27;m going to get into what Waymo has said about four-way stops, because in fact, I know this in a sense even, so I worked at Waymo, but it was now 13 years ago. So I&#x27;m not up on any insider information about the latest thing. But probably the very first thing that Waymo realized was that four-way stops were sort of the first thing they realized, oh, wait, we cannot drive like a grandmother, right?</p>
+<p class="zh">法律被视为四向停止，Waymo 知道这一点。现在，我要谈谈 Waymo 所说的四向停靠点，因为事实上，我什至在某种意义上知道这一点，所以我在 Waymo 工作过，但现在已经是 13 年前了。所以我不了解有关最新事情的任何内幕信息。但 Waymo 意识到的第一件事可能是四向停车是他们首先意识到的事情，哦，等等，我们不能像祖母一样开车，对吧？</p></div></p>
+<p class="seg" id="seg-2"><span class="ts">[00:23 – 00:43]</span><div class="seg-body">
+<p class="en">Because the original instinct of everyone putting a car out here is, you know, be very timid. They learned if you do that at four-way stops, you don&#x27;t go anywhere. Brad Templeton is a longtime speaker and consultant in the autonomy space. He has advised companies including Waymo, Zoox, Cruise, and Starship since their early days, and Brad also runs robocars.com and writes about self-driving</p>
+<p class="zh">因为每个人把车放在这里的最初本能是，你知道，非常胆怯。他们了解到，如果你在四个方向的车站这样做，你就哪儿也去不了。布拉德·坦普尔顿 (Brad Templeton) 是自治领域的长期演讲者和顾问。他从早期就为 Waymo、Zoox、Cruise 和 Starship 等公司提供咨询服务，Brad 还运营 robocars.com 并撰写有关自动驾驶的文章</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[00:43 – 01:01]</span><div class="seg-body">
+<p class="en">technology for Forbes. Brad, how are you doing today? Pretty good, and happy new year, almost. I don&#x27;t know if we&#x27;re going to air this, but the year&#x27;s almost over here. I think we will air this in 2026, so we&#x27;re doing this, I guess, I don&#x27;t know if it&#x27;s from the past or the future, but excited to have you on.</p>
+<p class="zh">福布斯科技。布拉德，你今天过得怎么样？非常好，新年快乐，差不多了。我不知道我们是否会播出这个节目，但今年已经快结束了。我想我们会在 2026 年播出这个节目，所以我们正在这样做，我想，我不知道这是来自过去还是未来，但很高兴你能参加。</p></div></p>
+<p class="seg" id="seg-4"><span class="ts">[01:01 – 01:23]</span><div class="seg-body">
+<p class="en">And the reason why I wanted to talk to you about this is I feel like this story, this, I don&#x27;t know what I&#x27;m going to title this episode yet, I&#x27;m thinking maybe Great Waymo Outage of 2025, but it still seems like it&#x27;s picking up steam. I mean, certainly, there&#x27;s a lot of people, I was surprised by it, so I think it&#x27;s not unreasonable that people are surprised by this. Trying to piece together why something like that happened to Waymo,</p>
+<p class="zh">我想和你们谈论这个的原因是我觉得这个故事，这个，我还不知道要给这一集起什么标题，我想也许是 2025 年 Waymo 大停运，但它似乎仍然在加速。我的意思是，当然，有很多人，我对此感到惊讶，所以我认为人们对此感到惊讶并不是没有道理的。试图弄清楚为什么 Waymo 会发生这样的事情，</p></div></p>
+<p class="seg" id="seg-5"><span class="ts">[01:23 – 01:48]</span><div class="seg-body">
+<p class="en">what it&#x27;s a harbinger of, I think is most important. In fact, one of the messages that if we get right into this is that self-driving cars like the Waymo are going to make mistakes, and they&#x27;re going to continue to make mistakes for the rest of their existence, because perfection is not an option. And so what really matters is obviously you care about the mistakes, and you care about the severity, but mostly you care about their repeatability.</p>
+<p class="zh">我认为这预示着什么，这是最重要的。事实上，如果我们直接进入这个话题，就会传达出这样的信息：像 Waymo 这样的自动驾驶汽车将会犯错误，而且它们将在余生中继续犯错误，因为完美不是一种选择。因此，真正重要的显然是你关心错误，关心错误的严重性，但最重要的是你关心它们的可重复性。</p></div></p>
+<p class="seg" id="seg-6"><span class="ts">[01:48 – 02:08]</span><div class="seg-body">
+<p class="en">Because the great thing about robots is when they make a mistake, well, not they, but their masters learn from it, we hope they learn from it. And they don&#x27;t make the same mistake again, which is very different from human beings. Human beings will make the same mistake, and even that human being will make the same mistake, but the other human beings will certainly make it. And that bodes very well, all right?</p>
+<p class="zh">因为机器人的伟大之处在于它们会犯错误，好吧，不是它们，而是它们的主人从中吸取教训，我们希望它们从中吸取教训。而且它们不会再犯同样的错误，这与人类有很大不同。人类会犯同样的错误，甚至那个人也会犯同样的错误，但其他人也一定会犯同样的错误。这是个好兆头，好吗？</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[02:08 – 02:21]</span><div class="seg-body">
+<p class="en">Because these vehicles are going to constantly improve. So when we look at these projects and these teams, I think the right thing is to judge, are they on a path of improvement? Do they show that that&#x27;s their goal? Are they doing their best? Not are they doing perfectly?</p>
+<p class="zh">因为这些车辆会不断改进。因此，当我们审视这些项目和这些团队时，我认为正确的做法是判断它们是否走在改进的道路上？他们是否表明这就是他们的目标？他们正在尽力而为吗？他们做得不是很完美吗？</p></div></p>
+<p class="seg" id="seg-8"><span class="ts">[02:21 – 02:37]</span><div class="seg-body">
+<p class="en">If we focus on individual incidents, we could easily get distracted from the real question, which is, are they putting us on a broad trend towards the goals that we&#x27;re after, like improved safety, like improved traffic? Are we getting to our goals and is this the best path? That&#x27;s the real question. Yeah.</p>
+<p class="zh">如果我们专注于个别事件，我们很容易忽视真正的问题，即它们是否使我们处于朝着我们所追求的目标（例如提高安全性，例如改善交通）的大趋势？我们正在实现我们的目标吗？这是最好的道路吗？这才是真正的问题。是的。</p></div></p>
+<p class="seg" id="seg-9"><span class="ts">[02:37 – 02:55]</span><div class="seg-body">
+<p class="en">Well said. I&#x27;m excited to dig into all of that with you today. And I want to start with maybe some of the facts that happen since we&#x27;re going to have a lot of conjecture and analysis and opinion on this sort of, I&#x27;ll call it less of an interview today, more of a conversation, but maybe, you know, I guess the thing that I&#x27;ve noted is, you know, just kind of timeline wise,</p>
+<p class="zh">说得好。我很高兴今天能与您一起深入探讨所有这些内容。我想从发生的一些事实开始，因为我们将对这类事情有很多猜想、分析和意见，我今天不会称之为采访，更多的是对话，但也许，你知道，我想我注意到的事情，你知道，只是时间轴方面的，</p></div></p>
+<p class="seg" id="seg-10"><span class="ts">[02:55 – 03:07]</span><div class="seg-body">
+<p class="en">right? Okay. December 20th, right? This was a Saturday before Christmas. I think you noted in your article, this was a pretty busy day, major power adage struck San Francisco, don&#x27;t really care about the reason why, but it was one third of households.</p>
+<p class="zh">正确的？好的。 12月20号吧？这是圣诞节前的一个星期六。我想你在文章中指出，这是非常忙碌的一天，主要权力格言袭击了旧金山，不太关心原因，但这是三分之一的家庭。</p></div></p>
+<p class="seg" id="seg-11"><span class="ts">[03:07 – 03:21]</span><div class="seg-body">
+<p class="en">I thought that was kind of interesting. 125,000 households. I looked it up. There&#x27;s 380,000 households in San Francisco. San Francisco also has a thousand cars in San Francisco. There&#x27;s actually a thousand cars in the Bay area.</p>
+<p class="zh">我觉得这很有趣。 125,000户家庭。我查了一下。旧金山有 38 万户家庭。旧金山市也有一千辆汽车。湾区实际上有一千辆汽车。</p></div></p>
+<p class="seg" id="seg-12"><span class="ts">[03:21 – 03:37]</span><div class="seg-body">
+<p class="en">So I would, I would guess they have more in San Francisco than any other town in the Bay area, but probably, you know, 600, probably in the city, I would guess. And then I also saw, I also looked up that San Francisco has 1,292 traffic signals. I don&#x27;t know if that&#x27;s important or not, but I was trying to think</p>
+<p class="zh">所以我想，我猜他们在旧金山的数量比湾区其他任何城镇都多，但我猜，你知道，可能有 600 个，可能在城市里。然后我也看到,我也查了一下,旧金山有1,292个交通信号灯。我不知道这是否重要，但我试图思考</p></div></p>
+<p class="seg" id="seg-13"><span class="ts">[03:37 – 03:53]</span><div class="seg-body">
+<p class="en">about factual objective things, but I could look up. So those were sort of the four or five. Anything else, you know, hasn&#x27;t been talked about enough or that you think sort of stands out in that timeline? Well, it&#x27;s hard to get the specific facts on this, but a lot of people who&#x27;ve talked about this have assumed that there was a</p>
+<p class="zh">关于事实客观的事情，但我可以查一下。所以这些大概是四五个。你知道，还有哪些事情没有得到足够的讨论，或者你认为在这个时间轴上有些突出？嗯，很难得到这方面的具体事实，但是很多谈论过这个的人都认为有一个</p></div></p>
+<p class="seg" id="seg-14"><span class="ts">[03:53 – 04:14]</span><div class="seg-body">
+<p class="en">cell phone outage here. And I have not been able to get confirmation that this happened. Waymo has not in any way attempted to blame this on cell phone outage. Most cell phone towers have at least four to eight hours of battery and most of them have generators. So even if the cell phone towers did run out of power and shut down, that</p>
+<p class="zh">这里手机停电了。我还无法确认这件事是否发生了。 Waymo 并未以任何方式试图将此事归咎于手机故障。大多数手机信号塔的电池至少可以使用四到八小时，并且大多数都配有发电机。因此，即使手机信号塔确实没电并关闭了，</p></div></p>
+<p class="seg" id="seg-15"><span class="ts">[04:14 – 04:30]</span><div class="seg-body">
+<p class="en">wouldn&#x27;t have happened until about eight hours into the event. So I don&#x27;t think that that&#x27;s a factor. Many people are assuming that&#x27;s a factor. Yeah, that&#x27;s a good point. So it&#x27;s sort of a TBD may not have been an issue. We&#x27;ll get into the cell service and if or how or why that matters.</p>
+<p class="zh">直到事件发生大约八小时后才发生。所以我认为这不是一个因素。许多人认为这是一个因素。是的，这是一个好点。所以这可能不是一个问题。我们将讨论手机服务以及它是否重要、如何重要以及为何重要。</p></div></p>
+<p class="seg" id="seg-16"><span class="ts">[04:30 – 04:51]</span><div class="seg-body">
+<p class="en">I guess, objectively though, the power went out, lights went out. We saw videos of signals out. So that sort of happened. And I guess that&#x27;s where and when the chaos started for Waymo. And I think the videos that were shared on social media, I think were basically Waymo&#x27;s stuck, I would say blocking intersections, blocking</p>
+<p class="zh">但客观地说，我想，停电了，灯也灭了。我们看到了信号输出的视频。所以就发生了这样的事情。我想这就是 Waymo 混乱开始的地方和时间。我认为在社交媒体上分享的视频基本上都是 Waymo 被卡住了，我想说的是，堵塞了十字路口，堵塞了</p></div></p>
+<p class="seg" id="seg-17"><span class="ts">[04:51 – 05:06]</span><div class="seg-body">
+<p class="en">traffic, not necessarily pulled over. Is that kind of what you saw? Yeah. I mean, the worst videos show four or five Waymo&#x27;s caused in the intersection. Yeah. I don&#x27;t, I don&#x27;t know if anyone&#x27;s counted or how many different videos.</p>
+<p class="zh">交通，不一定靠边停车。你看到的是这样的吗？是的。我的意思是，最糟糕的视频显示有四五辆 Waymo 在十字路口造成了事故。是的。我不知道，我不知道是否有人数过，也不知道有多少个不同的视频。</p></div></p>
+<p class="seg" id="seg-18"><span class="ts">[05:07 – 05:29]</span><div class="seg-body">
+<p class="en">Now, another fact, at least, or it&#x27;s a statement of Waymo, they say that they successfully navigated intersections on their own 7,000 times during this outage. So they were doing, we don&#x27;t have any videos of that. And so we do have to be very careful about selective attention because I would love to get, and Waymo has not given data about how many</p>
+<p class="zh">现在，至少还有一个事实，或者是 Waymo 的声明，他们表示，在这次停电期间，他们自己成功通过了十字路口 7,000 次。所以他们正在这样做，我们没有任何视频。因此，我们确实必须非常小心选择性注意，因为我很想得到，而 Waymo 没有提供有关有多少人的数据</p></div></p>
+<p class="seg" id="seg-19"><span class="ts">[05:29 – 05:44]</span><div class="seg-body">
+<p class="en">times something went wrong. Now I think broadly, well, this is a very interesting problem. You wrote that in your last article. And also let&#x27;s, I don&#x27;t think that Waymo is lying about that 7,000 number, but I think the omission is what you&#x27;re referring to. And I was hoping you read that in my newsletter, but I think you also</p>
+<p class="zh">有时出了问题。现在我广泛地思考，嗯，这是一个非常有趣的问题。你在上一篇文章中写到了这一点。另外，我不认为 Waymo 在 7,000 这个数字上撒谎，但我认为你所指的就是遗漏。我希望你在我的时事通讯中读到这一点，但我想你也</p></div></p>
+<p class="seg" id="seg-20"><span class="ts">[05:44 – 06:00]</span><div class="seg-body">
+<p class="en">came up with that idea on your own is, okay, what about the signals that they did not traverse successfully? What is the denominator there? If it&#x27;s 10,000, 7,000 divided by 10,000, not so good. If it&#x27;s 7,100, okay, pretty good. And so I&#x27;m always very skeptical of tech companies when they omit</p>
+<p class="zh">自己想出来的就是，好吧，那那些没有穿越成功的信号呢？那里的分母是多少？如果是 10,000，7,000 除以 10,000，不太好。如果是7100就好了。因此，当科技公司忽略了这一点时，我总是非常怀疑</p></div></p>
+<p class="seg" id="seg-21"><span class="ts">[06:01 – 06:19]</span><div class="seg-body">
+<p class="en">certain data, if that makes sense. And I&#x27;m going to be critical of Waymo here for the transparency on this. I understand their fear. And by the way, the public reaction to these events makes them feel more fear, right? They&#x27;re saying, oh my God, if we admit something, it&#x27;ll be all,</p>
+<p class="zh">某些数据，如果有意义的话。我将批评 Waymo 在这方面的透明度。我理解他们的恐惧。顺便说一句，公众对这些事件的反应让他们感到更加恐惧，对吗？他们说，天啊，如果我们承认一些事情，那就一切都结束了，</p></div></p>
+<p class="seg" id="seg-22"><span class="ts">[06:19 – 06:35]</span><div class="seg-body">
+<p class="en">you know, people will take it all out. And so they have this instinct and they close in. And sadly I saw this happen with Cruise quite a lot just before their end. And of course their end came from creating a culture of secrecy inside the company, which did them in. I mean, there were other factors as well, but the culture of secrecy</p>
+<p class="zh">你知道，人们会把一切都拿出来。所以他们有这种本能，他们接近了。可悲的是，我在克鲁斯临终前经常看到这种情况发生。当然，他们的结局来自于在公司内部创造了一种保密文化，这让他们陷入了困境。我的意思是，还有其他因素，但保密文化</p></div></p>
+<p class="seg" id="seg-23"><span class="ts">[06:35 – 06:57]</span><div class="seg-body">
+<p class="en">was probably the biggest thing that led to the fall of Cruise. And so I encourage Waymo to do what they can to avoid that. The problem is the public isn&#x27;t very understanding, right? And Justin, I&#x27;ve seen a lot of incorrect assertions going about this or speculations, which are not labeled as speculations. And I understand why they get this fear.</p>
+<p class="zh">这可能是导致克鲁斯垮台的最大因素。因此，我鼓励 Waymo 尽其所能来避免这种情况。问题是公众不太理解，对吗？贾斯汀，我看到了很多关于此问题的错误断言或猜测，这些都没有被标记为猜测。我理解他们为什么会感到恐惧。</p></div></p>
+<p class="seg" id="seg-24"><span class="ts">[06:57 – 07:11]</span><div class="seg-body">
+<p class="en">So this is natural desire to circle the wagons, but I don&#x27;t think in the end it serves us well. So 7,000 carried well. And also, I mean, I&#x27;ve seen many people write about this. We&#x27;ve just assumed the cars couldn&#x27;t handle a disabled traffic signal at all.</p>
+<p class="zh">因此，绕着马车转圈子是很自然的愿望，但我认为这最终对我们没有好处。所以 7,000 人表现良好。而且，我的意思是，我见过很多人写过这个问题。我们只是假设汽车根本无法处理失效的交通信号。</p></div></p>
+<p class="seg" id="seg-25"><span class="ts">[07:11 – 07:22]</span><div class="seg-body">
+<p class="en">And that&#x27;s clearly not true. Do you think that they&#x27;ve said to do that? Let&#x27;s put a pin in that. I mean, that is, I would say, you know, the 7,000 from Waymo, I don&#x27;t know if I would quite call that a fact, but that&#x27;s a fact from Waymo. Let&#x27;s call it that.</p>
+<p class="zh">这显然不是真的。你认为他们说过要这样做吗？让我们把它钉进去。我的意思是，我会说，你知道，Waymo 的 7,000 人，我不知道我是否会称其为事实，但这是 Waymo 的事实。我们就这么称呼它吧。</p></div></p>
+<p class="seg" id="seg-26"><span class="ts">[07:23 – 07:42]</span><div class="seg-body">
+<p class="en">And then, but I think one fact we do know, and you pointed this out, is that Waymos can handle dead intersection. This has happened many times before, right? On an individual or small number of bases, Waymos can handle this, right? Yeah, I mean, they know the law and we&#x27;re going to get into what I think is the real cause of this in a minute, but the law is treated</p>
+<p class="zh">然后，但我认为我们确实知道一个事实，并且您指出了这一点，那就是 Waymos 可以处理死路口。这种情况以前已经发生过很多次了，对吧？在单个或少量基地上，Waymos 可以处理这个问题，对吧？是的，我的意思是，他们了解法律，我们很快就会了解我认为这件事的真正原因，但法律是受到对待的</p></div></p>
+<p class="seg" id="seg-27"><span class="ts">[07:42 – 08:03]</span><div class="seg-body">
+<p class="en">as a four-way stop, and Waymos know that. Now, I&#x27;m going to get into what Waymo has said about four-way stops, because in fact, I know this in a sense, even so I worked at Waymo, but it was now 13, 12, 13 years ago. So I&#x27;m not up on any insider information about the latest thing, but probably the very first thing that Waymo realized, and we&#x27;re talking</p>
+<p class="zh">作为一个四向站点，Waymos 知道这一点。现在，我要谈谈 Waymo 所说的四向停靠点，因为事实上，我在某种意义上知道这一点，即使我在 Waymo 工作过，但现在已经是 13、12、13 年前了。所以我不知道有关最新情况的任何内幕信息，但可能是 Waymo 意识到的第一件事，我们正在谈论</p></div></p>
+<p class="seg" id="seg-28"><span class="ts">[08:03 – 08:23]</span><div class="seg-body">
+<p class="en">about just, or wasn&#x27;t even called Waymo then, it was Google&#x27;s chauffeur project, was that four-way stops were sort of the first thing they realized, oh, wait, we cannot drive like a grandmother, right? Because the original instinct of everyone putting a car out here is, you know, be very timid, be very conservative, do everything you can to be safe, especially when you&#x27;re young and immature and not</p>
+<p class="zh">大约只是，或者当时甚至没有被称为 Waymo，这是谷歌的司机项目，四向停车是他们意识到的第一件事，哦，等等，我们不能像祖母一样开车，对吧？因为每个人把车放在这里的原始本能是，你知道，非常胆怯，非常保守，尽一切努力确保安全，尤其是当你年轻、不成熟、不成熟的时候。</p></div></p>
+<p class="seg" id="seg-29"><span class="ts">[08:23 – 08:39]</span><div class="seg-body">
+<p class="en">ready to handle things. And they learned if you do that at four-way stops, you don&#x27;t go anywhere. And so their sort of first big revelation was, you know, we&#x27;ve found we have to be assertive at four-way stops, and I think that&#x27;s going to play a role in final understanding of the situation. Gotcha.</p>
+<p class="zh">准备好处理事情。他们了解到，如果你在四个方向的车站这样做，你就哪儿也去不了。所以他们的第一个重大启示是，你知道，我们发现我们必须在四路停靠站保持自信，我认为这将在最终了解情况方面发挥作用。明白了。</p></div></p>
+<p class="seg" id="seg-30"><span class="ts">[08:40 – 08:59]</span><div class="seg-body">
+<p class="en">So anything else as far as timeline that we didn&#x27;t cover? I mean, I guess one other thing, I didn&#x27;t actually see any videos of Waymo&#x27;s actually stuck at intersections longer than 30 to 45 seconds. Did you see any videos where it was 15 minutes of a Waymo stuck at an intersection, because I saw a lot of comments kind of back and forth, oh, they were stuck for that long or they weren&#x27;t?</p>
+<p class="zh">那么就时间表而言，还有什么我们没有提到的吗？我的意思是，我猜另一件事是，我实际上没有看到任何 Waymo 在十字路口停留时间超过 30 到 45 秒的视频。你有没有看过 Waymo 在十字路口被困了 15 分钟的视频，因为我看到很多评论，哦，他们被困了那么长时间，或者没有？</p></div></p>
+<p class="seg" id="seg-31"><span class="ts">[09:00 – 09:13]</span><div class="seg-body">
+<p class="en">Is there anything factual you saw around that? I have not, I haven&#x27;t done a complete survey of the videos. Maybe somebody who&#x27;s more diligent, like, uh, and look pretty horrible. I don&#x27;t know. Once, once to do that, I&#x27;d be interested in, in someone getting that result.</p>
+<p class="zh">你在这周围看到了什么事实吗？我没有，我没有对视频进行完整的调查。也许有人更勤奋，比如，呃，看起来很可怕。我不知道。一次，一旦这样做，我会对有人得到这个结果感兴趣。</p></div></p>
+<p class="seg" id="seg-32"><span class="ts">[09:13 – 09:29]</span><div class="seg-body">
+<p class="en">But no, I don&#x27;t know how long it was. It was certainly long enough. People noticed it was certainly long enough, at least in two or three intersections for several Waymos to join the fund. So, okay. So the only other final things on the timeline, I guess, is that, you</p>
+<p class="zh">但不，我不知道那是多久。这当然已经足够长了。人们注意到，这确实足够长，至少在两三个路口足以让几家 Waymos 加入该基金。那么，好吧。所以我想，时间线上唯一的最后一件事就是，你</p></div></p>
+<p class="seg" id="seg-33"><span class="ts">[09:29 – 09:48]</span><div class="seg-body">
+<p class="en">know, Waymo sort of, they, they paused their serve the robo taxi service in San Francisco, and then they came out about seven or 8 p.m. I think right about seven or 8 p.m. And then I believe it was, let me pull up the exact date when Waymo did their blog, say it was 18 hours later, they restored service. Oh, they restored service.</p>
+<p class="zh">知道，Waymo 有点，他们，他们暂停了在旧金山的机器人出租车服务，然后他们在晚上七点或八点左右出来。我想大概是晚上七八点左右。然后我相信是的，让我调出 Waymo 发布博客的确切日期，说是 18 小时后，他们恢复了服务。哦，他们恢复了服务。</p></div></p>
+<p class="seg" id="seg-34"><span class="ts">[09:49 – 10:06]</span><div class="seg-body">
+<p class="en">And then, and then briefly shut it down again because of some flooding. So that, well, that was a few days or a week later, don&#x27;t, don&#x27;t confuse people with that one. And then December 23rd, so that was one, two, three days later, they released this blog post. Although I also, they started releasing some comments, I think</p>
+<p class="zh">然后，由于一些洪水，又短暂地关闭了它。所以，好吧，那是几天或一周后的事，不要，不要让人们与那个混淆。然后 12 月 23 日，也就是一、两天、三天后，他们发布了这篇博文。虽然我也是，他们开始发表一些评论，我想</p></div></p>
+<p class="seg" id="seg-35"><span class="ts">[10:06 – 10:24]</span><div class="seg-body">
+<p class="en">to CNBC and others, you know, a day or two after the event, sort of hinting at this explanation that they gave, which we&#x27;ll get into, but then they had their kind of official blog post autonomously navigating the real world lessons from the PG&amp;E outage. Is that kind of the main items on the timeline? Yes, I think so.</p>
+<p class="zh">事件发生后一两天，向 CNBC 和其他人发布，有点暗示他们给出的解释，我们将对此进行讨论，但随后他们发布了官方博客文章，自主导航从 PG&amp;E 停电中汲取的现实教训。这是时间线上的主要项目吗？是的，我想是的。</p></div></p>
+<p class="seg" id="seg-36"><span class="ts">[10:24 – 10:47]</span><div class="seg-body">
+<p class="en">Anyway, and in that post, of course, I mean, again, it&#x27;s again, a statement from Waymo, but it&#x27;s, I think it&#x27;s, it&#x27;s unlikely they&#x27;d lie about it, that they have said that they had a backlog in their system, which handles requests for assistance from vehicles, and that this was the cause of the congestion. So for those who may not know, what exactly does that mean?</p>
+<p class="zh">无论如何，在那篇文章中，当然，我的意思是，这又是 Waymo 的一份声明，但我认为他们不太可能撒谎，他们说他们的系统中有积压的订单，该系统处理车辆的援助请求，这就是拥堵的原因。那么对于那些可能不知道的人来说，这到底意味着什么？</p></div></p>
+<p class="seg" id="seg-37"><span class="ts">[10:48 – 10:59]</span><div class="seg-body">
+<p class="en">Yeah, boy, people don&#x27;t know about this. It&#x27;s complex. So there are a lot of people in fact, Waymo also doesn&#x27;t talk about their telecommunications much. I mean, they talk about it. So everyone does it.</p>
+<p class="zh">是的，孩子，人们不知道这一点。这很复杂。所以其实有很多人，Waymo 也不太讲他们的电信。我的意思是，他们谈论它。所以每个人都这样做。</p></div></p>
+<p class="seg" id="seg-38"><span class="ts">[10:59 – 11:14]</span><div class="seg-body">
+<p class="en">And so a lot of people say, well, these vehicles are fully autonomous. And I have a little joke that when a vehicle is autonomous, you can say, take me to the office. It says, I&#x27;d rather go to the beach. Yeah, that&#x27;s a fully autonomous vehicle. These vehicles are not that, but they are at least Waymo&#x27;s vehicles.</p>
+<p class="zh">所以很多人说，这些车辆是完全自动驾驶的。我有一个小笑话，当车辆是自动驾驶时，你可以说，带我去办公室。它说，我宁愿去海滩。是的，这是一辆完全自动驾驶的汽车。这些车辆不是那样，但它们至少是 Waymo 的车辆。</p></div></p>
+<p class="seg" id="seg-39"><span class="ts">[11:14 – 11:39]</span><div class="seg-body">
+<p class="en">They say are mostly autonomous that they&#x27;re, you know, they&#x27;re driving 99% of the time entirely on their own, but nobody is building one or even intends to build one that doesn&#x27;t occasionally rely on human beings to go after the long tail of complexity on the roads, you know, it&#x27;s a dream for some day, the so-called level five or I hate the levels. I&#x27;m their biggest and they shouldn&#x27;t exist, but a level five actually made</p>
+<p class="zh">他们说，他们大部分时间都是自动驾驶的，你知道，他们99%的时间完全靠自己驾驶，但没有人正在建造，甚至没有人打算建造一辆不偶尔依赖人类来追求道路上复杂性的长尾的汽车，你知道，这是有一天的梦想，所谓的五级，或者我讨厌这些级别。我是他们最大的，他们不应该存在，但五级确实存在</p></div></p>
+<p class="seg" id="seg-40"><span class="ts">[11:39 – 11:56]</span><div class="seg-body">
+<p class="en">sense because level five is this actually doesn&#x27;t happen. This is to tell you that we don&#x27;t do this. We do less than that. And we&#x27;re still useful and that&#x27;s what happened. So anyway, they have, there are several levels, however, to me use that word in a different sense of assistance you could give to a vehicle.</p>
+<p class="zh">这是有道理的，因为第五级是这实际上不会发生。这是为了告诉您我们不这样做。我们做的比这少。我们仍然有用，这就是发生的事情。所以无论如何，他们有，有几个级别，但是，对我来说，这个词是在你可以给车辆提供的不同帮助意义上使用的。</p></div></p>
+<p class="seg" id="seg-41"><span class="ts">[11:56 – 12:14]</span><div class="seg-body">
+<p class="en">And the most extreme is what a German company called they does in Las Vegas. They have remote drivers, right? Who are actually, you know, have video games, steering wheels and big gills of monitors and everything else. And they&#x27;re driving the car. And then you can have simply a system where people are watching the car, just</p>
+<p class="zh">最极端的是一家德国公司在拉斯维加斯所做的事情。他们有远程驱动程序，对吧？你知道，谁实际上拥有电子游戏、方向盘、大鳃显示器和其他一切。他们正在开车。然后你可以拥有一个简单的系统，人们可以在其中监视汽车，只需</p></div></p>
+<p class="seg" id="seg-42"><span class="ts">[12:14 – 12:35]</span><div class="seg-body">
+<p class="en">looking through the cameras over the data networks and able to do things like take over if they have one of those steering wheels, this is what I think Tesla has, at least we&#x27;ve seen photographs suggesting that they have that. You can have again, some are just watching it with just an emergency stop button. And so all they can do is say, holy crap, we got to, we got to tell this</p>
+<p class="zh">通过数据网络上的摄像头进行查看，如果他们拥有其中一个方向盘，就能够执行诸如接管之类的事情，这就是我认为特斯拉所拥有的，至少我们已经看到照片表明他们拥有这一点。你可以再次拥有，有些人只是通过紧急停止按钮观看它。所以他们所能做的就是说，天哪，我们必须，我们必须告诉这个</p></div></p>
+<p class="seg" id="seg-43"><span class="ts">[12:35 – 12:57]</span><div class="seg-body">
+<p class="en">car to stop what it&#x27;s doing and get to a safe state. Then you have the ability for the car to decide, you know what? I think I&#x27;m not fully safer. I&#x27;m not fully confident I can hit our safety target in this situation. So please human being, give me some advice. And this advice in say, in some cases could be a video game steering wheel,</p>
+<p class="zh">汽车停止正在做的事情并进入安全状态。然后你就有能力让汽车做出决定，你知道吗？我想我还没有完全安全。在这种情况下，我并不完全有信心能够达到我们的安全目标。所以请人类给我一些建议。这个建议在某些情况下可能是视频游戏方向盘，</p></div></p>
+<p class="seg" id="seg-44"><span class="ts">[12:57 – 13:11]</span><div class="seg-body">
+<p class="en">but it&#x27;s not that Waymo says they don&#x27;t have that. They don&#x27;t have any steering wheels. What they have is a way for someone just at a keyboard. They don&#x27;t even have a joystick to give the vehicle some advice. Now Waymo has never described this. Cruise actually described their system in some detail.</p>
+<p class="zh">但这并不是 Waymo 说他们没有。他们没有方向盘。他们所拥有的是一种只需要键盘操作的人的方法。他们甚至没有操纵杆来给车辆提供一些建议。现在 Waymo 从未描述过这一点。克鲁斯实际上详细描述了他们的系统。</p></div></p>
+<p class="seg" id="seg-45"><span class="ts">[13:11 – 13:29]</span><div class="seg-body">
+<p class="en">What do we want to call Waymo&#x27;s people? What do we call these remote operators? Yeah, they&#x27;re usually called remote operators or try to at least. Yeah, and but it is so they&#x27;re not remote drivers. They are remote assistance or advice would be another term that they would use. Now, the normal way this works, at least did it cruise.</p>
+<p class="zh">我们如何称呼 Waymo 的员工？我们如何称呼这些远程操作员？是的，他们通常被称为远程操作员，或者至少尝试这样称呼。是的，但事实是他们不是远程司机。他们使用的另一个术语是远程协助或建议。现在，按照正常的方式，至少可以巡航。</p></div></p>
+<p class="seg" id="seg-46"><span class="ts">[13:29 – 13:50]</span><div class="seg-body">
+<p class="en">And this is, I think, a pretty common theme is the car actually is looking at situation and it sees, you know, three or four things to do. And normally it wants to have one that it&#x27;s ninety nine point nine nine percent sure is a good and safe path. But it can&#x27;t find any that it&#x27;s that sure of, but it puts up the top four or five or whatever it is on the screen of the remote assistant.</p>
+<p class="zh">我认为，这是一个非常常见的主题，即汽车实际上正在观察情况，并且它看到，你知道，需要做三到四件事。通常它希望有一条百分之九十九点九九确定是一条良好且安全的路径。但它找不到任何确定的内容，但它会在远程助手的屏幕上显示前四名或前五名或其他任何内容。</p></div></p>
+<p class="seg" id="seg-47"><span class="ts">[13:50 – 14:04]</span><div class="seg-body">
+<p class="en">And a route assistant says, yeah, take the first one. It almost always says take the first one. The car is normally right about what to do. But sometimes it says is another one. These are high level plans. They&#x27;re things like, should I take the second left?</p>
+<p class="zh">路线助理说，是的，走第一个。它几乎总是说选择第一个。汽车通常会正确地判断要做什么。但有时它说是另一个。这些是高层计划。他们的问题是，我应该在第二个路口左转吗？</p></div></p>
+<p class="seg" id="seg-48"><span class="ts">[14:05 – 14:25]</span><div class="seg-body">
+<p class="en">Should I make a U-turn and get out of here, right? Should I back up and so on? Sometimes that&#x27;s not enough. And so the remote assistance people can give the car waypoints as it&#x27;s called. So they get a little map of the area which the car has built and they click their mouse and say, drive here, then here, then here, and that&#x27;s your way out.</p>
+<p class="zh">我应该掉头离开这里吗？我应该备份等等吗？有时这还不够。因此，远程协助人员可以为汽车提供所谓的路径点。因此，他们得到了汽车所建造区域的小地图，然后单击鼠标并说，开到这里，然后到这里，然后到这里，这就是你的出路。</p></div></p>
+<p class="seg" id="seg-49"><span class="ts">[14:25 – 14:41]</span><div class="seg-body">
+<p class="en">You know, you can get around a pit in the middle of a road or a stalled vehicle if the car cannot figure out how to do that. The car does all the actual steering and avoiding things. Right. It&#x27;s just so it&#x27;s a little bit more like you being in the back of an Uber and telling your Uber driver, take the second left of there.</p>
+<p class="zh">你知道，如果汽车不知道如何绕过路中间的坑或熄火的车辆，你可以绕过它。汽车负责所有实际的转向和躲避事情。正确的。这有点像你坐在 Uber 的后座上，告诉你的 Uber 司机，在第二个路口左转。</p></div></p>
+<p class="seg" id="seg-50"><span class="ts">[14:41 – 14:57]</span><div class="seg-body">
+<p class="en">Not that the Uber driver ever listens to you, by the way. Wouldn&#x27;t you say this? Yeah. In this case, and this is actually a little important, Phil Koopman has making a big bust of a bug about this right now, that the car definitely obeys like a robot to the remote assistance operator so that one of the commands</p>
+<p class="zh">顺便说一句，Uber 司机并没有听你的。你不说这个吗？是的。在这种情况下，这实际上有点重要，菲尔·库普曼（Phil Koopman）现在已经解决了这个问题，汽车肯定像机器人一样服从远程协助操作员，以便其中一个命令</p></div></p>
+<p class="seg" id="seg-51"><span class="ts">[14:57 – 15:12]</span><div class="seg-body">
+<p class="en">that can happen is the car says, I think I&#x27;m stuck at a red. What&#x27;s going on? And the remote operator says, Oh no, it&#x27;s actually good to go. You think there&#x27;s a red, but go. Now, Uber driver might not obey that either. But the car will obey that because this is the human&#x27;s judgment.</p>
+<p class="zh">可能发生的情况是汽车说，我想我遇到了红灯。这是怎么回事？远程操作员说，哦不，实际上很好。你认为有红色，但是去吧。现在，Uber 司机可能也不会遵守这一规定。但汽车会遵守这一点，因为这是人类的判断。</p></div></p>
+<p class="seg" id="seg-52"><span class="ts">[15:12 – 15:35]</span><div class="seg-body">
+<p class="en">This is why we&#x27;ve paid to the remote assistant or operator. And I guess bringing it back to this Waymo situation, Waymo said that, OK, we had a bunch of cars that, you know, power lights went out. We normally know how to stop that or how to handle that. And these Waymos got stuck at the traffic lights. So they all kind of called home at the same time, basically.</p>
+<p class="zh">这就是我们向远程助理或操作员付费的原因。我想回到 Waymo 的情况，Waymo 说，好吧，我们有很多汽车，你知道，电源灯都灭了。我们通常知道如何阻止这种情况或如何处理这种情况。这些 Waymos 被困在红绿灯处。所以基本上他们都同时打电话回家。</p></div></p>
+<p class="seg" id="seg-53"><span class="ts">[15:35 – 15:46]</span><div class="seg-body">
+<p class="en">Right. Yeah. Or hopefully not exactly at the same time, but when they got to the in a much higher rate than normal. And I think this is important to understand because people were sort of freaking out about this.</p>
+<p class="zh">正确的。是的。或者希望不是完全在同一时间，但当他们以比正常情况高得多的速度到达时。我认为理解这一点很重要，因为人们对此感到有点害怕。</p></div></p>
+<p class="seg" id="seg-54"><span class="ts">[15:46 – 16:03]</span><div class="seg-body">
+<p class="en">Right. OK, so Waymo uses these remote assistants in normal average baseline conditions. Let&#x27;s say they have, well, to be simple, a thousand cars on the road. They might we don&#x27;t we have no idea, right? But let&#x27;s say they have 50 operators on standby, right? And they know that, OK, at certain times it might spike to 75 or 100.</p>
+<p class="zh">正确的。好的，Waymo 在正常的平均基线条件下使用这些远程助手。简单来说，假设路上有一千辆汽车。他们可能不知道，我们不知道，对吧？但假设他们有 50 名接线员待命，对吗？他们知道，好吧，在某些时候它可能会飙升至 75 或 100。</p></div></p>
+<p class="seg" id="seg-55"><span class="ts">[16:03 – 16:21]</span><div class="seg-body">
+<p class="en">So I&#x27;m sure that they&#x27;ve planned for that. And they kind of have those standard deviations in their plan. But when it exceeds, you know, one or two or three standard deviations, like in a situation like this, that&#x27;s when they do not have currently have the ability to handle all those requests at once. Right. Does that make sense?</p>
+<p class="zh">所以我确信他们已经计划好了。他们的计划中有一些标准偏差。但是，当它超过一两个或三个标准差时，就像在这样的情况下，那就是他们目前没有能力立即处理所有这些请求。正确的。这有道理吗？</p></div></p>
+<p class="seg" id="seg-56"><span class="ts">[16:21 – 16:43]</span><div class="seg-body">
+<p class="en">Yeah, I mean, I don&#x27;t actually think they have a ratio as good as 20 to one that you just said. I think that they all plan to get a ratio that&#x27;s as good as, say, 50 to one. And I mean, the higher the ratio, the better from a financial perspective. So they&#x27;re probably on the more conservative side, I would say. But I think there was a good point brought up.</p>
+<p class="zh">是的，我的意思是，我实际上并不认为他们的比例像你刚才所说的 20 比 1 那样好。我认为他们都计划获得一个 50 比 1 的比例。我的意思是，从财务角度来看，该比率越高越好。所以我想说，他们可能属于更保守的一方。但我认为提出了一个很好的观点。</p></div></p>
+<p class="seg" id="seg-57"><span class="ts">[16:43 – 17:02]</span><div class="seg-body">
+<p class="en">Oh, gosh, I&#x27;m I&#x27;m I&#x27;m going to I&#x27;m totally blinking on who said this. But it was either Jeff Tumlin on a recent interview of mine. But, you know, the companies now have a you know, they&#x27;re starting to get a financial incentive when it comes to safety. Right. So eventually they&#x27;re going to have to make money or they&#x27;re going to have to kind of trend that that ratio upwards.</p>
+<p class="zh">哦，天哪，我是我是我我要我完全不知道是谁说的。但要么是我最近接受采访时的杰夫·塔姆林（Jeff Tumlin）。但是，你知道，这些公司现在有了一个你知道的，他们开始在安全方面获得经济激励。正确的。因此，最终他们将不得不赚钱，或者他们将不得不使该比率呈上升趋势。</p></div></p>
+<p class="seg" id="seg-58"><span class="ts">[17:02 – 17:21]</span><div class="seg-body">
+<p class="en">Right. Which would be better margins. By the way, Uber and Uber drivers make money at a one to one ratio. And, you know, even actually even a two to one ratio, if you think about Uber drivers who spend all their time idle waiting for rides, when you do when you have a remote driver, for example, as me does, you don&#x27;t need a person while the car is sitting waiting.</p>
+<p class="zh">正确的。这会是更好的利润。顺便说一句，Uber和Uber司机赚钱的比例是一比一的。而且，你知道，即使实际上是二比一的比例，如果你考虑一下 Uber 司机，他们把所有时间都花在闲置等待乘车上，当你有一个远程司机时，例如，就像我一样，当汽车坐着等待时，你不需要一个人。</p></div></p>
+<p class="seg" id="seg-59"><span class="ts">[17:21 – 17:38]</span><div class="seg-body">
+<p class="en">It&#x27;s a big advantage over having or even while you&#x27;re waiting for the passenger to come outside, which drivers know it takes five minutes. Even when you&#x27;re stopped at a traffic light, if you want to get really specific or any time you can trust the vehicle to handle everything, which is stopped at a traffic light, you can trust the vehicle beep when the lights are about to change.</p>
+<p class="zh">与等待乘客外出相比，这是一个很大的优势，司机知道这需要五分钟。即使您在红绿灯处停下来，如果您想要真正具体，或者任何时候您可以相信车辆可以处理在红绿灯处停下来的所有事情，您也可以相信信号灯即将改变时车辆发出的蜂鸣声。</p></div></p>
+<p class="seg" id="seg-60"><span class="ts">[17:38 – 17:55]</span><div class="seg-body">
+<p class="en">Right. So there is actually an economic case at the price that they currently charge because they charge an Uber like price for Waymo. Even more sometimes. You could actually do it with a small ratio. But everyone&#x27;s goal, of course, is to get the ratio very good. I had a chat with Kyle Vogt, the CEO of Cruise, just before their</p>
+<p class="zh">正确的。因此，他们目前收取的价格实际上是有经济依据的，因为他们对 Waymo 收取的价格与 Uber 类似。有时甚至更多。实际上你可以用很小的比例来做到这一点。但每个人的目标当然是让这个比例非常好。就在他们之前，我与 Cruise 首席执行官凯尔·沃格特 (Kyle Vogt) 进行了交谈。</p></div></p>
+<p class="seg" id="seg-61"><span class="ts">[17:55 – 18:09]</span><div class="seg-body">
+<p class="en">failure when it was leaked, how often Cruise was doing remote intervention, which was about every five miles, I think it leaked out. And a lot of people said, wow, that&#x27;s really often. Maybe it was five minutes, but it was pretty frequent. I think it was five minutes. And everyone was saying, oh, my God.</p>
+<p class="zh">泄漏时的故障，克鲁斯进行远程干预的频率，大约每五英里一次，我认为它泄漏了。很多人说，哇，这种情况真的很常见。也许只有五分钟，但频率相当高。我想那是五分钟。每个人都说，哦，天哪。</p></div></p>
+<p class="seg" id="seg-62"><span class="ts">[18:09 – 18:25]</span><div class="seg-body">
+<p class="en">And Kyle was like a little bit shocked that people thought that was a bad number. For him, it was exactly where he wanted to be. Right. At that stage in Cruise&#x27;s life, they were happy to, you know, you don&#x27;t need one operator for five cars or whatever. They needed for that thing. So I don&#x27;t know what number Waymo has.</p>
+<p class="zh">凯尔对人们认为这是一个糟糕的数字感到有点震惊。对他来说，这正是他想去的地方。正确的。在克鲁斯人生的那个阶段，他们很高兴，你知道，你不需要一个操作员来操作五辆车或其他什么。他们需要那个东西。所以我不知道 Waymo 有多少号码。</p></div></p>
+<p class="seg" id="seg-63"><span class="ts">[18:25 – 18:42]</span><div class="seg-body">
+<p class="en">They haven&#x27;t said what number Waymo has. I know that at most places, they would dream that someday they&#x27;ll have 50 to one and maybe even 100 to one. No, I don&#x27;t think so. Whatever. But I guess whatever the number is. I mean, that was the root issue of why all of these Waymos were stalled.</p>
+<p class="zh">他们没有透露 Waymo 的数量。我知道在大多数地方，他们会梦想有一天他们的比分是 50 比 1，甚至可能是 100 比 1。不，我不这么认为。任何。但我想无论数字是多少。我的意思是，这就是所有这些 Waymo 陷入停滞的根本问题。</p></div></p>
+<p class="seg" id="seg-64"><span class="ts">[18:42 – 19:02]</span><div class="seg-body">
+<p class="en">It was because they called home. There weren&#x27;t enough remote, which I think makes sense. Right. Yeah. So the explanation makes sense. I guess the big thing that came to my mind is why did they stay stuck right in the middle of the road instead of pulling over and then calling</p>
+<p class="zh">这是因为他们打电话回家。没有足够的遥控器，我认为这是有道理的。正确的。是的。所以这个解释是有道理的。我想我想到的最重要的事情是为什么他们被困在路中间而不是靠边停车然后打电话</p></div></p>
+<p class="seg" id="seg-65"><span class="ts">[19:02 – 19:18]</span><div class="seg-body">
+<p class="en">for help, right? Like there&#x27;s some fail scenario there that I think is like you said, I guess it&#x27;s kind of an easy update, but it was like kind of kind of stupid to do that. Right. Is there is there a good reason for them to do that? I think that I think that they will, you know, they will learn from this. They say they have already learned from it.</p>
+<p class="zh">寻求帮助，对吗？就像有一些失败的情况，我认为就像你说的那样，我想这是一个简单的更新，但这样做有点愚蠢。正确的。他们这样做有充分的理由吗？我认为他们会，你知道，他们会从中吸取教训。他们说他们已经从中吸取了教训。</p></div></p>
+<p class="seg" id="seg-66"><span class="ts">[19:18 – 19:34]</span><div class="seg-body">
+<p class="en">And, you know, one of the things that they hopefully learn is to make sure that they handle this more gracefully. So the biggest problem for me was a quick change. You think they could make that in this type of situation, they pull. No, no, that there&#x27;s a whole list. Some of them are not quick.</p>
+<p class="zh">而且，你知道，他们希望学到的一件事就是确保他们更优雅地处理这件事。所以对我来说最大的问题是快速改变。你认为他们可以在这种情况下做到这一点，他们会拉。不，不，有一个完整的清单。其中一些并不快。</p></div></p>
+<p class="seg" id="seg-67"><span class="ts">[19:34 – 19:53]</span><div class="seg-body">
+<p class="en">So I maybe that&#x27;s one of the quicker ones. But remember, they want to stay very safe. And Jeffrey Tumlin actually is interesting. He&#x27;s changed his tune a bit since when he was running the Muni Agency in San Francisco Transportation. He has criticized them for saying that for focusing way too much</p>
+<p class="zh">所以我也许这是更快的之一。但请记住，他们希望保持安全。杰弗里·图姆林实际上很有趣。自从他在旧金山交通运输部管理市政机构以来，他的态度有所改变。他批评他们这样说，因为他们过于专注</p></div></p>
+<p class="seg" id="seg-68"><span class="ts">[19:53 – 20:10]</span><div class="seg-body">
+<p class="en">on preventing crashes. Right. And, you know, I think they have a reason why they think he said that that is what they&#x27;re typically judged on right when it comes to metrics or DMV or things like that. Right. But that they put as much effort as possible to making sure that they won&#x27;t hit anything.</p>
+<p class="zh">关于防止崩溃。正确的。而且，你知道，我认为他们有理由认为他说的是，当涉及到指标或 DMV 或类似的事情时，他们通常会根据正确的判断。正确的。但他们会尽最大努力确保不会撞到任何东西。</p></div></p>
+<p class="seg" id="seg-69"><span class="ts">[20:10 – 20:27]</span><div class="seg-body">
+<p class="en">And that sacrifices where they look too cautious in front of a fire truck, a little too cautious in an intersection. And he&#x27;s right that this should be a more subtle where you put this dial should be more subtle. I think it&#x27;s interesting to examine what&#x27;s pushed companies like Waymo to turn that dial the way that he says they&#x27;ve turned it</p>
+<p class="zh">这就牺牲了他们在消防车前显得过于谨慎，在十字路口显得有点过于谨慎。他是对的，这应该是一个更微妙的地方，你把这个表盘应该更微妙。我认为研究一下是什么促使像 Waymo 这样的公司按照他所说的方式改变这一方向是很有趣的</p></div></p>
+<p class="seg" id="seg-70"><span class="ts">[20:27 – 20:43]</span><div class="seg-body">
+<p class="en">and he thinks they&#x27;ve turned it too far that way. Now, when he was heading, I mean, it&#x27;s he was not saying this. Right. I mean, but it&#x27;s a fair I mean, if you&#x27;re Waymo, it is better to not hit someone and kill someone than to cause traffic backup. Right. Well, for sure. Fortunately, you know, only person who has died</p>
+<p class="zh">他认为他们在这方面做得太过分了。现在，当他走的时候，我的意思是，他并没有这么说。正确的。我的意思是，但这是公平的，我的意思是，如果你是 Waymo，最好不要撞到某人并杀死某人，而不是造成流量阻塞。正确的。嗯，当然。幸运的是，你知道，只有一个已经死了的人</p></div></p>
+<p class="seg" id="seg-71"><span class="ts">[20:43 – 21:01]</span><div class="seg-body">
+<p class="en">was in a crash that Uber ATG had many years ago. And it wasn&#x27;t really involving the self-driving system at all. It was involving the negligent management of of the safety driver that they had. But Cruise, of course, did have an incentive. They didn&#x27;t actually hit the person, but after they hit them. And this is very interesting.</p>
+<p class="zh">Uber ATG 多年前就曾遭遇过一次事故。而且它根本不涉及自动驾驶系统。这涉及到他们对安全驾驶员的疏忽管理。但克鲁斯当然有动机。他们实际上并没有打人，而是打了人之后。这很有趣。</p></div></p>
+<p class="seg" id="seg-72"><span class="ts">[21:01 – 21:21]</span><div class="seg-body">
+<p class="en">And we probably do a whole show on just this particular incident. But the cruise vehicle within 500 milliseconds, half a second after it had stopped, after this woman was thrown in front of the cruise, they immediately started to pull over, like literally within half a second. They were trying to pull over. Right. And Cruise had never said this, but it&#x27;s pretty clear to me</p>
+<p class="zh">我们可能会针对这个特定事件制作一整个节目。但巡航车不到500毫秒，就停了半秒，这个女人被扔到巡航车前面后，他们立即开始靠边停车，几乎是半秒之内。他们试图靠边停车。正确的。克鲁斯从未说过这句话，但我很清楚</p></div></p>
+<p class="seg" id="seg-73"><span class="ts">[21:21 – 21:38]</span><div class="seg-body">
+<p class="en">that that&#x27;s because they were trying to listen to Jeffrey Tumlin in advance. They were saying, let&#x27;s clear the road because they did not think she was under the car. That was a big mistake they made that they didn&#x27;t understand that she could be under the car. And so they went into a mode to say, oh, my God, there&#x27;s been a crash.</p>
+<p class="zh">那是因为他们试图提前听取 Jeffrey Tumlin 的意见。他们说，让我们清理道路吧，因为他们认为她不在车底下。他们犯了一个很大的错误，他们不明白她可能在车底下。所以他们进入一种模式说，哦，天哪，发生了车祸。</p></div></p>
+<p class="seg" id="seg-74"><span class="ts">[21:38 – 21:53]</span><div class="seg-body">
+<p class="en">Let&#x27;s not block traffic. Let&#x27;s not block the ambulances and the fire trucks are going to come through here. And so within half a second, they pull over. Sadly, she lived, but still hurt very badly with someone underneath the vehicle. And so where you tune this dial is really important.</p>
+<p class="zh">我们不要阻塞交通。我们不要挡住救护车，消防车要经过这里。半秒之内，他们就靠边停车了。不幸的是，她虽然活了下来，但仍然受了重伤，车下还有人。因此，调节旋钮的位置非常重要。</p></div></p>
+<p class="seg" id="seg-75"><span class="ts">[21:53 – 22:06]</span><div class="seg-body">
+<p class="en">It&#x27;s a fine line. You have to walk. Well, walks the wrong metaphor here. Drive flat. Yeah. But Cruise is dead because of this. I mean, this is no minor thing. This is billions of dollars invested by GM thrown away</p>
+<p class="zh">这是一条很好的线。你必须步行。好吧，这里用了错误的比喻。平地行驶。是的。但克鲁斯却因此而死。我的意思是，这不是一件小事。这被通用汽车扔掉了数十亿美元的投资</p></div></p>
+<p class="seg" id="seg-76"><span class="ts">[22:06 – 22:20]</span><div class="seg-body">
+<p class="en">because the regulators at the DMV said, you know, we don&#x27;t like what happened. We don&#x27;t. There&#x27;s two things we don&#x27;t like. We don&#x27;t like that you dragged her and we don&#x27;t like that you covered it up. They only covered it up for like two days. It&#x27;s like the shortest cover up in history, really. But it was still cover up.</p>
+<p class="zh">因为DMV 的监管者说，你知道，我们不喜欢发生的事情。我们不这样做。有两件事我们不喜欢。我们不喜欢你拖着她，也不喜欢你掩盖它。他们只掩盖了大约两天。真的，这就像历史上最短的掩盖。但它仍然被掩盖了。</p></div></p>
+<p class="seg" id="seg-77"><span class="ts">[22:20 – 22:36]</span><div class="seg-body">
+<p class="en">And, you know, just like Watergate for us old people, you don&#x27;t get in trouble for the crime. You get in trouble for the cover-up, right? And they did. But the cruise was dead. And Uber ATG was also effectively dead from their mistake. So everybody knows you&#x27;ve got to make sure that doesn&#x27;t happen</p>
+<p class="zh">而且，你知道，就像水门事件对我们老年人来说，你不会因为犯罪而陷入麻烦。你会因为掩盖真相而惹上麻烦，对吗？他们做到了。但游轮已经死了。 Uber ATG 也因他们的错误而实际上死了。所以每个人都知道你必须确保这种情况不会发生</p></div></p>
+<p class="seg" id="seg-78"><span class="ts">[22:36 – 22:53]</span><div class="seg-body">
+<p class="en">because everything you&#x27;re doing and all the good you&#x27;re going to do as well as all the money you&#x27;ve spent is going to be thrown away. And so the message from the regulators, including Tumlin, is turn that dial as far to the left as you can. And he&#x27;s complaining they&#x27;ve turned it too far. The truth is he played a role in turning it.</p>
+<p class="zh">因为你所做的一切、你要做的所有好事以及你花的所有钱都会被扔掉。因此，包括图姆林在内的监管机构发出的信息是，将旋钮尽可能向左转动。他抱怨他们做得太过分了。事实上，他在扭转局面方面发挥了作用。</p></div></p>
+<p class="seg" id="seg-79"><span class="ts">[22:53 – 23:10]</span><div class="seg-body">
+<p class="en">Yeah, well, so I think it is fair to say that Waymo likely, you know, the cars stayed there and stayed in the way because they didn&#x27;t want to pull over. They didn&#x27;t want to, you know, let me get to what I think&#x27;s going on. And Waymo won&#x27;t confirm this. But but here&#x27;s here&#x27;s the thing that I think played a role.</p>
+<p class="zh">是的，好吧，所以我认为可以公平地说，Waymo 很可能，你知道，汽车停在那里并挡住路，因为它们不想靠边停车。你知道，他们不想让我了解我认为正在发生的事情。 Waymo 不会证实这一点。但这是我认为发挥作用的事情。</p></div></p>
+<p class="seg" id="seg-80"><span class="ts">[23:10 – 23:27]</span><div class="seg-body">
+<p class="en">One thing you&#x27;ll notice in these videos, and this is another fact. And we&#x27;re going to speculate after we deal with the fact is that the people, the human drivers, they&#x27;re all acting like crazy, right? They&#x27;re not treating these things as four way stops. They&#x27;re just driving through them. They&#x27;re certainly rolling, stopping most of them.</p>
+<p class="zh">您会在这些视频中注意到一件事，这是另一个事实。在我们处理了这个事实之后我们会推测，人们，人类司机，他们都表现得像疯了，对吧？他们并没有将这些事情视为四路停靠点。他们只是开车经过它们。他们肯定在滚动，阻止了大多数人。</p></div></p>
+<p class="seg" id="seg-81"><span class="ts">[23:27 – 23:42]</span><div class="seg-body">
+<p class="en">Some of them are going through pretty fast because, yeah, the law says when a traffic signal is out, you treat it as a four way stop. But, you know, humans don&#x27;t obey the law. The robot does, but the human doesn&#x27;t. And so what we get is a normal intersection. People are just, oh, well, this light&#x27;s out.</p>
+<p class="zh">其中一些人的速度相当快，因为​​，是的，法律规定，当交通信号灯熄灭时，你将其视为四向停车。但是，你知道，人类不遵守法律。机器人会，但人类不会。所以我们得到的是一个正常的交叉点。人们只是，哦，好吧，灯灭了。</p></div></p>
+<p class="seg" id="seg-82"><span class="ts">[23:42 – 23:57]</span><div class="seg-body">
+<p class="en">You know, we&#x27;ll be careful here. But once you&#x27;ve gone through 10 lights that are out, you&#x27;re just, you know, how what the fuck got to get out of here. I mean, everything&#x27;s blocked up. Unlacially, Brad, if you see a Waymo, like if I&#x27;m tired, I&#x27;ve done 10 and I see a Waymo, I&#x27;m cutting right in from like, see a Waymo, I&#x27;m going</p>
+<p class="zh">你知道，我们会在这里小心的。但一旦你经历了 10 盏熄灭的灯，你就会知道，他妈的到底是怎么离开这里的。我的意思是，一切都被封锁了。说实话，Brad，如果你看到 Waymo，就像我累了一样，我已经做了 10 次了，我看到了 Waymo，我就直接插话，看到 Waymo，我就去</p></div></p>
+<p class="seg" id="seg-83"><span class="ts">[23:57 – 24:05]</span><div class="seg-body">
+<p class="en">in front of you. Hey. So this has happened. So that part&#x27;s a fact. We know the humans are doing that. And what they&#x27;re doing though, is they&#x27;re doing, this is something Waymo</p>
+<p class="zh">在你面前。嘿。所以这件事就发生了。所以这部分是事实。我们知道人类正在这样做。他们正在做的事情，就是他们正在做的事情，这是 Waymo 的事情</p></div></p>
+<p class="seg" id="seg-84"><span class="ts">[24:05 – 24:19]</span><div class="seg-body">
+<p class="en">didn&#x27;t anticipate, that suddenly all the humans in the city would go crazy and ignore the law. And so I think if you&#x27;ve programmed a vehicle to be cautious, no, actually you&#x27;ve programmed to do two things. You&#x27;ve said you&#x27;re at a four way stop, assert yourself. You got to take your turn.</p>
+<p class="zh">没想到，突然全城的人类都疯狂了，无视法律。所以我认为，如果你对车辆进行了编程以使其保持谨慎，不，实际上你已将其编程为做两件事。你说过你在四路停下来，坚持自己的观点。轮到你了。</p></div></p>
+<p class="seg" id="seg-85"><span class="ts">[24:19 – 24:30]</span><div class="seg-body">
+<p class="en">So you say, okay, it&#x27;s my turn. We count the cars coming. It&#x27;s my turn. I advance into the intersection. Cause that&#x27;s what I got to do. And normally what happens there is either, you know, people, well,</p>
+<p class="zh">所以你说，好吧，轮到我了。我们数一下来的车。轮到我了。我前进到十字路口。因为这就是我必须做的。通常情况下会发生什么，你知道，人们，嗯，</p></div></p>
+<p class="seg" id="seg-86"><span class="ts">[24:30 – 24:44]</span><div class="seg-body">
+<p class="en">robots won&#x27;t play chicken. Humans will play chicken at a four way stop. That&#x27;s, but robots won&#x27;t play chicken. They&#x27;ll go forward, but as soon as someone else is coming, they&#x27;ll stop. And I think these cars all concluded all very quickly. Oh my crap, the humans have gone nuts.</p>
+<p class="zh">机器人不会玩吃鸡游戏。人类会在四路停车处玩吃鸡游戏。是的，但机器人不会扮演胆小鬼的角色。他们会向前走，但一旦有人到来，他们就会停下来。我认为这些车都很快就结束了。天哪，人类已经疯了。</p></div></p>
+<p class="seg" id="seg-87"><span class="ts">[24:45 – 24:58]</span><div class="seg-body">
+<p class="en">This is definitely the kind of time where I better ask for my human masters to give me a hand. And so what Waymo wasn&#x27;t ready for was that a hundred cars at once would all say, what the hell is going on here? The humans are crazy. Right.</p>
+<p class="zh">这绝对是我最好请求我的人类师父帮助我的时候。因此，Waymo 没有做好准备的是，一百辆车同时会说，这里到底发生了什么？人类太疯狂了。正确的。</p></div></p>
+<p class="seg" id="seg-88"><span class="ts">[24:58 – 25:09]</span><div class="seg-body">
+<p class="en">And so that overloaded their system. And they&#x27;re expecting people to stop and everyone&#x27;s literally just driving through it, the cars might be thinking, Hey, is the light actually green on the other way? And I don&#x27;t know. You know what I mean?</p>
+<p class="zh">因此他们的系统超载了。他们期望人们停下来，而每个人都只是开车穿过它，汽车可能会想，嘿，另一边的灯实际上是绿灯吗？我不知道。你知道我的意思？</p></div></p>
+<p class="seg" id="seg-89"><span class="ts">[25:09 – 25:27]</span><div class="seg-body">
+<p class="en">So that, I actually, I don&#x27;t think the cars think that I think they just that, but like something very odd is happening is basically what you&#x27;re saying, which I think is very fair. And the Waymo&#x27;s are saying, let&#x27;s call home and get a confirmation. So I think that makes sense. And I gotta say that if, what would we want a Waymo to do when it sees</p>
+<p class="zh">所以，实际上，我不认为汽车认为我认为他们只是那样，但就像发生了非常奇怪的事情基本上就是你所说的那样，我认为这是非常公平的。 Waymo 说，让我们打电话回家并得到确认。所以我认为这是有道理的。我必须说，如果 Waymo 看到时我们会做什么</p></div></p>
+<p class="seg" id="seg-90"><span class="ts">[25:27 – 25:38]</span><div class="seg-body">
+<p class="en">a crazy situation that makes no sense? We&#x27;d want it to call home for advice. We just wouldn&#x27;t want 200 of them to call back at once when they don&#x27;t have 200 people there to deal with. I think it&#x27;s okay. Okay.</p>
+<p class="zh">一种毫无意义的疯狂情况？我们希望它打电话回家寻求建议。我们只是不希望他们中的 200 人在没有 200 人需要处理的情况下立即回电。我觉得还可以。好的。</p></div></p>
+<p class="seg" id="seg-91"><span class="ts">[25:38 – 25:55]</span><div class="seg-body">
+<p class="en">So let&#x27;s get into that in a second. I think it&#x27;s okay that they called back in that situation where there was 100, 200, because there&#x27;s a million unknowns that could be happening. And if it&#x27;s, I think that we want them calling home in that situation. I do think though, that in that situation, that exactly what you described, they could still pull over.</p>
+<p class="zh">让我们稍后讨论一下。我认为他们在有 100、200 人的情况下回电是可以的，因为可能会发生一百万个未知数。如果是的话，我认为我们希望他们在这种情况下给家里打电话。但我确实认为，在那种情况下，正如你所描述的那样，他们仍然可以靠边停车。</p></div></p>
+<p class="seg" id="seg-92"><span class="ts">[25:55 – 25:59]</span><div class="seg-body">
+<p class="en">They could still get out of the way. They could reverse. They could get the hell out of the way.</p>
+<p class="zh">他们仍然可以避开。他们可以逆转。他们可以摆脱困境。</p></div></p>
+<p class="seg" id="seg-93"><span class="ts">[26:01 – 26:16]</span><div class="seg-body">
+<p class="en">This is their failure in that. So normally what happens is the car gets into situations, confused, it calls home and normally within 10, 15 seconds, they have an answer. Right? So you don&#x27;t pull over when you&#x27;re expecting an answer within 10 seconds. That wouldn&#x27;t make traffic worse if the car is always pulled over.</p>
+<p class="zh">这是他们的失败。所以通常情况下，汽车陷入困境，感到困惑，它打电话回家，通常在 10、15 秒内，他们就会得到答案。正确的？因此，当您期望 10 秒内得到答复时，您不必停车。如果汽车总是被拦在路边，那不会让交通变得更糟。</p></div></p>
+<p class="seg" id="seg-94"><span class="ts">[26:16 – 26:33]</span><div class="seg-body">
+<p class="en">Back and forth, yeah. They got a stop in the middle of intersection when they&#x27;re just expecting it. And what Waymo wasn&#x27;t ready for was the advice wouldn&#x27;t come. Now, I actually think this is an irony. Waymo hasn&#x27;t confirmed this. It may or may not be true, but they&#x27;re ready for a communications failure.</p>
+<p class="zh">来来回回，是的。当他们正期待的时候，他们在十字路口中间停了下来。 Waymo 没有做好准备，因为建议不会出现。现在看来，我其实觉得这是一个讽刺。 Waymo 尚未证实这一点。这可能是真的，也可能不是，但他们已经做好了应对通信故障的准备。</p></div></p>
+<p class="seg" id="seg-95"><span class="ts">[26:33 – 26:48]</span><div class="seg-body">
+<p class="en">Cruise had a problem at Outside Lands, a big concert in Golden Gate Park, San Francisco, where the cell phone network got overloaded and the cruises were all waiting for advice and they all froze up. And so that&#x27;s not a secret. Everybody knows that that can happen. We saw it happen to Cruise.</p>
+<p class="zh">克鲁斯在旧金山金门公园举办的一场大型音乐会“Outside Lands”中遇到了问题，那里的手机网络超载，克鲁斯都在等待建议，结果全都死机了。所以这不是秘密。每个人都知道这可能会发生。我们看到这种情况发生在克鲁斯身上。</p></div></p>
+<p class="seg" id="seg-96"><span class="ts">[26:48 – 27:02]</span><div class="seg-body">
+<p class="en">I got to believe Waymo had a meeting and said, you know, what will we do here? And they worked out solutions for it. I think if the cell phone networks had gone out, we wouldn&#x27;t have had this problem. I think the cars would have gone into a cell phone networks are out mode, powers out mode, we better pull over. We&#x27;re not going to get any help.</p>
+<p class="zh">我相信 Waymo 召开了一次会议并说，你知道，我们在这里要做什么？他们为此制定了解决方案。我想如果手机网络断了，我们就不会遇到这个问题了。我认为汽车会进入手机网络断电模式、断电模式，我们最好靠边停车。我们不会得到任何帮助。</p></div></p>
+<p class="seg" id="seg-97"><span class="ts">[27:02 – 27:21]</span><div class="seg-body">
+<p class="en">It&#x27;s the fact that they asked for help and daddy didn&#x27;t answer. And they just go, that&#x27;s pretty good. That&#x27;s what I, that&#x27;s my best guess as to what happened. And what Waymo will have learned from this is, okay, we got to be ready for that. Well, we&#x27;ve got to be ready for that two ways. We&#x27;ve got to be ready and being fixed.</p>
+<p class="zh">事实上，他们寻求帮助，但爸爸没有回答。他们就走了，这很好。这就是我，这是我对发生的事情的最好猜测。 Waymo 从中学到的是，好吧，我们必须为此做好准备。好吧，我们必须为这两种方式做好准备。我们必须做好准备并进行修复。</p></div></p>
+<p class="seg" id="seg-98"><span class="ts">[27:21 – 27:33]</span><div class="seg-body">
+<p class="en">Brad, I think it&#x27;s, Hey, let&#x27;s call 10 to 15 seconds. No answer. Pull over. I think that&#x27;s pretty easy fix. I mean, well, pull over is pretty difficult in get out of the way. In that, yeah.</p>
+<p class="zh">Brad，我想是，嘿，我们通话 10 到 15 秒。没有答案。套衫。我认为这很容易解决。我的意思是，好吧，靠边停车很难让路。在那方面，是的。</p></div></p>
+<p class="seg" id="seg-99"><span class="ts">[27:34 – 27:55]</span><div class="seg-body">
+<p class="en">So the problem is, again, they, they don&#x27;t want to make a move unless they&#x27;re 99.999% certain nobody&#x27;s going to get hit by it. And again, they&#x27;ve, they, this is a situation which, you know, wasn&#x27;t for better or worse anticipated. Now my article actually focused more on why didn&#x27;t they know this was going to happen because I think I came up with this explanation in part because I was</p>
+<p class="zh">所以问题是，他们不想采取行动，除非他们 99.999% 确定没有人会受到打击。再说一次，他们，他们，这是一种情况，你知道，这不是预期的更好或更坏。现在我的文章实际上更多地关注为什么他们不知道这会发生，因为我认为我提出这个解释的部分原因是我</p></div></p>
+<p class="seg" id="seg-100"><span class="ts">[27:55 – 28:15]</span><div class="seg-body">
+<p class="en">trying to figure out, I know these guys that work with them. They&#x27;re very top people and I don&#x27;t think they would have not considered a big power failure, for example, I would hope that they&#x27;ve considered earthquakes and all bad storms and all the bad things are going to happen. I don&#x27;t think they have experience with them. This was the first time they had to actually deal with it on the ground.</p>
+<p class="zh">试图弄清楚，我认识那些与他们一起工作的人。他们是非常顶尖的人，我认为他们不会没有考虑过大停电，例如，我希望他们考虑过地震和所有恶劣的风暴以及所有糟糕的事情都会发生。我认为他们没有相关经验。这是他们第一次真正在地面上应对。</p></div></p>
+<p class="seg" id="seg-101"><span class="ts">[28:15 – 28:37]</span><div class="seg-body">
+<p class="en">No battle plan survives first contact with the enemy. But I think that they, there&#x27;s a, there&#x27;s a bunch of things they could do. I think they should be able to handle high volumes of requests. By the way, that will also just solve itself naturally as they scale, because right now, Waymo&#x27;s in 10 cities, but they&#x27;re really, most of their activity is San Francisco, Phoenix and LA.</p>
+<p class="zh">没有任何作战计划能在与敌人的第一次接触后幸存下来。但我认为他们有很多事情可以做。我认为他们应该能够处理大量的请求。顺便说一句，随着规模的扩大，这个问题也会自然解决，因为目前 Waymo 已覆盖 10 个城市，但实际上，他们的大部分活动都在旧金山、凤凰城和洛杉矶。</p></div></p>
+<p class="seg" id="seg-102"><span class="ts">[28:37 – 28:53]</span><div class="seg-body">
+<p class="en">And once you&#x27;re in a hundred cities, you&#x27;ve got, and one city has been blown up by a, you know, terrorist attack. It doesn&#x27;t matter. The other 99 cities, you know, EMP that affects all hundred cities. Don&#x27;t never say never Brad. Sorry, in a major nuclear war.</p>
+<p class="zh">一旦你进入了一百个城市，你就会发现其中一个城市被恐怖袭击炸毁了。没关系。其他99个城市，你知道，电磁脉冲影响到所有一百个城市。永远不要说永远，布拉德。抱歉，在一场重大核战争中。</p></div></p>
+<p class="seg" id="seg-103"><span class="ts">[28:53 – 29:07]</span><div class="seg-body">
+<p class="en">I&#x27;m not talking nuclear war, but I feel like in tech, EMP in a hundred cities is a nuclear war. My friend, I don&#x27;t know, but like in tech, everyone, you know, I&#x27;m very optimistic. I work with a lot of founders and I always say, Oh, that can never happen. I&#x27;m like, dude, it&#x27;s going to happen.</p>
+<p class="zh">我不是在谈论核战争，但我觉得在科技领域，一百座城市的电磁脉冲就是一场核战争。我的朋友，我不知道，但就像在科技行业一样，每个人，你知道，我非常乐观。我和很多创始人一起工作，我总是说，哦，这永远不会发生。我想，伙计，这将会发生。</p></div></p>
+<p class="seg" id="seg-104"><span class="ts">[29:07 – 29:21]</span><div class="seg-body">
+<p class="en">I&#x27;m like, you gotta, people are almost like in tech. They&#x27;re a little too optimistic. You kind of need, whenever I work with startups, I tell them, like, it&#x27;s kind of good to have someone like me who doesn&#x27;t work at the company. I don&#x27;t care how long you&#x27;ve worked on this product or how much blood, sweat and tears you put into it.</p>
+<p class="zh">我想，你得，人们几乎就像科技界的人一样。他们有点过于乐观了。你有点需要，每当我与初创公司合作时，我都会告诉他们，有像我这样不在公司工作的人是件好事。我不在乎你在这个产品上工作了多久，也不在乎你为它付出了多少心血、汗水和泪水。</p></div></p>
+<p class="seg" id="seg-105"><span class="ts">[29:21 – 29:35]</span><div class="seg-body">
+<p class="en">You release something and it&#x27;s a stupid idea. I&#x27;m going to tell you, or if you don&#x27;t think about like, Oh, someone&#x27;s going to abuse it fraud, what can go wrong? Like, I don&#x27;t, I never liked the solution. Like, Oh, that probably won&#x27;t happen. I never liked, but here&#x27;s, here&#x27;s what I would, would think would happen.</p>
+<p class="zh">你释放了一些东西，这是一个愚蠢的想法。我要告诉你，或者如果你不考虑，哦，有人会滥用它进行欺诈，会出什么问题呢？就像，我不喜欢，我从来不喜欢这个解决方案。就像，哦，那可能不会发生。我从来不喜欢，但这就是我会想到会发生的事情。</p></div></p>
+<p class="seg" id="seg-106"><span class="ts">[29:35 – 29:55]</span><div class="seg-body">
+<p class="en">As you build up to being at base care with a hundred cities, you naturally have much more wiggle room in your capacity of your remote assistants. Secondly, you have all the people who are off shift, right? And I don&#x27;t, I&#x27;m guessing maybe they didn&#x27;t have a system, but you want to have a system that says, wake up the people who are off shift because we got this big, pay them some fat over times.</p>
+<p class="zh">当您在一百个城市建立基地护理时，您的远程助理能力自然会拥有更多的回旋余地。其次，你们所有的人都下班了，对吗？我不知道，我猜他们可能没有一个系统，但你想要一个系统，说，叫醒那些因为我们规模这么大而下班的人，分次给他们一些报酬。</p></div></p>
+<p class="seg" id="seg-107"><span class="ts">[29:55 – 30:17]</span><div class="seg-body">
+<p class="en">Cause you had to wake them up. The Waymo employees, like, Hey guys, you should all be trained on. Dimitri Dolgov and every other Waymo engineer, Waymo has 3000 employees. Alphabet has 200,000 employees. Get them trained at doing low level support, basic triage, that kind of thing. And that&#x27;ll be a great business insider story anyways.</p>
+<p class="zh">因为你必须叫醒他们。 Waymo 员工会说，嘿伙计们，你们都应该接受培训。 Dimitri Dolgov 和其他 Waymo 工程师一样，Waymo 拥有 3000 名员工。 Alphabet 拥有 20 万名员工。让他们接受低水平支持、基本分类等方面的培训。无论如何，这将是一个很棒的商业内幕故事。</p></div></p>
+<p class="seg" id="seg-108"><span class="ts">[30:17 – 30:33]</span><div class="seg-body">
+<p class="en">You know, this Waymo engineer spends his week, nights and weekends doing remote support to learn about the company. So no, no, this, this should be something is, you know, you get called for this, you know, once in a decade, right? It&#x27;s not a, you can pay very fat over time for this and justify people that they&#x27;re training.</p>
+<p class="zh">你知道，这位 Waymo 工程师每周、晚上和周末都在进行远程支持，以了解公司。所以不，不，这，这应该是，你知道，你被要求这样做，你知道，十年一次，对吧？这不是，随着时间的推移，你可以为此付出很大的代价，并证明他们正在培训的人是合理的。</p></div></p>
+<p class="seg" id="seg-109"><span class="ts">[30:33 – 30:45]</span><div class="seg-body">
+<p class="en">You don&#x27;t need that much training. I&#x27;ve actually been pondering over this. They do not use, as far as I know, VR glasses, for example, for this remote assistance task, because VR glasses are uncomfortable to wear for a long time. There&#x27;s a lot of reasons not to use them, but actually one thing</p>
+<p class="zh">你不需要那么多的训练。我其实一直在思考这个问题。比如，据我所知，他们在这个远程协助任务中并没有使用VR眼镜，因为VR眼镜长时间佩戴不舒服。不使用它们的理由有很多，但实际上有一件事</p></div></p>
+<p class="seg" id="seg-110"><span class="ts">[30:45 – 30:57]</span><div class="seg-body">
+<p class="en">they&#x27;re very good at is bringing a person up to speed on the situation, right? You, we can put you in there. You can look around. So they should have a plan to scale up remote operators 10 or 100 X at a moment&#x27;s notice.</p>
+<p class="zh">他们非常擅长让人们了解情况，对吗？你，我们可以把你放进去。你可以四处看看。因此，他们应该制定计划，立即将远程操作员规模扩大 10 倍或 100 倍。</p></div></p>
+<p class="seg" id="seg-111"><span class="ts">[30:57 – 31:09]</span><div class="seg-body">
+<p class="en">I think that maybe should have already been in place at this. Do you think it should have been already been like, that&#x27;s kind of obvious to me, right? Like Uber has surge pricing. Hey, when there&#x27;s a big demand and you know, big, big spike in demand, right?</p>
+<p class="zh">我认为也许应该已经就位了。你认为这应该已经是这样了，这对我来说是显而易见的，对吗？就像优步有峰时定价一样。嘿，当需求很大时，你知道，需求会大幅增长，对吗？</p></div></p>
+<p class="seg" id="seg-112"><span class="ts">[31:09 – 31:19]</span><div class="seg-body">
+<p class="en">We have a bunch more drivers like. Yeah. I, you know, I guess I&#x27;m going to say that they haven&#x27;t spoken about this, but obviously they didn&#x27;t have something that worked. Right. They might&#x27;ve had a plan.</p>
+<p class="zh">我们还有很多这样的司机。是的。我，你知道，我想我会说他们还没有谈论过这个，但显然他们没有有效的办法。正确的。他们可能有一个计划。</p></div></p>
+<p class="seg" id="seg-113"><span class="ts">[31:19 – 31:32]</span><div class="seg-body">
+<p class="en">That plan might&#x27;ve run into problems. They might&#x27;ve not had enough plan. I think that&#x27;s one of the lessons that will be learned from this and, you know, but I, and I have to believe it&#x27;s easy for us to sit here in our chair. Oh, they should have done this.</p>
+<p class="zh">该计划可能会遇到问题。他们可能没有足够的计划。我认为这是我们从中吸取的教训之一，而且，你知道，但我，我必须相信，我们坐在椅子上是很容易的。哦，他们应该这样做。</p></div></p>
+<p class="seg" id="seg-114"><span class="ts">[31:32 – 31:44]</span><div class="seg-body">
+<p class="en">They should have done that. But you know, sort of, we&#x27;re definitely being probably extra critical, but you know, I think Waymo probably rightfully should be held to a high, very high standard. They should be. So they do simulation.</p>
+<p class="zh">他们应该这样做。但你知道，在某种程度上，我们肯定会更加挑剔，但你知道，我认为 Waymo 可能理所当然地应该保持很高、非常高的标准。他们应该是。所以他们进行模拟。</p></div></p>
+<p class="seg" id="seg-115"><span class="ts">[31:44 – 31:56]</span><div class="seg-body">
+<p class="en">They do a lot of simulation of the vehicle driving down the road. They haven&#x27;t spoken much about the other type of simulation you want to do, which is whole fleet simulation where you can&#x27;t be simulating the individual cars very well, but you can simulate things that happen to the</p>
+<p class="zh">他们对车辆在路上行驶进行了大量的模拟。他们没有太多谈论您想要做的另一种类型的模拟，即整个车队模拟，您无法很好地模拟单个汽车，但您可以模拟发生在整个车队上的事情。</p></div></p>
+<p class="seg" id="seg-116"><span class="ts">[31:56 – 32:10]</span><div class="seg-body">
+<p class="en">whole fleet like this. And I am surprised that whatever simulation they did, didn&#x27;t help uncover this as a contingency. And you know, they&#x27;re probably surprised too. But I haven&#x27;t seen too much. I mean power outages are pretty common, right?</p>
+<p class="zh">整个舰队都是这样。令我惊讶的是，无论他们做了什么模拟，都无助于发现这是一个偶然事件。你知道，他们可能也很惊讶。但我还没有看到太多。我的意思是停电很常见，对吗？</p></div></p>
+<p class="seg" id="seg-117"><span class="ts">[32:10 – 32:19]</span><div class="seg-body">
+<p class="en">No. So I got to believe that, I got to believe they gained power outages. They definitely planned for a power outage for sure. That&#x27;s probably got to be the number one thing on the edge case list.</p>
+<p class="zh">不，所以我必须相信，我必须相信他们停电了。他们肯定计划停电。这可能是边缘案例列表中的第一件事。</p></div></p>
+<p class="seg" id="seg-118"><span class="ts">[32:19 – 32:33]</span><div class="seg-body">
+<p class="en">It&#x27;s not even really an edge case. They plan for a power outage, but. And for an earthquake, which is power outages, roads, roads destroyed. Brad, I think your theory is the right one. I bet what they didn&#x27;t plan for is humans driving</p>
+<p class="zh">这甚至不是一个真正的边缘案例。他们计划停电，但是。而对于地震来说，就是停电、道路、道路被毁。布拉德，我认为你的理论是正确的。我敢打赌他们没有想到的是人类驾驶</p></div></p>
+<p class="seg" id="seg-119"><span class="ts">[32:33 – 32:46]</span><div class="seg-body">
+<p class="en">like psychos, you know, basically treating four way stops like the lights are actually not out. They are working right on the other ways. Now, by the way, I think they have a very hard problem ahead of them because when they want to be ready to handle an earthquake or a hurricane or</p>
+<p class="zh">就像精神病一样，你知道，基本上对待四路停车就像灯实际上没有熄灭一样。他们正在以其他方式努力。现在，顺便说一句，我认为他们面临着一个非常困难的问题，因为当他们想要准备好应对地震或飓风或</p></div></p>
+<p class="seg" id="seg-120"><span class="ts">[32:46 – 32:58]</span><div class="seg-body">
+<p class="en">some of these other big disasters, which will come there in Miami now, they&#x27;ll get a hurt. The easy solution is the one they took here, which is let&#x27;s shut down and pull off to the side of the road because I mean, they eventually did do that. Get them all back to depots.</p>
+<p class="zh">其他一些重大灾难现在将在迈阿密发生，他们会受到伤害。最简单的解决方案就是他们在这里采取的解决方案，那就是让我们关闭并把车停到路边，因为我的意思是，他们最终确实这样做了。把它们全部带回仓库。</p></div></p>
+<p class="seg" id="seg-121"><span class="ts">[32:59 – 33:11]</span><div class="seg-body">
+<p class="en">That is not the best solution in an emergency. There&#x27;s going to be eventually people who depend on these vehicles for the transportation, and they&#x27;re going to, they&#x27;re not going to want to say, sorry, bad weather. We&#x27;re off today.</p>
+<p class="zh">这不是紧急情况下的最佳解决方案。最终将会有人依赖这些车辆进行交通，他们不会想说，对不起，天气不好。我们今天休息。</p></div></p>
+<p class="seg" id="seg-122"><span class="ts">[33:11 – 33:16]</span><div class="seg-body">
+<p class="en">That&#x27;s not going to be an acceptable solution. That I kind of keep seeing, right? Okay. You mentioned, right? Waymo, oh, flooding. All right.</p>
+<p class="zh">这不会是一个可接受的解决方案。我一直在看，对吧？好的。你提到过，对吗？ Waymo，哦，洪水泛滥。好的。</p></div></p>
+<p class="seg" id="seg-123"><span class="ts">[33:16 – 33:23]</span><div class="seg-body">
+<p class="en">You know, Waymo, we&#x27;ve kind of, you know, they&#x27;ve been made fun of, right? They kind of, the cars like to drive through flooding. They haven&#x27;t quite figured that one out. So now when there&#x27;s heavy rains or flooding,</p>
+<p class="zh">你知道，Waymo，我们有点，你知道，他们被取笑了，对吧？他们有点，汽车喜欢在洪水中行驶。他们还没有完全弄清楚这一点。所以现在遇到大雨或者洪水的时候</p></div></p>
+<p class="seg" id="seg-124"><span class="ts">[33:23 – 33:33]</span><div class="seg-body">
+<p class="en">they pull them off the road. Like you mentioned a few days after, but you know, one thing we see with Uber drivers actually during inclement weather and, you know, even sometimes during natural disasters and things like people actually really need,</p>
+<p class="zh">他们把它们从路上拉下来。就像你几天后提到的那样，但你知道，我们在优步司机身上看到的一件事实际上是在恶劣天气期间，你知道，甚至有时在自然灾害和人们真正需要的事情期间，</p></div></p>
+<p class="seg" id="seg-125"><span class="ts">[33:33 – 33:44]</span><div class="seg-body">
+<p class="en">they need to get the hell out of Dodge. They need to get out of there. Right. So like, it&#x27;s not actually a great long-term solution, pausing service completely and leaving people stranded or whatever it might be.</p>
+<p class="zh">他们需要摆脱道奇。他们需要离开那里。正确的。所以，这实际上并不是一个很好的长期解决方案，完全暂停服务并让人们陷入困境或其他任何可能的情况。</p></div></p>
+<p class="seg" id="seg-126"><span class="ts">[33:44 – 33:55]</span><div class="seg-body">
+<p class="en">Right. But I think this is very early in the history of the robot taxis. And so I, I don&#x27;t fault them and I certainly can&#x27;t fault the others who don&#x27;t even have fleets like Waymo does that their plan is</p>
+<p class="zh">正确的。但我认为这在机器人出租车的历史上还很早。所以我，我不会责怪他们，我当然也不能责怪那些甚至没有像 Waymo 这样的车队的其他人，他们的计划是</p></div></p>
+<p class="seg" id="seg-127"><span class="ts">[33:55 – 34:10]</span><div class="seg-body">
+<p class="en">not complete here yet. Well, I think they know, they know they&#x27;ve got to do this, but they can&#x27;t use the, the conservative, you know, the, the very timid solution is stop and don&#x27;t take any risks. The, the precautionary principle sort of</p>
+<p class="zh">这里还没有完成。嗯，我认为他们知道，他们知道他们必须这样做，但他们不能使用保守派，你知道，非常胆怯的解决方案是停止并且不冒任何风险。预防原则是</p></div></p>
+<p class="seg" id="seg-128"><span class="ts">[34:10 – 34:21]</span><div class="seg-body">
+<p class="en">applied here and that&#x27;s not going to work forever, but they need to make you, you obviously cannot test your earthquake response in anything but simulator. I mean, cause the other approach of let&#x27;s wait for some earthquakes and see what</p>
+<p class="zh">在这里应用，这不会永远有效，但他们需要让你，你显然不能在模拟器之外的任何东西中测试你的地震反应。我的意思是，让我们等待一些地震，看看会发生什么</p></div></p>
+<p class="seg" id="seg-129"><span class="ts">[34:21 – 34:30]</span><div class="seg-body">
+<p class="en">happens, not so great. I mean, definitely. I&#x27;ve got to believe they, they would assimilate at a power outage, but they obviously, you know, simulations are not perfect.</p>
+<p class="zh">发生了，不是那么好。我的意思是，绝对是。我必须相信他们，他们会在停电时同化，但他们显然，你知道，模拟并不完美。</p></div></p>
+<p class="seg" id="seg-130"><span class="ts">[34:30 – 34:41]</span><div class="seg-body">
+<p class="en">They didn&#x27;t catch what was going to happen here. And so I&#x27;m a little disappointed though, that they didn&#x27;t do enough of what&#x27;s called red teaming or red team is when you have a deliberate team of adversaries who</p>
+<p class="zh">他们没有明白这里会发生什么。所以我有点失望，他们在所谓的“红队”或“红队”方面做得不够，当你有一个故意的对手团队时，他们</p></div></p>
+<p class="seg" id="seg-131"><span class="ts">[34:41 – 34:50]</span><div class="seg-body">
+<p class="en">try to break your system, usually in cybersecurity, but it can happen in all of their fields and there should have been people trying to say, okay, what, what would break this? What&#x27;s it take to break us?</p>
+<p class="zh">尝试破坏你的系统，通常是在网络安全领域，但它可能发生在所有领域，应该有人试图说，好吧，什么，什么会破坏这个？需要什么才能击垮我们？</p></div></p>
+<p class="seg" id="seg-132"><span class="ts">[34:50 – 34:57]</span><div class="seg-body">
+<p class="en">What if we got a thousand support requests? And someone else who said, Oh, we&#x27;ll never get a thousand support requests. Yeah. And like you, you said, never say it can never happen.</p>
+<p class="zh">如果我们收到一千个支持请求怎么办？还有人说，哦，我们永远不会收到一千个支持请求。是的。就像你一样，你说过，永远不要说它永远不会发生。</p></div></p>
+<p class="seg" id="seg-133"><span class="ts">[34:57 – 35:09]</span><div class="seg-body">
+<p class="en">The red team&#x27;s job is to say that. In fact, to even show how it could happen and stress test the crap out of it. Yeah. So was there anything else more broadly about Waymo&#x27;s actions or response?</p>
+<p class="zh">红队的工作就是这么说。事实上，甚至是为了展示它是如何发生的，并对它进行压力测试。是的。那么 Waymo 的行动或反应还有其他更广泛的内容吗？</p></div></p>
+<p class="seg" id="seg-134"><span class="ts">[35:09 – 35:19]</span><div class="seg-body">
+<p class="en">Because I think the kind of subjective, the reason why I wanted to even interview, I feel like the story has really, you know, kind of kept going. We&#x27;re out a couple of weeks now, almost two weeks that we&#x27;re talking now, not as much</p>
+<p class="zh">因为我认为这种主观性，就是我想要采访的原因，我觉得这个故事真的，你知道，有点继续下去。我们已经休息了几周了，我们现在谈论的时间差不多是两周了，没有那么多了</p></div></p>
+<p class="seg" id="seg-135"><span class="ts">[35:19 – 35:31]</span><div class="seg-body">
+<p class="en">as running over a cat, but I don&#x27;t know. I think this was up there and you know, what I&#x27;ve seen kind of anecdotally is that, you know, I think even people like you and I, I think you and I are both big Waymo fans, you know, I would say,</p>
+<p class="zh">就像碾过一只猫，但我不知道。我认为这就是上面的情况，你知道，我所看到的轶事是，你知道，我认为即使像你和我这样的人，我认为你和我都是 Waymo 的忠实粉丝，你知道，我会说，</p></div></p>
+<p class="seg" id="seg-136"><span class="ts">[35:31 – 35:41]</span><div class="seg-body">
+<p class="en">you know, maybe not boosters, but you know, very positive outlook on the industry and the company, you know, I think you and I have both sort of said, you know, express disappointment or Waymo, you know, could have done this</p>
+<p class="zh">你知道，也许不是支持者，但你知道，对行业和公司非常积极的看法，你知道，我想你和我都说过，你知道，表达失望，或者 Waymo，你知道，可以做到这一点</p></div></p>
+<p class="seg" id="seg-137"><span class="ts">[35:41 – 35:50]</span><div class="seg-body">
+<p class="en">better or that better. I think even a lot of the Waymo customers, you know, the tech VCs and the people in San Francisco who are usually the biggest fans of Waymo. I&#x27;ve seen them, you know, kind of</p>
+<p class="zh">更好或者更好。我认为甚至很多 Waymo 客户，你知道，技术风险投资家和旧金山的人们通常都是 Waymo 的最大粉丝。我见过他们，你知道，有点</p></div></p>
+<p class="seg" id="seg-138"><span class="ts">[35:50 – 35:59]</span><div class="seg-body">
+<p class="en">making comments like, wow, how did Waymo screw this up? Right. So that&#x27;s kind of one thing I&#x27;ve noticed. I wasn&#x27;t in love with like the scene in the, it&#x27;s like the</p>
+<p class="zh">发表这样的评论，哇，Waymo 怎么搞砸了？正确的。这就是我注意到的一件事。我并不喜欢里面的场景，就像</p></div></p>
+<p class="seg" id="seg-139"><span class="ts">[35:59 – 36:06]</span><div class="seg-body">
+<p class="en">scene in The Man Who Would Be King. Right. And oh my God, a God who bleeds. Yeah. But like, I, you know, like I can&#x27;t believe they, we thought they</p>
+<p class="zh">《将成为国王的男人》中的场景。正确的。噢，我的上帝，一个流血的上帝。是的。但就像，我，你知道，就像我不敢相信他们，我们以为他们</p></div></p>
+<p class="seg" id="seg-140"><span class="ts">[36:06 – 36:13]</span><div class="seg-body">
+<p class="en">were perfect and immortal. Brad, if this was Tesla, you know, everyone would have been like, oh, they did great. Right. But like the Waymo fans in this one, like they&#x27;re, they kind of</p>
+<p class="zh">是完美且不朽的。布拉德，如果这是特斯拉，你知道，每个人都会说，哦，他们做得很棒。正确的。但就像这一次的 Waymo 粉丝一样，他们有点</p></div></p>
+<p class="seg" id="seg-141"><span class="ts">[36:13 – 36:26]</span><div class="seg-body">
+<p class="en">rightfully called out Waymo. And I was proud of them for saying that I did not love Waymo&#x27;s response. I don&#x27;t think it really vited much that they hadn&#x27;t, they already kind of gave that comment</p>
+<p class="zh">正确地呼唤 Waymo。我为他们表示我不喜欢 Waymo 的回应而感到自豪。我不认为他们没有这样做真的很重要，他们已经发表了这样的评论</p></div></p>
+<p class="seg" id="seg-142"><span class="ts">[36:26 – 36:35]</span><div class="seg-body">
+<p class="en">to a couple of outlets that said, okay, yeah, we basically had too many requests all at once. Like the blog post didn&#x27;t really say much in my mind. And let&#x27;s talk about Waymo&#x27;s</p>
+<p class="zh">几家媒体表示，好吧，是的，我们基本上同时收到了太多请求。就像这篇博文在我心里并没有说太多。我们来谈谈 Waymo 的</p></div></p>
+<p class="seg" id="seg-143"><span class="ts">[36:35 – 36:44]</span><div class="seg-body">
+<p class="en">kind of response or the reaction to it more broadly. Well, my advice to Cruise, to Waymo, to all of these companies might be bad advice and they don&#x27;t want to take it.</p>
+<p class="zh">一种反应或更广泛的反应。好吧，我给 Cruise、Waymo 和所有这些公司的建议可能是糟糕的建议，他们不想接受。</p></div></p>
+<p class="seg" id="seg-144"><span class="ts">[36:44 – 36:55]</span><div class="seg-body">
+<p class="en">But yes, to, to be more transparent and make every story, not about the fact that we made a mistake to say, listen, we&#x27;ve made mistakes. We&#x27;re going to make more. What you should care about</p>
+<p class="zh">但是，是的，为了更加透明并制作每个故事，而不是关于我们犯了错误的事实，听着，我们犯了错误。我们会做得更多。你应该关心什么</p></div></p>
+<p class="seg" id="seg-145"><span class="ts">[36:55 – 37:06]</span><div class="seg-body">
+<p class="en">is, are we fixing them? Well, they never happen again. And, and that means explaining how the mistake happened and explaining how you fixed it. And in many cases, Waymo&#x27;s press</p>
+<p class="zh">是，我们正在修复它们吗？好吧，它们再也不会发生了。而且，这意味着解释错误是如何发生的以及如何修复它。在很多情况下，Waymo 的媒体</p></div></p>
+<p class="seg" id="seg-146"><span class="ts">[37:06 – 37:12]</span><div class="seg-body">
+<p class="en">releases around the other mistakes that they&#x27;ve made have said, we&#x27;ve already fixed this. Right. So there was a big, big one about school buses earlier this</p>
+<p class="zh">关于他们所犯的其他错误的发布已经说过，我们已经修复了这个问题。正确的。所以今年早些时候有一件关于校车的大事</p></div></p>
+<p class="seg" id="seg-147"><span class="ts">[37:12 – 37:21]</span><div class="seg-body">
+<p class="en">month, which they got a NHTSA investigation from. They had a flaw, they didn&#x27;t under, they were misjudging whether the school bus was stopped with its stop sign out.</p>
+<p class="zh">月，他们收到了 NHTSA 的调查。他们有一个缺陷，但他们没有缺陷，他们错误地判断了校车是否在停车牌上停下来。</p></div></p>
+<p class="seg" id="seg-148"><span class="ts">[37:22 – 37:32]</span><div class="seg-body">
+<p class="en">And so they were driving past the school bus and that&#x27;s against the law. And then, you know, so now I, I got a lot of people angry at me for saying, yes, it&#x27;s against the law. And so</p>
+<p class="zh">所以他们开车经过校车，这是违法的。然后，你知道，所以现在我，很多人对我生气，因为我说，是的，这是违法的。所以</p></div></p>
+<p class="seg" id="seg-149"><span class="ts">[37:32 – 37:41]</span><div class="seg-body">
+<p class="en">they should definitely fix it. But I mean, it isn&#x27;t against the law in most countries, by the way, but in the United States and Canada, it is. But anyway, that&#x27;s a whole other</p>
+<p class="zh">他们绝对应该修复它。但我的意思是，顺便说一句，这在大多数国家并不违法，但在美国和加拿大却是违法的。但无论如何，那是另外一回事了</p></div></p>
+<p class="seg" id="seg-150"><span class="ts">[37:41 – 37:49]</span><div class="seg-body">
+<p class="en">issue. And people think I&#x27;m absolutely insane about this, but I like to push the edge and that&#x27;s fine. But they got what they, when they released that, they said,</p>
+<p class="zh">问题。人们认为我对此绝对是疯了，但我喜欢挑战极限，这很好。但他们得到了他们的结果，当他们发布时，他们说，</p></div></p>
+<p class="seg" id="seg-151"><span class="ts">[37:49 – 37:57]</span><div class="seg-body">
+<p class="en">yes, we did go by the school buses. We&#x27;re sorry, very sorry about that. It&#x27;s fixed. Right. Right. That&#x27;s why the idea of these, you know, people say it was a</p>
+<p class="zh">是的，我们确实乘坐校车。我们对此感到抱歉，非常抱歉。它是固定的。正确的。正确的。这就是为什么这些想法，你知道，人们说这是一个</p></div></p>
+<p class="seg" id="seg-152"><span class="ts">[37:57 – 38:06]</span><div class="seg-body">
+<p class="en">recall. So that&#x27;s a recall is a term of art in, in auto regulation law that involved the NHTSA has. It&#x27;s not a recall, it&#x27;s just yet another software update.</p>
+<p class="zh">记起。因此，召回是涉及 NHTSA 的汽车监管法中的一个术语。这不是召回，这只是又一次软件更新。</p></div></p>
+<p class="seg" id="seg-153"><span class="ts">[38:06 – 38:14]</span><div class="seg-body">
+<p class="en">They do software update every week. And this one tricks that bug. But, you know, again, human beings, they&#x27;re not robots that, you know, problems fix.</p>
+<p class="zh">他们每周都会进行软件更新。而这个就可以欺骗这个错误。但是，你知道，人类不是可以解决问题的机器人。</p></div></p>
+<p class="seg" id="seg-154"><span class="ts">[38:15 – 38:23]</span><div class="seg-body">
+<p class="en">By the way, the great thing is that if the other companies like Tesla, well, actually, maybe not like Tesla, we can get into them in a second. But, you know, like the</p>
+<p class="zh">顺便说一句，最棒的是，如果其他公司喜欢特斯拉，实际上，也许不像特斯拉，我们可以立即进入它们。但是，你知道，就像</p></div></p>
+<p class="seg" id="seg-155"><span class="ts">[38:23 – 38:32]</span><div class="seg-body">
+<p class="en">Chinese companies, May Mobility, Zoox that are operating, anytime something happens to Waymo, you can bet they&#x27;re having a meeting saying, would we do that?</p>
+<p class="zh">正在运营的中国公司，May Mobility、Zoox，只要 Waymo 出事，你可以打赌他们会开会说，我们会这么做吗？</p></div></p>
+<p class="seg" id="seg-156"><span class="ts">[38:32 – 38:39]</span><div class="seg-body">
+<p class="en">What would happen with us? And they fix it before it even happens. So that&#x27;s kind of a little bonus for them. So not just the company that has the problem fixes the</p>
+<p class="zh">我们会发生什么？他们甚至在事情发生之前就修复了它。所以这对他们来说是一个小小的奖励。因此，不仅仅是有问题的公司能够解决问题</p></div></p>
+<p class="seg" id="seg-157"><span class="ts">[38:39 – 38:48]</span><div class="seg-body">
+<p class="en">problem. Everyone fixes the problem. Nobody. Now, when I was at Waymo, I wrote an essay this back in like 2012 saying we must never drag somebody.</p>
+<p class="zh">问题。每个人都解决问题。没有人。现在，当我在 Waymo 时，我大约在 2012 年写了一篇文章，说我们绝不能拖累别人。</p></div></p>
+<p class="seg" id="seg-158"><span class="ts">[38:49 – 38:56]</span><div class="seg-body">
+<p class="en">And I put to the case of how the dragging someone under the car would be the public would just never accept it. I knew that I don&#x27;t think it&#x27;s a genius thing to have</p>
+<p class="zh">我举了一个例子，公众永远不会接受将某人拖到车下的情况。我知道我不认为这是一个天才</p></div></p>
+<p class="seg" id="seg-159"><span class="ts">[38:56 – 39:03]</span><div class="seg-body">
+<p class="en">known it. It&#x27;s pretty obvious that that&#x27;s the case. And I asked the cruise people, I mean, did no one say that inside cruise? And they said, no, no, we</p>
+<p class="zh">知道它。很明显，情况就是如此。我问游轮上的人，我的意思是，游轮内没有人这么说吗？他们说，不，不，我们</p></div></p>
+<p class="seg" id="seg-160"><span class="ts">[39:03 – 39:13]</span><div class="seg-body">
+<p class="en">said that just a whole bunch of other things happened so that we didn&#x27;t think we were dragging somebody. But you&#x27;ve got the point is that when cruise dragged</p>
+<p class="zh">说只是发生了一大堆其他事情，所以我们不认为我们在拖累某人。但你要明白的一点是，当巡航拖累时</p></div></p>
+<p class="seg" id="seg-161"><span class="ts">[39:13 – 39:20]</span><div class="seg-body">
+<p class="en">that woman, every other company did a double check to make sure could that happen to us? And so nobody will ever have happened to them. What happened to that cruise?</p>
+<p class="zh">那位女士，其他所有公司都进行了双重检查，以确保这种情况会发生在我们身上吗？所以没有人会发生在他们身上的事情。那次游轮发生了什么？</p></div></p>
+<p class="seg" id="seg-162"><span class="ts">[39:21 – 39:30]</span><div class="seg-body">
+<p class="en">So am I being too hard on Waymo, you think? I mean, like their response, like, I guess I would have liked to have more info, more kind of transparency</p>
+<p class="zh">那么你认为我对 Waymo 是不是太严厉了？我的意思是，就像他们的回应一样，我想我希望获得更多信息，更多的透明度</p></div></p>
+<p class="seg" id="seg-163"><span class="ts">[39:30 – 39:37]</span><div class="seg-body">
+<p class="en">around what happened. I was a little disappointed. I would like them to take a stance, maybe partly because I want to write about it. But I just think in</p>
+<p class="zh">围绕所发生的事情。我有点失望。我希望他们表明立场，部分原因可能是我想写下这件事。但我只是想在</p></div></p>
+<p class="seg" id="seg-164"><span class="ts">[39:37 – 39:47]</span><div class="seg-body">
+<p class="en">general, the problem is I do understand their fear. And I think there is merit to their fear that the public will go nuts with the truth sometimes.</p>
+<p class="zh">一般来说，问题是我确实理解他们的恐惧。我认为他们担心公众有时会对真相感到疯狂是有道理的。</p></div></p>
+<p class="seg" id="seg-165"><span class="ts">[39:47 – 39:56]</span><div class="seg-body">
+<p class="en">Now, I criticize them about the fact that when they did hit this cat in the Mission District in San Francisco, that they left out the fact that there was</p>
+<p class="zh">现在，我批评他们，当他们在旧金山的教会区击中这只猫时，他们忽略了一个事实：</p></div></p>
+<p class="seg" id="seg-166"><span class="ts">[39:56 – 40:04]</span><div class="seg-body">
+<p class="en">a pedestrian who came by and tried to get the cat to come out and stood in front of the car. And as soon as she walked away, that&#x27;s when the car started moving,</p>
+<p class="zh">一位行人路过，试图让猫出来，并站在车前。她刚走开，车子就开始移动，</p></div></p>
+<p class="seg" id="seg-167"><span class="ts">[40:04 – 40:10]</span><div class="seg-body">
+<p class="en">because the car has an absolute no-go when there&#x27;s a human in front of me. But it doesn&#x27;t really understand about a cat that&#x27;s hiding underneath the</p>
+<p class="zh">因为当我前面有人时，汽车绝对不能前进。但它并不能真正理解隐藏在下面的猫</p></div></p>
+<p class="seg" id="seg-168"><span class="ts">[40:10 – 40:16]</span><div class="seg-body">
+<p class="en">car and totally invisible to the sensors. Maybe they could have figured out the cat was still in the car. They couldn&#x27;t see it.</p>
+<p class="zh">汽车并且对传感器完全不可见。也许他们可以发现猫还在车里。他们看不到。</p></div></p>
+<p class="seg" id="seg-169"><span class="ts">[40:17 – 40:26]</span><div class="seg-body">
+<p class="en">Now, one of the things that I said, but Waymo never said this, but looking in the nits of data, Waymo has hit about five cats in 130 million</p>
+<p class="zh">现在，我说过一件事，但 Waymo 从未说过这一点，但从数据的细节来看，Waymo 已经击中了 1.3 亿只猫中的大约 5 只</p></div></p>
+<p class="seg" id="seg-170"><span class="ts">[40:26 – 40:35]</span><div class="seg-body">
+<p class="en">miles. So I went to look up what the number was for humans. And humans in that distance would hit 150 cats. So if you want Waymo off</p>
+<p class="zh">英里。所以我去查了一下人类的数字是多少。人类在这个距离内会击中 150 只猫。所以如果你想关闭 Waymo</p></div></p>
+<p class="seg" id="seg-171"><span class="ts">[40:35 – 40:42]</span><div class="seg-body">
+<p class="en">the roads because it hit this cat, and I&#x27;ve had three cats that were hit by humans. I&#x27;m very, it&#x27;s not that I don&#x27;t feel how terrible</p>
+<p class="zh">因为它撞到了这只猫，我养了三只被人类撞到的猫。我很，不是我不觉得有多可怕</p></div></p>
+<p class="seg" id="seg-172"><span class="ts">[40:42 – 40:49]</span><div class="seg-body">
+<p class="en">it is to lose a pet like that. But if you want Waymo off the roads because they hit that cat, I might say to you, why do you hate cats so</p>
+<p class="zh">就这样失去一只宠物。但如果你因为 Waymo 撞到了那只猫而想让 Waymo 离开道路，我可能会对你说，你为什么这么讨厌猫</p></div></p>
+<p class="seg" id="seg-173"><span class="ts">[40:49 – 40:58]</span><div class="seg-body">
+<p class="en">much? Because all those humans who are riding back in Waymo would switch to being behind the wheel or in Ubers. And unfortunately, a lot of</p>
+<p class="zh">很多？因为所有那些回到 Waymo 的人都会转而开车或乘坐 Uber。不幸的是，很多</p></div></p>
+<p class="seg" id="seg-174"><span class="ts">[40:58 – 41:04]</span><div class="seg-body">
+<p class="en">animals would be struck because of that. And so you&#x27;ve got to put this in perspective. You definitely got to look at it on an absolute</p>
+<p class="zh">动物会因此而受到打击。所以你必须正确看待这一点。你一定要绝对地看待它</p></div></p>
+<p class="seg" id="seg-175"><span class="ts">[41:04 – 41:12]</span><div class="seg-body">
+<p class="en">basis. But to finish my sense, I am going on too long, which is it&#x27;s pretty clear that in spite of those unassailable numbers,</p>
+<p class="zh">基础。但就我的感觉而言，我说得太长了，很明显，尽管有这些无可辩驳的数字，</p></div></p>
+<p class="seg" id="seg-176"><span class="ts">[41:12 – 41:21]</span><div class="seg-body">
+<p class="en">the public&#x27;s reaction is, oh my God, they killed the kitty. And so that gives them the fear of being honest about it because some members of</p>
+<p class="zh">公众的反应是，天啊，他们杀了这只小猫。因此，这让他们害怕诚实地面对这件事，因为一些成员</p></div></p>
+<p class="seg" id="seg-177"><span class="ts">[41:21 – 41:28]</span><div class="seg-body">
+<p class="en">the public would say, these things aren&#x27;t ready for prime time because they&#x27;re not perfect. And if people say that, if, you know, if the DMV</p>
+<p class="zh">公众会说，这些东西还没有准备好迎接黄金时段，因为它们并不完美。如果人们这么说，如果，你知道，如果 DMV</p></div></p>
+<p class="seg" id="seg-178"><span class="ts">[41:28 – 41:34]</span><div class="seg-body">
+<p class="en">bans you from the roads because of a serious mistake, well, then everything is lost and they have a good reason to be afraid of that.</p>
+<p class="zh">因为一个严重的错误而禁止你上路，那么一切就都失去了，他们有充分的理由害怕这一点。</p></div></p>
+<p class="seg" id="seg-179"><span class="ts">[41:34 – 41:42]</span><div class="seg-body">
+<p class="en">Yeah. So final thing, topic that I want to ask you and discuss is the regulation piece of things, because this</p>
+<p class="zh">是的。最后一件事，我想问你并讨论的话题是监管方面的事情，因为这</p></div></p>
+<p class="seg" id="seg-180"><span class="ts">[41:42 – 41:49]</span><div class="seg-body">
+<p class="en">kind of is something that I wrote, I feel like Waymo is kind of asking for regulation here. You know, like I think they really,</p>
+<p class="zh">这是我写的，我觉得 Waymo 是在寻求监管。你知道，就像我认为他们真的，</p></div></p>
+<p class="seg" id="seg-181"><span class="ts">[41:49 – 41:56]</span><div class="seg-body">
+<p class="en">you know, they haven&#x27;t disclosed what their remote operator ratios are. They didn&#x27;t really give a lot of info into what happened here.</p>
+<p class="zh">你知道，他们还没有透露他们的远程操作员比例是多少。他们并没有真正提供有关这里发生的事情的大量信息。</p></div></p>
+<p class="seg" id="seg-182"><span class="ts">[41:56 – 42:03]</span><div class="seg-body">
+<p class="en">Like if I&#x27;m a regulator, like I&#x27;m pretty worried about this situation and future disasters. Like I really want to know that Waymo didn&#x27;t</p>
+<p class="zh">就像我是一名监管者一样，我非常担心这种情况和未来的灾难。就像我真的很想知道 Waymo 没有</p></div></p>
+<p class="seg" id="seg-183"><span class="ts">[42:03 – 42:10]</span><div class="seg-body">
+<p class="en">handle this first one very well. Like I, I guess I want to know like, hey, okay, Waymo says they didn&#x27;t have enough remote operators.</p>
+<p class="zh">很好地处理第一个。就像我一样，我想我想知道，嘿，好吧，Waymo 说他们没有足够的远程操作员。</p></div></p>
+<p class="seg" id="seg-184"><span class="ts">[42:10 – 42:17]</span><div class="seg-body">
+<p class="en">So I want to make sure they have enough next time at a minimum. Not a minimum, but like the most safe has to be one to one, right?</p>
+<p class="zh">所以我想确保他们下次至少有足够的钱。不是最低要求，但最安全的必须是一对一的，对吧？</p></div></p>
+<p class="seg" id="seg-185"><span class="ts">[42:17 – 42:23]</span><div class="seg-body">
+<p class="en">One, one remote operator for one car would be if I&#x27;m a regulator and I wanted the apps, I didn&#x27;t care about the business or</p>
+<p class="zh">一、一辆汽车的一个远程操作员如果我是一名监管者并且我想要这些应用程序，我不关心业务或</p></div></p>
+<p class="seg" id="seg-186"><span class="ts">[42:23 – 42:30]</span><div class="seg-body">
+<p class="en">whatever. I wanted the safest roads possible. But I wanted them to operate. I would say one to one and also kind of nearby. I want these</p>
+<p class="zh">任何。我想要尽可能最安全的道路。但我希望他们能够运作。我会说一对一，也有点接近。我想要这些</p></div></p>
+<p class="seg" id="seg-187"><span class="ts">[42:30 – 42:38]</span><div class="seg-body">
+<p class="en">remote operators nearby in the US licensed because I don&#x27;t love the idea of someone in the Philippines remote operating. They&#x27;ve never</p>
+<p class="zh">美国附近的​​远程操作员获得许可是因为我不喜欢菲律宾人远程操作的想法。他们从来没有</p></div></p>
+<p class="seg" id="seg-188"><span class="ts">[42:38 – 42:45]</span><div class="seg-body">
+<p class="en">driven on the roads of San Francisco. Like it&#x27;s pretty different in one country to another. I&#x27;m starting it if I&#x27;m a regulator and I&#x27;m</p>
+<p class="zh">在旧金山的道路上行驶。就像一个国家的情况与另一个国家的情况有很大不同一样。如果我是监管者，我就会开始这样做</p></div></p>
+<p class="seg" id="seg-189"><span class="ts">[42:45 – 42:51]</span><div class="seg-body">
+<p class="en">pissed at Waymo right now because they didn&#x27;t do a very good job here. I mean, that&#x27;s what I would, that&#x27;s like my starting</p>
+<p class="zh">现在对 Waymo 很生气，因为他们在这里做得不好。我的意思是，这就是我想要的，这就像我的开始</p></div></p>
+<p class="seg" id="seg-190"><span class="ts">[42:51 – 42:56]</span><div class="seg-body">
+<p class="en">negotiation point, basically like, hey, Waymo, this is what I want. I don&#x27;t know. What do you think about from a regulatory</p>
+<p class="zh">谈判点，基本上就像，嘿，Waymo，这就是我想要的。我不知道。您对监管有何看法</p></div></p>
+<p class="seg" id="seg-191"><span class="ts">[42:56 – 43:03]</span><div class="seg-body">
+<p class="en">perspective? Well, I admit I have a view on regulation that I don&#x27;t think is mainstream, but I think it&#x27;s right, of course. And</p>
+<p class="zh">看法？嗯，我承认我对监管有一个我认为不是主流的观点，但我认为它当然是正确的。和</p></div></p>
+<p class="seg" id="seg-192"><span class="ts">[43:03 – 43:09]</span><div class="seg-body">
+<p class="en">I think that regulation should start for, always start from goals. What&#x27;s our goal? Right. So we start with the goal of, we want to improve road</p>
+<p class="zh">我认为监管应该从目标出发，永远从目标出发。我们的目标是什么？正确的。所以我们从目标开始，我们要改善道路</p></div></p>
+<p class="seg" id="seg-193"><span class="ts">[43:09 – 43:15]</span><div class="seg-body">
+<p class="en">safety. We want to improve throughput on the roads. You know, we want pleasant streets, all of the goals that we have for public</p>
+<p class="zh">安全。我们希望提高道路的吞吐量。你知道，我们想要舒适的街道，我们为公众设定的所有目标</p></div></p>
+<p class="seg" id="seg-194"><span class="ts">[43:15 – 43:23]</span><div class="seg-body">
+<p class="en">goods and missions and access and all the things we list those goals. And then we say, how do we make the companies they&#x27;re going</p>
+<p class="zh">货物、使命、访问以及我们列出这些目标的所有内容。然后我们说，我们如何让他们要去的公司</p></div></p>
+<p class="seg" id="seg-195"><span class="ts">[43:23 – 43:30]</span><div class="seg-body">
+<p class="en">to play in this aligned with these goals? How do we make them very afraid not to reach these goals and very much want them? And that&#x27;s</p>
+<p class="zh">在此方面发挥与这些目标一致的作用？我们如何让他们非常害怕无法实现这些目标并且非常想要它们？那就是</p></div></p>
+<p class="seg" id="seg-196"><span class="ts">[43:30 – 43:38]</span><div class="seg-body">
+<p class="en">not enough. This is not a complete solution. But this says that focus mostly on that. And only if you can&#x27;t make that work, do you actually tell</p>
+<p class="zh">不够。这不是一个完整的解决方案。但这表明主要关注于此。只有当你无法做到这一点时，你才会真正告诉</p></div></p>
+<p class="seg" id="seg-197"><span class="ts">[43:38 – 43:46]</span><div class="seg-body">
+<p class="en">them how to do it, right? Because you suck at figuring out how to do it. Waymo didn&#x27;t deliberately, like if you found out that Waymo</p>
+<p class="zh">他们该怎么做呢？因为你不知道如何去做。 Waymo 不是故意的，就像你发现 Waymo</p></div></p>
+<p class="seg" id="seg-198"><span class="ts">[43:46 – 43:52]</span><div class="seg-body">
+<p class="en">had, in order to save money, not had enough remote operators, that they had a budget meeting and they said, oh, well, too many</p>
+<p class="zh">为了省钱，没有足够的远程操作员，他们召开了一次预算会议，他们说，哦，好吧，太多了</p></div></p>
+<p class="seg" id="seg-199"><span class="ts">[43:52 – 43:58]</span><div class="seg-body">
+<p class="en">remote, that many remote operators would cost us way too much. I don&#x27;t, I don&#x27;t believe that happened at all. I think they did</p>
+<p class="zh">远程，许多远程操作员会让我们花费太多。我不，我根本不相信这件事发生过。我认为他们做到了</p></div></p>
+<p class="seg" id="seg-200"><span class="ts">[43:58 – 44:06]</span><div class="seg-body">
+<p class="en">the best job they could at figuring out how many they needed and they were wrong. But I have no reason to believe regulators would do any</p>
+<p class="zh">他们能做的最好的工作就是弄清楚他们需要多少，但他们错了。但我没有理由相信监管机构会采取任何行动</p></div></p>
+<p class="seg" id="seg-201"><span class="ts">[44:06 – 44:13]</span><div class="seg-body">
+<p class="en">better a job at figuring out that number, other than to deliberately make it high because they don&#x27;t care about cost at all. I don&#x27;t think</p>
+<p class="zh">更好地计算出这个数字，而不是故意提高这个数字，因为他们根本不关心成本。我不认为</p></div></p>
+<p class="seg" id="seg-202"><span class="ts">[44:13 – 44:21]</span><div class="seg-body">
+<p class="en">Waymo cares about cost at all. None of the players today care about cost. They care about a path towards a profitable margin, but</p>
+<p class="zh">Waymo 非常关心成本。如今，没有一个玩家关心成本。他们关心的是实现利润率的途径，但是</p></div></p>
+<p class="seg" id="seg-203"><span class="ts">[44:21 – 44:28]</span><div class="seg-body">
+<p class="en">they don&#x27;t care that they get that today. Now in China, the regulations do actually mandate how many remote operators you have per</p>
+<p class="zh">他们不在乎今天是否得到了这个。现在在中国，法规确实规定了每个人拥有多少远程操作员</p></div></p>
+<p class="seg" id="seg-204"><span class="ts">[44:28 – 44:35]</span><div class="seg-body">
+<p class="en">vehicle. And they, when you get your first permit in China, you get one-to-one is written on your permit. And I think I was talking to Baidu</p>
+<p class="zh">车辆。他们，当你在中国获得第一个许可证时，你的许可证上会写着一对一的信息。我想我是在和百度说话</p></div></p>
+<p class="seg" id="seg-205"><span class="ts">[44:35 – 44:40]</span><div class="seg-body">
+<p class="en">about this. They don&#x27;t want to say what they have because, you know, and they think about China&#x27;s, you can, your permits can be secret</p>
+<p class="zh">关于这个。他们不想透露他们拥有什么，因为，你知道，他们想到中国的，你可以，你的许可证可以是秘密的</p></div></p>
+<p class="seg" id="seg-206"><span class="ts">[44:40 – 44:46]</span><div class="seg-body">
+<p class="en">and stuff. It&#x27;s a different kind of world. But I think they&#x27;re sort of at five to one or something I think is where they, and Baidu</p>
+<p class="zh">和东西。这是一个不同的世界。但我认为他们的比例是五比一或者我认为他们的比例是这样的，而百度</p></div></p>
+<p class="seg" id="seg-207"><span class="ts">[44:46 – 44:52]</span><div class="seg-body">
+<p class="en">Apollo is the best performing of the Chinese operators. So they&#x27;re the, but I don&#x27;t think we want Chinese style</p>
+<p class="zh">Apollo是中国运营商中表现最好的。所以他们是，但我不认为我们想要中国风格</p></div></p>
+<p class="seg" id="seg-208"><span class="ts">[44:52 – 45:00]</span><div class="seg-body">
+<p class="en">regulation. I want us to find, what I want to know is, are these companies motivated by the public goals that we have, you know, safety</p>
+<p class="zh">规定。我希望我们找到，我想知道的是，这些公司是否受到我们的公共目标的激励，你知道，安全</p></div></p>
+<p class="seg" id="seg-209"><span class="ts">[45:00 – 45:07]</span><div class="seg-body">
+<p class="en">and road citizenship and all these other things? Is there any reason, anything that would incentivize them to go other than that, let&#x27;s</p>
+<p class="zh">和道路公民身份以及所有其他事情？除此之外，还有什么理由或任何事情可以激励他们去吗？</p></div></p>
+<p class="seg" id="seg-210"><span class="ts">[45:07 – 45:14]</span><div class="seg-body">
+<p class="en">fix that. And then I would ask, not what mistakes are they making or have they made? Are they improving? Are they going to really be</p>
+<p class="zh">解决这个问题。然后我会问，不是他们正在犯或已经犯了什么错误？他们有进步吗？他们真的会成为</p></div></p>
+<p class="seg" id="seg-211"><span class="ts">[45:14 – 45:23]</span><div class="seg-body">
+<p class="en">doing, you know, best efforts to be better and put us on that upward path? And otherwise, I would mostly let them figure it out because</p>
+<p class="zh">你知道，尽最大努力变得更好，让我们走上向上的道路吗？否则，我主要会让他们弄清楚，因为</p></div></p>
+<p class="seg" id="seg-212"><span class="ts">[45:23 – 45:31]</span><div class="seg-body">
+<p class="en">they are still figuring it out. And I can&#x27;t imagine the regulators making the right decisions. So that&#x27;s not something regulators agree</p>
+<p class="zh">他们还在想办法。我无法想象监管机构会做出正确的决定。所以监管机构不同意这一点</p></div></p>
+<p class="seg" id="seg-213"><span class="ts">[45:31 – 45:39]</span><div class="seg-body">
+<p class="en">with when I say it. Yeah. I mean, I think there was a new law that&#x27;s about to go into effect on food delivery. If any piece</p>
+<p class="zh">当我说出来的时候。是的。我的意思是，我认为有一项关于食品配送的新法律即将生效。如果有一块</p></div></p>
+<p class="seg" id="seg-214"><span class="ts">[45:39 – 45:45]</span><div class="seg-body">
+<p class="en">or part of the order is wrong, you know, get a full refund, which has got to be one of the stupidest, you know, kind of good at heart, right?</p>
+<p class="zh">或者部分订单是错误的，你知道，获得全额退款，这一定是最愚蠢的行为之一，你知道，心地善良，对吧？</p></div></p>
+<p class="seg" id="seg-215"><span class="ts">[45:45 – 45:49]</span><div class="seg-body">
+<p class="en">But one of the stupidest laws I&#x27;ve heard from regulators lately, because now a bunch of people are going to fraudulently</p>
+<p class="zh">但这是我最近从监管机构听到的最愚蠢的法律之一，因为现在有一群人要欺诈</p></div></p>
+<p class="seg" id="seg-216"><span class="ts">[45:50 – 45:56]</span><div class="seg-body">
+<p class="en">report, oh, my fries were missing or my ketchup, you know, to try and get the full refund. Well, I&#x27;ve heard a lot of breach drivers do eat</p>
+<p class="zh">报告，哦，我的薯条不见了，或者我的番茄酱不见了，你知道，尝试获得全额退款。嗯，我听说很多违规司机都吃东西</p></div></p>
+<p class="seg" id="seg-217"><span class="ts">[45:56 – 46:01]</span><div class="seg-body">
+<p class="en">your fries. I mean, they do. But at this at the end of the day, right, it&#x27;s a product. If you&#x27;re enjoying the product, use</p>
+<p class="zh">你的薯条。我的意思是，他们确实这么做了。但归根结底，它是一种产品。如果您喜欢该产品，请使用</p></div></p>
+<p class="seg" id="seg-218"><span class="ts">[46:01 – 46:08]</span><div class="seg-body">
+<p class="en">it. If you&#x27;re not, don&#x27;t I don&#x27;t really know why you need regulators in that case. In this case, I think it&#x27;s pretty I had someone ask me, why</p>
+<p class="zh">它。如果不是，我真的不知道为什么在这种情况下需要监管机构。在这种情况下，我认为有人问我为什么很漂亮</p></div></p>
+<p class="seg" id="seg-219"><span class="ts">[46:08 – 46:12]</span><div class="seg-body">
+<p class="en">was this even such a big issue? And I said, I don&#x27;t know. I mean, I think it&#x27;s kind of obvious, right? If there&#x27;s a bunch of</p>
+<p class="zh">这还是一个大问题吗？我说，我不知道。我的意思是，我认为这很明显，对吧？如果有一堆</p></div></p>
+<p class="seg" id="seg-220"><span class="ts">[46:12 – 46:19]</span><div class="seg-body">
+<p class="en">Waymo stuck in the road and a natural disaster or power outage, like not a good thing. And then imagine if there&#x27;s thousands or tens of</p>
+<p class="zh">Waymo 陷入困境与自然灾害或停电一样，都不是一件好事。然后想象一下如果有数千或数十个</p></div></p>
+<p class="seg" id="seg-221"><span class="ts">[46:19 – 46:26]</span><div class="seg-body">
+<p class="en">thousands of these, right? So if you can conclude that Waymo is not properly motivated to handle disasters like</p>
+<p class="zh">数千个这样的，对吗？因此，如果您可以得出结论，Waymo 没有适当的动力来处理类似的灾难</p></div></p>
+<p class="seg" id="seg-222"><span class="ts">[46:26 – 46:34]</span><div class="seg-body">
+<p class="en">outages, then it makes sense for regulation to come in and say, let us change your motivations. Let&#x27;s make, and maybe let&#x27;s even get involved</p>
+<p class="zh">断电，那么监管机构介入并说，让我们改变你的动机是有意义的。让我们一起创造，也许我们甚至可以参与其中</p></div></p>
+<p class="seg" id="seg-223"><span class="ts">[46:34 – 46:41]</span><div class="seg-body">
+<p class="en">in how you were in your business. Although again, I don&#x27;t think this was enough of a wake up call for Waymo that if I was a city</p>
+<p class="zh">您的业​​务表现。不过，我认为这还不足以给 Waymo 敲响警钟，如果我是一座城市</p></div></p>
+<p class="seg" id="seg-224"><span class="ts">[46:41 – 46:49]</span><div class="seg-body">
+<p class="en">regulator, I would sort of just trust them to do the right thing the next time around. I might ask them, please tell me what you&#x27;ve</p>
+<p class="zh">监管机构，我只是相信他们下次会做正确的事情。我可能会问他们，请告诉我你有什么</p></div></p>
+<p class="seg" id="seg-225"><span class="ts">[46:49 – 47:00]</span><div class="seg-body">
+<p class="en">done. So you decide what to do. You tell us, how do you know this won&#x27;t happen again? And if Waymo is honest about that,</p>
+<p class="zh">完毕。所以你决定要做什么。你告诉我们，你怎么知道这种事不会再发生？如果 Waymo 诚实地说，</p></div></p>
+<p class="seg" id="seg-226"><span class="ts">[47:00 – 47:05]</span><div class="seg-body">
+<p class="en">they&#x27;ll say, we can&#x27;t absolutely be sure this won&#x27;t happen again. There&#x27;s going to be something else have come up that nothing happened,</p>
+<p class="zh">他们会说，我们不能绝对确定这种情况不会再次发生。还会有一些什么都没有发生的事情发生，</p></div></p>
+<p class="seg" id="seg-227"><span class="ts">[47:05 – 47:12]</span><div class="seg-body">
+<p class="en">but we&#x27;re going to do the best job. It may be not the best job that anyone can do, but we&#x27;re going to do a grade A job at figuring this</p>
+<p class="zh">但我们会尽力做到最好。这可能不是任何人都能做的最好的工作，但我们将在解决这个问题上做一流的工作</p></div></p>
+<p class="seg" id="seg-228"><span class="ts">[47:12 – 47:19]</span><div class="seg-body">
+<p class="en">out. And you telling us how to, cause I&#x27;ll tell you something. Unfortunately, the regulation attempts so far have not been</p>
+<p class="zh">出去。你告诉我们如何做，因为我会告诉你一些事情。遗憾的是，迄今为止监管尝试尚未得到落实</p></div></p>
+<p class="seg" id="seg-229"><span class="ts">[47:19 – 47:27]</span><div class="seg-body">
+<p class="en">well crafted or successful. They put in a requirement that disengagement be reported and that didn&#x27;t work at all. Right. Everybody just figured</p>
+<p class="zh">精心设计或成功。他们提出了报告脱离接触的要求，但这根本不起作用。正确的。大家才想到</p></div></p>
+<p class="seg" id="seg-230"><span class="ts">[47:27 – 47:34]</span><div class="seg-body">
+<p class="en">out what they would call a disengagement. And we got numbers we couldn&#x27;t compare. We got, and it&#x27;s a requirement that you give all the details</p>
+<p class="zh">他们称之为脱离接触。我们得到了无法比较的数字。我们得到了，并且要求您提供所有详细信息</p></div></p>
+<p class="seg" id="seg-231"><span class="ts">[47:34 – 47:42]</span><div class="seg-body">
+<p class="en">of any incident you&#x27;re in. It&#x27;s very useful, but Tesla just draws a black box around anything interesting. It&#x27;s and it&#x27;s not, you can&#x27;t</p>
+<p class="zh">这非常有用，但特斯拉只是在任何有趣的事情周围画了一个黑框。是又不是，你不能</p></div></p>
+<p class="seg" id="seg-232"><span class="ts">[47:42 – 47:50]</span><div class="seg-body">
+<p class="en">break through it like the Epstein files. Right. So although someone blamed Elon Musk for the fact that the Epstein files redactions, you</p>
+<p class="zh">像爱泼斯坦档案一样突破它。正确的。因此，尽管有人指责埃隆·马斯克（Elon Musk）对爱泼斯坦进行了修改，但你</p></div></p>
+<p class="seg" id="seg-233"><span class="ts">[47:50 – 47:58]</span><div class="seg-body">
+<p class="en">could undo them because Elon cut the budget for them to buy the pro version of an Adobe Acrobat. And so they have the cheap version where</p>
+<p class="zh">可能会撤销它们，因为 Elon 削减了他们购买 Adob​​e Acrobat 专业版的预算。所以他们有便宜的版本</p></div></p>
+<p class="seg" id="seg-234"><span class="ts">[47:58 – 48:07]</span><div class="seg-body">
+<p class="en">you can&#x27;t fully redact. Anyway, so it&#x27;s, it&#x27;s secretly Elon&#x27;s fault that that happened. However, that&#x27;s the track record is poor here. And I</p>
+<p class="zh">你无法完全编辑。不管怎样，事情就是这样，这件事的发生私下都是埃隆的错。然而，这里的记录很差。而我</p></div></p>
+<p class="seg" id="seg-235"><span class="ts">[48:07 – 48:15]</span><div class="seg-body">
+<p class="en">think you, you want to work together with the teams. I definitely think you start with transparency requirements. Right. And, but it&#x27;s</p>
+<p class="zh">想想你，你想与团队一起工作。我绝对认为你从透明度要求开始。正确的。而且，但是它是</p></div></p>
+<p class="seg" id="seg-236"><span class="ts">[48:15 – 48:22]</span><div class="seg-body">
+<p class="en">actually a very tough job to write a transparency requirement that will actually work. I have proposed a system that maybe could</p>
+<p class="zh">实际上，编写切实有效的透明度要求是一项非常艰巨的工作。我提出了一个系统，也许可以</p></div></p>
+<p class="seg" id="seg-237"><span class="ts">[48:22 – 48:28]</span><div class="seg-body">
+<p class="en">work, although it&#x27;s only for incidents, it&#x27;s not for things like I got stuck in the intersection. Well, it&#x27;s hard. And</p>
+<p class="zh">工作，虽然只是针对突发事件，但不是针对我被困在路口这样的事情。嗯，这很难。和</p></div></p>
+<p class="seg" id="seg-238"><span class="ts">[48:28 – 48:35]</span><div class="seg-body">
+<p class="en">that&#x27;s where I think there&#x27;s sort of more binary situations, right? Where like I killed someone, I hit someone, but what about these,</p>
+<p class="zh">我认为这就是更多二元情况的地方，对吗？就像我杀了人，我打了人，但是这些呢，</p></div></p>
+<p class="seg" id="seg-239"><span class="ts">[48:35 – 48:40]</span><div class="seg-body">
+<p class="en">like, I&#x27;m blocking a fire truck situations, right? Like, how do you track that? Is it through three, one, one calls? Like, I think</p>
+<p class="zh">就像，我正在阻止消防车的情况，对吗？比如，你如何追踪它？是通过三一一电话吗？就像，我认为</p></div></p>
+<p class="seg" id="seg-240"><span class="ts">[48:40 – 48:46]</span><div class="seg-body">
+<p class="en">that&#x27;s where Waymo really needs to, you know, kind of have a little more or a lot more transparency. So I actually like this, you</p>
+<p class="zh">你知道，这就是 Waymo 真正需要增加一点或更多透明度的地方。所以我其实很喜欢这个，你</p></div></p>
+<p class="seg" id="seg-241"><span class="ts">[48:46 – 48:51]</span><div class="seg-body">
+<p class="en">know, kind of ending on a positive note. I don&#x27;t think we need to come after Waymo with the regulatory pitch forks just yet, but I do</p>
+<p class="zh">知道，有点积极的结局。我认为我们还不需要用监管叉子来追赶 Waymo，但我确实这样做</p></div></p>
+<p class="seg" id="seg-242"><span class="ts">[48:51 – 48:56]</span><div class="seg-body">
+<p class="en">think it is important. Okay. They, we gave them a few days. They had this blog post after the incident. I don&#x27;t know when a reasonable</p>
+<p class="zh">认为这很重要。好的。他们，我们给了他们几天的时间。事件发生后，他们发表了这篇博文。不知道什么时候合理</p></div></p>
+<p class="seg" id="seg-243"><span class="ts">[48:56 – 49:02]</span><div class="seg-body">
+<p class="en">timeframe, maybe a month, I&#x27;d say a month is probably plenty of time. This should be a pretty important issue that they should, you</p>
+<p class="zh">时间框架，也许一个月，我想说一个月可能足够了。这应该是一个非常重要的问题，他们应该，你</p></div></p>
+<p class="seg" id="seg-244"><span class="ts">[49:02 – 49:08]</span><div class="seg-body">
+<p class="en">know, kind of release some more data. They should release some more finding what, what they&#x27;re going to do to prevent this. And if</p>
+<p class="zh">知道，发布更多数据。他们应该发布更多信息来了解他们将采取什么措施来防止这种情况发生。如果</p></div></p>
+<p class="seg" id="seg-245"><span class="ts">[49:08 – 49:16]</span><div class="seg-body">
+<p class="en">I&#x27;m a city regulator, I&#x27;m emailing them right now and say, Hey, let me know when you&#x27;re going to do this. Otherwise, I mean, they probably</p>
+<p class="zh">我是一名城市监管者，我现在正在给他们发电子邮件说，嘿，让我知道你什么时候要做这件事。否则，我的意思是，他们可能</p></div></p>
+<p class="seg" id="seg-246"><span class="ts">[49:16 – 49:22]</span><div class="seg-body">
+<p class="en">will build an emergency preparedness report. They have these big reports about their, you know, interface with emergency responders and</p>
+<p class="zh">将建立一份应急准备报告。他们有这些关于他们与紧急响应人员的接口的重要报告</p></div></p>
+<p class="seg" id="seg-247"><span class="ts">[49:22 – 49:29]</span><div class="seg-body">
+<p class="en">everything else. But let&#x27;s just, let&#x27;s be clear by the way, when we said this at the beginning of the list, nobody was in danger here. Okay. And,</p>
+<p class="zh">其他一切。但顺便说一句，当我们在清单开头这么说时，这里没有人处于危险之中。好的。和，</p></div></p>
+<p class="seg" id="seg-248"><span class="ts">[49:29 – 49:35]</span><div class="seg-body">
+<p class="en">you know, some traffic that was already snarled got a little more snarled in the grand scale of disasters. This one&#x27;s</p>
+<p class="zh">你知道，一些已经陷入困境的交通在大规模灾难中变得更加混乱。这个的</p></div></p>
+<p class="seg" id="seg-249"><span class="ts">[49:35 – 49:42]</span><div class="seg-body">
+<p class="en">pretty milk toast. So right. But I think if it could have easily been an earthquake, right? An earthquake could be coming the</p>
+<p class="zh">漂亮的牛奶吐司。太对了。但我想如果这很容易是一场地震，对吧？地震可能即将来临</p></div></p>
+<p class="seg" id="seg-250"><span class="ts">[49:42 – 49:50]</span><div class="seg-body">
+<p class="en">next time. And in that situation, I think, you know, maybe actual lives are on the, on the line, right? So they should, I think,</p>
+<p class="zh">下次。在这种情况下，我想，你知道，也许现实生活就岌岌可危了，对吧？所以我认为他们应该</p></div></p>
+<p class="seg" id="seg-251"><span class="ts">[49:50 – 49:58]</span><div class="seg-body">
+<p class="en">book, I think making a statement about what they&#x27;ve done for emergency preparedness makes perfect sense. It makes sense to demand</p>
+<p class="zh">书中，我认为对他们为应急准备所做的工作进行陈述是非常有意义的。要求有意义</p></div></p>
+<p class="seg" id="seg-252"><span class="ts">[49:58 – 50:03]</span><div class="seg-body">
+<p class="en">that. Yeah. If they released a report that&#x27;s like, Hey, here&#x27;s the top five edge cases, failure modes that we are</p>
+<p class="zh">那。是的。如果他们发布的报告类似于，嘿，这是我们所面临的前五种边缘情况和故障模式</p></div></p>
+<p class="seg" id="seg-253"><span class="ts">[50:03 – 50:09]</span><div class="seg-body">
+<p class="en">preparing for in a situation of an earthquake. Here&#x27;s what we are expecting to happen. And here&#x27;s how we are planning on</p>
+<p class="zh">为地震情况做好准备。这就是我们期望发生的情况。这就是我们的计划</p></div></p>
+<p class="seg" id="seg-254"><span class="ts">[50:09 – 50:15]</span><div class="seg-body">
+<p class="en">handling it. They don&#x27;t need to release, you know, all their private data around remote operator ratios. But, you know, like you said,</p>
+<p class="zh">处理它。你知道，他们不需要发布有关远程操作员比率的所有私人数据。但是，你知道，就像你说的，</p></div></p>
+<p class="seg" id="seg-255"><span class="ts">[50:15 – 50:20]</span><div class="seg-body">
+<p class="en">they say, Hey, we normally have a certain ratio of remote operators. And in the event of an earthquake, we have the</p>
+<p class="zh">他们说，嘿，我们通常有一定比例的远程操作员。如果发生地震，我们有</p></div></p>
+<p class="seg" id="seg-256"><span class="ts">[50:20 – 50:27]</span><div class="seg-body">
+<p class="en">ability to draw in employees, our secondary workforce, off shift, whatever. And then people can kind of publicly poke holes in</p>
+<p class="zh">吸引员工、我们的辅助劳动力、下班人员等等的能力。然后人们就可以公开地找出漏洞</p></div></p>
+<p class="seg" id="seg-257"><span class="ts">[50:27 – 50:34]</span><div class="seg-body">
+<p class="en">that before it happens. I like that. And, and even the regulators can have opinions on it. I don&#x27;t think it&#x27;s time for</p>
+<p class="zh">在它发生之前。我喜欢这样。而且，甚至监管机构也可以对此发表意见。我认为现在还不是时候</p></div></p>
+<p class="seg" id="seg-258"><span class="ts">[50:34 – 50:41]</span><div class="seg-body">
+<p class="en">them to like set minimum bars and stuff yet. But let&#x27;s, let&#x27;s also put another thing in perspective. All right. So yes, these</p>
+<p class="zh">他们还喜欢设定最低限度之类的东西。但让我们也换个角度来看待另一件事。好的。所以是的，这些</p></div></p>
+<p class="seg" id="seg-259"><span class="ts">[50:41 – 50:47]</span><div class="seg-body">
+<p class="en">companies all want to make a lot of money and they have profit motive and we have to, you know, bend it back towards the public good</p>
+<p class="zh">公司都想赚很多钱，他们有盈利动机，我们必须，你知道，将其重新用于公共利益</p></div></p>
+<p class="seg" id="seg-260"><span class="ts">[50:47 – 50:54]</span><div class="seg-body">
+<p class="en">from time to time. And that&#x27;s the role of regulation to figure out what those goals are. But Waymo says they&#x27;re having 1/10 the injuries of</p>
+<p class="zh">时。这就是监管的作用，以确定这些目标是什么。但 Waymo 表示，他们受伤的人数只有 1/10</p></div></p>
+<p class="seg" id="seg-261"><span class="ts">[50:54 – 51:00]</span><div class="seg-body">
+<p class="en">ordinary human driving. Yeah. Which is that they&#x27;ve already reached a very important bar and it&#x27;s a great bar to reach. So as</p>
+<p class="zh">普通人类驾驶。是的。也就是说，他们已经达到了一个非常重要的标准，而且是一个非常值得达到的标准。所以作为</p></div></p>
+<p class="seg" id="seg-262"><span class="ts">[51:00 – 51:09]</span><div class="seg-body">
+<p class="en">Waymo scales and starts deploying a lot of things, we&#x27;re talking about a pretty serious decrease in the number of deaths and injuries and</p>
+<p class="zh">Waymo 扩展并开始部署很多东西，我们正在谈论死亡和受伤人数的相当严重减少，</p></div></p>
+<p class="seg" id="seg-263"><span class="ts">[51:09 – 51:17]</span><div class="seg-body">
+<p class="en">property damage. And I&#x27;m not talking about small numbers. I&#x27;m talking over years and across the world, millions of lives, you know, billions</p>
+<p class="zh">财产损失。我说的不是小数字。我说的是多年来，全世界有数百万人的生命，你知道，数十亿的生命</p></div></p>
+<p class="seg" id="seg-264"><span class="ts">[51:17 – 51:25]</span><div class="seg-body">
+<p class="en">of injuries and trillions of dollars. You start talking about a trillion here, a trillion there, you&#x27;re starting to talk about real money to</p>
+<p class="zh">伤害和数万亿美元。你开始在这里谈论一万亿，在那里谈论一万亿，你开始谈论真正的钱</p></div></p>
+<p class="seg" id="seg-265"><span class="ts">[51:25 – 51:34]</span><div class="seg-body">
+<p class="en">paraphrase the old joke about a billion. Now, the more we delay this, and this is a chilling number, but because these million people who will</p>
+<p class="zh">解释一下关于十亿的老笑话。现在，我们越拖延，这是一个令人毛骨悚然的数字，但因为这百万人将</p></div></p>
+<p class="seg" id="seg-266"><span class="ts">[51:34 – 51:39]</span><div class="seg-body">
+<p class="en">die, if we don&#x27;t deploy robo taxis, they&#x27;re not going to be killed by anyone we&#x27;re going to see, but they&#x27;re just going to be killed by</p>
+<p class="zh">死吧，如果我们不部署机器人出租车，他们不会被我们将要看到的任何人杀死，但他们只会被</p></div></p>
+<p class="seg" id="seg-267"><span class="ts">[51:39 – 51:45]</span><div class="seg-body">
+<p class="en">drunk humans, right? We don&#x27;t like being killed by robots. We&#x27;d much rather be killed by drunks. We&#x27;re kind of funny that way. That&#x27;s</p>
+<p class="zh">喝醉酒的人类，对吗？我们不喜欢被机器人杀死。我们宁愿被醉汉杀死。我们这样说有点好笑。那是</p></div></p>
+<p class="seg" id="seg-268"><span class="ts">[51:45 – 51:52]</span><div class="seg-body">
+<p class="en">what&#x27;s going to happen. So we won&#x27;t know who to blame. We won&#x27;t say, okay, oh, you died because they didn&#x27;t let these robo taxis out on the road.</p>
+<p class="zh">将会发生什么。所以我们不知道该责怪谁。我们不会说，好吧，哦，你死了，因为他们没有让这些机器人出租车上路。</p></div></p>
+<p class="seg" id="seg-269"><span class="ts">[51:52 – 51:59]</span><div class="seg-body">
+<p class="en">You declared they were not ready for prime time. You wanted them to be more cautious. I think in order to get them to be cautious, they should</p>
+<p class="zh">你宣称他们还没有准备好迎接黄金时段。你希望他们更加谨慎。我认为为了让他们保持谨慎，他们应该</p></div></p>
+<p class="seg" id="seg-270"><span class="ts">[51:59 – 52:06]</span><div class="seg-body">
+<p class="en">be cautious. And, you know, oh no, a few people got blocked on the road. Well, you know who blocks way more fire trucks than way</p>
+<p class="zh">一定要小心。而且，你知道，哦不，有几个人在路上被堵住了。好吧，你知道谁阻挡的消防车比谁阻挡的多得多</p></div></p>
+<p class="seg" id="seg-271"><span class="ts">[52:06 – 52:13]</span><div class="seg-body">
+<p class="en">more people? Well, I don&#x27;t know, do they? I mean, people, I think in that situation pretty, no, people are in the way to get out of</p>
+<p class="zh">更多人？嗯，我不知道，是吗？我的意思是，人们，我认为在这种情况下，相当不错，不，人们阻碍了逃脱</p></div></p>
+<p class="seg" id="seg-272"><span class="ts">[52:13 – 52:19]</span><div class="seg-body">
+<p class="en">the way all the time. Yeah, they know to get out. Oh, come on. You never, you&#x27;ve never been driving. You&#x27;ve had a fire truck come behind</p>
+<p class="zh">一直这样。是的，他们知道要出去。哦，来吧。你从来没有，你从来没有开车过。你身后有一辆消防车</p></div></p>
+<p class="seg" id="seg-273"><span class="ts">[52:19 – 52:25]</span><div class="seg-body">
+<p class="en">you and everybody pulled over, did they? I mean, I mean, they don&#x27;t block them in the same way where it&#x27;s literally stuck there for</p>
+<p class="zh">你和大家都靠边停车了，是吗？我的意思是，我的意思是，他们不会以同样的方式阻止它们，就像它实际上卡在那里一样</p></div></p>
+<p class="seg" id="seg-274"><span class="ts">[52:25 – 52:30]</span><div class="seg-body">
+<p class="en">15 seconds, right? Maybe they block them for a second or two or, you know, here and there. But I get your larger point that obviously, yeah,</p>
+<p class="zh">15秒，对吗？也许他们会阻止他们一两秒钟，或者，你知道，在这里或那里。但我明白你更重要的观点，显然，是的，</p></div></p>
+<p class="seg" id="seg-275"><span class="ts">[52:30 – 52:36]</span><div class="seg-body">
+<p class="en">the, there&#x27;s a lot of potential here. I think that&#x27;s why you and I are both so excited and bullish on the industry. So it is</p>
+<p class="zh">这里有很大的潜力。我想这就是为什么你和我都对这个行业如此兴奋和乐观。原来如此</p></div></p>
+<p class="seg" id="seg-276"><span class="ts">[52:36 – 52:43]</span><div class="seg-body">
+<p class="en">important to keep that potential in mind. And that&#x27;s sort of where I like to, Hey, the regulatory approach, a little more hands off.</p>
+<p class="zh">牢记这种潜力很重要。这就是我喜欢的地方，嘿，监管方法，放手一点。</p></div></p>
+<p class="seg" id="seg-277"><span class="ts">[52:43 – 52:50]</span><div class="seg-body">
+<p class="en">Waymo has a lot of the right incentives on their own. So let&#x27;s give them a little time and let&#x27;s, you know, ask them for some more</p>
+<p class="zh">Waymo 本身就有很多正确的激励措施。所以，让我们给他们一点时间，让我们，你知道，要求他们再给一些时间</p></div></p>
+<p class="seg" id="seg-278"><span class="ts">[52:50 – 52:58]</span><div class="seg-body">
+<p class="en">information, some more transparency and see what they do. But, but keep it in perspective, right? And don&#x27;t don&#x27;t, because we have a natural desire as</p>
+<p class="zh">信息，更多透明度，看看他们做了什么。但是，但是要保持正确的态度，对吗？不要不要，因为我们有一个自然的愿望</p></div></p>
+<p class="seg" id="seg-279"><span class="ts">[52:58 – 53:05]</span><div class="seg-body">
+<p class="en">human beings to focus on incidents, excuse me, especially tragedies. And it&#x27;s, it&#x27;s just the way we&#x27;re built and we&#x27;re probably not going to</p>
+<p class="zh">人类要关注事件，对不起，尤其是悲剧。这就是我们的构建方式，我们可能不会</p></div></p>
+<p class="seg" id="seg-280"><span class="ts">[53:05 – 53:12]</span><div class="seg-body">
+<p class="en">change that. But policymakers have a job to look at the big picture, the statistics, they have to look at the future that</p>
+<p class="zh">改变这一点。但政策制定者有责任着眼于大局、统计数据，他们必须着眼于未来</p></div></p>
+<p class="seg" id="seg-281"><span class="ts">[53:12 – 53:20]</span><div class="seg-body">
+<p class="en">they&#x27;re trying to build. And they should not say, Oh my God, they gummed up traffic. So let&#x27;s get them off the roads or let&#x27;s make it much</p>
+<p class="zh">他们正在努力建造。他们不应该说，天哪，他们堵塞了交通。所以让我们让它们离开道路或者让它们变得更多</p></div></p>
+<p class="seg" id="seg-282"><span class="ts">[53:20 – 53:27]</span><div class="seg-body">
+<p class="en">harder for them to do their job when the real goal is so much bigger than a bit of gummed up traffic. I mean, I think in the long run,</p>
+<p class="zh">当真正的目标比一点点粘稠的流量大得多时，他们就更难完成自己的工作。我的意思是，我认为从长远来看，</p></div></p>
+<p class="seg" id="seg-283"><span class="ts">[53:27 – 53:33]</span><div class="seg-body">
+<p class="en">there&#x27;s a lot of arguments about this, of course, whether robo taxis are going to make traffic worse or better. And we could do</p>
+<p class="zh">当然，关于机器人出租车是否会使交通状况变得更糟还是更好，对此存在很多争论。我们可以做</p></div></p>
+<p class="seg" id="seg-284"><span class="ts">[53:33 – 53:41]</span><div class="seg-body">
+<p class="en">two other or three other programs about where that goes. But for now, I think there&#x27;s a lot of potential and we want to let it flower as much as</p>
+<p class="zh">另外两个或三个其他程序关于它的去向。但就目前而言，我认为有很大的潜力，我们希望让它尽可能多地绽放</p></div></p>
+<p class="seg" id="seg-285"><span class="ts">[53:41 – 53:48]</span><div class="seg-body">
+<p class="en">we can. If someone&#x27;s doing something that&#x27;s obviously dangerous, if we can see that they&#x27;re not aligned with the public interest, then we</p>
+<p class="zh">我们可以。如果某人正在做一些明显危险的事情，如果我们发现他们不符合公共利益，那么我们</p></div></p>
+<p class="seg" id="seg-286"><span class="ts">[53:48 – 53:57]</span><div class="seg-body">
+<p class="en">should use the power to law to change that. But I don&#x27;t think we want the regulators, even the smartest regulators to be saying, here&#x27;s how to do</p>
+<p class="zh">应该利用法律的力量来改变这一点。但我不认为我们希望监管机构，即使是最聪明的监管机构说，这是怎么做的</p></div></p>
+<p class="seg" id="seg-287"><span class="ts">[53:57 – 54:04]</span><div class="seg-body">
+<p class="en">your job. I think that&#x27;s a great note to end on. Brad, happy new year. And thank you so much for coming on to discuss the</p>
+<p class="zh">你的工作。我认为这是一个很好的结束语。布拉德，新年快乐。非常感谢您前来讨论</p></div></p>
+<p class="seg" id="seg-288"><span class="ts">[54:04 – 54:11]</span><div class="seg-body">
+<p class="en">great Waymo outage of 2025. Hopefully won&#x27;t have to do this in 2026 or in the future. I know you write a bunch on Forbes, so</p>
+<p class="zh">2025 年 Waymo 的大停电。希望 2026 年或将来不必这样做。我知道你在《福布斯》上写了很多文章，所以</p></div></p>
+<p class="seg" id="seg-289"><span class="ts">[54:11 – 54:18]</span><div class="seg-body">
+<p class="en">we&#x27;ll leave a link to your profiles there and very active on LinkedIn. So Forbes, I say, Forbes insist I say Forbes.com because it</p>
+<p class="zh">我们会在那里留下您的个人资料链接，并且在 LinkedIn 上非常活跃。所以福布斯，我说，福布斯坚持我说 Forbes.com 因为它</p></div></p>
+<p class="seg" id="seg-290"><span class="ts">[54:18 – 54:23]</span><div class="seg-body">
+<p class="en">doesn&#x27;t go in the magazine. Forbes.com. All right. Thank you, Brad. Have a great new year. See you soon.</p>
+<p class="zh">没有出现在杂志上。福布斯网站。好的。谢谢你，布拉德。祝你新年快乐。再见。</p></div></p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="/ep/av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="/ep/av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="/ep/uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="/ep/uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">拆解 Uber 的自动驾驶战略</div></div></a><a class="relcard" href="/ep/lyft-hybrid-autonomy-risher/index.html"><div class="rw"><img loading="lazy" src="/ep/lyft-hybrid-autonomy-risher/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Lyft 的自动驾驶混合战略</div></div></a><a class="relcard" href="/ep/av-pilot-to-public-service/index.html"><div class="rw"><img loading="lazy" src="/ep/av-pilot-to-public-service/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Ep.19</div><div class="rt">从自动驾驶试点到公共服务</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="/index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["自动驾驶", "Autonomy", "Waymo", "Robotaxi", "Brad Templeton", "大瘫痪", "Outage", "远程协助", "Teleoperation", "远程运营", "Cruise", "透明度", "Transparency", "监管", "Regulator", "公共认知", "Public perception", "边缘案例", "Edge case", "Harry Campbell", "可靠性", "Reliability", "The Driverless Digest"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><div id='wbToast'></div></body></html>

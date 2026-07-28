@@ -1,0 +1,320 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>🐑的收藏库</title><meta name='description' content='中英对照逐字稿 + 深度分析视频收藏库'><meta property='og:title' content='🐑的收藏库'><meta property='og:description' content='中英对照逐字稿 + 深度分析视频收藏库'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div class="topnav"><a class="brand" href="index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="hero"><div class="kicker">视频收藏库 · Video Library</div><h1>🐑的收藏库</h1><p>🐑收藏的感兴趣内容。 Powered by WorkBuddy</p></header><div class="tagfilter"><span class="lab">分类</span><span class="tchip active" data-tag="__all__" onclick="wbTag('__all__')">全部</span><span class="tchip" data-tag="AI投研" onclick="wbTag('AI投研')">AI投研</span><span class="tchip" data-tag="自动驾驶" onclick="wbTag('自动驾驶')">自动驾驶</span><span class="tchip" data-tag="量化" onclick="wbTag('量化')">量化</span></div><div class="searchbar"><div class="field"><span class="ico">⌕</span><input id="wbSearch" type="search" placeholder="搜索标题、嘉宾或关键词，如 Einride / 许可持有者 …" oninput="wbFilter()" autocomplete="off"></div><span class="count"><b id="wbCount">15</b> / 15 期</span></div><div class="noresult" id="wbNoResult">没有匹配的视频，换个筛选或关键词试试。</div><div class="grid"><a class="ecard" href="ep/janestreet-gpus-trading-hiring/index.html" data-search="jane street：gpu、交易与招聘 jane street on gpus, trading, and hiring yaron minsky（技术团队共同负责人）、dan pontecorvo（物理工程团队负责人） jane street 技术共同负责人 yaron minsky 与物理工程负责人 dan pontecorvo 复盘：从 100 纳秒的 fpga 到几十万张 gpu 的训练集群，量化交易为何是「agi 完全」问题，以及算力扩张如何反而抬高了招聘门槛而非降低它。 jane street yaron minsky dan pontecorvo dwarkesh patel 量化交易 高频交易 fpga gpu coreweave 规模定律 scaling law 公允价值 fair value 托管 colo 推理工作负载 inference agi 完全 agi-complete 人类在环 humans-in-the-loop 相变 phase transition 物理工程 physical engineering 液冷 liquid cooling nvl72 gb200 tpu 字节/浮点比 bytes-to-flop 去中心化 disaggregation 形式化方法 formal methods fleet-wide optimization asic 招聘 导师辅导 mentorship 数据中心 data center 后门 backdoor 量化" data-tag="量化"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/janestreet-gpus-trading-hiring/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">量化</span><span class="timepill">📤 2026-07-28</span></div><div class="src">Dwarkesh Podcast · YouTube</div><h3>Jane Street：GPU、交易与招聘</h3><p class="en">Jane Street on GPUs, Trading, and Hiring</p><p class="meta">⏱ — · 👤 Yaron Minsky（技术团队共同负责人）、Dan Pontecorvo（物理工程团队负责人）</p><p class="one">Jane Street 技术共同负责人 Yaron Minsky 与物理工程负责人 Dan Pontecorvo 复盘：从 100 纳秒的 FPGA 到几十万张 GPU 的训练集群，量化交易为何是「AGI 完全」问题，以及算力扩张如何反而抬高了招聘门槛而非降低它。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/av-safety-robotaxis-yoshida/index.html" data-search="重新思考 av 安全：当 robotaxi 开始规模化 rethinking av safety as robotaxis scale junko yoshida（资深科技记者、av safety 主理人） 资深记者 junko yoshida 泼冷水：av 在「正常路况」下跑通了，但安全永远活在边缘案例；七月四日 waymo 事件是可预见的压力测试失败，行业却躲在「商业机密」后不愿解释。远程操作员、混合自动驾驶与分阶段认证才是务实的扩容路径。 自动驾驶 av safety junko yoshida harry campbell robotaxi waymo 边缘案例 edge case 远程操作员 remote operator 混合自动驾驶 hybrid autonomy 端到端 end-to-end 透明度 七月四日 july 4th wayve london 伦敦 phil koopman missy cummings ats 2026 sae 安全驾驶员 safety driver 压力测试 stress test 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/av-safety-robotaxis-yoshida/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-24</span></div><div class="src">The Driverless Digest · Podcast</div><h3>重新思考 AV 安全：当 robotaxi 开始规模化</h3><p class="en">Rethinking AV Safety as Robotaxis Scale</p><p class="meta">⏱ 36:10 · 👤 Junko Yoshida（资深科技记者、AV Safety 主理人）</p><p class="one">资深记者 Junko Yoshida 泼冷水：AV 在「正常路况」下跑通了，但安全永远活在边缘案例；七月四日 Waymo 事件是可预见的压力测试失败，行业却躲在「商业机密」后不愿解释。远程操作员、混合自动驾驶与分阶段认证才是务实的扩容路径。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/waymo-outage-2025-templeton/index.html" data-search="从 2025 年 waymo 大瘫痪看 robotaxi 的可靠性 lessons from the great waymo outage of 2025 brad templeton（自动驾驶领域资深顾问，曾为 waymo、zoox、cruise、starship 提供早期咨询；robocars.com 作者、forbes 自动驾驶专栏作家） 自动驾驶老将 brad templeton 与主持人 harry 复盘 2025 年 waymo 在旧金山的大规模瘫痪：时间线、根因（远程协助 teleoperation 成为瓶颈）、与 cruise 的透明度对比、监管角色，以及 outage 如何重塑公众对 robotaxi 可靠性的认知。 自动驾驶 autonomy waymo robotaxi brad templeton 大瘫痪 outage 远程协助 teleoperation 远程运营 cruise 透明度 transparency 监管 regulator 公共认知 public perception 边缘案例 edge case harry campbell 可靠性 reliability the driverless digest 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-24</span></div><div class="src">The Driverless Digest · Podcast</div><h3>从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</h3><p class="en">Lessons from the Great Waymo Outage of 2025</p><p class="meta">⏱ 54:35 · 👤 Brad Templeton（自动驾驶领域资深顾问，曾为 Waymo、Zoox、Cruise、Starship 提供早期咨询；Robocars.com 作者、Forbes 自动驾驶专栏作家）</p><p class="one">自动驾驶老将 Brad Templeton 与主持人 Harry 复盘 2025 年 Waymo 在旧金山的大规模瘫痪：时间线、根因（远程协助 teleoperation 成为瓶颈）、与 Cruise 的透明度对比、监管角色，以及 outage 如何重塑公众对 robotaxi 可靠性的认知。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/ai-agents-investment-research-caughran/index.html" data-search="ai agent 如何改变投资研究（外骨骼假说） how ai agents are changing investment research | building your ai exoskeleton brett caughran 基本面投资者 brett caughran 提出「外骨骼假说」：ai agent 不是替代投研，而是包裹并放大你的流程——我们正处 demo era，真正杠杆在数据可读性与工作流上下文。 ai agent 投资研究 基本面投资 外骨骼假说 claude code agentic workspace llm 局限 evals 马赛克理论 mosaic theory 红黄绿灯框架 知识库 skills.md 金融建模 alpha 行为金融 aqr power law fundamental edge brett caughran karpathy 智能过剩 ai投研" data-tag="AI投研"><div class="thumbwrap"><img class="thumb" loading="lazy" src="https://img.youtube.com/vi/muzEI6HePb0/hqdefault.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">AI投研</span><span class="timepill">📤 2026-07-24</span></div><div class="src">Fundamental Edge · YouTube Webinar</div><h3>AI Agent 如何改变投资研究（外骨骼假说）</h3><p class="en">How AI Agents Are Changing Investment Research | Building Your AI Exoskeleton</p><p class="meta">⏱ 82:38 · 👤 Brett Caughran</p><p class="one">基本面投资者 Brett Caughran 提出「外骨骼假说」：AI Agent 不是替代投研，而是包裹并放大你的流程——我们正处 demo era，真正杠杆在数据可读性与工作流上下文。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/uber-av-strategy-rojas/index.html" data-search="拆解 uber 的自动驾驶战略 inside uber&#x27;s av strategy eduardo rojas（前 uber 自动驾驶出行与配送团队创始成员） 前 uber 自动驾驶团队创始成员拆解 uber 的 av 战略：靠维持供给侧竞争保住价差，用 uas 运营层锁定 av 公司；2024 年 waymo 上线引爆投资者紧迫感，而 waymo 的「车不够」与「特洛伊木马」博弈正改写行业权力结构。 自动驾驶 autonomy uber waymo eduardo rojas 双边平台 two-sided platform uas uber autonomous solutions 混合模式 hybrid model 特洛伊木马 trojan horse zoox nuro wayve lucid 配送机器人 delivery robot doordash 投资者叙事 robotaxi 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/uber-av-strategy-rojas/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-24</span></div><div class="src">The Driverless Digest · Podcast</div><h3>拆解 Uber 的自动驾驶战略</h3><p class="en">Inside Uber&#x27;s AV Strategy</p><p class="meta">⏱ 42:37 · 👤 Eduardo Rojas（前 Uber 自动驾驶出行与配送团队创始成员）</p><p class="one">前 Uber 自动驾驶团队创始成员拆解 Uber 的 AV 战略：靠维持供给侧竞争保住价差，用 UAS 运营层锁定 AV 公司；2024 年 Waymo 上线引爆投资者紧迫感，而 Waymo 的「车不够」与「特洛伊木马」博弈正改写行业权力结构。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/lyft-hybrid-autonomy-risher/index.html" data-search="lyft 的自动驾驶混合战略 lyft&#x27;s hybrid approach to autonomy david risher（lyft ceo） lyft 不造自动驾驶，而是用「混合市场模式」做需求聚合方与车队运营伙伴：与 waymo 在纳什维尔互补、用 flexdrive 做 av 车队维护，并认为多 app 并存与和 uber 既竞争又合作是行业常态。 自动驾驶 autonomy lyft waymo david risher 混合模式 hybrid model 纳什维尔 nashville zoox flexdrive robotaxi 网约车 需求聚合 demand aggregator uber 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/lyft-hybrid-autonomy-risher/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-24</span></div><div class="src">The Driverless Digest · Podcast</div><h3>Lyft 的自动驾驶混合战略</h3><p class="en">Lyft&#x27;s Hybrid Approach to Autonomy</p><p class="meta">⏱ 38:55 · 👤 David Risher（Lyft CEO）</p><p class="one">Lyft 不造自动驾驶，而是用「混合市场模式」做需求聚合方与车队运营伙伴：与 Waymo 在纳什维尔互补、用 Flexdrive 做 AV 车队维护，并认为多 App 并存与和 Uber 既竞争又合作是行业常态。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/neurips-2024-sequence-modeling-finance/index.html" data-search="金融服务中的序列建模：capital one 在消费银行表格数据上的探索 sequence modeling in financial services nam nguyen（capital one · ai foundations） capital one 的 nam nguyen 在 neurips 2024 分享如何把 transformer 序列建模的思路搬到消费金融的表格数据（交易/支付流水）上：从消费银行业务独有的『交易数据宇宙』和『支付数据宇宙』出发，提出『时序表格建模』的研究问题，介绍初步探索——把列名与列值联合做嵌入、用预训练 llm 编码列语义、并借鉴 tabula、t2g-former 等表格基础模型把异构表格映射到统一语义空间。 sequence modeling tabular data capital one transformer foundation model consumer banking transaction data payment data tabula t2g-former column embedding llm for tabular neurips 2024 ai foundations 量化" data-tag="量化"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/neurips-2024-sequence-modeling-finance/slides/2BTZO3XMEQgX4Itk.webp" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">量化</span><span class="timepill">📤 2026-07-24</span></div><div class="src">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><h3>金融服务中的序列建模：Capital One 在消费银行表格数据上的探索</h3><p class="en">Sequence Modeling in Financial Services</p><p class="meta">⏱ 约 50 分钟 · 👤 Nam Nguyen（Capital One · AI Foundations）</p><p class="one">Capital One 的 Nam Nguyen 在 NeurIPS 2024 分享如何把 Transformer 序列建模的思路搬到消费金融的表格数据（交易/支付流水）上：从消费银行业务独有的『交易数据宇宙』和『支付数据宇宙』出发，提出『时序表格建模』的研究问题，介绍初步探索——把列名与列值联合做嵌入、用预训练 LLM 编码列语义、并借鉴 TABULA、T2G-Former 等表格基础模型把异构表格映射到统一语义空间。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/neurips-2024-av-at-scale/index.html" data-search="ai 驱动的自动驾驶规模化：waymo 可扩展驾驶栈 ai for autonomous driving at scale vincent vanhoucke（waymo 杰出工程师）、samer shehab waymo 杰出工程师 vincent vanhoucke 与 samer shehab 在 neurips 2024 expo talk panel 分享 waymo 如何把每周 1500 万次 robotaxi 出行背后的 ai 驾驶栈做到规模化与可泛化：双子系统（driving agent + protection）、感知从数据中学习、用于 bev 的 transformer、预测即「新语言」中的运动令牌、闭环智能体训练与 city-cars 数据域评测。 waymo robotaxi autonomous driving bird&#x27;s-eye-view transformer end-to-end closed-loop auto-labeling perception prediction planning control motion tokens city-cars neurips 2024 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/neurips-2024-av-at-scale/slides/7gXa6my61sSOk2yh.webp" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-24</span></div><div class="src">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><h3>AI 驱动的自动驾驶规模化：Waymo 可扩展驾驶栈</h3><p class="en">AI for Autonomous Driving at Scale</p><p class="meta">⏱ 约 43 分钟 · 👤 Vincent Vanhoucke（Waymo 杰出工程师）、Samer Shehab</p><p class="one">Waymo 杰出工程师 Vincent Vanhoucke 与 Samer Shehab 在 NeurIPS 2024 Expo Talk Panel 分享 Waymo 如何把每周 1500 万次 Robotaxi 出行背后的 AI 驾驶栈做到规模化与可泛化：双子系统（Driving Agent + Protection）、感知从数据中学习、用于 BEV 的 Transformer、预测即「新语言」中的运动令牌、闭环智能体训练与 City-Cars 数据域评测。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/einride-autonomous-freight/index.html" data-search="einride 的自动驾驶货运战略 einride&#x27;s autonomous freight strategy henrik green（einride cto） einride 从第一天就把问题定义为「把货运能力作为服务卖出」；用单一商业模式串起资产/能源/人力三大效率缺口，按站点许可、混合架构、渐进式安全样本实现规模化。 einride henrik green 货运 zenseact autonomous freight 站点 许可 robotaxi 规模化 安全 运营 监管 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/einride-autonomous-freight/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-23</span></div><div class="src">The Driverless Digest Podcast</div><h3>Einride 的自动驾驶货运战略</h3><p class="en">Einride&#x27;s Autonomous Freight Strategy</p><p class="meta">⏱ 37:05 · 👤 Henrik Green（Einride CTO）</p><p class="one">Einride 从第一天就把问题定义为「把货运能力作为服务卖出」；用单一商业模式串起资产/能源/人力三大效率缺口，按站点许可、混合架构、渐进式安全样本实现规模化。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/neurips-2024-financial-text-llm/index.html" data-search="拆解金融文本数据：llm 在交易决策中的应用 demystify financial textual data with llms dianqi li（citadel securities 量化研究员 ph.d.） citadel securities 量化研究员 dianqi li 在 neurips 2024 expo talk panel 上系统讲解如何用 llm 从高噪声、多模态、高难度的金融文本数据中抽取信号，支撑系统化/半系统化交易决策，并讨论 rag 等负责任的落地路径。 llm 金融文本 量化交易 systematic trading citadel securities alpha generalization rag long context hallucination ftx sec earnings call bloomberg reuters refactorize precision recall grounding ocr peng zhao 量化" data-tag="量化"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/neurips-2024-financial-text-llm/slides/6rPwg0QWRQjnjjM6.webp" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">量化</span><span class="timepill">📤 2026-07-23</span></div><div class="src">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><h3>拆解金融文本数据：LLM 在交易决策中的应用</h3><p class="en">Demystify Financial Textual Data with LLMs</p><p class="meta">⏱ 约 54 分钟 · 👤 Dianqi Li（Citadel Securities 量化研究员 Ph.D.）</p><p class="one">Citadel Securities 量化研究员 Dianqi Li 在 NeurIPS 2024 Expo Talk Panel 上系统讲解如何用 LLM 从高噪声、多模态、高难度的金融文本数据中抽取信号，支撑系统化/半系统化交易决策，并讨论 RAG 等负责任的落地路径。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/waymo-data-who-rides-robotaxis/index.html" data-search="waymo 的数据揭示了：到底谁在坐 robotaxi what waymo&#x27;s data reveals about who actually rides robotaxis william &quot;billy&quot; riggs（university of san francisco；autonomous vehicles and the city initiative 主任） 技术行了的之后呢？av 研究者 william riggs 用 cruise/waymo 真实骑手数据，把行业叙事翻了个面：自动驾驶是基础设施，不是软件；运营与路缘政治才是真瓶颈。 waymo cruise william riggs robotaxi 基础设施 infrastructure 运营 operations 路缘 curb 模式转移 mode shift 风险投资 venture capital b2b b2g 欧洲模式 autonomous vehicles and the city 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/waymo-data-who-rides-robotaxis/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-23</span></div><div class="src">Autonomy Insiders · Podcast (The AV Market Strategist)</div><h3>Waymo 的数据揭示了：到底谁在坐 Robotaxi</h3><p class="en">What Waymo&#x27;s Data Reveals About Who Actually Rides Robotaxis</p><p class="meta">⏱ 65:35 · 👤 William &quot;Billy&quot; Riggs（University of San Francisco；Autonomous Vehicles and the City Initiative 主任）</p><p class="one">技术行了的之后呢？AV 研究者 William Riggs 用 Cruise/Waymo 真实骑手数据，把行业叙事翻了个面：自动驾驶是基础设施，不是软件；运营与路缘政治才是真瓶颈。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/driverless-cars-for-everyone/index.html" data-search="为所有人设计无人驾驶汽车（而不只是尝鲜者） designing driverless cars for everyone (not just early adopters) dr. clare mutzenich（loughborough university；anthrometric 创始人） 无人驾驶出租车能过所有安全测试，却可能输给乘客的信任——人因专家 clare mutzenich 谈座舱内那个没人设计的部分。 信任 trust 人因 human factors clare mutzenich anthrometric 远程操作员 remote operator 可及性 accessibility automated vehicles act 2024 vr 紧急研究 loughborough 座舱体验 自动驾驶 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/driverless-cars-for-everyone/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-23</span></div><div class="src">Autonomy Insiders · Podcast</div><h3>为所有人设计无人驾驶汽车（而不只是尝鲜者）</h3><p class="en">Designing Driverless Cars for Everyone (Not Just Early Adopters)</p><p class="meta">⏱ 45:55 · 👤 Dr. Clare Mutzenich（Loughborough University；Anthrometric 创始人）</p><p class="one">无人驾驶出租车能过所有安全测试，却可能输给乘客的信任——人因专家 Clare Mutzenich 谈座舱内那个没人设计的部分。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/icml-2026-scaling-dl-financial-markets/index.html" data-search="在金融市场中扩展深度学习 scaling deep learning in financial markets iain dunning（hudson river trading） hudson river trading 分享如何在全球金融市场的非平稳、海量、低延迟约束下，构建并部署大规模市场基础模型（foundation models），以捕捉价格发现的潜在结构。 deep learning 量化金融 foundation model hrt market model non-stationary price discovery scaling 量化" data-tag="量化"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/icml-2026-scaling-dl-financial-markets/slides/2ZlGAQV3BS5jIYBx.webp" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">量化</span><span class="timepill">📤 2026-07-23</span></div><div class="src">ICML 2026 · Expo Talk Panel</div><h3>在金融市场中扩展深度学习</h3><p class="en">Scaling Deep Learning in Financial Markets</p><p class="meta">⏱ 65:42 · 👤 Iain Dunning（Hudson River Trading）</p><p class="one">Hudson River Trading 分享如何在全球金融市场的非平稳、海量、低延迟约束下，构建并部署大规模市场基础模型（foundation models），以捕捉价格发现的潜在结构。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/icml-2026-multiagent-quant-finance/index.html" data-search="多智能体系统在量化金融中的设计与评估 multi-agent system design and evaluation for quantitative finance lucas baker、loren puchalla 量化金融以非平稳数据、紧延迟预算与严苛的时序推理约束，对通用多智能体架构构成真实压力测试；本场 icml expo 座谈探讨如何设计与评估面向研究流程的多智能体系统。 multi-agent 量化金融 agent architecture temporal reasoning evaluation non-stationary quant finance 量化" data-tag="量化"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/icml-2026-multiagent-quant-finance/slides/UxJB0hNgVik4Smt5.webp" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">量化</span><span class="timepill">📤 2026-07-23</span></div><div class="src">ICML 2026 · Expo Talk Panel</div><h3>多智能体系统在量化金融中的设计与评估</h3><p class="en">Multi-Agent System Design and Evaluation for Quantitative Finance</p><p class="meta">⏱ 77:20 · 👤 Lucas Baker、Loren Puchalla</p><p class="one">量化金融以非平稳数据、紧延迟预算与严苛的时序推理约束，对通用多智能体架构构成真实压力测试；本场 ICML Expo 座谈探讨如何设计与评估面向研究流程的多智能体系统。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a><a class="ecard" href="ep/av-pilot-to-public-service/index.html" data-search="从自动驾驶试点到公共服务 from av pilot to public service stefanie berliner、anders toft（holo） 行业重心从「证明技术」转向「证明可规模化运营」；责任归属在运营商而非车企，监管从挪威的开放风险评估走向瑞士的数据密集式安全管理体系。 许可持有者 permit holder ruter holo moia mobileye 挪威 瑞士 远程协助 自动驾驶 责任 安全 监管 运营 自动驾驶" data-tag="自动驾驶"><div class="thumbwrap"><img class="thumb" loading="lazy" src="ep/av-pilot-to-public-service/cover.jpg" alt=""><span class="play">▶</span></div><div class="body"><div class="tags"><span class="tagpill">自动驾驶</span><span class="timepill">📤 2026-07-23</span></div><div class="src">Autonomy Insiders · Ep.19</div><h3>从自动驾驶试点到公共服务</h3><p class="en">From AV Pilot to Public Service</p><p class="meta">⏱ 54:15 · 👤 Stefanie Berliner、Anders Toft（Holo）</p><p class="one">行业重心从「证明技术」转向「证明可规模化运营」；责任归属在运营商而非车企，监管从挪威的开放风险评估走向瑞士的数据密集式安全管理体系。</p><span class="cta">查看总结 + 逐字稿 →</span></div></a></div><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var wbActiveTag='__all__';
+function wbTag(t){wbActiveTag=t;document.querySelectorAll('.tchip').forEach(function(c){c.classList.toggle('active',c.getAttribute('data-tag')===t);});wbApply();}
+function wbFilter(){wbApply();}
+function wbApply(){var q=document.getElementById('wbSearch').value.trim().toLowerCase();
+  var cards=document.querySelectorAll('.ecard');var n=0;
+  cards.forEach(function(c){var hitS=c.getAttribute('data-search').indexOf(q)>=0;var hitT=(wbActiveTag==='__all__')||c.getAttribute('data-tag')===wbActiveTag;var hit=hitS&&hitT;c.classList.toggle('hidden',!hit);if(hit)n++;});
+  document.getElementById('wbCount').textContent=n;
+  document.getElementById('wbNoResult').classList.toggle('show',n===0);}
+</script><div id='wbToast'></div></body></html>

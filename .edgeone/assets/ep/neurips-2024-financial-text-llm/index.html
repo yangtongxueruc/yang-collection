@@ -1,0 +1,369 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>拆解金融文本数据：LLM 在交易决策中的应用 · 总结分析</title><meta name='description' content='Citadel Securities 量化研究员 Dianqi Li 在 NeurIPS 2024 Expo Talk Panel 上系统讲解如何用 LLM 从高噪声、多模态、高难度的金融文本数据中抽取信号，支撑系统化/半系统化交易决策，并讨论 RAG 等负责任的落地路径。'><meta property='og:title' content='拆解金融文本数据：LLM 在交易决策中的应用 · 总结分析'><meta property='og:description' content='Citadel Securities 量化研究员 Dianqi Li 在 NeurIPS 2024 Expo Talk Panel 上系统讲解如何用 LLM 从高噪声、多模态、高难度的金融文本数据中抽取信号，支撑系统化/半系统化交易决策，并讨论 RAG 等负责任的落地路径。'><meta property='og:type' content='website'><meta property='og:image' content='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work/ep/neurips-2024-financial-text-llm/slides/6rPwg0QWRQjnjjM6.webp'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://neurips.cc/virtual/2024/expo-talk-panel/100365" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><h1>拆解金融文本数据：LLM 在交易决策中的应用</h1><p class="sub">Demystify Financial Textual Data with LLMs</p><div class="tags"><span class="tag">⏱ 约 54 分钟</span><span class="tag">👤 Dianqi Li（Citadel Securities 量化研究员 Ph.D.）</span><span class="tag">🗓 2024-12</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="slides/6rPwg0QWRQjnjjM6.webp" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="slides/6rPwg0QWRQjnjjM6.webp" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://slideslive.com/39031407" target="_blank" rel="noopener">▶ 在来源站观看视频</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览</a><a href="#s1">🔢 关键数据 / 事实速记</a><a href="#s2">🗝️ 关键金句（原文摘录）</a><a href="#s3">一、背景：为什么是「金融文本」与「做市商视角」</a><a href="#s4">二、核心议题（一）：系统化 / 半系统化交易是怎么运作的</a><a href="#s5">三、核心议题（二）：金融文本数据的难点与「精度—召回」权衡</a><a href="#s6">四、核心议题（三）：不能让 LLM「直接说买」——要先把先验喂进去</a><a href="#s7">五、多模态、时间序列，与「金融 Agent」的展望</a><a href="#s8">🧭 核心框架：LLM 在金融文本的&quot;辅助&quot;定位</a><a href="#s9">🔗 关联阅读</a><a href="#s10">👥 适合谁听</a><a href="#s11">六、关键结论与趋势</a><a href="#s12">八、局限性与说明</a></nav><main class="content"><h1>深度分析：用 LLM 拆解金融文本数据（NeurIPS 2024 Expo Talk Panel）</h1>
+<blockquote>演讲：*Demystify Financial Textual Data with LLMs*</blockquote>
+<blockquote>讲者：<strong>Dianqi Li</strong>（Citadel Securities 量化研究员，华盛顿大学 NLP / 深度学习方向 Ph.D.，曾任微软研究院）</blockquote>
+<blockquote>来源：NeurIPS 2024 Expo Talk Panel｜时长约 54 分钟｜SlidesLive pid 39031407</blockquote>
+<blockquote>说明：基于 Whisper 英文识别稿 + 机器翻译中文稿整理，专有名词（Citadel Securities、NeurIPS、Alpha、RAG、EPS、IV 等）已人工校对。</blockquote>
+<h2 id="s0">📌 核心速览</h2>
+<ul><li><strong>一句话定位</strong>：Citadel Securities 把 <strong>LLM 引入金融交易中最难啃的一块——复杂、高噪声、多模态、跨来源的金融文本数据</strong>，用其抽取信号、解读市场信息、辅助交易判断。</li></ul>
+<ul><li><strong>最核心的告诫</strong>：<strong>不能让 LLM「直接说买」</strong>——金融文本的信噪比极低、信息不公开，必须先把手工 / 交易先验（human / trading prior）喂进去，否则会出事。</li></ul>
+<ul><li><strong>最务实的落地形态</strong>：<strong>RAG（检索增强生成）</strong> 是当下首选，但金融多标的、非时序的特性让 <strong>graph RAG</strong> 成为值得探索的方向。</li></ul>
+<ul><li><strong>机构护城河</strong>：文本问题可站在公开基线（微调 / 复杂系统）上；<strong>非文本市场数据必须自建模型</strong>——这是机构相对开源社区的真实壁垒。</li></ul>
+<h2 id="s1">🔢 关键数据 / 事实速记</h2>
+<ul><li><strong>Citadel Securities 画像</strong>：全球最大的做市商之一；在美国股市承担约 <strong>20–25% 总成交量</strong>、是零售侧最大做市商；全球每天约交易 <strong>5000 亿美元</strong>金融资产（约&quot;全球一天的 GDP&quot;量级）。</li></ul>
+<ul><li><strong>系统化交易两步</strong>：Alpha 研究（X → Y，Y 为价格变动，预测即 Alpha）→ 变现（组合优化 + 风控）。</li></ul>
+<ul><li><strong>半系统化 = 人在回路</strong>：人工调整信号本身被收集为标签，反哺系统化侧，形成类似现代 RLHF 的闭环。</li></ul>
+<ul><li><strong>金融 vs 科技行业根本差异</strong>：信噪比极低（价格受多系统因素共同决定，直接拿价格当标签极易过拟合）+ 信息不公开/难获取（博弈论使然）。</li></ul>
+<ul><li><strong>精度—召回权衡</strong>：金融策略对&quot;精度&quot;容忍度极低（精度错 = 报单方向错 = 直接亏钱），又必须靠&quot;召回&quot;放大量捕捉机会。</li></ul>
+<ul><li><strong>案例</strong>：2020-05-01 马斯克发推称&quot;Tesla 股价太高&quot;，Tesla 随即跌约 10%。</li></ul>
+<h2 id="s2">🗝️ 关键金句（原文摘录）</h2>
+<blockquote>*&quot;We trade more than the GDP of the world… And all of our trading is based on a foundation of cutting-edge machine learning and deep learning research.&quot;*</blockquote>
+<blockquote>*&quot;In the tech industry, most of the tasks are very clean, has a very high signal to noise ratio… But for quantitative trading, if you want to predict the market behavior, the target is not very deterministic.&quot;*</blockquote>
+<blockquote>*&quot;If you just run a larger model on all the earnings, you will find a very positive sentiment, but that&#x27;s not true, right?&quot;*（直接对财报跑大模型会得到一片正面情绪，但那不是真相——取决于市场预期。）</blockquote>
+<blockquote>*&quot;When we retrieve the relevant contacts from the database, it will be ordered in a sequential order. But in the stock market, sometimes it&#x27;s not a time series order… maybe a graph RAG is a choice, but it&#x27;s still an open-ended question.&quot;*</blockquote>
+<h2 id="s3">一、背景：为什么是「金融文本」与「做市商视角」</h2>
+<p>演讲由 Citadel Securities 的两位同事完成。主讲人 Dianqi Li 把自己的研究定位为：把<strong>大语言模型（LLM）</strong>引入金融交易中最难啃的一块——<strong>复杂、高噪声、多模态、跨来源的金融文本数据</strong>。</p>
+<h2 id="s4">二、核心议题（一）：系统化 / 半系统化交易是怎么运作的</h2>
+<ul><li><strong>Alpha 研究（X → Y）</strong>：X 是各类数据（历史价、订单簿、文本等），Y 是价格变动；模型对 Y 的合理预测即为 <strong>Alpha（超额收益）</strong>。</li></ul>
+<ul><li><strong>半系统化交易 = 人在回路（Human-in-the-loop）</strong>：系统化侧产出信号，交易员基于强先验做调整，触发相反信号；<strong>这些人工调整本身又被收集为标签，反哺、提升系统化信号</strong>——形成类似现代 RLHF 的闭环。</li></ul>
+<ul><li><strong>数据全景与根本差异</strong>：可预测的价格（Y）受历史价、订单簿、文本、第三方数据、图像、天气等影响。与科技行业相比，金融另有两个硬约束：<strong>信噪比极低</strong> 与 <strong>信息不公开 / 难获取</strong>。</li></ul>
+<h2 id="s5">三、核心议题（二）：金融文本数据的难点与「精度—召回」权衡</h2>
+<ul><li><strong>三大难点</strong>：特征复杂、跨度长、任务多样；对应信噪比低、类型异构、可见度低且更新滞后。</li></ul>
+<ul><li><strong>来源全景</strong>：新闻、社媒、财报电话会、<strong>SEC 备案</strong>、财报、专利、公告、研报、庭审记录……很多<strong>公开度低、非结构化、领域术语晦涩</strong>（EPS、META 与代码 AAPL、IV 隐含波动率等）。</li></ul>
+<ul><li><strong>传统 NLP vs LLM</strong>：传统 NLP 上限等于写规则的人；LLM 数据驱动、长上下文、zero/few-shot，能把多个任务合并进单一模型。领域适配靠 <strong>continual pre-training / SFT / RLHF</strong>。</li></ul>
+<ul><li><strong>最重要的一点始终没变</strong>：让 LLM 理解「交易逻辑」与「我们到底在找什么」——human prior 仍是关键。文本理解分两层：① 字面意思；② 字面背后的交易逻辑。</li></ul>
+<h2 id="s6">四、核心议题（三）：不能让 LLM「直接说买」——要先把先验喂进去</h2>
+<h3>1. 交易模拟（以「X / 苹果」EPS 为例）</h3>
+<p>逐条新闻按时间推进：财报发布（无信息）→ EPS 高于去年（买还是卖？<strong>取决于市场预期</strong>）→ 跳涨 10%（通常已无信息量）。很多公司在业绩差时措辞也很委婉、负面信号很隐晦。因此正确做法是<strong>先把 human / trading prior 转成 LLM 能懂的语言</strong>，再组合成最终交易决策。</p>
+<h3>2. RAG 与幻觉治理</h3>
+<p>团队大量使用 <strong>RAG</strong> 来规范 LLM 输出、抑制幻觉。但讲者指出金融特有的坑：传统 RAG 按「时序/顺序」检索，而股市多标的并发、非时序——<strong>graph RAG（图检索）</strong> 可能是更优解，但仍属开放问题。</p>
+<h2 id="s7">五、多模态、时间序列，与「金融 Agent」的展望</h2>
+<ul><li><strong>表格解析</strong>：多模态模型把表格转成 tags，或走「区域检测 + OCR / 视觉模型」多阶段方案；高质量训练数据不足时可用<strong>合成数据策略</strong>。</li></ul>
+<ul><li><strong>时间序列 + 语言的对齐难题</strong>：目前没有好的时间序列基础模型，也没有好的「时间序列 + 语言」多模态模型（跨域分布漂移极大）。</li></ul>
+<ul><li><strong>金融 Agent</strong>：交易员想查「Rivian 下季度交付量」这类信息，Agent 在数据库里检索并回喂给交易员，<strong>时间就是机会</strong>（比竞争对手早一步拿到信息即盈利）。</li></ul>
+<h2 id="s8">🧭 核心框架：LLM 在金融文本的&quot;辅助&quot;定位</h2>
+<p><code>`</code> 原始文本 → 注入 human/trading prior → RAG 检索（graph RAG?） → LLM 解读 → 信号（辅助） → 人在回路校准 → 交易决策（不替代） <code>`</code> 关键约束：精度优先（报单方向错 = 直接亏钱）；human prior 不可省；非文本市场数据必须自建。</p>
+<h2 id="s9">🔗 关联阅读</h2>
+<ul><li>[在金融市场中扩展深度学习（HRT @ ICML 2026）](../../icml-2026-scaling-dl-financial-markets/)：从&quot;市场事件流建模&quot;的 scaling 视角看 AI + 金融，与本集&quot;文本信号&quot;互补。</li></ul>
+<ul><li>[Multi-Agent System Design and Evaluation for Quantitative Finance（Jump @ ICML 2026）](../../icml-2026-multiagent-quant-finance/)：金融场景里如何用 agent / eval 组织研究流程，呼应本集&quot;金融 Agent&quot;展望。</li></ul>
+<ul><li>[AI Agent 如何改变投资研究（Fundamental Edge）](../../ai-agents-investment-research-caughran/)：买方研究员如何用 agent 做投资研究，是本集&quot;金融 Agent&quot;在真实工作流里的延伸。</li></ul>
+<h2 id="s10">👥 适合谁听</h2>
+<ul><li>金融机构的 ML / NLP 研究员与量化研究员；</li></ul>
+<ul><li>做 RAG / 检索 / 多模态落地的 AI 工程师；</li></ul>
+<ul><li>关注&quot;LLM 不能直接做决策&quot;这一边界的产品/策略负责人；</li></ul>
+<ul><li>想理解机构相对开源社区护城河（自建非文本模型）的投资人。</li></ul>
+<h2 id="s11">六、关键结论与趋势</h2>
+<p>1. <strong>LLM 在金融文本上的价值是「辅助 + 组织」，不是「替代决策」</strong>：human / trading prior 是绕不开的约束条件。 2. <strong>RAG 是当下最务实的落地形态</strong>，但金融多标的、非时序的特性让 <strong>graph RAG</strong> 成为值得探索的方向。 3. <strong>时间序列 + 语言的多模态</strong>是尚未解决的基础难题，也是金融场景区别于通用 NLP 的核心壁垒。 4. <strong>金融 Agent（检索 / 提炼 / 回喂）</strong> 是把 LLM 能力转化为交易实效的自然载体，时间敏感度是胜负手。 5. 文本问题可站在公开基线上；<strong>非文本市场数据必须自建模型</strong>——这是机构相对开源社区的真实护城河。</p>
+<h2 id="s12">八、局限性与说明</h2>
+<ul><li>本稿基于自动语音识别（Whisper small.en）与机器翻译，已对金融专有名词做校正，但个别同音/近音词仍可能存在误差；关键判断建议对照英文原文与官方 slides。</li></ul>
+<ul><li>演讲中的具体数字（成交量占比、日均交易额等）来自讲者口述与 slides，以 Citadel Securities 官方披露为准。</li></ul>
+<ul><li>slides 中的个别图表因分辨率限制，图注为基于缩略图墙的概括性描述。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="/ep/janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="/ep/janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="/ep/neurips-2024-sequence-modeling-finance/index.html"><div class="rw"><img loading="lazy" src="/ep/neurips-2024-sequence-modeling-finance/slides/2BTZO3XMEQgX4Itk.webp" alt=""></div><div class="rb"><div class="rs">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><div class="rt">金融服务中的序列建模：Capital One 在消费银行表格数据上的探索</div></div></a><a class="relcard" href="/ep/icml-2026-scaling-dl-financial-markets/index.html"><div class="rw"><img loading="lazy" src="/ep/icml-2026-scaling-dl-financial-markets/slides/2ZlGAQV3BS5jIYBx.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">在金融市场中扩展深度学习</div></div></a><a class="relcard" href="/ep/icml-2026-multiagent-quant-finance/index.html"><div class="rw"><img loading="lazy" src="/ep/icml-2026-multiagent-quant-finance/slides/UxJB0hNgVik4Smt5.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">多智能体系统在量化金融中的设计与评估</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="/index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><div id='wbToast'></div></body></html>

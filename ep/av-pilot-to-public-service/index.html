@@ -1,0 +1,387 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>从自动驾驶试点到公共服务 · 总结分析</title><meta name='description' content='行业重心从「证明技术」转向「证明可规模化运营」；责任归属在运营商而非车企，监管从挪威的开放风险评估走向瑞士的数据密集式安全管理体系。'><meta property='og:title' content='从自动驾驶试点到公共服务 · 总结分析'><meta property='og:description' content='行业重心从「证明技术」转向「证明可规模化运营」；责任归属在运营商而非车企，监管从挪威的开放风险评估走向瑞士的数据密集式安全管理体系。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/from-av-pilot-to-public-service-what" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders · Ep.19</div><h1>从自动驾驶试点到公共服务</h1><p class="sub">From AV Pilot to Public Service</p><div class="tags"><span class="tag">⏱ 54:15</span><span class="tag">👤 Stefanie Berliner、Anders Toft（Holo）</span><span class="tag">🗓 2026-07-23</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/kB6vJKkQ81g" title="From AV Pilot to Public Service" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览</a><a href="#s1">🔢 关键数据 / 事实速记</a><a href="#s2">🗝️ 关键金句（核心判断摘录）</a><a href="#s3">一、行业拐点：为什么&quot;只想要一辆展示车&quot;会被拒绝</a><a href="#s4">二、真实部署中的角色分工（谁做什么）</a><a href="#s5">三、责任归属：许可持有者才是真正的&quot;兜底方&quot;</a><a href="#s6">四、依赖关系制造的运营风险</a><a href="#s7">五、事故管理：根因分析 + &quot;局部 vs 全局&quot;的关键判断</a><a href="#s8">六、监管对比：挪威（开放）vs 瑞士（数据密集）</a><a href="#s9">七、可追溯性（Traceability）：无法解释，就无法担责</a><a href="#s10">八、安全是&quot;组织任务&quot;，不止技术问题</a><a href="#s11">九、按道路类型的自动驾驶水平（比总里程更诚实）</a><a href="#s12">十、远程协助：阈值与&quot;一人管多少车&quot;</a><a href="#s13">十一、运营方与技术提供方最常&quot;彼此误解&quot;的地方</a><a href="#s14">🧭 核心框架：从&quot;试点&quot;到&quot;公共服务&quot;的跃迁</a><a href="#s15">🔗 关联阅读</a><a href="#s16">👥 适合谁听</a><a href="#s17">十二、给四类参与者的启示</a><a href="#s18">附：主要人物与机构对照</a></nav><main class="content"><h1>从自动驾驶试点到公共服务（Autonomy Insiders 第 19 期）</h1>
+<blockquote>来源：*Autonomy Insiders*（The AV Market Strategist）· 主持人 Daniel Abreu Marques</blockquote>
+<blockquote>嘉宾：Stefanie Berliner（Holo DACH 业务负责人）、Anders Toft（Holo 运营负责人）</blockquote>
+<blockquote>时长约 70 分钟 · 中英对照逐字稿见同目录 <code>bilingual_transcript.md</code></blockquote>
+<h2 id="s0">📌 核心速览</h2>
+<ul><li><strong>一句话定位</strong>：行业叙事重心已从&quot;证明技术（proving technology）&quot;转向&quot;<strong>证明运营可扩展性（proving operational scalability）</strong>&quot;——车辆本身是最容易的部分，真正的难点在车之外。</li></ul>
+<ul><li><strong>全篇最重要洞见</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问永远只找许可持有者，公众却直觉以为是&quot;车企/品牌&quot;责任。</li></ul>
+<ul><li><strong>最反直觉的运营细节</strong>：远程协助不远程开车，只在车辆受阻时给&quot;A/B 场景&quot;决策建议；人车比财务可行区间约 <strong>1:15 到 1:20+</strong>（冬季奥斯陆可降到 1:8）。</li></ul>
+<ul><li><strong>对城市的忠告</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
+<h2 id="s1">🔢 关键数据 / 事实速记</h2>
+<ul><li><strong>软件更新频率</strong>：每 1–2 个月一次，会改变车辆行为（感知、让行、进出环岛等）。</li></ul>
+<ul><li><strong>远程协助响应阈值</strong>：交通场景 ≤ 5 秒决断；安全/乘客紧急 ≤ 2 秒。</li></ul>
+<ul><li><strong>人车比（operator-to-vehicle）</strong>：1:15 ~ 1:20+（参考 Waymo/Baidu/WeRide）；冬季奥斯陆 ~1:8。</li></ul>
+<ul><li><strong>Mobileye → MOIA 迁移红利</strong>：许可申请仅 <strong>3 个月</strong>拿到；安全驾驶员培训 5 天→3 天；整体部署阶段<strong>至少缩短 1–1.5 年</strong>。</li></ul>
+<ul><li><strong>监管对比</strong>：挪威（开放、以风险评估为基础）vs 瑞士（数据密集、指标导向、倒逼 SMS）。</li></ul>
+<h2 id="s2">🗝️ 关键金句（核心判断摘录）</h2>
+<blockquote>&quot;车辆本身是最容易的部分；真正的难点在车之外——安全治理、责任归属、十几家公司的日常协作、以及整个组织的转型。&quot;</blockquote>
+<blockquote>&quot;下一个十年是&#x27;证明服务能运营&#x27;，而非&#x27;证明车能开&#x27;。&quot;</blockquote>
+<blockquote>&quot;若运营商无法追溯车辆&#x27;为什么这么做&#x27;，就不能对许可负责，也无法预判其行为——透明度是要&#x27;争&#x27;来的。&quot;</blockquote>
+<blockquote>&quot;按道路类型拆分自动驾驶率，比只看总里程更诚实。&quot;</blockquote>
+<h2 id="s3">一、行业拐点：为什么&quot;只想要一辆展示车&quot;会被拒绝</h2>
+<ul><li>OEM 与技术提供商不再为纯试点免费提供车辆——&quot;证明技术&quot;的时代已经结束。</li></ul>
+<ul><li>现在他们要的是 <strong>可扩展性、运营就绪度、更大的车队</strong>。</li></ul>
+<ul><li>城市/市长最常提的需求仍是&quot;我们就想要一辆 showcase 车证明技术能跑&quot;，但 <strong>这种需求现在会被挡回去</strong>。</li></ul>
+<h2 id="s4">二、真实部署中的角色分工（谁做什么）</h2>
+<table><thead><tr><th>角色</th><th>说明</th><th>本案例中的对应方</th></tr></thead><tbody><tr><td><strong>Permit Holder（许可持有者）</strong></td><td>向当局申请、对日常运营负责、承担法律责任</td><td><strong>Holo</strong>（在奥斯陆同时是运营商+许可持有者）</td></tr><tr><td><strong>PTA / 公共服务提供方</strong></td><td>面向乘客的品牌方（涂装、客服）</td><td><strong>Ruter</strong>（奥斯陆公共交通局）</td></tr><tr><td><strong>Software Provider（软件提供商）</strong></td><td>提供自动驾驶平台</td><td><strong>MOIA</strong>（底层与 <strong>Mobileye</strong> 合作）</td></tr><tr><td><strong>OEM</strong></td><td>车辆制造</td><td>车辆平台提供方</td></tr></tbody></table>
+<p>关键洞察：<strong>乘客看到的是 Ruter 涂装的品牌车、接到的是 Ruter 客服</strong>——Holo 在公众层面&quot;隐身&quot;，专心做技术和安全。</p>
+<h2 id="s5">三、责任归属：许可持有者才是真正的&quot;兜底方&quot;</h2>
+<ul><li><strong>公众直觉</strong>：出事 = 车辆/车企（即 Ruter 品牌）责任。</li></ul>
+<ul><li><strong>法律现实</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问，永远只找许可持有者，不会直接找软件商或 PTA。</li></ul>
+<ul><li>合同内部用 <strong>&quot;黑箱（black box）&quot;数据</strong> 确定根因，再在联盟内部分摊。</li></ul>
+<ul><li>即便进入 <strong>L4（无安全员）</strong>，运营商对当局仍要为&quot;车辆做了什么&quot;负责。</li></ul>
+<h2 id="s6">四、依赖关系制造的运营风险</h2>
+<ul><li>存在 <strong>安全利益 vs 商业利益</strong> 的张力：&quot;多快能推送更新&quot; 与 &quot;多安全才行&quot; 的时间线未必重合。</li></ul>
+<ul><li>一旦某个安全关键部件出问题，运营商会 <strong>停摆整个车队</strong>——这是服务退化，不是 PTA 想要的。</li></ul>
+<h2 id="s7">五、事故管理：根因分析 + &quot;局部 vs 全局&quot;的关键判断</h2>
+<p><strong>每次异常都做根因分析（RCA）</strong>。事发后最初几分钟的流程：现场安全驾驶员先 securing 现场 → 升级到监控团队（控制塔）→ 事故经理记录开 ticket → <strong>核心判断：这是局部事故，还是潜在全局事故？</strong> 软件自身发生无法解释的、有安全隐患的行为 → 可能是全局问题 → 立即停摆整个车队。</p>
+<h2 id="s8">六、监管对比：挪威（开放）vs 瑞士（数据密集）</h2>
+<table><thead><tr><th>维度</th><th>挪威 / 奥斯陆</th><th>瑞士</th></tr></thead><tbody><tr><td>监管风格</td><td>开放、以 <strong>风险评估</strong> 为基础</td><td>数据密集、指标导向</td></tr><tr><td>数据要求</td><td>无预设数据点；风险上升即报告</td><td>实时定位、连通延迟、<strong>脱离率</strong>、按道路类型的行为</td></tr><tr><td>目标</td><td>风险可控即可</td><td>倒逼运营商建立 <strong>安全管理体系(SMS)</strong></td></tr><tr><td>ODD 复杂度</td><td>郊区为主</td><td>城市核心（苏黎世/巴塞尔）复杂度高得多</td></tr></tbody></table>
+<p>嘉宾强调：<strong>欧洲难就难在每个国家规则不同</strong>，没有统一剧本。</p>
+<h2 id="s9">七、可追溯性（Traceability）：无法解释，就无法担责</h2>
+<ul><li>若运营商 <strong>无法追溯车辆&quot;为什么这么做&quot;</strong>，就<strong>不能对许可负责</strong>。</li></ul>
+<ul><li>但决策数据（&quot;他们的大脑&quot;）<strong>掌握在软件商手中</strong>；运营商不需要、也看不到底层方程，只需看到&quot;结果层&quot;。</li></ul>
+<ul><li>因此 <strong>透明度是要&quot;争&quot;来的</strong>。Mobileye 案例：作为首个外部运营商部署，Holo 持续施压获取数据，过程艰难但最终双赢。</li></ul>
+<h2 id="s10">八、安全是&quot;组织任务&quot;，不止技术问题</h2>
+<ul><li>必须把 <strong>&quot;人的安全管理体系&quot;</strong> 与 <strong>&quot;技术安全管理体系&quot;</strong> 融合。</li></ul>
+<ul><li>这是 <strong>零容忍行业</strong>：以 Cruise 为例，一个小问题就能摧毁整个业务。</li></ul>
+<ul><li>Holo 的做法：频繁 <strong>事故演练</strong>、专门安全页面、全员安全意识培训、招聘环节即测试安全素养。</li></ul>
+<h2 id="s11">九、按道路类型的自动驾驶水平（比总里程更诚实）</h2>
+<ul><li>单纯的 <strong>&quot;每公里自动驾驶率&quot;</strong> 会骗人：好路与住宅区小路差异巨大。</li></ul>
+<ul><li><strong>按道路类型拆分</strong> 能揭示真实差距，也便于向当局和 Ruter 展示风险与缓解策略。</li></ul>
+<ul><li>实践意义：<strong>逐道路类型逐步放开 L4</strong>，而不是一次性全域放开。</li></ul>
+<h2 id="s12">十、远程协助：阈值与&quot;一人管多少车&quot;</h2>
+<ul><li><strong>远程协助操作员不执行动态驾驶任务（DDT）</strong>，不远程开车；只在车辆受阻时给&quot;A/B 场景&quot;决策建议，或处理乘客紧急事件。</li></ul>
+<ul><li><strong>响应阈值</strong>：交通场景 ≤ 5 秒；安全/乘客紧急 ≤ 2 秒。</li></ul>
+<ul><li><strong>人车比</strong>：财务可行区间约 <strong>1:15 到 1:20+</strong>；冬季奥斯陆可能降到 <strong>1:8</strong>。</li></ul>
+<h2 id="s13">十一、运营方与技术提供方最常&quot;彼此误解&quot;的地方</h2>
+<ul><li>技术方视角：&quot;系统按设计工作&quot;（为避让行人停车）= 成功。</li></ul>
+<ul><li>运营方视角：结果却是 <strong>15 名乘客被搁浅、堵住车站、客户投诉</strong>——真正的麻烦才开始。</li></ul>
+<h2 id="s14">🧭 核心框架：从&quot;试点&quot;到&quot;公共服务&quot;的跃迁</h2>
+<table><thead><tr><th>阶段</th><th>关注点</th><th>决胜能力</th></tr></thead><tbody><tr><td>证明技术</td><td>车能不能开</td><td>驾驶栈</td></tr><tr><td>证明运营可扩展性</td><td>服务能不能稳定跑</td><td>责任切分 / 远程协助 / 变更管理 / SMS</td></tr></tbody></table>
+<h2 id="s15">🔗 关联阅读</h2>
+<ul><li>[为所有人设计无人驾驶汽车](../../driverless-cars-for-everyone/)：远程操作员的情境意识上限与&quot;人环&quot;设计——本集运营侧的人因注脚。</li></ul>
+<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：远程协助请求积压导致整城瘫痪——本集&quot;2 秒内决断&quot;的现实压力测试。</li></ul>
+<ul><li>[Einride 的自动驾驶货运战略](../../einride-autonomous-freight/)：同为&quot;重运营&quot;路线，看货运侧如何做 per-site 许可与渐进式安全。</li></ul>
+<h2 id="s16">👥 适合谁听</h2>
+<ul><li>自动驾驶运营商、许可持有者、安全/合规负责人；</li></ul>
+<ul><li>城市交通局与 PTA（理解&quot;别只想要展示车&quot;）；</li></ul>
+<ul><li>想进入欧洲 AV 市场的技术/软件提供商；</li></ul>
+<ul><li>关注 AV 责任链与保险结构的投资人。</li></ul>
+<h2 id="s17">十二、给四类参与者的启示</h2>
+<ul><li><strong>城市/交通局</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
+<ul><li><strong>运营商</strong>：构建软件/数据/安全能力是核心竞争力；<strong>许可持有者既是责任中心，也是价值中心</strong>。</li></ul>
+<ul><li><strong>技术/软件提供商</strong>：补齐&quot;运营视角&quot;，用透明度换取更高质量的运营反馈。</li></ul>
+<ul><li><strong>行业与投资方</strong>：范式已从 *Can it drive?* 转向 *Can it operate as a service?*</li></ul>
+<h2 id="s18">附：主要人物与机构对照</h2>
+<table><thead><tr><th>名称</th><th>角色</th></tr></thead><tbody><tr><td>Daniel Abreu Marques</td><td>主持人（Autonomy Insiders）</td></tr><tr><td>Stefanie Berliner</td><td>Holo DACH（德奥瑞）业务负责人</td></tr><tr><td>Anders Toft</td><td>Holo 运营负责人</td></tr><tr><td><strong>Holo</strong></td><td>北欧自动驾驶运营商，为 Ruter 运营奥斯陆车队</td></tr><tr><td><strong>Ruter</strong></td><td>奥斯陆公共交通运输局（PTA）</td></tr><tr><td><strong>MOIA</strong></td><td>软件提供商（与 Mobileye 合作）</td></tr><tr><td><strong>Mobileye</strong></td><td>自动驾驶技术栈/底层供应商</td></tr><tr><td><strong>Vegvesen</strong></td><td>挪威公共道路管理局</td></tr></tbody></table></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="/ep/waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="/ep/einride-autonomous-freight/index.html"><div class="rw"><img loading="lazy" src="/ep/einride-autonomous-freight/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">Einride 的自动驾驶货运战略</div></div></a><a class="relcard" href="/ep/av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="/ep/av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="/ep/uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="/ep/uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">拆解 Uber 的自动驾驶战略</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="/index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><div id='wbToast'></div></body></html>

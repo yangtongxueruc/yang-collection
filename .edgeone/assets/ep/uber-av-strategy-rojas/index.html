@@ -1,0 +1,408 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>拆解 Uber 的自动驾驶战略 · 总结分析</title><meta name='description' content='前 Uber 自动驾驶团队创始成员拆解 Uber 的 AV 战略：靠维持供给侧竞争保住价差，用 UAS 运营层锁定 AV 公司；2024 年 Waymo 上线引爆投资者紧迫感，而 Waymo 的「车不够」与「特洛伊木马」博弈正改写行业权力结构。'><meta property='og:title' content='拆解 Uber 的自动驾驶战略 · 总结分析'><meta property='og:description' content='前 Uber 自动驾驶团队创始成员拆解 Uber 的 AV 战略：靠维持供给侧竞争保住价差，用 UAS 运营层锁定 AV 公司；2024 年 Waymo 上线引爆投资者紧迫感，而 Waymo 的「车不够」与「特洛伊木马」博弈正改写行业权力结构。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/inside-ubers-av-strategy-with-founding" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Podcast</div><h1>拆解 Uber 的自动驾驶战略</h1><p class="sub">Inside Uber&#x27;s AV Strategy</p><div class="tags"><span class="tag">⏱ 42:37</span><span class="tag">👤 Eduardo Rojas（前 Uber 自动驾驶出行与配送团队创始成员）</span><span class="tag">🗓 2026-05-25</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/qI8PM81D1Jw" title="Inside Uber&#x27;s AV Strategy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览（TL;DR）</a><a href="#s1">🗝️ 关键金句（原文摘录）</a><a href="#s2">一、起点：Uber 是一家&quot;双边平台&quot;，但两侧逻辑完全不同</a><a href="#s3">二、2024 年的转折点：Waymo 上线，紧迫感骤然降临</a><a href="#s4">三、Uber 的应对：合作 + 投资 + UAS 运营层&quot;锁定&quot;</a><a href="#s5">四、模型之争：垂直整合 vs 聚合，以及&quot;混合模式&quot;的合理性</a><a href="#s6">五、&quot;特洛伊木马&quot;策略：Uber 为何不敢做&quot;纯 AV 选项&quot;</a><a href="#s7">六、Waymo 的&quot;车&quot;问题：技术领先，却错失三年窗口</a><a href="#s8">七、被忽视的战场：自动驾驶配送与厨房机器人</a><a href="#s9">🧭 一图看懂：Uber 的 AV 博弈框架</a><a href="#s10">🔗 关联阅读</a><a href="#s11">👥 适合谁听</a><a href="#s12">✅ 关键结论</a><a href="#s13">⚠️ 局限性与说明</a></nav><main class="content"><h1>深度分析：拆解 Uber 的自动驾驶（AV）战略</h1>
+<blockquote><strong>一句话主旨：</strong> Uber 的 AV 战略从第一天起就没变过——维持供给侧的充分竞争、保住&quot;需求价与供给价之间的价差&quot;；真正改变的是 2024 年 Waymo 上线后由资本市场点燃的&quot;生存级紧迫感&quot;。</blockquote>
+<blockquote><strong>嘉宾：</strong> Eduardo Rojas —— 自动驾驶配送运营者，前 Uber 自动驾驶出行与配送团队（Autonomous Mobility &amp; Delivery）创始成员，2022 年 1 月加入时团队仅约 20 人，负责把 Uber Eats 上的配送机器人从 20 台扩展到数千台；早期还运营过 cloud kitchens，并在哥伦比亚做过&quot;配送优先&quot;的餐饮生意。</blockquote>
+<blockquote><strong>来源：</strong> The Driverless Digest Podcast（主持人 Harry Campbell —— The Rideshare Guy）</blockquote>
+<blockquote><strong>访谈时间：</strong> 2026 年 5 月前后</blockquote>
+<hr>
+<h2 id="s0">📌 核心速览（TL;DR）</h2>
+<ul><li><strong>战略本质没变：</strong> Uber 是一家&quot;双边平台&quot;，AV 威胁的是供给侧的价差；Uber 要做的始终是让多家 AV 供应商彼此压价，保住那道利润空间。</li></ul>
+<ul><li><strong>变的是紧迫感：</strong> 2024 年 Waymo 在旧金山上线，成为首个可信的纯 AV 替代者；同期投资者电话会上 <strong>约 71% 的问题都与 AV 相关</strong>，把战略从&quot;稳步推进&quot;改写成&quot;现在就得成&quot;。</li></ul>
+<ul><li><strong>护城河在&quot;运营层&quot;不在&quot;造车&quot;：</strong> 通过 <strong>Uber Autonomous Solutions（UAS）</strong> 包揽 depot/维护/充电，把 AV 公司锁定在自己生态里。</li></ul>
+<ul><li><strong>&quot;特洛伊木马&quot;暴露软肋：</strong> Uber 敢聚合 Waymo 的供给，却不敢给 Waymo 独立入口，怕&quot;用户意图被夺走&quot;。</li></ul>
+<ul><li><strong>Waymo 的最大风险是&quot;车不够&quot;：</strong> 技术领先 + 3–4 年独家窗口，却只铺了约 <strong>3,000 台车</strong>，规模远不及 Uber/Lyft 单一城市日单量。</li></ul>
+<ul><li><strong>被低估的战场是配送：</strong> 当点餐比做饭便宜（中国样本：上海/北京人均下单是纽约的 <strong>5 倍</strong>），需求被引爆，机器人是压低成本的核心杠杆。</li></ul>
+<p><strong>关键数据速记：</strong> 投资者 AV 提问率 ≈ 71% ｜ Waymo 已部署 ≈ 3,000 台 ｜ Zoox 目标量产 ≈ 10,000 台/年 ｜ Tesla 日产整车 ≈ 5,000 台 ｜ Waymo 周单量 ≈ 50 万次 vs Uber+Lyft 纽约单城日合计 ≈ 70 万次 ｜ 中国人均下单 ≈ 纽约 5 倍。</p>
+<hr>
+<h2 id="s1">🗝️ 关键金句（原文摘录）</h2>
+<blockquote>&quot;不与 Uber 合作，你就逼着 Uber 去重金投资你的竞争对手。&quot;</blockquote>
+<blockquote>—— Rojas 开场抛出的核心命题：Waymo 不供给，Uber 就持续扶持整个替代生态，确保&quot;不止一个赢家&quot;。</blockquote>
+<blockquote>&quot;投资者是终极管理者。&quot;</blockquote>
+<blockquote>—— 当投资人把 AV 定义为最重要的议题，压力会层层传导到 C-suite 再到执行团队。</blockquote>
+<blockquote>&quot;Uber 想要的是：充足的供给时长（abundant supply hours）、可靠的供给、以及低价格。&quot;</blockquote>
+<blockquote>&quot;Waymo 有出色的自动驾驶技术，却有一个&#x27;车&#x27;的问题——它没有足够的车。&quot;</blockquote>
+<blockquote>—— 本集对 Waymo 最尖锐的判断，也是理解后续行业叙事的一把钥匙（见下方关联阅读）。</blockquote>
+<blockquote>&quot;在上海、北京，人均下单量是纽约的 5 倍，因为点餐成本已逼近自炊成本。&quot;</blockquote>
+<hr>
+<h2 id="s2">一、起点：Uber 是一家&quot;双边平台&quot;，但两侧逻辑完全不同</h2>
+<p>要理解 Uber 的 AV 战略，Rojas 认为必须先拆开它的&quot;双边平台&quot;结构：</p>
+<ul><li><strong>需求侧（demand side）是软件生意。</strong> 做出一款产品后，每个新增用户的边际成本趋近于零。胜负靠的是&quot;需求与意图的占有&quot;——当用户饿肚子、赶时间、赴约晚点时，脑子里第一个蹦出来的是&quot;叫个 Uber&quot;，Uber 就赢了。</li></ul>
+<ul><li><strong>供给侧（supply side）是物流 / 运营市场。</strong> 胜负靠的是&quot;供给的流动性&quot;（liquidity）——要有足够多的司机在线。但每拉新一名司机都有成本（背景审查、激励），Uber 的利润来自<strong>需求端愿意支付的最高价</strong>与<strong>供给端愿意接单的最低价</strong>之间的差价（spread）。</li></ul>
+<p>在这个框架下，<strong>自动驾驶（AV）的出现直接威胁的是供给侧的&quot;价差&quot;</strong>：</p>
+<blockquote>今天 Uber 平台上有成千上万名人类司机彼此竞争，这保证了低价格。但如果你把&quot;成百上千竞争的司机&quot;换成&quot;少数几个 AV 供应商&quot;，这些供应商的议价权会骤然上升，需求与供给之间的价差被压缩，Uber 的盈利空间也就被挤压。</blockquote>
+<p>所以 Rojas 一针见血地指出：<strong>Uber 的 AV 战略从第一天起就是——维持 AV 供给侧的充分竞争，让多家供应商彼此压价，从而保住那道价差。</strong> 这与 Uber 过去对人类司机的策略一脉相承（他用 Trip Radar 举例：把 10 个订单同时推给司机，让司机自己挑，Uber 总能以更低成本撮合）。战略本身&quot;没有变&quot;，变的是<strong>紧迫感</strong>。</p>
+<hr>
+<h2 id="s3">二、2024 年的转折点：Waymo 上线，紧迫感骤然降临</h2>
+<p>Rojas 把 2024 年中定义为 Uber AV 战略的转折点。导火索是 <strong>Waymo 在旧金山上线，成为首个可信的、纯 AV 的 Uber 替代者，并开始抢走市场份额</strong>。</p>
+<p>但更关键的信号来自资本市场。Rojas 有个个人习惯——逐字读 Uber 投资者电话会记录，看董事们在问什么。他的发现是：</p>
+<blockquote>到 2024 年中，投资者电话会上<strong>高达约 71% 的问题都与 AV 相关</strong>。</blockquote>
+<p>他的洞见是：<strong>&quot;投资者是终极管理者。&quot;</strong> 当投资人把 AV 定义为最重要的议题，C-suite（高管层）就会被牵引，压力再层层传导到执行团队。于是原本&quot;我们在稳步推进&quot;的节奏，被改写为&quot;这事儿现在就得成，因为已经有一个可信的替代者在冲击我们的股价&quot;。</p>
+<p>主持人 Harry 也给了佐证：Uber 当前约 99% 的营收来自人类网约车，但 90%–99% 的投资者兴趣都在 AV 上——一个&quot;业务占比极小、却绑架了全部叙事&quot;的错位时刻。更扎心的是股价：访谈中提到，当年标普 500 涨约 5%，Uber 股价却跌约 10%，即便单季盈利达 30 亿美元。<strong>投资人显然还没买账 Uber 的&quot;我们靠合作与运营层锁定就能赢&quot;的叙事。</strong></p>
+<hr>
+<h2 id="s4">三、Uber 的应对：合作 + 投资 + UAS 运营层&quot;锁定&quot;</h2>
+<p>面对&quot;只有 Waymo 一个可信 AV 方案&quot;的焦虑，Uber 做了什么？Rojas 总结出一套连贯动作：</p>
+<p>1. <strong>识别并清除行业 blocker。</strong> Uber 自己发过两份 AV 行业深度分析（一份 2025 年初、一份 2026 年），核心结论是&quot;AV 行业有个 OEM 问题——它们没有车&quot;。于是 Uber 去和 <strong>Lucid</strong> 等整车厂签合作；发现有些公司还有&quot;资金问题&quot;，就直接下场投资（<strong>Nuro、Wayve、Lucid</strong> 等生态）。 2. <strong>用运营层把 AV 公司&quot;锁&quot;在自己身上。</strong> 这就是 <strong>Uber Autonomous Solutions（UAS）</strong>：Uber 包揽 depot（场站）、support、maintenance、charging 等&quot;围绕车辆的一切&quot;。逻辑是——AV 公司若把部署周边的事都交给 Uber，就会更依赖 Uber，也更愿意给出一个有竞争力的低价。</p>
+<blockquote>&quot;Uber 想要的是：充足的供给时长（abundant supply hours）、可靠的供给、以及低价格。&quot; 而 UAS 正是把&quot;多家供应商竞争低价&quot;这个终极目标落到运营实处的抓手。</blockquote>
+<p>这里有个精妙的博弈观：Rojas 在开场就抛出核心命题——</p>
+<blockquote><strong>&quot;不与 Uber 合作，你就逼着 Uber 去重金投资你的竞争对手。&quot;</strong></blockquote>
+<p>他的推演是：假如 Waymo 有数千台车跑在 Uber 平台上，Uber 就没有动力去大举投资 Lucid、Nuro、Wayve 这些&quot;其他玩家&quot;了；正因为 Waymo 不供给、Uber 视其为生存威胁，Uber 才必须持续扶持整个替代生态，确保&quot;不止一个赢家&quot;。</p>
+<hr>
+<h2 id="s5">四、模型之争：垂直整合 vs 聚合，以及&quot;混合模式&quot;的合理性</h2>
+<p>围绕 Waymo（垂直整合、第一方）与 Uber（聚合供需的市场模式）谁会赢，Rojas 给出了一个更细腻的视角——他把它拆成&quot;<strong>固定车队 vs 波动需求</strong>&quot;的矛盾：</p>
+<ul><li>Waymo 的车队是<strong>固定投资</strong>，但需求在日内、日间、月月间剧烈波动。于是 Waymo 被迫二选一：要么车队小、利用率高，但高峰等待时间与价格飙升；要么车队大、却要承受大量闲置。</li></ul>
+<ul><li><strong>混合模式（hybrid）</strong> 更合理：在 UberX 里，用户可能匹配到 AV，也可能匹配到人类司机；高峰期用人类司机补位，平峰期 AV 顶上。Rojas 认为未来 10–30 年 hybrid 都更合理，<strong>只有到 AV 成本真的极低、闲置车的成本不再是问题时，纯 AV 平台才有意义。</strong></li></ul>
+<p>主持人补充了现实证据：在旧金山、洛杉矶，高峰期 Waymo 的 ETA 常达 10–20 分钟，价格甚至高于 Uber 和 Lyft Black——固定车队的&quot;供给天花板&quot;在尖峰时段暴露无遗。</p>
+<hr>
+<h2 id="s6">五、&quot;特洛伊木马&quot;策略：Uber 为何不敢做&quot;纯 AV 选项&quot;</h2>
+<p>在 Austin、Atlanta 上线的 &quot;<strong>Waymo on Uber</strong>&quot; 产品中，用户在 Uber App 叫车，却<strong>没有独立的纯 AV 选项</strong>——即便勾选了 AV，多数时候匹配的仍是人类司机。主持人把这套设计称为 <strong>&quot;特洛伊木马（Trojan horse）&quot;</strong>：Uber 用海量需求把用户喂给 Waymo 的好体验，等用户养成&quot;Waymo 真棒&quot;的心智，一旦合作终止，用户就会直奔 Waymo 自家 App。</p>
+<p>Rojas 道破了 Uber 真正的担忧——还是要回到&quot;占有意图&quot;：</p>
+<blockquote>如果给 Waymo 在 Uber 里一个独立的产品入口，用户&quot;点的是 Waymo、走的是 Waymo&quot;，那 Uber 就只是个被绕过的管道，利润被 Waymo 拿走。Uber 怕的正是&quot;你不是在叫 Uber，你是在叫 Waymo&quot;。</blockquote>
+<p>有趣的反例在中东（如迪拜）：那里 Uber 确实有 AV 独立选项——因为当地没有&quot;多个 AV 互相竞争&quot;的局面，Waymo 式的强势玩家缺位，Uber 才敢放开。Rojas 的判断是：<strong>问题不在于&quot;有没有 AV 选项&quot;，而在于&quot;这个 AV 是不是强到能反客为主&quot;——而 Waymo 恰好就是。</strong></p>
+<hr>
+<h2 id="s7">六、Waymo 的&quot;车&quot;问题：技术领先，却错失三年窗口</h2>
+<p>Rojas 对 Waymo 下了一个尖锐判断：<strong>Waymo 有出色的自动驾驶技术，却有一个&quot;车&quot;的问题——它没有足够的车。</strong></p>
+<p>他的&quot;重大失误论&quot;：Waymo 曾有 <strong>3–4 年的独家窗口期</strong>（市场上几乎没有其他可信 AV 供应商），但到现在只部署了约 <strong>3,000 台车</strong>。对比之下——</p>
+<ul><li><strong>Zoox</strong> 目标量产爬坡后每年 10,000 台；</li></ul>
+<ul><li><strong>Tesla</strong> 日产约 5,000 台整车；</li></ul>
+<ul><li>中国有三家公司已在运营。</li></ul>
+<blockquote>&quot;它们本该更激进，现在就该有 1 万、2 万、3 万台车，建立一道后来者难以逾越的领先优势。&quot;</blockquote>
+<p>主持人用数据印证了这点：Waymo 周单量约 50 万次，而 Uber + Lyft 仅在纽约一个城市每天就合计约 70 万次——Waymo 在全美的体量不过是 Uber/Lyft 单一市场的零头。增长曲线虽&quot;向右上&quot;，但<strong>绝对规模仍受限于车辆供给</strong>。</p>
+<p>Rojas 还从 Waymo 的角度给了解释：既然车不够，把有限的车部署在自己第一方平台（及与 Lyft 的合作）上 ROI 最高。但他预判，当车辆不再受限时，Waymo 应该让车出现在每一个可用平台——&quot;更多行程 → 更多收入 → 更好工程师 → 更好产品&quot;才是飞轮。他还顺带预言：<strong>Lyft 与 Waymo 是天作之合</strong>（Lyft 市值约 50 亿美元，对 Google 而言是笔极小的交易），双方都能从&quot;不排他、多平台&quot;中获益。</p>
+<hr>
+<h2 id="s8">七、被忽视的战场：自动驾驶配送与厨房机器人</h2>
+<p>访谈后半段转向了&quot;投资人几乎不问、却可能更具爆发力&quot;的自动驾驶配送。</p>
+<ul><li><strong>叙事错位：</strong> 投资者 100% 的问题都围着出行（mobility）转，几乎没人问 Uber 的自动驾驶配送。但 Rojas 点出 Uber 的&quot;输不起&quot;心态——<strong>DoorDash</strong> 在该领域极其激进，Uber 即便优先级不高，也绝不会把这块让出去。</li></ul>
+<ul><li><strong>落地远比想象复杂：</strong> 他在 Uber 时把配送机器人部署设计成一个&quot;漏斗&quot;——选城市 → 选城区 → 商户接入率（stores 是 opt-in，这是行业谈得不够多的真实 blocker）→ 适配机器人的订单比例 → 车队的就近供给与调度。连&quot;店里店员怎么知道哪单归机器人、机器人到了怎么沟通、小店店员能不能走出柜台装货&quot;这种细枝末节，都是规模化路上的真实障碍。</li></ul>
+<ul><li><strong>解法在美国 vs 中国：</strong> 美国人力成本高、且不能靠压低时薪解决，所以<strong>机器人 + 模块化（单一公司无需自建全栈）</strong> 是关键。Rojas 自己正据此创业，做一套&quot;快且低成本&quot;的自动驾驶配送方案。</li></ul>
+<p>最触动人的数据点是<strong>中国样本</strong>：在上海、北京，人均下单量是纽约的 <strong>5 倍</strong>，根因是&quot;点餐成本已逼近自炊成本&quot;——当点外卖和自己做一样便宜，需求就被引爆。Rojas 因此看好&quot;<strong>配送机器人 + 厨房机器人</strong>&quot;双线压低边际成本，把配送的 TAM 推向近乎无限（毕竟人一天吃三顿、还得喝咖啡，高频刚需的边际成本越接近零，市场越大）。</p>
+<hr>
+<h2 id="s9">🧭 一图看懂：Uber 的 AV 博弈框架</h2>
+<p><code>`</code> 需求侧(软件)                          供给侧(物流/运营) 占有&quot;意图&quot;                            保住&quot;价差&quot;(spread) │                                      │ └──────────────┬───────────────────────┘ ▼ 双边平台：撮合需求价 ↔ 供给价，赚差价 │ 当 AV 出现 → 供给从&quot;海量竞争司机&quot;变成&quot;少数供应商&quot; │ ▼ 供给侧议价权上升 → 价差被压缩 → Uber 盈利受威胁 │ ┌──────────┬───────────┴────────────┬──────────────┐ ▼          ▼                         ▼              ▼ 维持多供应商   下场投资(Nuro/       UAS 运营层锁定        &quot;特洛伊木马&quot; 彼此压价       Wayve/Lucid)      (depot/维护/充电)       (聚合但不给入口) │                                                              │ └──────────── 目标：充足的供给时长 + 可靠供给 + 低价格 ─────────┘ <code>`</code></p>
+<p>一句话：Uber 不造车，它赌的是&quot;<strong>谁供给都不重要，只要供给充分竞争、且离不开我的运营层</strong>&quot;。</p>
+<hr>
+<h2 id="s10">🔗 关联阅读</h2>
+<ul><li><strong>[Lessons from the Great Waymo Outage of 2025（Brad Templeton）](/ep/waymo-outage-2025-templeton/)</strong> —— 本集从一次真实 outage 的实证角度，正好补上了上面&quot;Waymo 的车 / 远程运营瓶颈&quot;这一判断：当远程协助（teleoperation）成为规模化瓶颈、 outage 让 robotaxi 整城趴窝，Rojas 口中的&quot;车不够&quot;之外，又多了一层&quot;运营韧性&quot;的考题。</li></ul>
+<ul><li><strong>[Who Rides Robotaxis（Waymo 用户画像）](/ep/waymo-data-who-rides-robotaxis/)</strong> —— 从需求侧数据看 Waymo 实际服务的用户群，可与本集&quot;占有意图&quot;的命题互为印证。</li></ul>
+<hr>
+<h2 id="s11">👥 适合谁听</h2>
+<ul><li>关注出行 / 自动驾驶行业战略与商业模式的人；</li></ul>
+<ul><li>想理解&quot;平台型公司如何对付垂直整合型颠覆者&quot;的产品 / 战略从业者；</li></ul>
+<ul><li>跟踪 Uber、Waymo、Zoox、Lucid、Nuro、Wayve 等公司的投资者；</li></ul>
+<ul><li>对&quot;自动驾驶配送 / 机器人&quot;赛道机会感兴趣的创业者。</li></ul>
+<hr>
+<h2 id="s12">✅ 关键结论</h2>
+<p>1. <strong>Uber 的 AV 战略本质没变：维持供给侧竞争、保住价差。</strong> 变的是 2024 年后由 Waymo 上线 + 投资者 71% 提问率带来的&quot;生存级紧迫感&quot;。 2. <strong>Uber 的护城河在&quot;运营层&quot;，不在&quot;造车&quot;。</strong> 通过 UAS 包揽 depot/维护/充电，把 AV 公司锁定在自己生态里，再用海量需求与高利用率赋能车队——这是它对抗垂直整合型对手的差异化打法。 3. <strong>&quot;特洛伊木马&quot;暴露了 Uber 的软肋：</strong> 它敢聚合 Waymo 的供给，却不敢给 Waymo 独立入口，怕&quot;意图被夺走&quot;。一旦多个 AV 成熟，这套平衡术将面临考验。 4. <strong>Waymo 的最大风险是&quot;车不够&quot;。</strong> 技术领先 + 3–4 年独家窗口，却只铺了约 3,000 台车；若不能更激进扩产，领先优势会被 Zoox、Lucid、Wayve 及中国玩家快速蚕食。 5. <strong>混合模式（hybrid）在中长期更稳。</strong> 固定车队扛不住波动需求，人类司机补位是务实选择；纯 AV 平台要等成本足够低才成立。 6. <strong>配送是被低估的战场，中国是最前沿的样本。</strong> 当点餐比做饭便宜，需求爆发；机器人（配送 + 厨房）是压低成本的核心杠杆。</p>
+<hr>
+<h2 id="s13">⚠️ 局限性与说明</h2>
+<ul><li>本分析基于播客音频的自动语音识别（ASR）逐字稿整理，已对品牌与专名做校正（如 Serve Robotics、Nuro、Zoox、Wayve、Lucid、Rappi、Colombia、Trojan horse、Uber Eats、AV data、Max Wiethe 等）。个别数字（如股价涨跌幅、车辆与单量数据）为嘉宾口述，引用时建议以 Uber / Waymo 官方财报与公告为准。</li></ul>
+<ul><li>部分论述（如&quot;Waymo 重大失误论&quot;&quot;Lyft–Waymo 合并预言&quot;）属嘉宾个人判断与预测，不代表事实结论；访谈时间为 2026 年 5 月前后，部分展望（&quot;未来 6–12 个月出现替代者&quot;&quot;约 2027 年中叙事可能转变&quot;）需结合后续行业进展验证。</li></ul>
+<ul><li>本集属于行业观点访谈，非投资建议；涉及股价与市值的内容仅供理解战略语境，不构成任何投资意见。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="/ep/lyft-hybrid-autonomy-risher/index.html"><div class="rw"><img loading="lazy" src="/ep/lyft-hybrid-autonomy-risher/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Lyft 的自动驾驶混合战略</div></div></a><a class="relcard" href="/ep/av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="/ep/av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="/ep/waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="/ep/waymo-data-who-rides-robotaxis/index.html"><div class="rw"><img loading="lazy" src="/ep/waymo-data-who-rides-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast (The AV Market Strategist)</div><div class="rt">Waymo 的数据揭示了：到底谁在坐 Robotaxi</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="/index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><div id='wbToast'></div></body></html>
