@@ -1,4 +1,4 @@
-<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>为所有人设计无人驾驶汽车（而不只是尝鲜者） · 总结分析</title><meta name='description' content='无人驾驶出租车能过所有安全测试，却可能输给乘客的信任——人因专家 Clare Mutzenich 谈座舱内那个没人设计的部分。'><meta property='og:title' content='为所有人设计无人驾驶汽车（而不只是尝鲜者） · 总结分析'><meta property='og:description' content='无人驾驶出租车能过所有安全测试，却可能输给乘客的信任——人因专家 Clare Mutzenich 谈座舱内那个没人设计的部分。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://1b12298ad9434bdaa37c70b10ad078d7.app.codebuddy.work'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>为什么机器学习需要一门新编程语言 · 总结分析</title><meta name='description' content='LLVM 与 Mojo 缔造者 Chris Lattner 与 Jane Street 的 Ron Minsky 深聊：在 GPU/TPU 当道的今天，为什么碎片化逼出了「CUDA 继任者」Mojo——用 Python 血缘、类型系统与元编程，把性能、可移植性与易用性放进同一门语言。'><meta property='og:title' content='为什么机器学习需要一门新编程语言 · 总结分析'><meta property='og:description' content='LLVM 与 Mojo 缔造者 Chris Lattner 与 Jane Street 的 Ron Minsky 深聊：在 GPU/TPU 当道的今天，为什么碎片化逼出了「CUDA 继任者」Mojo——用 Python 血缘、类型系统与元编程，把性能、可移植性与易用性放进同一门语言。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
 :root{
   --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
   --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
@@ -295,72 +295,56 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 @media (max-width:560px){
   .grid{grid-template-columns:1fr}
 }
-</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/designing-driverless-cars-for-everyone" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders · Podcast</div><h1>为所有人设计无人驾驶汽车（而不只是尝鲜者）</h1><p class="sub">Designing Driverless Cars for Everyone (Not Just Early Adopters)</p><div class="tags"><span class="tag">⏱ 45:55</span><span class="tag">👤 Dr. Clare Mutzenich（Loughborough University；Anthrometric 创始人）</span><span class="tag">🗓 2026-07-01</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/MbuqJ_L6-3Q" title="Designing Driverless Cars for Everyone (Not Just Early Adopters)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览</a><a href="#s1">🔢 关键数据 / 事实速记</a><a href="#s2">🗝️ 关键金句（原文摘录）</a><a href="#s3">一、信任不是单一变量</a><a href="#s4">二、早期尝鲜者陷阱</a><a href="#s5">三、被低估的&quot;司机的情绪与社会劳动&quot;</a><a href="#s6">四、L3 接管与模拟器研究</a><a href="#s7">五、共享乘车：裁判消失后的社会规范</a><a href="#s8">六、可及性：当界面变成 AI</a><a href="#s9">七、远程操作员：被误解的&quot;人环&quot;</a><a href="#s10">八、欧洲谨慎：劣势还是优势？</a><a href="#s11">九、Anthrometric 与&quot;来得太晚的人因&quot;</a><a href="#s12">十、下一前沿：女性安全</a><a href="#s13">🧭 核心框架：规模化的两个产品</a><a href="#s14">🔗 关联阅读</a><a href="#s15">👥 适合谁听</a><a href="#s16">十一、关键结论</a><a href="#s17">局限与说明</a></nav><main class="content"><h1>为所有人设计无人驾驶汽车（而不只是尝鲜者）</h1>
-<blockquote>来源：*Autonomy Insiders*（The AV Market Strategist）· 2026-07-01</blockquote>
-<blockquote>嘉宾：Dr. Clare Mutzenich — Loughborough University 人因与 AI 交互教授，Anthrometric 创始人</blockquote>
-<blockquote>主持：Daniel Abreu Marques · 时长约 50 分钟</blockquote>
-<h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：自动驾驶最难的部分不是&quot;让车开得更好&quot;，而是<strong>信任</strong>——当驾驶座空无一人，车厢里发生了什么、出问题时乘客该找谁，才是规模化的真实瓶颈。</li></ul>
-<ul><li><strong>最反直觉的判断</strong>：行业把几乎全部工程精力投在驾驶栈，却极少设计&quot;让人在没有司机时感到安全、被照顾、知道发生了什么&quot;。</li></ul>
-<ul><li><strong>最硬的数据点</strong>：一项 91 人、覆盖各人口群体的 VR 紧急研究显示——<strong>所有人都想要同一个东西：一个能接通真人的按钮</strong>。</li></ul>
-<ul><li><strong>本集立场</strong>：为尝鲜者设计 ≠ 为所有人设计；前 1 万次乘坐和第 1 千万次乘坐是两种完全不同的产品。</li></ul>
-<h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>91 人 VR 紧急情景研究</strong>：跨年龄、性别、技术熟练度，结论高度一致——都要&quot;接通真人的按钮&quot;。</li></ul>
-<ul><li><strong>信任是多层结构</strong>：过度信任（自满）与信任不足（不确定）两个极端都危险，尤其在 L3&quot;用户负责&quot;设定下。</li></ul>
-<ul><li><strong>远程操作员存在硬上限</strong>：一人能同时监督的车数有现实边界，超过则情境意识（situational awareness）崩溃；干预的&quot;度&quot;极难拿捏。</li></ul>
-<ul><li><strong>欧洲《2024 年自动驾驶汽车法案》（Automated Vehicles Act 2024）</strong>：以风险为基础的审慎路径，可能反而是长期优势。</li></ul>
-<ul><li><strong>人因介入太晚</strong>：往往在车造好、界面定型、商业模式锁定后才补&quot;人的部分&quot;，代价极高。</li></ul>
-<h2 id="s2">🗝️ 关键金句（原文摘录）</h2>
-<blockquote>&quot;无人驾驶汽车可以顺利通过每一项安全测试，却仍然输掉乘客——因为最终决定 robotaxi 能否规模化的，是<strong>信任，而不是技术</strong>。&quot;</blockquote>
-<blockquote>&quot;前 10,000 次乘坐和前 10,000,000 次乘坐，是<strong>两种完全不同的产品</strong>。&quot;</blockquote>
-<blockquote>&quot;几乎所有人都想要同一个东西——<strong>一个能接通真人的按钮</strong>。&quot;</blockquote>
-<blockquote>&quot;紧急时刻，人最想要的不是更聪明的 AI，而是一个<strong>可以被找到的人</strong>。&quot;</blockquote>
-<h2 id="s3">一、信任不是单一变量</h2>
-<p>Mutzenich 把信任拆成多个层次，而不是一个开关。两个极端都危险：</p>
-<ul><li><strong>过度信任 / 自满（over-trust / complacency）</strong>：乘客把车当成绝对可靠，放松到该接管时不接管（尤其在 L3 这种&quot;用户负责任的&quot;设定下）。</li></ul>
-<ul><li><strong>信任不足</strong>：第一次乘坐的人充满不确定性，不知道系统能做什么、不能做什么，也不知道紧急时怎么办。</li></ul>
-<p>行业严重低估了&quot;第一次乘坐&quot;和&quot;第 N 次乘坐&quot;之间体验的鸿沟。</p>
-<h2 id="s4">二、早期尝鲜者陷阱</h2>
-<p>设计团队天然地围绕&quot;新奇寻求者&quot;和早期采用者来打磨体验，因为这部分人最容易取悦、最容易给出好评。但 Mutzenich 指出，这是最常见的错误假设：把对尝鲜者有效的东西，误认为是&quot;对人有效的东西&quot;。</p>
-<p>关于首次乘坐者，她提到一个被普遍低估的事实：人们以为新手会害怕，但更常见的是新手<strong>根本不知道该期待什么</strong>——这种不确定性本身就是体验风险。</p>
-<h2 id="s5">三、被低估的&quot;司机的情绪与社会劳动&quot;</h2>
-<p>这一节是全集最有启发的地方之一。人类司机过去一直在做大量<strong>隐形的情绪与社会工作</strong>：安抚紧张的乘客、在尴尬的沉默里找话题、在乘客争执时当裁判、对老人和孩子多一份耐心、在突发状况下用语言和肢体让人安心。</p>
-<p>当司机被移除，这些工作并没有消失——它们<strong>转移到了系统、界面和运营流程上</strong>，而行业几乎没有为此做设计。一个空荡荡的驾驶座，留下的不只是一个物理空位，而是一整套社会功能的空缺。</p>
-<h2 id="s6">四、L3 接管与模拟器研究</h2>
-<p>在 L3（&quot;用户负责&quot;）设定下，&quot;把控制权交回人类&quot;是一个被严重浪漫化的环节。Mutzenich 的模拟器研究聚焦这一点：当系统要求用户接管时，真实人类的表现远不像规范假设的那样干脆。从&quot;系统通知&quot;到&quot;人真正理解并有效控制&quot;，中间有巨大的、被设计忽略的认知缝隙。</p>
-<h2 id="s7">五、共享乘车：裁判消失后的社会规范</h2>
-<p>当 robotaxi 变成拼车，车厢里不再有司机这个&quot;社会 referee&quot;。陌生人共处一车时的行为规范（谁坐哪、怎么处理冲突、谁来定调）原本由司机默默维持。没有了人，这些规范如何重建？这是运营方几乎没碰过的话题。</p>
-<h2 id="s8">六、可及性：当界面变成 AI</h2>
-<p>为儿童（8–17 岁）和认知障碍者做设计，暴露了现有体验的脆弱。而当&quot;界面本身变成一个 AI&quot;时，&quot;可及性&quot;的含义被彻底改写：传统无障碍规范假设的是一个固定的、可预测的交互对象，而 AI 界面是可变的、会解释的、会出人意料的。</p>
-<ul><li><strong>真实包容设计 vs. 合规表演</strong>：Mutzenich 区分了真正从第一天起就把包容性做进产品的商业逻辑，和只是为了通过审计的&quot;合规剧场&quot;。</li></ul>
-<ul><li><strong>最被盲视的用户群</strong>：行业有一整块用户几乎从不被纳入设计考量——她点名了认知差异群体以及特定安全脆弱群体。</li></ul>
-<ul><li><strong>包容设计的商业理由</strong>：从第一天起就做包容性设计，不是成本中心，而是打开最大用户基数、避免后期返工的商业必然。</li></ul>
-<h2 id="s9">七、远程操作员：被误解的&quot;人环&quot;</h2>
-<p>公众对&quot;远程操作员&quot;有诸多误解。Mutzenich 澄清了现实约束：</p>
-<ul><li>一个人能同时监督多少辆车，存在<strong>现实上限</strong>；超过这个点，情境意识就会崩溃。</li></ul>
-<ul><li>干预太少（出问题没人管）和干预太多（系统不断打扰人类）都是陷阱，中间那个甜区极难设计。</li></ul>
-<p>这直接呼应了本站在 [从自动驾驶试点到公共服务](../../av-pilot-to-public-service/) 中提到的&quot;2–5 秒内必须做出远程协助决策&quot;&quot;按道路类型而非总里程衡量自动驾驶&quot;——人因和操作可扩展性，是同一枚硬币的两面。</p>
-<h2 id="s10">八、欧洲谨慎：劣势还是优势？</h2>
-<p>面对美国和中国的高歌猛进，欧洲的&quot;慢&quot;常被解读为落后。Mutzenich 提出相反看法：欧洲的审慎、以风险为基础的方法（如英国《2024 年自动驾驶汽车法案》）可能反而是<strong>长期优势</strong>——因为它逼着行业在规模化之前先把信任、责任和人机边界这些问题想清楚。</p>
-<h2 id="s11">九、Anthrometric 与&quot;来得太晚的人因&quot;</h2>
-<p>作为 Anthrometric（独立人因与行为科学咨询）创始人，Mutzenich 点出一个行业结构性问题：人因工作往往在项目的<strong>太晚阶段</strong>才被引入——等车已经造好、界面已经定型、商业模式已经锁定，再来补&quot;人的部分&quot;，代价极高、效果极有限。真正有效的人因，必须从第一天就在场。</p>
-<h2 id="s12">十、下一前沿：女性安全</h2>
-<p>在收尾部分，她把目光投向一个被长期忽视的维度：女性乘客安全。深夜独自乘坐一辆没有司机的车，对许多女性而言是一个真实的、未被充分设计的焦虑源。这很可能是下一阶段&quot;为所有人设计&quot;必须正面回答的问题。</p>
-<h2 id="s13">🧭 核心框架：规模化的两个产品</h2>
-<table><thead><tr><th>维度</th><th>前 1 万次乘坐（尝鲜者）</th><th>前 1 千万次乘坐（所有人）</th></tr></thead><tbody><tr><td>用户画像</td><td>好奇、愿容忍怪异</td><td>通勤者、老人、带娃者、深夜独行者</td></tr><tr><td>设计目标</td><td>惊喜感、好评</td><td>安全、被照顾、可知可控</td></tr><tr><td>失败代价</td><td>低（少数人体验）</td><td>高（规模化信任崩塌）</td></tr></tbody></table>
-<h2 id="s14">🔗 关联阅读</h2>
-<ul><li>[从自动驾驶试点到公共服务](../../av-pilot-to-public-service/)：远程协助的阈值、人车比与&quot;一人管多少车&quot;——本集&quot;人环&quot;讨论的运营侧注脚。</li></ul>
-<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：远程协助请求积压如何导致整城瘫痪——&quot;按钮&quot;为何如此重要的现实印证。</li></ul>
-<ul><li>[Waymo 的数据揭示了&quot;到底谁在坐 robotaxi&quot;](../../waymo-data-who-rides-robotaxis/)：真实骑手研究，验证&quot;安全不是首要采用动机&quot;。</li></ul>
-<h2 id="s15">👥 适合谁听</h2>
-<ul><li>自动驾驶产品 / UX / 安全设计师；</li></ul>
-<ul><li>关注&quot;技术落地最后一公里&quot;的运营与城市交通规划者；</li></ul>
-<ul><li>投资人（理解为何&quot;信任工程&quot;是规模化的隐藏成本）；</li></ul>
-<ul><li>任何关心&quot;没有司机的车，出事找谁&quot;的普通乘客。</li></ul>
-<h2 id="s16">十一、关键结论</h2>
-<p>1. <strong>信任 &gt; 技术</strong> 是规模化的真实瓶颈，而行业资源配置严重偏向后者。 2. 为尝鲜者设计 ≠ 为所有人设计；前 1 万次和第 1 千万次是不同产品。 3. 司机的&quot;社会与情绪劳动&quot;被移除后并未消失，而是转移给了系统——而这部分几乎没人设计。 4. 紧急时刻，跨所有人群一致想要的，是一个<strong>能接通真人的按钮</strong>，而非更聪明的 AI。 5. 远程操作存在人车比与情境意识硬上限；干预的&quot;度&quot;极难拿捏。 6. 欧洲的审慎可能是长期优势；人因工作必须前置，而不是事后补救。</p>
-<h2 id="s17">局限与说明</h2>
-<p>本分析由智能体基于节目预告、章节大纲与公开信息主笔；其中具体表述与金句的最终核对，请以中英对照逐字稿中的英文原文为准（语音识别 + 机器翻译 + 人工校对，仅供学习与参考）。</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="/ep/av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="/ep/av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="/ep/nvidia-alpamayo-accelerating/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/IUBQykSURkA/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / Podcast</div><div class="rt">NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</div></div></a><a class="relcard" href="/ep/eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/xemPH7r300w/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a><a class="relcard" href="/ep/waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="/index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://signalsandthreads.com/why-ml-needs-a-new-programming-language/" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Signals &amp; Threads (Jane Street) · YouTube</div><h1>为什么机器学习需要一门新编程语言</h1><p class="sub">Why ML Needs a New Programming Language</p><div class="tags"><span class="tag">⏱ 1:12:58</span><span class="tag">👤 Chris Lattner（LLVM/Clang/MLIR/Swift/Mojo 缔造者、Modular 联合创始人）、Ron Minsky（Jane Street 技术共同负责人，主持人）</span><span class="tag">🗓 2025-09-04</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/4llyKNb_lak" title="Why ML Needs a New Programming Language" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一、来路：编译器与语言设计的往返</a><a href="#s1">二、为什么 ML 需要新语言：结构性的行业困局</a><a href="#s2">三、Modular 的打法：不卖语言，卖平台</a><a href="#s3">四、Mojo 的设计哲学：Python 家族 + 元编程</a><a href="#s4">五、性能与可移植性：类型系统与 PTX 类比</a><a href="#s5">六、保持简单：语言演化的取舍</a><a href="#s6">七、Agentic 编程、开源与 Mojo 的当下/未来</a></nav><main class="content"><h1>为什么 ML 需要一门新编程语言：Chris Lattner 谈 Mojo</h1>
+<p><strong>节目</strong>：Signals &amp; Threads（Jane Street）· Episode 25 <strong>主播</strong>：Ron Minsky（Jane Street） <strong>嘉宾</strong>：Chris Lattner（LLVM / Clang / Swift / MLIR / OpenCL 创造者，Modular 联合创始人，Mojo 语言设计者） <strong>时长</strong>：约 73 分钟（2025-09-03） <strong>官方逐字稿</strong>：https://signalsandthreads.com/why-ml-needs-a-new-programming-language/</p>
+<blockquote>这是一期相当硬核的工程访谈。Chris Lattner 从自己的来路讲起，一路推到「为什么 AI 时代需要一门新语言、而 Mojo 想怎么解决它」。核心结论一句话概括：<strong>AI 带来了 GPU / TPU / ASIC 这类全新的异构算力，但行业没有「AI 界的 LLVM」，于是每家硬件公司都在各建垂直栈、碎片化严重；Mojo 的思路是用一门「像 Python 但有真实类型」的语言，把编译时元编程（metaprogramming）做对，从而同时拿到极致性能、跨硬件可移植性和易用性。</strong></blockquote>
+<hr>
+<h2 id="s0">一、来路：编译器与语言设计的往返</h2>
+<p>Chris 在 80 年代用 BASIC 入门，靠书和杂志学编程，OS 课让他第一次体验「一层层搭系统」，波特兰州立大学的编译器教授把他带进了编译器世界。他的职业生涯在<strong>编译器工程</strong>和<strong>语言设计</strong>之间反复横跳：LLVM（2000 年启动）→ 2005 年加入 Apple → 2010 年前后 Clang 支持 C++ 自举 → Swift。他自认「不是数学家」，语言设计的取向是 <strong>utility-forward（从实用出发）</strong>，而非从类型理论的数学美感出发；他认为能落地的特性（如 pattern matching、代数数据类型）才是推动主流采用的关键。</p>
+<p>他还点出一个反复出现的隐喻——<strong>「系统里的沙子」</strong>：很多复杂源于本不该存在的约束（比如 C++ 永远无法删特性、Swift 里也有几粒沙子）。这也是他后来想做「下一代系统」去根治这些问题的动力。</p>
+<h2 id="s1">二、为什么 ML 需要新语言：结构性的行业困局</h2>
+<p>真正的转折是 <strong>AI 来了</strong>。GPU、TPU、FPGA、ASIC 带来了全新一代算力，而「LLVM 从没真正在这套系统里工作过」。</p>
+<p>Chris 把问题定性为一个<strong>结构性产业问题</strong>：</p>
+<ul><li>做高级代码生成（先进 GPU kernel 等）的人，<strong>全在硬件公司里</strong>；每家都被迫自建垂直软件栈，因为「没有东西可插」——不存在「AI 界的 LLVM」。</li></ul>
+<ul><li>硬件公司自然只为自己的芯片优化，没人 incentive 去协作：AMD 不会去给 NVIDIA GPU 打工。于是<strong>跨厂商碎片化</strong>不可避免。</li></ul>
+<ul><li>低层语言（CUDA / ROCm / XLA）和高层工具（PyTorch / JAX / Triton）之间，跨平台支持「complicated, messy and incomplete」。</li></ul>
+<ul><li>在「两个本就不兼容的东西」上叠抽象（当年的 MLOps 热：在 TensorFlow/PyTorch 上盖一层 Python 做统一平台）<strong>只能加胶带</strong>——一旦出问题，就得调试一整座你根本不想懂的栈。</li></ul>
+<p>硬件侧也在变：现代 GPU 有 SM、warp（通常 32 线程 lockstep 的 SIMD 模型）、以及为矩阵乘专设的 <strong>tensor core</strong>；Chris 直言「<strong>CUDA 从不是为这个现代世界设计的</strong>，它设计时世界简单得多，20 年过去了没能追上」。再往外，Google TPU 干脆拿掉线程、把整颗芯片围绕大矩阵乘单元构建，更专用、吞吐更高。</p>
+<h2 id="s2">三、Modular 的打法：不卖语言，卖平台</h2>
+<p>Ron 问了一个尖锐的商业问题：卖编程语言的公司「尸横遍野」，Modular 怎么避免被单一厂商锁定、又能做成共享平台？</p>
+<p>Chris 的回答很直接：<strong>「First answer is, don&#x27;t sell a programming language.」</strong> Mojo 免费随便用，他们卖的不是语言，而是<strong>统一硬件的基础技术</strong>；等底座修好，再向企业卖高价值服务（管理数百到数千张 GPU、3 年云承诺、平台团队 + 产品团队的生产负载）。</p>
+<p>技术栈由内到外三层：</p>
+<ul><li><strong>Mojo</strong>：编程语言（最内层）</li></ul>
+<ul><li><strong>MAX</strong>：可视为 PyTorch / vLLM 的替代品，单机高性能 LLM serving</li></ul>
+<ul><li><strong>Mammoth</strong>：集群管理 / Kubernetes 层</li></ul>
+<h2 id="s3">四、Mojo 的设计哲学：Python 家族 + 元编程</h2>
+<p>回到 Mojo 本身。Chris 强调 Mojo 是 <strong>Python 家族</strong>的一员——这对部分人「polarizing」，但 AI 社区早已 Pythonic，这是巨大优势。设计上：</p>
+<ul><li><strong>元编程（metaprogramming）是性能的老解法</strong>：普通 for 循环在运行时执行，但高层类型系统希望在<strong>编译时</strong>也能跑代码。很多语言都有这种「运行时 / 编译时双语言」的割裂（C++ 模板、宏最严重）。写解释器很慢，理想是「<strong>boil away the control structure</strong>」，直接 emit 你想要的机器码。</li></ul>
+<ul><li>Mojo 的追求是<strong>「一种语言、一套类型系统」</strong>同时覆盖编译时生成与运行时行为，两层调试体验一致。</li></ul>
+<ul><li>它<strong>看起来像 Python，但有真实类型</strong>；即便不用花哨特性，光用 CPU 的 SIMD 也能快很多（Chris 说「a thousand times faster or something」）。</li></ul>
+<ul><li>警惕 <strong>「sufficiently smart compiler（足够聪明的编译器）」陷阱</strong>：靠「魔法」让 demo 好看、声称编译器会自动搞定一切——但魔法不存在（当年的 auto-parallelization 就是例子）。CPU 本身是「让顺序代码并行跑得快的魔法盒」，代价是功耗与低效；Mojo 选择<strong>回到简单、把控制权交还给程序员</strong>。</li></ul>
+<h2 id="s4">五、性能与可移植性：类型系统与 PTX 类比</h2>
+<p>关于「可移植性能」：Chris 批评很多 AI 编译器只从一个很烂的基线往上爬，<strong>从不测量芯片的「speed of light（光速）」</strong>。而且硬件差异是真实的——AMD 的 warp 是 64 线程、NVIDIA 是 32；甚至 NVIDIA 内部 float32 与 float4 的 tensor core 行为也不同。Chris 还拿 <strong>1.2-bit 浮点</strong>当例子调侃「这真的是开玩笑吗」。要驾驭这种复杂度，需要强大的元编程。</p>
+<p>关键设计落点：</p>
+<ul><li>用<strong>抽象表示不同硬件</strong>，在编译时按所在硬件条件执行；布局不是简单 int，而是<strong>递归的层级树</strong>。</li></ul>
+<ul><li><strong>类型 / traits</strong>（类似 Swift 的 protocol、Rust 的 trait、Haskell 的 type class）实现 ad hoc 多态——典型例子是 iterator trait，可泛型地套用在链表、数组、字典、网络包序列上。<strong>比 C++ 模板好得多</strong>：模板本质只是代码生成（像 C 宏），嵌套展开报错会「spectacularly explode」，且编译极慢（同样代码反复生成）；Mojo 能在<strong>不实例化的情况下检查泛型代码</strong>，把错误压到最小。</li></ul>
+<ul><li><strong>可移植性机制</strong>：编译器解析你的代码时是泛型的、根本不知道目标平台；<code>mojo build</code> 默认产出普通 a.out，但 <strong>Mojo package 保留可移植性</strong>（类似 Java bytecode 的思路，但类型系统完全不同）。</li></ul>
+<ul><li><strong>与 NVIDIA PTX 的类比</strong>：PTX 是可移植字节码（IR），驱动内的 assembler 把它编译到特定机器码 SASS（且 NVIDIA 故意不完全公开）。PTX 是个很底层的虚拟机，类型系统「无聊」（只有指针/寄存器/内存）；而 Java 靠 bytecode 暴露对象实现可移植。Chris 指出 Mojo 的特别之处：在可移植对象里<strong>保留了程序员驱动的特化指令</strong>（部分编译），控制权更强——不像 PTX 把机器相关细节完全从程序员手里拿走。</li></ul>
+<h2 id="s5">六、保持简单：语言演化的取舍</h2>
+<p>怎么在「需要精确类型控制」和「保留 Python 式简单」之间平衡？Chris 的经验：</p>
+<ul><li><strong>从 Python 起</strong>，管理层就能 push back：「先把 Python 生态的完整能力（list、for-comprehension 等）实现好，别急着发明随机特性」。</li></ul>
+<ul><li>对复杂性有<strong>反向压力</strong>：用元编程吸收本会散落各处的复杂度。他认同 Ron 说的 <strong>「power-to-weight ratio（功率重量比）」</strong>——语言设计要维持性价比。</li></ul>
+<ul><li><strong>Swift 的教训</strong>：早期开放设计流程（任何人可提 proposal）导致特性膨胀。Mojo 的反制是<strong>核心团队要小、刻意</strong>，不为「将来也许有用」而堆特性。</li></ul>
+<ul><li><strong>向后兼容</strong>：主张语义化版本（1.0 / 2.0 / 3.0 可互不兼容但能链接）。对比 Python 2→3 花了 15 年（必须先把整个包生态转完），而 C++ 的 ABI 做对了。强类型系统能给出精确指引；<strong>强类型 + agentic coding 组合极佳</strong>——改个类型，让 AI「去跑下所有类型错误并修掉」，效果出奇好。Rust 在 crate / API 稳定化上的做法也值得借鉴。</li></ul>
+<h2 id="s6">七、Agentic 编程、开源与 Mojo 的当下/未来</h2>
+<p><strong>开源与 AI 编码</strong>：Mojo 开源，有<strong>数十万行公开代码</strong>（含大量 GPU kernel）。好处不是「训练模型认这门语言」，而是让 Cursor 之类的 coding tool <strong>去索引这个仓库来学</strong>——&quot;having access to it enables it to do good work&quot;。Chris 特别强调要按官方文档正确配置索引。</p>
+<p><strong>Mojo 是什么、现在能干什么</strong>：</p>
+<ul><li>定位有过演变：早期更多谈「Python 的扩展 / 演化 / 最终替代」，近期更多作为「CUDA 的替代、自顶向下的 GPU kernel 全栈」。</li></ul>
+<ul><li><strong>当下最实在的用途</strong>：让代码跑快（CPU / GPU 都行）；以及——<strong>扩展 Python 的最佳方式</strong>（预览中，即将固化）：把慢的 for 循环挪到 Mojo，没有 FFI / nanobind 那种绑定复杂度，pip 体验顺滑。有人把纯 Python 迁过去后，在 CPU 上拿到 <strong>10x / 100x / 1000x</strong> 加速。</li></ul>
+<ul><li>结尾 Chris 的总结：「<strong>let&#x27;s solve heterogeneous compute and AI</strong>」—— heterogeneous compute（异构计算）才是那个真正有用、也足够有野心的目标。</li></ul>
+<hr>
+<h3>一句话总结</h3>
+<p>AI 把异构算力（GPU/TPU/ASIC）推到前台，却没有人做「AI 界的 LLVM」，导致硬件厂商各自圈地、跨平台支持一团糟；Chris Lattner 的答案是 Mojo——一门「像 Python 但有真实类型」的语言，用做对的编译时元编程 + traits 类型系统，把极致性能、跨硬件可移植性和易用性塞进同一种语言里，并用「不卖语言、卖平台」的打法避开编程语言生意的坟墓。</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
