@@ -1,4 +1,4 @@
-<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>从自动驾驶试点到公共服务 · 总结分析</title><meta name='description' content='行业重心从「证明技术」转向「证明可规模化运营」；责任归属在运营商而非车企，监管从挪威的开放风险评估走向瑞士的数据密集式安全管理体系。'><meta property='og:title' content='从自动驾驶试点到公共服务 · 总结分析'><meta property='og:description' content='行业重心从「证明技术」转向「证明可规模化运营」；责任归属在运营商而非车企，监管从挪威的开放风险评估走向瑞士的数据密集式安全管理体系。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可 · 总结分析</title><meta name='description' content='TÜV SÜD 的 Dirk Fratzke 拆解欧盟 L4 自动驾驶型式认证（法规 2022/1426）：框架与技术服务机构早已就绪，真正的瓶颈在公司内部——以及「无方向盘接驳车靠马车法规获批」「1400 辆小批量上限反而是红利」「端到端 AI 能否过审」等反直觉细节。'><meta property='og:title' content='欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可 · 总结分析'><meta property='og:description' content='TÜV SÜD 的 Dirk Fratzke 拆解欧盟 L4 自动驾驶型式认证（法规 2022/1426）：框架与技术服务机构早已就绪，真正的瓶颈在公司内部——以及「无方向盘接驳车靠马车法规获批」「1400 辆小批量上限反而是红利」「端到端 AI 能否过审」等反直觉细节。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
 :root{
   --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
   --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
@@ -295,83 +295,52 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 @media (max-width:560px){
   .grid{grid-template-columns:1fr}
 }
-</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/from-av-pilot-to-public-service-what" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders · Ep.19</div><h1>从自动驾驶试点到公共服务</h1><p class="sub">From AV Pilot to Public Service</p><div class="tags"><span class="tag">⏱ 54:15</span><span class="tag">👤 Stefanie Berliner、Anders Toft（Holo）</span><span class="tag">🗓 2026-07-23</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/kB6vJKkQ81g" title="From AV Pilot to Public Service" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览</a><a href="#s1">🔢 关键数据 / 事实速记</a><a href="#s2">🗝️ 关键金句（核心判断摘录）</a><a href="#s3">一、行业拐点：为什么&quot;只想要一辆展示车&quot;会被拒绝</a><a href="#s4">二、真实部署中的角色分工（谁做什么）</a><a href="#s5">三、责任归属：许可持有者才是真正的&quot;兜底方&quot;</a><a href="#s6">四、依赖关系制造的运营风险</a><a href="#s7">五、事故管理：根因分析 + &quot;局部 vs 全局&quot;的关键判断</a><a href="#s8">六、监管对比：挪威（开放）vs 瑞士（数据密集）</a><a href="#s9">七、可追溯性（Traceability）：无法解释，就无法担责</a><a href="#s10">八、安全是&quot;组织任务&quot;，不止技术问题</a><a href="#s11">九、按道路类型的自动驾驶水平（比总里程更诚实）</a><a href="#s12">十、远程协助：阈值与&quot;一人管多少车&quot;</a><a href="#s13">十一、运营方与技术提供方最常&quot;彼此误解&quot;的地方</a><a href="#s14">🧭 核心框架：从&quot;试点&quot;到&quot;公共服务&quot;的跃迁</a><a href="#s15">🔗 关联阅读</a><a href="#s16">👥 适合谁听</a><a href="#s17">十二、给四类参与者的启示</a><a href="#s18">附：主要人物与机构对照</a></nav><main class="content"><h1>从自动驾驶试点到公共服务（Autonomy Insiders 第 19 期）</h1>
-<blockquote>来源：*Autonomy Insiders*（The AV Market Strategist）· 主持人 Daniel Abreu Marques</blockquote>
-<blockquote>嘉宾：Stefanie Berliner（Holo DACH 业务负责人）、Anders Toft（Holo 运营负责人）</blockquote>
-<blockquote>时长约 70 分钟 · 中英对照逐字稿见同目录 <code>bilingual_transcript.md</code></blockquote>
-<h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：行业叙事重心已从&quot;证明技术（proving technology）&quot;转向&quot;<strong>证明运营可扩展性（proving operational scalability）</strong>&quot;——车辆本身是最容易的部分，真正的难点在车之外。</li></ul>
-<ul><li><strong>全篇最重要洞见</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问永远只找许可持有者，公众却直觉以为是&quot;车企/品牌&quot;责任。</li></ul>
-<ul><li><strong>最反直觉的运营细节</strong>：远程协助不远程开车，只在车辆受阻时给&quot;A/B 场景&quot;决策建议；人车比财务可行区间约 <strong>1:15 到 1:20+</strong>（冬季奥斯陆可降到 1:8）。</li></ul>
-<ul><li><strong>对城市的忠告</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
-<h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>软件更新频率</strong>：每 1–2 个月一次，会改变车辆行为（感知、让行、进出环岛等）。</li></ul>
-<ul><li><strong>远程协助响应阈值</strong>：交通场景 ≤ 5 秒决断；安全/乘客紧急 ≤ 2 秒。</li></ul>
-<ul><li><strong>人车比（operator-to-vehicle）</strong>：1:15 ~ 1:20+（参考 Waymo/Baidu/WeRide）；冬季奥斯陆 ~1:8。</li></ul>
-<ul><li><strong>Mobileye → MOIA 迁移红利</strong>：许可申请仅 <strong>3 个月</strong>拿到；安全驾驶员培训 5 天→3 天；整体部署阶段<strong>至少缩短 1–1.5 年</strong>。</li></ul>
-<ul><li><strong>监管对比</strong>：挪威（开放、以风险评估为基础）vs 瑞士（数据密集、指标导向、倒逼 SMS）。</li></ul>
-<h2 id="s2">🗝️ 关键金句（核心判断摘录）</h2>
-<blockquote>&quot;车辆本身是最容易的部分；真正的难点在车之外——安全治理、责任归属、十几家公司的日常协作、以及整个组织的转型。&quot;</blockquote>
-<blockquote>&quot;下一个十年是&#x27;证明服务能运营&#x27;，而非&#x27;证明车能开&#x27;。&quot;</blockquote>
-<blockquote>&quot;若运营商无法追溯车辆&#x27;为什么这么做&#x27;，就不能对许可负责，也无法预判其行为——透明度是要&#x27;争&#x27;来的。&quot;</blockquote>
-<blockquote>&quot;按道路类型拆分自动驾驶率，比只看总里程更诚实。&quot;</blockquote>
-<h2 id="s3">一、行业拐点：为什么&quot;只想要一辆展示车&quot;会被拒绝</h2>
-<ul><li>OEM 与技术提供商不再为纯试点免费提供车辆——&quot;证明技术&quot;的时代已经结束。</li></ul>
-<ul><li>现在他们要的是 <strong>可扩展性、运营就绪度、更大的车队</strong>。</li></ul>
-<ul><li>城市/市长最常提的需求仍是&quot;我们就想要一辆 showcase 车证明技术能跑&quot;，但 <strong>这种需求现在会被挡回去</strong>。</li></ul>
-<h2 id="s4">二、真实部署中的角色分工（谁做什么）</h2>
-<table><thead><tr><th>角色</th><th>说明</th><th>本案例中的对应方</th></tr></thead><tbody><tr><td><strong>Permit Holder（许可持有者）</strong></td><td>向当局申请、对日常运营负责、承担法律责任</td><td><strong>Holo</strong>（在奥斯陆同时是运营商+许可持有者）</td></tr><tr><td><strong>PTA / 公共服务提供方</strong></td><td>面向乘客的品牌方（涂装、客服）</td><td><strong>Ruter</strong>（奥斯陆公共交通局）</td></tr><tr><td><strong>Software Provider（软件提供商）</strong></td><td>提供自动驾驶平台</td><td><strong>MOIA</strong>（底层与 <strong>Mobileye</strong> 合作）</td></tr><tr><td><strong>OEM</strong></td><td>车辆制造</td><td>车辆平台提供方</td></tr></tbody></table>
-<p>关键洞察：<strong>乘客看到的是 Ruter 涂装的品牌车、接到的是 Ruter 客服</strong>——Holo 在公众层面&quot;隐身&quot;，专心做技术和安全。</p>
-<h2 id="s5">三、责任归属：许可持有者才是真正的&quot;兜底方&quot;</h2>
-<ul><li><strong>公众直觉</strong>：出事 = 车辆/车企（即 Ruter 品牌）责任。</li></ul>
-<ul><li><strong>法律现实</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问，永远只找许可持有者，不会直接找软件商或 PTA。</li></ul>
-<ul><li>合同内部用 <strong>&quot;黑箱（black box）&quot;数据</strong> 确定根因，再在联盟内部分摊。</li></ul>
-<ul><li>即便进入 <strong>L4（无安全员）</strong>，运营商对当局仍要为&quot;车辆做了什么&quot;负责。</li></ul>
-<h2 id="s6">四、依赖关系制造的运营风险</h2>
-<ul><li>存在 <strong>安全利益 vs 商业利益</strong> 的张力：&quot;多快能推送更新&quot; 与 &quot;多安全才行&quot; 的时间线未必重合。</li></ul>
-<ul><li>一旦某个安全关键部件出问题，运营商会 <strong>停摆整个车队</strong>——这是服务退化，不是 PTA 想要的。</li></ul>
-<h2 id="s7">五、事故管理：根因分析 + &quot;局部 vs 全局&quot;的关键判断</h2>
-<p><strong>每次异常都做根因分析（RCA）</strong>。事发后最初几分钟的流程：现场安全驾驶员先 securing 现场 → 升级到监控团队（控制塔）→ 事故经理记录开 ticket → <strong>核心判断：这是局部事故，还是潜在全局事故？</strong> 软件自身发生无法解释的、有安全隐患的行为 → 可能是全局问题 → 立即停摆整个车队。</p>
-<h2 id="s8">六、监管对比：挪威（开放）vs 瑞士（数据密集）</h2>
-<table><thead><tr><th>维度</th><th>挪威 / 奥斯陆</th><th>瑞士</th></tr></thead><tbody><tr><td>监管风格</td><td>开放、以 <strong>风险评估</strong> 为基础</td><td>数据密集、指标导向</td></tr><tr><td>数据要求</td><td>无预设数据点；风险上升即报告</td><td>实时定位、连通延迟、<strong>脱离率</strong>、按道路类型的行为</td></tr><tr><td>目标</td><td>风险可控即可</td><td>倒逼运营商建立 <strong>安全管理体系(SMS)</strong></td></tr><tr><td>ODD 复杂度</td><td>郊区为主</td><td>城市核心（苏黎世/巴塞尔）复杂度高得多</td></tr></tbody></table>
-<p>嘉宾强调：<strong>欧洲难就难在每个国家规则不同</strong>，没有统一剧本。</p>
-<h2 id="s9">七、可追溯性（Traceability）：无法解释，就无法担责</h2>
-<ul><li>若运营商 <strong>无法追溯车辆&quot;为什么这么做&quot;</strong>，就<strong>不能对许可负责</strong>。</li></ul>
-<ul><li>但决策数据（&quot;他们的大脑&quot;）<strong>掌握在软件商手中</strong>；运营商不需要、也看不到底层方程，只需看到&quot;结果层&quot;。</li></ul>
-<ul><li>因此 <strong>透明度是要&quot;争&quot;来的</strong>。Mobileye 案例：作为首个外部运营商部署，Holo 持续施压获取数据，过程艰难但最终双赢。</li></ul>
-<h2 id="s10">八、安全是&quot;组织任务&quot;，不止技术问题</h2>
-<ul><li>必须把 <strong>&quot;人的安全管理体系&quot;</strong> 与 <strong>&quot;技术安全管理体系&quot;</strong> 融合。</li></ul>
-<ul><li>这是 <strong>零容忍行业</strong>：以 Cruise 为例，一个小问题就能摧毁整个业务。</li></ul>
-<ul><li>Holo 的做法：频繁 <strong>事故演练</strong>、专门安全页面、全员安全意识培训、招聘环节即测试安全素养。</li></ul>
-<h2 id="s11">九、按道路类型的自动驾驶水平（比总里程更诚实）</h2>
-<ul><li>单纯的 <strong>&quot;每公里自动驾驶率&quot;</strong> 会骗人：好路与住宅区小路差异巨大。</li></ul>
-<ul><li><strong>按道路类型拆分</strong> 能揭示真实差距，也便于向当局和 Ruter 展示风险与缓解策略。</li></ul>
-<ul><li>实践意义：<strong>逐道路类型逐步放开 L4</strong>，而不是一次性全域放开。</li></ul>
-<h2 id="s12">十、远程协助：阈值与&quot;一人管多少车&quot;</h2>
-<ul><li><strong>远程协助操作员不执行动态驾驶任务（DDT）</strong>，不远程开车；只在车辆受阻时给&quot;A/B 场景&quot;决策建议，或处理乘客紧急事件。</li></ul>
-<ul><li><strong>响应阈值</strong>：交通场景 ≤ 5 秒；安全/乘客紧急 ≤ 2 秒。</li></ul>
-<ul><li><strong>人车比</strong>：财务可行区间约 <strong>1:15 到 1:20+</strong>；冬季奥斯陆可能降到 <strong>1:8</strong>。</li></ul>
-<h2 id="s13">十一、运营方与技术提供方最常&quot;彼此误解&quot;的地方</h2>
-<ul><li>技术方视角：&quot;系统按设计工作&quot;（为避让行人停车）= 成功。</li></ul>
-<ul><li>运营方视角：结果却是 <strong>15 名乘客被搁浅、堵住车站、客户投诉</strong>——真正的麻烦才开始。</li></ul>
-<h2 id="s14">🧭 核心框架：从&quot;试点&quot;到&quot;公共服务&quot;的跃迁</h2>
-<table><thead><tr><th>阶段</th><th>关注点</th><th>决胜能力</th></tr></thead><tbody><tr><td>证明技术</td><td>车能不能开</td><td>驾驶栈</td></tr><tr><td>证明运营可扩展性</td><td>服务能不能稳定跑</td><td>责任切分 / 远程协助 / 变更管理 / SMS</td></tr></tbody></table>
-<h2 id="s15">🔗 关联阅读</h2>
-<ul><li>[为所有人设计无人驾驶汽车](../../driverless-cars-for-everyone/)：远程操作员的情境意识上限与&quot;人环&quot;设计——本集运营侧的人因注脚。</li></ul>
-<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：远程协助请求积压导致整城瘫痪——本集&quot;2 秒内决断&quot;的现实压力测试。</li></ul>
-<ul><li>[Einride 的自动驾驶货运战略](../../einride-autonomous-freight/)：同为&quot;重运营&quot;路线，看货运侧如何做 per-site 许可与渐进式安全。</li></ul>
-<h2 id="s16">👥 适合谁听</h2>
-<ul><li>自动驾驶运营商、许可持有者、安全/合规负责人；</li></ul>
-<ul><li>城市交通局与 PTA（理解&quot;别只想要展示车&quot;）；</li></ul>
-<ul><li>想进入欧洲 AV 市场的技术/软件提供商；</li></ul>
-<ul><li>关注 AV 责任链与保险结构的投资人。</li></ul>
-<h2 id="s17">十二、给四类参与者的启示</h2>
-<ul><li><strong>城市/交通局</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
-<ul><li><strong>运营商</strong>：构建软件/数据/安全能力是核心竞争力；<strong>许可持有者既是责任中心，也是价值中心</strong>。</li></ul>
-<ul><li><strong>技术/软件提供商</strong>：补齐&quot;运营视角&quot;，用透明度换取更高质量的运营反馈。</li></ul>
-<ul><li><strong>行业与投资方</strong>：范式已从 *Can it drive?* 转向 *Can it operate as a service?*</li></ul>
-<h2 id="s18">附：主要人物与机构对照</h2>
-<table><thead><tr><th>名称</th><th>角色</th></tr></thead><tbody><tr><td>Daniel Abreu Marques</td><td>主持人（Autonomy Insiders）</td></tr><tr><td>Stefanie Berliner</td><td>Holo DACH（德奥瑞）业务负责人</td></tr><tr><td>Anders Toft</td><td>Holo 运营负责人</td></tr><tr><td><strong>Holo</strong></td><td>北欧自动驾驶运营商，为 Ruter 运营奥斯陆车队</td></tr><tr><td><strong>Ruter</strong></td><td>奥斯陆公共交通运输局（PTA）</td></tr><tr><td><strong>MOIA</strong></td><td>软件提供商（与 Mobileye 合作）</td></tr><tr><td><strong>Mobileye</strong></td><td>自动驾驶技术栈/底层供应商</td></tr><tr><td><strong>Vegvesen</strong></td><td>挪威公共道路管理局</td></tr></tbody></table></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../einride-autonomous-freight/index.html"><div class="rw"><img loading="lazy" src="../einride-autonomous-freight/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">Einride 的自动驾驶货运战略</div></div></a><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/xemPH7r300w/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/eu-type-approval-explained-how-autonomous" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Substack / Podcast</div><h1>欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</h1><p class="sub">EU Type Approval Explained: How Autonomous Vehicles Get Certified for European Roads</p><div class="tags"><span class="tag">⏱ 约 50 分钟</span><span class="tag">👤 Dirk Fratzke（TÜV SÜD 自动驾驶与 ADAS 部门项目负责人，曾主导卡尔斯鲁厄 EVA 接驳车 L4 项目）</span><span class="tag">🗓 2026-07</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/xemPH7r300w/hqdefault.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/xemPH7r300w" title="EU Type Approval Explained: How Autonomous Vehicles Get Certified for European Roads" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">导语</a><a href="#s1">一、三个容易混的词：homologation、type approval 与美国自认证</a><a href="#s2">二、两步走：产品型式认证 + 运营区域批准</a><a href="#s3">三、真正的瓶颈在公司内部，而非监管</a><a href="#s4">四、1400 辆小批量上限：是红利不是障碍</a><a href="#s5">五、无方向盘怎么过审：回到马车的法规框架</a><a href="#s6">六、中美企业为何涌向 TÜV SÜD</a><a href="#s7">七、端到端 AI 能过欧洲认证吗</a><a href="#s8">八、UN 全球无人驾驶法规，与一处荒诞的过时条款</a><a href="#s9">结语：谁先拿到证，谁先定义欧洲</a></nav><main class="content"><h1>欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</h1>
+<blockquote>对谈：Daniel Abreu Marques（AV Market Strategist）× Dirk Fratzke（TÜV SÜD 自动驾驶与 ADAS 部门项目负责人）</blockquote>
+<blockquote>来源：AV Market Strategist（Substack / Podcast），附 YouTube、Spotify、Apple Podcasts 多平台</blockquote>
+<h2 id="s0">导语</h2>
+<p>认证、型式认证、homologation——自动驾驶里最不性感、却可能最决定生死的一组词。欧盟的 L4 法规（2022/1426）已经存在四年，但直到今天，没有任何一辆车上用它拿到欧盟型式认证。流行的叙事把锅甩给「监管太慢」，但本期嘉宾给出了另一个版本：<strong>框架是ready的，技术服务机构也是ready的，真正的瓶颈在车企和运营商自己内部。</strong></p>
+<p>Dirk Fratzke 是 TÜV SÜD（南德认证）自动驾驶与 ADAS 部门的项目负责人。TÜV SÜD 是一家有 160 年历史的独立测评机构，横跨三大洲为自动驾驶公司做合规评估；Dirk 主导了卡尔斯鲁厄 EVA 接驳车项目——德国最早的 SAE L4 公共交通部署之一——并合著过关于「系统性测试自动驾驶功能」的学术研究。这一期把欧洲这套「独立第三方评估」体系拆得很透。</p>
+<hr>
+<h2 id="s1">一、三个容易混的词：homologation、type approval 与美国自认证</h2>
+<p>很多人把 homologation 和 type approval 当成同义词，但背后是两套监管哲学。欧盟走的是<strong>独立技术服务机构（technical service）评估</strong>模式：企业不能自己说了算，必须由 TÜV 这类被成员国指定的独立机构，按统一技术法规逐项验证，再由国家主管部门颁发型式认证。</p>
+<p>这与美国的 <strong>self-certification（自我认证）</strong> 形成鲜明对比：美国车企自己声明合规、自己承担责任，监管事后追责。Dirk 强调，欧洲这套「多一双独立的眼睛」的模式，代价是更慢更贵，但换来的是<strong>一致性与可追溯性</strong>——每一辆获批车上路，背后都有一份被独立核验过的技术档案。对 L4 这种「系统可能做出人类没预见决策」的场景，独立评估的价值被放大。</p>
+<hr>
+<h2 id="s2">二、两步走：产品型式认证 + 运营区域批准</h2>
+<p>欧盟 L4 的落地不是一个动作，而是<strong>两段式</strong>：</p>
+<p>1. <strong>产品层面——欧盟型式认证（EU type approval）</strong>：依据法规 2022/1426，对「这辆车 / 这个自动驾驶系统」本身做认证。这是跨成员国通用的「护照」。 2. <strong>运营层面——运营区域批准（operating area approval）</strong>：由「道路所有者（owner of the road）」——通常是各城市或联邦州——对「你要在我这片区域的哪些道路上跑、跑什么工况」做批准。</p>
+<p>关键洞察：<strong>型式认证解决「车能不能造」，运营区域批准解决「你能不能在 A 街到 B 街之间跑」。</strong> 前者是产品合规，后者是场景合规。很多公司只盯着第一步，却忽略了第二步往往才是地方政治与基础设施的硬仗。</p>
+<hr>
+<h2 id="s3">三、真正的瓶颈在公司内部，而非监管</h2>
+<p>Dirk 最尖锐的判断：欧洲第一张 L4 型式认证之所以迟迟不来，<strong>不是法规没准备好，也不是 TÜV 这类技术服务机构没准备好，而是申请方自己没准备好。</strong> 具体卡在企业的「垂直整合 vs 合作分工」——谁来牵头申请？谁对整车的合规证据链负责？功能安全、预期功能安全（SOTIF）、网络安全、数据记录……每一项都要可证明。</p>
+<p>当一家公司的感知、规划、执行链路由不同供应商拼装，责任边界一旦模糊，认证所需的「端到端证据链」就断掉。Dirk 给的时间预期很克制：<strong>「也许一年，也许两年」</strong>。这不是监管拖延，而是工程成熟度与组织协同的诚实估值。</p>
+<p>Mobileye 完成功能安全管理体系（functional safety management）评估被 Dir 视为一个里程碑式信号——它说明头部玩家开始把「可认证性」当成产品属性来经营，而不只是把算法堆上去。</p>
+<hr>
+<h2 id="s4">四、1400 辆小批量上限：是红利不是障碍</h2>
+<p>法规里有条常被误读的规定：型式认证下的小批量上限约 <strong>1400 辆</strong>。业内的第一反应往往是「这上限太憋屈」。但 Dirk 的反直觉解读是——<strong>对自动驾驶公司而言，这恰恰是个保护伞，而不是拦路虎。</strong></p>
+<p>逻辑在于：L4 商业化早期，任何一家公司的真实交付能力都远不到千辆级；与其被要求证明「百万辆规模下的失效模式」，不如在「小批量、限定场景」的框架内先把合规跑通。1400 辆的上限把验证范围钉在可控体量，反而降低了证明负担，让企业能更快拿到第一张证、在真实运营里积累数据，再谈规模扩张。</p>
+<hr>
+<h2 id="s5">五、无方向盘怎么过审：回到马车的法规框架</h2>
+<p>最精彩的工程叙事之一，是 TÜV SÜD 如何批准<strong>没有方向盘的接驳车</strong>。现行车辆法规的许多条款是围绕「有驾驶员」建构的——方向盘、踏板、后视镜都是默认前提。面对一辆完全没有方向盘的车，逐条硬套会处处碰壁。</p>
+<p>Dirk 的思路是<strong>回到更底层的监管框架去论证</strong>，而不是直接对抗具体条款：他援引了历史上为<strong>马车（horse-drawn coaches）</strong>制定的、本就不预设「人类驾驶员」的法规逻辑，把「无人类操控者」的情况在法理上重新对接。这种「向上抽象到框架、再向下适配新技术」的论证方式，是认证机构面对跃迁式创新时的标准动作，也解释了为什么 EVA 接驳车能在卡尔斯鲁厄（以及更早的巴特比恩巴赫 Bad Birnbach）落地为德国最早的 L4 公共交通部署。</p>
+<hr>
+<h2 id="s6">六、中美企业为何涌向 TÜV SÜD</h2>
+<p>一个值得玩味的现象：美国的 Waymo、中国的 Pony.ai（小马智行）、WeRide（文远知行）、Momenta 都在接触 TÜV SÜD。原因有两层：</p>
+<ul><li><strong>欧洲市场是必争之地</strong>，而进欧洲就必须过这套独立认证。无论你在美国靠自认证、在中国靠单车/区域许可跑得多顺，到了欧盟都要重新走 technical service 流程。</li></ul>
+<ul><li><strong>中国玩家走的是 L3 切入</strong>：Dirk 提到，Pony.ai、WeRide、Momenta 进入欧洲多从 L3（有条件自动驾驶，责任仍部分在驾驶员）起步，先把合规与品牌立住，再向 L4 推进。这和美国 Waymo 直接押 L4 Robotaxi 的路线形成对照。</li></ul>
+<p>他还点出美国自认证体系里「four-eye principle（四眼原则，即关键决策需双人复核）」与欧洲独立评估的精神差异——同样是兜底，一个靠企业内部纪律，一个靠外部独立核验。</p>
+<hr>
+<h2 id="s7">七、端到端 AI 能过欧洲认证吗</h2>
+<p>这是技术圈最关心的问题。端到端（end-to-end）神经网络把感知—规划—控制压成一个大体黑箱，而传统功能安全认证依赖「可解释、可分解、可单独验证每个模块」。当系统变成一个不可拆解的整体，欧洲以「可追溯证据链」为核心的认证范式能否接纳它？</p>
+<p>Dirk 的态度是审慎而非否定：认证不拒绝端到端，但要求你能<strong>证明</strong>系统在各种工况下的行为边界与安全裕度。黑箱本身不是问题，<strong>无法论证安全才是问题</strong>。这意味着端到端方案必须配套更强的形式化验证、仿真覆盖与运行监控，把「不可解释」转化为「可被统计与经验证明」。这恰恰是当前学术与产业都在攻坚的方向。</p>
+<hr>
+<h2 id="s8">八、UN 全球无人驾驶法规，与一处荒诞的过时条款</h2>
+<p>近期 <strong>UNECE（联合国欧洲经济委员会）通过了全球层面的无人驾驶车辆法规</strong>，为跨国互认铺路——这比欧盟单边法规更进一步，意味着合规证据未来可能在不同司法区之间流通，降低重复认证成本。</p>
+<p>Dirk 也举了一个说明「法规更新为何 overdue」的荒诞案例：<strong>酒精锁（alcohol interlock）条款</strong>。某些旧规把「驾驶员必须接受酒精检测」作为上路前提，这套逻辑是为「有人类驾驶员」量身定制的；到了无人驾驶场景，硬套这条反而制造出毫无意义的合规负担。这类条款的存在，正是为什么「向上抽象到框架、再向下适配」的论证如此必要——也提醒我们，法规的现代化往往滞后于技术，需要评估机构与设计方共同把过时的预设清理掉。</p>
+<hr>
+<h2 id="s9">结语：谁先拿到证，谁先定义欧洲</h2>
+<p>无论你是造车的、运营的、承保的，还是投钱的，这一期说清了一件事：<strong>决定谁能在欧洲部署、以及什么时候部署的，是这套认证流程，而不是谁的 demo 更炫。</strong> 框架已就绪、服务机构已就绪，剩下来拼的是企业内部的工程成熟度、组织协同与「可认证性」思维。</p>
+<p>而对中美玩家而言，欧洲不是另一个需要「再适配」的市场，而是一个<strong>用独立第三方的尺子重新量你一遍</strong>的市场。先理解这把尺子的人，会先拿到那张通往欧洲道路的证。</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-pilot-to-public-service/index.html"><div class="rw"><img loading="lazy" src="../av-pilot-to-public-service/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Ep.19</div><div class="rt">从自动驾驶试点到公共服务</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="../uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">拆解 Uber 的自动驾驶战略</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

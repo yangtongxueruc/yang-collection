@@ -1,0 +1,412 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可 · 逐字稿</title><meta name='description' content='TÜV SÜD 的 Dirk Fratzke 拆解欧盟 L4 自动驾驶型式认证（法规 2022/1426）：框架与技术服务机构早已就绪，真正的瓶颈在公司内部——以及「无方向盘接驳车靠马车法规获批」「1400 辆小批量上限反而是红利」「端到端 AI 能否过审」等反直觉细节。'><meta property='og:title' content='欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可 · 逐字稿'><meta property='og:description' content='TÜV SÜD 的 Dirk Fratzke 拆解欧盟 L4 自动驾驶型式认证（法规 2022/1426）：框架与技术服务机构早已就绪，真正的瓶颈在公司内部——以及「无方向盘接驳车靠马车法规获批」「1400 辆小批量上限反而是红利」「端到端 AI 能否过审」等反直觉细节。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/eu-type-approval-explained-how-autonomous" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Substack / Podcast</div><h1>欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</h1><p class="sub">中英对照逐字稿 · EU Type Approval Explained: How Autonomous Vehicles Get Certified for European Roads</p><div class="tags"><span class="tag">⏱ 约 50 分钟</span><span class="tag">Dirk Fratzke（TÜV SÜD 自动驾驶与 ADAS 部门项目负责人，曾主导卡尔斯鲁厄 EVA 接驳车 L4 项目）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/xemPH7r300w/hqdefault.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">欧盟型式认证</span><span class="chip" onclick="wbJumpKw(this)">type approval</span><span class="chip" onclick="wbJumpKw(this)">homologation</span><span class="chip" onclick="wbJumpKw(this)">TÜV SÜD</span><span class="chip" onclick="wbJumpKw(this)">Dirk Fratzke</span><span class="chip" onclick="wbJumpKw(this)">法规 2022/1426</span><span class="chip" onclick="wbJumpKw(this)">L4</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">UNECE</span><span class="chip" onclick="wbJumpKw(this)">运营区域批准</span><span class="chip" onclick="wbJumpKw(this)">owner of the road</span><span class="chip" onclick="wbJumpKw(this)">EVA shuttle</span><span class="chip" onclick="wbJumpKw(this)">卡尔斯鲁厄</span><span class="chip" onclick="wbJumpKw(this)">无方向盘</span><span class="chip" onclick="wbJumpKw(this)">小批量上限 1400</span><span class="chip" onclick="wbJumpKw(this)">功能安全</span><span class="chip" onclick="wbJumpKw(this)">Mobileye</span><span class="chip" onclick="wbJumpKw(this)">端到端 AI</span><span class="chip" onclick="wbJumpKw(this)">小马智行</span><span class="chip" onclick="wbJumpKw(this)">Pony.ai</span><span class="chip" onclick="wbJumpKw(this)">WeRide</span><span class="chip" onclick="wbJumpKw(this)">Momenta</span><span class="chip" onclick="wbJumpKw(this)">中美企业进欧洲</span><span class="chip" onclick="wbJumpKw(this)">UN 全球法规</span><span class="chip" onclick="wbJumpKw(this)">酒精锁</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">00:00 — 开场：为什么自动驾驶需要「一双独立的眼睛」</a><a href="#s1">01:18 — 引言：certification、type approval、homologation</a><a href="#s2">03:07 — Dirk 的来路：从汽车修理工到 TÜV SÜD</a><a href="#s3">04:48 — 一家 160 岁的测评机构为何跳进自动驾驶</a><a href="#s4">06:19 — 「技术服务机构」到底做什么</a><a href="#s5">07:22 — 团队规模与需求的变化</a><a href="#s6">09:24 — Homologation vs Type Approval vs 美国自认证</a><a href="#s7">11:10 — L3 与 L4：两条独立的监管轨道</a><a href="#s8">14:00 — UNECE 法规如何变成有约束力的法律</a><a href="#s9">17:05 — 卡尔斯鲁厄的 EVA 接驳车（以及更早的巴特比恩巴赫）</a><a href="#s10">19:05 — 批准一辆没有方向盘的车</a><a href="#s11">21:09 — 欧盟两步式批准流程（2022/1426）</a><a href="#s12">23:30 — 运营区域批准：道路的「所有者」</a><a href="#s13">25:11 — 零张 L4 认证：到底卡在哪</a><a href="#s14">27:32 — 垂直整合 vs 合作：谁去申请</a><a href="#s15">30:21 — 批准 realistically 要多久</a><a href="#s16">32:43 — 1400 辆小批量上限，为什么是红利</a><a href="#s17">35:12 — 为什么美中企业都来找 TÜV SÜD</a><a href="#s18">36:46 — Waymo、自认证与「四眼原则」</a><a href="#s19">39:15 — 中国自动驾驶企业进欧洲：L3 切入</a><a href="#s20">41:42 — 端到端 AI 能过欧洲认证吗</a><a href="#s21">44:16 — 新的 UN 全球无人驾驶法规</a><a href="#s22">47:00 — 欧洲乘客何时能打到无人驾驶车</a><a href="#s23">49:00 — 如果明天能改一件事</a></nav><main class="content"><h1>欧盟型式认证详解 · 中英章节要点</h1>
+<blockquote><strong>说明（Note）：</strong> 本页基于节目公开的「时间戳章节大纲」整理为<strong>结构化中英要点</strong>，<strong>并非逐字稿（verbatim transcript）</strong>。原始来源仅提供了章节标题与时间码，未提供完整口播文本。如需完整的「中英对照逐字稿」，请提供节目文字稿，我将替换为逐字版本。</blockquote>
+<blockquote>Source: AV Market Strategist（Daniel Abreu Marques × Dirk Fratzke, TÜV SÜD）. YouTube: xemPH7r300w.</blockquote>
+<hr>
+<h2 id="s0">00:00 — 开场：为什么自动驾驶需要「一双独立的眼睛」</h2>
+<p><strong>中文要点：</strong> 主持人点出本期核心命题——在自动驾驶能否上路的判断里，最关键的未必是算法本身，而是有没有一个独立于厂商之外的角色来「替公众把一道关」。这正是欧洲型式认证体系的立足点。</p>
+<p><strong>English：</strong> The host frames the episode around a central question: what matters most for AV deployment may not be the algorithm itself, but whether an independent party vets it on behalf of the public. That is exactly where Europe&#x27;s type-approval system starts.</p>
+<h2 id="s1">01:18 — 引言：certification、type approval、homologation</h2>
+<p><strong>中文要点：</strong> 三个常被混用的词被逐一厘清。它们共同指向「车辆/系统被官方认可可以上路」这一动作，但在不同司法区对应不同的责任主体与流程。</p>
+<p><strong>English：</strong> Three frequently conflated terms are disentangled. They all point to the act of a vehicle or system being officially cleared to operate, but in different jurisdictions they imply different accountable bodies and procedures.</p>
+<h2 id="s2">03:07 — Dirk 的来路：从汽车修理工到 TÜV SÜD</h2>
+<p><strong>中文要点：</strong> Dirk 分享职业轨迹——从一线汽车机械师起步，逐步进入认证与测评领域，最终在 TÜV SÜD 领导自动驾驶与 ADAS 项目。一线经验让他对「车辆到底怎么出错」有直觉。</p>
+<p><strong>English：</strong> Dirk traces his path from a hands-on car mechanic to leading ADAS and autonomous-driving projects at TÜV SÜD. Shop-floor experience gave him an intuition for how vehicles actually fail.</p>
+<h2 id="s3">04:48 — 一家 160 岁的测评机构为何跳进自动驾驶</h2>
+<p><strong>中文要点：</strong> TÜV SÜD 有 160 年测试传统。进入自动驾驶不是赶风口，而是其「独立验证」使命的自然延伸——当一个系统的决策可能超出人类预设，第三方核验的价值被放大。</p>
+<p><strong>English：</strong> With 160 years of testing heritage, TÜV SÜD&#x27;s move into AVs is less a trend chase than a natural extension of its independent-verification mission—third-party scrutiny matters more when systems make unforeseen decisions.</p>
+<h2 id="s4">06:19 — 「技术服务机构」到底做什么</h2>
+<p><strong>中文要点：</strong> 作为被成员国指定的 technical service，TÜV SÜD 按统一技术法规逐项验证企业的合规证据，再把结论交由国家主管部门颁发认证。它既不是企业、也不是监管，而是中间的「尺子」。</p>
+<p><strong>English：</strong> As a state-designated technical service, TÜV SÜD verifies a company&#x27;s compliance evidence against harmonized technical regulations, then hands conclusions to the national authority that issues approval. It is the neutral &quot;ruler&quot; between industry and regulator.</p>
+<h2 id="s5">07:22 — 团队规模与需求的变化</h2>
+<p><strong>中文要点：</strong> Dirk 谈到团队体量，以及需求侧如何从「概念验证咨询」转向「真实量产前的合规攻坚」——说明行业正从讲故事进入交证据的阶段。</p>
+<p><strong>English：</strong> Dirk discusses team size and how demand has shifted from proof-of-concept consulting toward pre-production compliance work—signaling an industry moving from narrative to evidence.</p>
+<h2 id="s6">09:24 — Homologation vs Type Approval vs 美国自认证</h2>
+<p><strong>中文要点：</strong> 欧洲独立评估模式 vs 美国 self-certification 的根本差异：欧洲由独立机构核验、国家发证；美国由企业自我声明、事后追责。代价与收益相反。</p>
+<p><strong>English：</strong> The episode contrasts Europe&#x27;s independent-assessment model with US self-certification: Europe uses independent verification and state-issued certificates; the US relies on manufacturer declarations and ex-post liability. The trade-offs invert.</p>
+<h2 id="s7">11:10 — L3 与 L4：两条独立的监管轨道</h2>
+<p><strong>中文要点：</strong> L3（责任仍部分在驾驶员）与 L4（完全甩给系统）走的是不同的法规轨道，不能互相替代。这也解释了为何中国玩家多从 L3 切入欧洲。</p>
+<p><strong>English：</strong> Level 3 (driver still partly liable) and Level 4 (system fully liable) run on separate regulatory tracks and cannot substitute for each other—explaining why many Chinese entrants start with L3 in Europe.</p>
+<h2 id="s8">14:00 — UNECE 法规如何变成有约束力的法律</h2>
+<p><strong>中文要点：</strong> UNECE（联合国欧洲经济委员会）制定的法规，需经成员国采纳才在本国具约束力。理解这条「国际协定 → 国内法」的转化链，是看懂欧洲认证的前提。</p>
+<p><strong>English：</strong> UNECE regulations only become binding once member states adopt them domestically. Understanding this international-agreement-to-national-law chain is prerequisite to reading European approval.</p>
+<h2 id="s9">17:05 — 卡尔斯鲁厄的 EVA 接驳车（以及更早的巴特比恩巴赫）</h2>
+<p><strong>中文要点：</strong> EVA 接驳车项目是德国最早的 SAE L4 公共交通部署之一；更早的巴特比恩巴赫展示了限定场景 L4 的先行落地。它们是「真实运营积累证据」的范本。</p>
+<p><strong>English：</strong> The EVA shuttle in Karlsruhe is among Germany&#x27;s first SAE L4 public-transport deployments; the earlier Bad Birnbach pilot showed confined-scenario L4 first. Both are templates for learning from real operations.</p>
+<h2 id="s10">19:05 — 批准一辆没有方向盘的车</h2>
+<p><strong>中文要点：</strong> 面对完全没有方向盘、踏板、后视镜的车辆，逐条硬套旧规会处处碰壁。Dirk 的策略是向上抽象到更底层的框架（甚至援引马车时代的法规逻辑）再向下适配。</p>
+<p><strong>English：</strong> A vehicle with no steering wheel, pedals, or mirrors breaks clause-by-clause checks. Dirk&#x27;s approach is to abstract up to the underlying framework—even invoking horse-drawn-coach-era logic—then adapt downward.</p>
+<h2 id="s11">21:09 — 欧盟两步式批准流程（2022/1426）</h2>
+<p><strong>中文要点：</strong> 法规 2022/1426 定义的第一步是产品层面的欧盟型式认证（跨成员国通用），第二步是运营区域的场景批准。两步缺一不可。</p>
+<p><strong>English：</strong> Regulation 2022/1426 defines step one as product-level EU type approval (valid across member states) and step two as operating-area approval. Neither alone suffices.</p>
+<h2 id="s12">23:30 — 运营区域批准：道路的「所有者」</h2>
+<p><strong>中文要点：</strong> 第二步由「道路所有者」（城市或联邦州）对具体运营范围与工况批准。这是地方政治与基建的硬仗，常被企业低估。</p>
+<p><strong>English：</strong> Step two is granted by the &quot;owner of the road&quot;—cities or states—over specific operating zones and conditions. It is a local-political and infrastructural battle often underestimated by firms.</p>
+<h2 id="s13">25:11 — 零张 L4 认证：到底卡在哪</h2>
+<p><strong>中文要点：</strong> 四年过去仍零认证，Dirk 的判断是瓶颈不在法规、不在服务机构，而在申请方内部——责任边界、证据链、组织协同没准备好。</p>
+<p><strong>English：</strong> With zero approvals after four years, Dirk&#x27;s verdict: the bottleneck is neither the regulation nor the technical services, but inside the applicants—unsettled accountability, broken evidence chains, weak coordination.</p>
+<h2 id="s14">27:32 — 垂直整合 vs 合作：谁去申请</h2>
+<p><strong>中文要点：</strong> 谁来牵头申请、谁对整车合规证据链负责，是垂直整合与分工合作模式的分水岭。责任模糊会直接断掉认证所需的可追溯证据。</p>
+<p><strong>English：</strong> Who leads the application and owns the vehicle-level evidence chain divides vertically-integrated from partnership models. Blurred accountability severs the traceable evidence certification requires.</p>
+<h2 id="s15">30:21 — 批准 realistically 要多久</h2>
+<p><strong>中文要点：</strong> Dirk 给的时间预期克制而诚实：「也许一年，也许两年」——这是工程成熟度与组织协同的估值，而非监管拖延。</p>
+<p><strong>English：</strong> Dirk&#x27;s timeframe is restrained and honest: &quot;maybe one year, maybe two&quot;—an estimate of engineering maturity and coordination, not regulatory delay.</p>
+<h2 id="s16">32:43 — 1400 辆小批量上限，为什么是红利</h2>
+<p><strong>中文要点：</strong> 型式认证下约 1400 辆的小批量上限，被业内误读为障碍。Dirk 反解读：早期交付远未到千辆级，把验证范围钉在可控体量反而降低证明负担，是先拿证、再积累数据的保护伞。</p>
+<p><strong>English：</strong> The ~1,400-unit small-series cap is misread as a barrier. Dirk reframes it as a benefit: early deliveries are far below that scale, so bounding verification to a controllable volume lowers the proof burden—a shield to get certified first, then learn.</p>
+<h2 id="s17">35:12 — 为什么美中企业都来找 TÜV SÜD</h2>
+<p><strong>中文要点：</strong> 进欧洲就必须过独立认证这道关，无论你在美国靠自认证、在中国靠区域许可跑得多顺。欧洲是必争市场，而 TÜV SÜD 是那把尺子。</p>
+<p><strong>English：</strong> Entering Europe requires passing independent approval regardless of how smoothly a firm self-certified in the US or ran regional permits in China. Europe is a must-win market, and TÜV SÜD holds the ruler.</p>
+<h2 id="s18">36:46 — Waymo、自认证与「四眼原则」</h2>
+<p><strong>中文要点：</strong> 美国自认证体系靠企业内部纪律（如 four-eye principle，关键决策双人复核）兜底；欧洲靠外部独立核验。同样是兜底，机制不同。</p>
+<p><strong>English：</strong> The US self-certification model relies on internal discipline such as the four-eye principle (dual sign-off); Europe relies on external independent verification. Both backstop risk differently.</p>
+<h2 id="s19">39:15 — 中国自动驾驶企业进欧洲：L3 切入</h2>
+<p><strong>中文要点：</strong> Pony.ai、WeRide、Momenta 多从 L3 起步，先把合规与品牌立住，再向 L4 推进——与美国 Waymo 直接押 L4 Robotaxi 形成对照。</p>
+<p><strong>English：</strong> Pony.ai, WeRide, and Momenta largely enter via L3, establishing compliance and brand before pushing to L4—contrasting with Waymo&#x27;s direct L4 robotaxi bet.</p>
+<h2 id="s20">41:42 — 端到端 AI 能过欧洲认证吗</h2>
+<p><strong>中文要点：</strong> 端到端黑箱与传统「可分解、可单独验证」的功能安全范式冲突。Dirk 审慎而非否定：认证不拒绝端到端，但要求证明行为边界与安全裕度；黑箱本身不是问题，无法论证安全才是。</p>
+<p><strong>English：</strong> End-to-end black boxes clash with the traditional decomposable, individually-verifiable safety paradigm. Dirk is cautious, not dismissive: certification doesn&#x27;t reject end-to-end, but demands proven behavioral bounds and safety margin. The black box isn&#x27;t the issue; unprovable safety is.</p>
+<h2 id="s21">44:16 — 新的 UN 全球无人驾驶法规</h2>
+<p><strong>中文要点：</strong> UNECE 通过全球层面无人驾驶法规，为跨国互认铺路，有望降低重复认证成本。这是比欧盟单边法规更进一步的信号。</p>
+<p><strong>English：</strong> UNECE adopted a global driverless-vehicle regulation, paving the way for cross-border mutual recognition and lower duplicate-certification cost—a step beyond the EU&#x27;s unilateral rule.</p>
+<h2 id="s22">47:00 — 欧洲乘客何时能打到无人驾驶车</h2>
+<p><strong>中文要点：</strong> 结合两步式流程与真实运营进展，讨论乘客真正能叫到无人驾驶接驳车的时间线——取决于企业准备度与地方的运营区域批准节奏。</p>
+<p><strong>English：</strong> Combining the two-step process with real deployment progress, the discussion weighs when passengers can actually hail a driverless shuttle—gated by applicant readiness and local operating-area approvals.</p>
+<h2 id="s23">49:00 — 如果明天能改一件事</h2>
+<p><strong>中文要点：</strong> Dirk 收尾给出「最想立刻改变的一点」，指向清理那些为「有人类驾驶员」量身定制、在无人驾驶场景已无意义的过时条款（如酒精锁）。</p>
+<p><strong>English：</strong> Dirk closes with the one thing he&#x27;d change tomorrow: clearing outdated clauses built for &quot;human drivers&quot;—such as the alcohol interlock—that become meaningless under driverless operation.</p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-pilot-to-public-service/index.html"><div class="rw"><img loading="lazy" src="../av-pilot-to-public-service/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Ep.19</div><div class="rt">从自动驾驶试点到公共服务</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="../uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">拆解 Uber 的自动驾驶战略</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["欧盟型式认证", "type approval", "homologation", "TÜV SÜD", "Dirk Fratzke", "法规 2022/1426", "L4", "自动驾驶", "UNECE", "运营区域批准", "owner of the road", "EVA shuttle", "卡尔斯鲁厄", "无方向盘", "小批量上限 1400", "功能安全", "Mobileye", "端到端 AI", "小马智行", "Pony.ai", "WeRide", "Momenta", "中美企业进欧洲", "UN 全球法规", "酒精锁"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><div id='wbToast'></div></body></html>
