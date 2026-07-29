@@ -1,4 +1,4 @@
-<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Jane Street：GPU、交易与招聘 · 总结分析</title><meta name='description' content='Jane Street 技术共同负责人 Yaron Minsky 与物理工程负责人 Dan Pontecorvo 复盘：从 100 纳秒的 FPGA 到几十万张 GPU 的训练集群，量化交易为何是「AGI 完全」问题，以及算力扩张如何反而抬高了招聘门槛而非降低它。'><meta property='og:title' content='Jane Street：GPU、交易与招聘 · 总结分析'><meta property='og:description' content='Jane Street 技术共同负责人 Yaron Minsky 与物理工程负责人 Dan Pontecorvo 复盘：从 100 纳秒的 FPGA 到几十万张 GPU 的训练集群，量化交易为何是「AGI 完全」问题，以及算力扩张如何反而抬高了招聘门槛而非降低它。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>GPU、TPU 与 AI 经济学解析 · 总结分析</title><meta name='description' content='科技投资人 Gavin Baker 与 Dwarkesh Patel 的年度对谈：从 Hopper→Blackwell 的产品转型、Google「吸干经济氧气」的低成本策略、GPU 与自研 ASIC 的军备竞赛，到 AI 投资回报率（ROI）、推理飞轮、太空数据中心与 SaaS 的生死抉择——用第一性原理拆解 AI 基建经济学的「大博弈」。'><meta property='og:title' content='GPU、TPU 与 AI 经济学解析 · 总结分析'><meta property='og:description' content='科技投资人 Gavin Baker 与 Dwarkesh Patel 的年度对谈：从 Hopper→Blackwell 的产品转型、Google「吸干经济氧气」的低成本策略、GPU 与自研 ASIC 的军备竞赛，到 AI 投资回报率（ROI）、推理飞轮、太空数据中心与 SaaS 的生死抉择——用第一性原理拆解 AI 基建经济学的「大博弈」。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
 :root{
   --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
   --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
@@ -295,100 +295,70 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 @media (max-width:560px){
   .grid{grid-template-columns:1fr}
 }
-</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=xKZ_8ULR91Y" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Dwarkesh Podcast · YouTube</div><h1>Jane Street：GPU、交易与招聘</h1><p class="sub">Jane Street on GPUs, Trading, and Hiring</p><div class="tags"><span class="tag">⏱ —</span><span class="tag">👤 Yaron Minsky（技术团队共同负责人）、Dan Pontecorvo（物理工程团队负责人）</span><span class="tag">🗓 2026-05</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/xKZ_8ULR91Y" title="Jane Street on GPUs, Trading, and Hiring" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">导语</a><a href="#s1">一、背景：一家「研究实验室贴着交易台」的公司</a><a href="#s2">二、时间跨度的谱系：从 100 纳秒到数小时</a><a href="#s3">三、模型在预测什么：公允价值与组合性</a><a href="#s4">四、推理放在哪：colo、FPGA 与 GPU 的权衡</a><a href="#s5">五、60 亿美元 CoreWeave 与 Jane Street 的「规模定律」</a><a href="#s6">六、推理工作负载：延迟、批处理与极高数据速率</a><a href="#s7">七、存储、x86 与去中心化：被打破的工程捷径</a><a href="#s8">八、交易是「AGI 完全」问题</a><a href="#s9">九、人类在环：相变、非电子化交易与人类的元判断</a><a href="#s10">十、物理工程：20 年变迁、瓶颈与模块化</a><a href="#s11">十一、机架密度、封装类比与 NVL72 vs TPU</a><a href="#s12">十二、算力的「备用用途」与「盲区」</a><a href="#s13">十三、电力 vs 芯片：拆分与分流</a><a href="#s14">十四、GPU 规模几万→几十万；真正的瓶颈是人才</a><a href="#s15">十五、招聘哪些岗位</a><a href="#s16">十六、谜题文化与后门</a><a href="#s17">十七、关键结论与趋势</a><a href="#s18">十八、局限性与说明</a></nav><main class="content"><h1>Jane Street：GPU、交易与招聘 —— 当纳秒级交易遇上几十万张 GPU</h1>
-<blockquote>对谈：Dwarkesh Patel × Yaron Minsky（技术团队共同负责人）× Dan Pontecorvo（物理工程团队负责人）</blockquote>
-<blockquote>来源：Dwarkesh Podcast（本期为得州数据中心探访后的深度对谈，配套视频为数据中心的实地 tour）</blockquote>
-<h2 id="s0">导语</h2>
-<p>Jane Street 常被外界简化成「一家很会写 OCaml 的高频交易公司」。但在这一期对谈里，Yaron Minsky 和 Dan Pontecorvo 把这家公司的另一面摊开了：它本质上是一个<strong>研究实验室，外面贴着一层交易台</strong>——而且这个实验室正在以几十万张 GPU 的规模，去赌一个关于「信号藏在噪声里」的命题。</p>
-<p>这场对话最有张力的地方在于：它把两个看起来南辕北辙的世界并置在一起——一边是要求<strong>100 纳秒内</strong>返回一个数据包的极端硬件逻辑，另一边是动辄训练几周到几个月、需要<strong>几十万张 GPU</strong> 的深度学习集群。Jane Street 同时运转着这两个世界，并试图解释它们为什么并不矛盾。</p>
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=cmUo4841KQw" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Dwarkesh Podcast · YouTube</div><h1>GPU、TPU 与 AI 经济学解析</h1><p class="sub">GPUs, TPUs, &amp; The Economics of AI Explained</p><div class="tags"><span class="tag">⏱ 1:28:22</span><span class="tag">👤 Gavin Baker（Atreides Management 科技投资人）；主持人 Dwarkesh Patel</span><span class="tag">🗓 2026-07</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/cmUo4841KQw" title="GPUs, TPUs, &amp; The Economics of AI Explained" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">背景：一场关于「AI 大博弈」的年度对谈</a><a href="#s1">核心议题分节</a><a href="#s2">关键结论与趋势</a><a href="#s3">局限性与说明</a></nav><main class="content"><h1>GPUs、TPU 与 AI 经济学解析 — Gavin Baker 访谈深度分析</h1>
+<blockquote>节目：Dwarkesh Podcast（主持人 Dwarkesh Patel）</blockquote>
+<blockquote>嘉宾：Gavin Baker（Atreides Management 科技投资人，以「百科全书式的科技视野」著称）</blockquote>
+<blockquote>主题：AI 基础设施经济学——GPU 与 TPU 之争、缩放定律、ROI、太空数据中心、SaaS 的生死抉择，以及投资哲学</blockquote>
+<blockquote>时长：约 88 分钟</blockquote>
 <hr>
-<h2 id="s1">一、背景：一家「研究实验室贴着交易台」的公司</h2>
-<p>Dwarkesh 实地探访了 Jane Street 位于得州的数据中心。据 Jane Street 官方文章，该数据中心有 <strong>4,032 张 GPU、56 个机柜</strong>，为液冷改造，并用约 <strong>8,000 公里的光纤</strong> 把一切连起来。Yaron 与 Dan 的对谈，正是这次探访的延伸。</p>
-<p>一个关键澄清：视频字幕与部分中文报道把 Yaron 误记为「Ron Minsky」、把 Dan 误记为「Dan Ponttovo / Pavatova」，其本名分别为 <strong>Yaron Minsky</strong>（Jane Street 技术体系的核心人物，OCaml 与函数式风格的旗手）与 <strong>Dan Pontecorvo</strong>（物理工程团队负责人）。</p>
+<h2 id="s0">背景：一场关于「AI 大博弈」的年度对谈</h2>
+<p>Gavin Baker 是少数横跨一级与二级市场、既看十大科技巨头也看 25 岁创业者的投资人。这期对谈延续他一贯的「从第一性原理拆解硬科技」风格，把当下最热的 AI 叙事拆成了一道关于<strong>物理、成本与博弈</strong>的算术题。他的核心判断可以用一句话概括：<strong>AI 是他职业生涯中第一次让「低成本生产」真正重要的科技赛道</strong>——而这意味着整张产业地图都要按「谁在生产更便宜的 token」重新绘制。</p>
 <hr>
-<h2 id="s2">二、时间跨度的谱系：从 100 纳秒到数小时</h2>
-<p>Dwarkesh 的核心困惑是：既然你们在纳秒级交易，怎么还能做 GPU 的事？</p>
-<p>Yaron 的回答是整场对话的基石：<strong>交易不存在单一的时间跨度，而是一条完整的谱系。</strong></p>
-<ul><li>最快的一端：为保持竞争力，某些系统必须在 <strong>100 纳秒内</strong> 处理并返回数据包。到了这个速度，「用 OCaml 还是 Rust 还是 C++ 根本不重要，因为你连 CPU 都用不了——必须用 FPGA 直接焊在网线上」，数据包在输入端还没收完，输出端就已经发出去了。</li></ul>
-<ul><li>越慢的一端：可能是几微秒、几百微秒、毫秒，乃至「半小时内或当天返回决策都完全没问题」。</li></ul>
-<ul><li>在「决策的聪明程度」和「返回的延迟」之间存在一条完整的权衡曲线。最佳策略是<strong>集成（ensemble）</strong>：不同时间尺度用不同复杂度的决策。</li></ul>
-<blockquote>金句：「构建最佳交易策略的正确方法，实际上是采用一种集成方法。对于某些决策你极快极简，对于另一些你可以用更大的模型。」</blockquote>
+<h2 id="s1">核心议题分节</h2>
+<h3>1. 如何跟上 AI：付费、跟人、用 AI 跟 AI</h3>
+<p>Gavin 的方法论很朴素却反直觉：绝大多数著名投资人基于「免费档」就下了定论，而免费档「就像你在和一个 10 岁小孩打交道」。要真正理解能力边界，必须付费使用最高档（Gemini Ultra / SuperGrok，约 $200/月）——那是「完全长成的 30 多岁成年人」。真正懂行的人全球只有约 500–1000 人，且「其中有相当数量住在中国」。他建议紧密跟随这些人、必听四大实验室（OpenAI、Gemini/Google、Anthropic、xAI）的人上播客，并且<strong>把 AI 本身当作跟上 AI 的工具</strong>——听完播客就和新模型讨论感兴趣的部分。</p>
+<blockquote>*&quot;Everything in AI is just downstream of those people.&quot;*</blockquote>
+<h3>2. 缩放定律与那 18 个月的空档</h3>
+<p>Gemini 3 最大的意义是确认了<strong>预训练缩放定律依然成立</strong>。但 Gavin 强调：这不是物理定律，而是「经验观测」——如同古埃及人能精确对齐金字塔与巨石阵的赤道轴线，却完全不懂轨道力学。真正关键的是时间线：XAI 把约 20 万块 Hopper 做到「连贯（coherent，即每块 GPU 都知道其它 GPU 在想什么、共享内存）」之后，行业就触及了单代芯片的天花板，必须等 Blackwell。</p>
+<blockquote>*&quot;Had reasoning not come along, there would have been no AI progress from mid 2024 through essentially Gemini 3.&quot;*</blockquote>
+<p>是<strong>推理（RLVR，即可验证奖励的强化学习）+ 测试时计算</strong>桥接了这条约 18 个月的空档。三条缩放定律——预训练、后训练（RLVR）、测试时计算——是「乘法式叠加」的：更好的基座模型 × 更好的 RLVR × 更长的测试时计算。</p>
+<h3>3. 产品过渡：Hopper → Blackwell（风冷到液冷）</h3>
+<p>Blackwell 是从风冷到液冷的剧烈产品转型：机架从约 1000 磅增至 3000 磅，功耗从 30kW（≈30 个美国家庭）增至 130kW。Gavin 的类比很形象——「就像为了换一部新 iPhone，你得把全屋插座改成 220V、装特斯拉电池墙、发电机、太阳能，再加固地板」。正因如此，Blackwell 真正规模化部署只是过去 3–4 个月的事；即便拿到芯片，也需 6–9 个月调优才能追上已被完全吃透的 Hopper。</p>
+<h3>4. Google 的「吸干经济氧气」策略</h3>
+<p>这是全篇最锋利的一帧。Google 是 token 的<strong>最低成本生产者</strong>，而 Gavin 指出：</p>
+<blockquote>*&quot;Nvidia is not worth trillions cuz they&#x27;re the low-cost producer of AI accelerators. It&#x27;s never mattered. … what Google has been doing … they have been sucking the economic oxygen out of the AI ecosystem.&quot;*</blockquote>
+<p>作为低成本生产者，最理性的策略就是用低价把竞争对手的经济氧气抽干——尤其那些需要融资、不像 Google 那样财雄势大的玩家。所以他抛出一个尖锐问题：既然 Google 在搜索等生意上有决定性成本优势，<strong>「为什么不把 AI 跑在 -30% 的毛利率上？」</strong> 一旦 Blackwell 训练完成、Google 不再是低成本生产者，这套负毛利打法就难以为继，甚至可能反噬其股价。</p>
+<h3>5. GB300 与成本曲线的转移</h3>
+<p>GB300 与 GB200 机架「即插即用」完全兼容，无需重建供电与散热，可直接替换升级。于是「用上 GB300 且垂直整合」的公司，将成为新一代 token 低成本生产者。等到 Nvidia 的下一代 <strong>Rubin</strong> 出来，GPU 相对 TPU 及其它 ASIC 的差距还会显著扩大。</p>
+<h3>6. GPU 年更 vs 自研 ASIC 军备竞赛</h3>
+<p>面对「客户纷纷自研 ASIC」的威胁，Lisa Su 与 Jensen 的回应干脆利落：<strong>每年推一款 GPU，让你们追不上</strong>。Gavin 的反直觉结论是——做一颗好芯片至少要三代积累：TPU 到 V3/V4 才勉强有竞争力，Amazon 的 Trainium 同理。更隐蔽的成本在于：自研 ASIC 不只是「一颗芯片」，你还得搞定 CPU、scale-up 交换、协议、光模块、整套管线软件。「哦 s\*\*\*，我做了这么小一颗芯片，然后才发现……」是许多大厂的真实写照。</p>
+<p>Google 则因长期向 Broadcom 支付 50–55% 的毛利率，开始引入 MediaTek（更低毛利）向其「打响第一枪」——因为按第一性原理，把半导体项目完全内部化只是时间问题。</p>
+<h3>7. ROI 明确为正，但「训练没有 ROI」</h3>
+<p>Gavin 的立场毫不含糊：</p>
+<blockquote>*&quot;The ROI on AI has empirically, factually, unambiguously been positive.&quot;*</blockquote>
+<p>他的论据很硬：最大的 GPU 买家都是上市公司，有「经审计的季报」可算 ROIC——而这些公司加大 GPU 支出后的 ROIC 反而高于之前。但要区分：<strong>训练不产生 ROI，ROI 来自推理</strong>。他曾极度担忧「Blackwell 空档期」——巨额训练 capex 已起、推理尚未变现，ROIC 会下滑（Meta 就因做不出前沿模型而 printing 了一个 ROIC 下降的季度）。拐点信号来自 C.H. Robinson（货运代理）：用 AI 把报价覆盖率从 60% 提到 100%、耗时从 15–45 分钟降到秒级，财报后股价涨 20%——AI 同时撬动了收入线与成本线。</p>
+<h3>8. 推理飞轮与四大实验室格局</h3>
+<p>推理带来了一个预推理时代缺失的东西——<strong>飞轮</strong>：当用户对某个答案一致地喜欢或不喜欢，这本身就是「可验证奖励」，可反馈回模型。Meta、微软都曾重金却未能做出前沿模型（Meta 高管离职、百亿级挖人仍失败），关键在于维持大集群 GPU「连贯」且高利用率极难——30% 与 90% 在线率的对手「根本不在同一维度竞争」。格局上：xAI 将率先推出 Blackwell 模型并率先大规模推理；OpenAI 因向他人支付算力毛利而是「高成本 token 生产者」，这正是其近期 code red 的根源；Anthropic 烧钱更少、增长更快，借力 Google/Amazon 的 TPU 与 Trainium。</p>
+<h3>9. 中国、华为昇腾与稀土</h3>
+<p>中国开源是 Meta 的「天赐礼物」——可作为 bootstrap 的 checkpoint。但 Gavin 认为中国押注华为昇腾、拒绝 Blackwell 是「巨大错误」：DeepSeek 技术报告已直言算力不足。Blackwell 面世后中美前沿差距将拉大，中国最早 2026 年底才会意识到需要 Blackwell。至于稀土，他强调「稀土并不真的稀有，只是精炼很脏很麻烦」，DARPA/DoD 与友好国家正快速推进替代方案——地缘杠杆没大家想的那么牢。</p>
+<h3>10. 太空数据中心</h3>
+<p>这可能是全篇最「离谱却逻辑自洽」的部分。从第一性原理看，太空数据中心在各方面都优于地球：</p>
+<ul><li>太阳能辐照是地球 <strong>6 倍</strong>，且 24 小时日照、无需电池；</li></ul>
+<ul><li>散热免费——只需在卫星暗面装辐射板，温度接近绝对零度；</li></ul>
+<ul><li>激光在真空中互联比光纤更快更连贯；Starlink 已演示直连手机（direct-to-cell）。</li></ul>
+<blockquote>*&quot;In every way, data centers in space from a first principles perspective are superior to data centers on earth.&quot;*</blockquote>
+<p>最大摩擦是发射成本，需要大量 Starship。有趣的是，SpaceX / Tesla / xAI 正在「收敛」：xAI 提供智能模块、Tesla 造 Optimus、SpaceX 提供太空算力——彼此创造竞争优势。</p>
+<h3>11. 短缺与过剩、台积电与电力约束</h3>
+<p>半导体的「铁律」是客户缓冲库存必须等于交货周期，所以库存周期自古难免；但真正的产能周期自 90 年代末罕见，因为台积电太擅长平滑供给。如今台积电因害怕过度建设而扩张过慢，<strong>反而成了「泡沫刹车」</strong>。另一方面，电力是先进算力的最佳约束：以瓦特计，token/瓦 提升直接等于收入提升——所以最佳产品凭定价权取胜，与价格无关。短期答案是天然气 + 太阳能（美国核能受 NEPA 等限制太慢）。这一节还点出年轻 AI 原生创始人与半导体 VC 复兴的同步到来。</p>
+<h3>12. SaaS 公司的「生死抉择」</h3>
+<p>Gavin 把 SaaS 比作当年面对电商的实体零售：留恋 70–90% 毛利率，拒绝接受 AI 的 ~40% 毛利率。但 AI 的本质是「每次都要重新计算」，与「写一次、广分发」的传统软件相反。AI 原生公司人力极少、反而更早产生现金。</p>
+<blockquote>*&quot;This is a life or death decision. And essentially everyone except Microsoft is failing it.&quot;*</blockquote>
+<blockquote>*&quot;if you&#x27;re not willing to run it at a sub 35% gross margin … you are guaranteeing that you will not succeed at AI.&quot;*</blockquote>
+<p>正确打法是用 agent 自动化核心功能（如 CRM 做客服/销售），以 10–20% 抽成售卖，抢在别人用 agent 接入你的系统、再把你「关掉」之前行动。</p>
+<h3>13. 泡沫：核能、量子</h3>
+<p>当前「滚动泡沫」轮到了核能（核聚变 / SMR）与量子，但公开可投的标的里，真正的领导者（Google、IBM、Honeywell）几乎都不在上市公司。量子霸权被严重误解——量子只在某些经典计算机做不到的计算上更强，并非「全面取代经典计算机」。一个耐人寻味的观察是：每当 AI 撞上瓶颈（电力、芯片），似乎总有对应的突破加速到来（Rubin 平滑过渡、AMD MI450 入局），「AI 需要什么，就得到什么」。</p>
+<h3>14. 结语：投资即追寻真相</h3>
+<p>Gavin 把投资定义为对「真相」的追寻——<strong>先于他人发现隐藏的真相，才能产生 alpha</strong>。他的路径是历史 + 对时事的准确理解，交叉出差异化预判；早年在滑雪场当清洁工、被人当「外星人」看待的经历，深刻塑造了他对待每个人的方式。给年轻人的建议：把投资当作技巧与运气的游戏，用最深厚的历史知识交叉最敏锐的时事判断。</p>
+<blockquote>*&quot;investing is the search for truth. And if you find truth first … that&#x27;s how you generate alpha.&quot;*</blockquote>
 <hr>
-<h2 id="s3">三、模型在预测什么：公允价值与组合性</h2>
-<p>被问到「模型究竟在预测什么」时，Yaron 点出了一个最经典也最重要的目标：<strong>公允价值（fair value）</strong>——「这个东西到底值多少钱」。它的妙处在于<strong>可组合性</strong>，能干净地嵌进许多不同的交易流程。这不是唯一目标，但是最重要的之一。值得注意的是，Yaron 说这个问题他 25 年前用线性回归时就在想——模型的形态变了，但「给资产定价」这一根本命题没变。</p>
+<h2 id="s2">关键结论与趋势</h2>
+<p>1. <strong>低成本生产决定一切</strong>：AI 首次让「谁生产更便宜的 token」成为产业主导变量；Google 的临时优势来自 TPU + 垂直整合，但 Rubin/Blackwell 将把优势重新推回 GPU 阵营。 2. <strong>三条缩放定律乘法叠加</strong>：预训练（已确认延续至少一代）+ RLVR + 测试时计算，意味着能力曲线远未触顶。 3. <strong>ROI 已被审计数据证实为正</strong>，但价值实现靠推理而非训练；企业采用正从初创（最早）走向财富 500 强（开始给出量化增效）。 4. <strong>ASIC 没那么容易</strong>：三代积累 + 整套生态，使大多数自研芯片难成气候；GPU 年更节奏让对手疲于奔命。 5. <strong>物理约束是天然限速器</strong>：电力与台积电产能（以及未来的太空算力）决定扩张节奏，反而让周期更平滑、更长。 6. <strong>SaaS 面临范式改写</strong>：不接受 ~40% 毛利率、不用 agent 接管核心功能的 SaaS，大概率被 AI 原生玩家颠覆。</p>
 <hr>
-<h2 id="s4">四、推理放在哪：colo、FPGA 与 GPU 的权衡</h2>
-<p>Dwarkesh 提到业界关于交易的「梗」：必须搞定托管（colo），把机器搬到交易所旁边。</p>
-<p>Yaron 的解释更细腻：推理过程<strong>可能在 CPU、FPGA 或 GPU 上</strong>，取决于你要多少算力、模型多大、需要多快返回。更大的模型在物理位置上灵活得多；而真正极速的东西，连「光纤线圈的长度」都要量。Dan 补充了一个工程现实：<strong>把 GPU 塞进交易所旁的托管机房，就得遵守服务商的规则，电力、冷却都更紧</strong>——一个机柜可能只放得下一张 GPU，反而没法做高效液冷。所以算力规模越大，这类约束越要提前想清楚。</p>
-<hr>
-<h2 id="s5">五、60 亿美元 CoreWeave 与 Jane Street 的「规模定律」</h2>
-<p>Jane Street 与 CoreWeave 签下 <strong>60 亿美元</strong> 算力协议。Yaron 借此区分了 Jane Street 与基础模型实验室的根本差异：</p>
-<ul><li>基础模型实验室的价值在于「训练一个通用大模型做所有事」。</li></ul>
-<ul><li>Jane Street 的价值在于<strong>模型架构的多样性 + 实验的数量</strong>。大量价值来自「让研究员用更快的迭代试很多很不一样的新设计」。</li></ul>
-<p>他还点出一个常被忽视的专业化动因——<strong>字节/浮点比（bytes-to-flop ratio）</strong>：金融数据噪声大、体量巨大，但单位字节的信息量低，因此模型往往更小、数据更脏更多。不同应用之间的存储、加载、塑形、吞吐与延迟权衡完全不同。</p>
-<hr>
-<h2 id="s6">六、推理工作负载：延迟、批处理与极高数据速率</h2>
-<p>相对大模型聊天机器人，Jane Street 的推理<strong>延迟更关键</strong>，批处理仍是难题；并且因为要 watch 不同交易标的，模型常常被<strong>解耦（disaggregated）</strong>。</p>
-<p>最反直觉的一点：<strong>数据速率极高</strong>。大模型实验室从所有用户聚合来的总数据率虽高，但单个用户的序列数据很小；而从纳斯达克行情喂入的字节，在单一领域内需要<strong>因果、串行地</strong>被极高速消费。Yaron 的总结很克制：「底层工程问题大同小异，只是所有常数都被调到了不同的位置，于是你做出了不同的选择。」</p>
-<hr>
-<h2 id="s7">七、存储、x86 与去中心化：被打破的工程捷径</h2>
-<p>Jane Street 曾靠两条「捷径」极大简化工程：① 假装世界上只有 <strong>x86_64</strong> 一种 CPU 架构；② 只有一个大型研究数据中心 + 一个大型存储集群。</p>
-<p>如今两条都被打破：单数据中心接不进足够电力（Yaron 开玩笑说是「thunderbolts/雷电」级别的电力需求），只能<strong>全球分布式建数据中心</strong>，于是计算调度与存储调度必须深度交织——同时被迫支持 <strong>ARM</strong>。这本质上是一个<strong>去中心化（disaggregation）</strong> 难题。</p>
-<hr>
-<h2 id="s8">八、交易是「AGI 完全」问题</h2>
-<p>Dwarkesh 抛出一个激进问题：AGI 一旦出现，会立刻让 Jane Street 失业吗？</p>
-<p>Yaron 先不否定这种世界，但认为「距离尚远」，并给出了一个极好的框架：</p>
-<blockquote>「交易对我来说有点像『AGI 完全』（AGI-complete）问题，类似于『NP 完全』（NP-complete）。世界上所有不同的问题最终都会在交易背景下影响你正在做的事，因为交易归根结底是弄清楚事物的价值、预测未来，而无数事情都会汇入其中。」</blockquote>
-<p>随着各部分被逐一自动化，<strong>还没法很好自动化的那部分难事，反而成了竞争优势的来源</strong>。因此他反而比以往更想招人——「人类和人类的认知比以往任何时候都更有价值」。</p>
-<hr>
-<h2 id="s9">九、人类在环：相变、非电子化交易与人类的元判断</h2>
-<p>哪天最赚钱？往往是世界发疯、没人知道发生了什么、流动性极难提供的时候——而这时恰恰最需要<strong>人类的判断</strong>去回答「今天和往常有什么不同」。</p>
-<p>Yaron 区分了两种自动化：</p>
-<ul><li>模型尽量学会应对<strong>相变（phase transitions）</strong>；</li></ul>
-<ul><li>但<strong>人类在相变时比模型表现更好</strong>，需要一种「该怎么做」的<strong>元判断（meta judgment）</strong>。</li></ul>
-<p>他还澄清了「非电子化」的含义：仍有大量通过聊天工具、人际沟通完成的交易；有人要评估电话那头的人代表了多少<strong>逆向选择（adverse selection）</strong>。债券的自动化程度远低于股票——「25 到 30 年过去了，并不是所有事都走向了电子化」。</p>
-<hr>
-<h2 id="s10">十、物理工程：20 年变迁、瓶颈与模块化</h2>
-<p>Dan 谈数据中心建设的 20 年变化：行业老人还在用老办法，但旧方法正被淘汰。典型例子：发电机是交期最长的设备之一，于是 Jane Street 选择「把发电机只留给必须靠它的核心系统，让 GPU 提早六个月上线」——「从纯工程看未必最优，但从业务看绝对是对的」。</p>
-<p>当前瓶颈（且两周后就变）：<strong>发电机、变压器、液冷设备</strong>交期长、需求大。应对之道是与采购团队囤通用件，并拥抱<strong>模块化/预制基础设施</strong>（长交期部件场外造好、现场近乎即插即用）。</p>
-<hr>
-<h2 id="s11">十一、机架密度、封装类比与 NVL72 vs TPU</h2>
-<p>Dwarkesh 的类比很妙：机架密度越高，数据中心越像<strong>芯片上的封装</strong>——计算核心只占封装总面积的极小一部分。</p>
-<p>Dan 展开：单机架迈向 <strong>1 兆瓦</strong> 时，冷却管路与供电是核心约束；无论用交流还是未来 800V 直流，都得把部件凑到同一处。更关键的是<strong>供应链协同</strong>：Nvidia、ASIC 公司卖的必须是「能在数据中心跑起来」的部件，而基础设施交期常超过一年，往往<strong>在订芯片之前就得定基础设施</strong>。他以 Google TPU（水温更低、密度约为 Nvidia NVL72/GB200 的一半）为例，说明必须前瞻兼容不同路线。</p>
-<hr>
-<h2 id="s12">十二、算力的「备用用途」与「盲区」</h2>
-<p>大模型实验室能承诺海量算力，部分因为他们有闲置算力的「备用用途」（比如 Meta 不用时就拿 GPU 把 Instagram 广告模型做更好）。Dwarkesh 问：Jane Street 有对等物吗？</p>
-<p>Yaron 说：Jane Street 其实是<strong>严重算力受限</strong>的——大量创新与实验受限于现有算力，被迫放弃的任务价值极高。因此不存在「算力过剩」，反而有一大片<strong>「盲区（dark space）」</strong>：只要有更多算力就会去做的研究与实验（如更频繁地重训模型以对抗质量衰减、用 bulk 推理填补空闲）。他也不讳言其中存在<strong>隐性下注</strong>——竞争可能削弱业务价值，所以必须时刻保持紧张。</p>
-<hr>
-<h2 id="s13">十三、电力 vs 芯片：拆分与分流</h2>
-<p>Dan 补充了一个巧妙的财务视角：可以把「为数据中心供电」与「买芯片」<strong>拆分</strong>——先锁定电力和数据中心容量做多，推迟昂贵的芯片采购决策；未来甚至可以把部分容量<strong>分流（offload）</strong> 给他人。对 Jane Street 而言，分流电力/容量比分流芯片容易得多。</p>
-<hr>
-<h2 id="s14">十四、GPU 规模几万→几十万；真正的瓶颈是人才</h2>
-<p>这段直接点题「招聘」：</p>
-<ul><li>当前 GPU 约<strong>几万张</strong>，不久的将来将达<strong>几十万张</strong>，且完全可由业务效益证明合理（「我们绝不会去想：能不能用交易 P&amp;L 证明它？显然是好投资」）。</li></ul>
-<ul><li>算力扩张<strong>不会放慢招聘</strong>，反而增加招聘动力——「研究本身极有价值，研究员极有价值，这反而是买更多算力的理由」。</li></ul>
-<ul><li>真正的最大瓶颈不是硬件，而是<strong>找到优秀人才</strong>与<strong>导师辅导能力（mentorship capacity）</strong>——培训新人、融入文化需要时间。</li></ul>
-<blockquote>金句：「我绝对不认为硬件是限制因素；真正的限制是找到优秀的人，以及我们的导师辅导能力。」</blockquote>
-<hr>
-<h2 id="s15">十五、招聘哪些岗位</h2>
-<p>Yaron 把招聘版图铺得很开：</p>
-<ul><li><strong>物理工程</strong>：机械/电气/结构工程师、项目经理、建筑师（覆盖空间全生命周期）；</li></ul>
-<ul><li><strong>ML / 交易</strong>：架构设计、各类定制模型、LLM 训练全周期经验；数学/CS/物理/工程背景的交易员；</li></ul>
-<ul><li><strong>软件 / 硬件</strong>：通用 SWE；<strong>fleet-wide optimization</strong>（全域/全集群优化，随着算力投入达数十亿美元而价值飙升）；自研 <strong>ASIC</strong>；</li></ul>
-<ul><li><strong>新兴</strong>：<strong>形式化方法（formal methods）</strong> 团队——用数学证明提升软件工程效率（AI 革命让这个冷门领域回春）；以及被长期忽视的<strong>前端工程</strong>（过去 Jane Street 假装 Web 技术不存在，现在为更好的 AI 工具大量投入）；</li></ul>
-<ul><li><strong>以人为本的元观点</strong>：在 AI 工具的喧嚣中，别忽视「人的因素」——工具应提升人的理解力、能动性与效率。</li></ul>
-<hr>
-<h2 id="s16">十六、谜题文化与后门</h2>
-<p>Dwarkesh 提到 Jane Street 为听众专门出的谜题，其中一个<strong>连 Jane Street 自己都没解出来</strong>——关于在多个 LLM 中埋入<strong>触发词（trigger phrase）的后门</strong>。Yaron 说谜题本就是文化的一部分，「用它作为和大家建立联系的方式真的很棒」。</p>
-<hr>
-<h2 id="s17">十七、关键结论与趋势</h2>
-<p>1. <strong>两个时间尺度的统一体</strong>：Jane Street 同时运营 100 纳秒的 FPGA 与几十万张 GPU 的训练集群，二者靠「时间跨度谱系 + 集成策略」统一，而非互相取代。 2. <strong>多样性 &gt; 通用性</strong>：与基础模型实验室押注单一通用模型不同，Jane Street 的护城河来自<strong>架构多样性与实验吞吐</strong>。 3. <strong>交易 = AGI 完全问题</strong>：自动化会不断把「易事」吃掉，留下「难事」成为竞争优势；人类判断（尤其相变时）短期内不可替代。 4. <strong>算力受限下的扩张逻辑</strong>：即便有几十万张 GPU，瓶颈仍是人才与导师辅导；电力/容量可与芯片解耦、提前锁定。 5. <strong>物理工程成为核心竞争力</strong>：从液冷、交期管理到封装级思维，数据中心本身正在变成 Jane Street 的护城河。</p>
-<hr>
-<h2 id="s18">十八、局限性与说明</h2>
-<ul><li>本逐字稿的中文底本来自公开中文报道（对谈全文的 AI 辅助翻译），英文由人工据中文回译并校对；<strong>原始 YouTube 字幕因当前运行环境无法直连 YouTube 而未能抓取</strong>，故未附时间戳（mm:ss）。如需带时间戳的英文原文字幕，可在能访问 YouTube 的机器上用 <code>yt-dlp --skip-download --write-auto-sub --sub-lang en</code> 导出 .vtt 后交由本流程重新生成。</li></ul>
-<ul><li>专业术语（如 NVL72/GB200、bytes-to-flop、phase transition、fleet-wide optimization）已在正文与关键词中标注中英对照。</li></ul>
-<ul><li>部分为中文报道译注指出的速记误差（如人物姓名），已按 Jane Street 官方信息更正。</li></ul>
-<p>*页脚：语音识别 + 机器翻译 + 人工校对，仅供学习与参考。*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../gavin-baker-ai-economics/index.html"><div class="rw"><img loading="lazy" src="../gavin-baker-ai-economics/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">GPU、TPU 与 AI 经济学解析</div></div></a><a class="relcard" href="../neurips-2024-financial-text-llm/index.html"><div class="rw"><img loading="lazy" src="../neurips-2024-financial-text-llm/slides/6rPwg0QWRQjnjjM6.webp" alt=""></div><div class="rb"><div class="rs">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><div class="rt">拆解金融文本数据：LLM 在交易决策中的应用</div></div></a><a class="relcard" href="../neurips-2024-sequence-modeling-finance/index.html"><div class="rw"><img loading="lazy" src="../neurips-2024-sequence-modeling-finance/slides/2BTZO3XMEQgX4Itk.webp" alt=""></div><div class="rb"><div class="rs">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><div class="rt">金融服务中的序列建模：Capital One 在消费银行表格数据上的探索</div></div></a><a class="relcard" href="../icml-2026-scaling-dl-financial-markets/index.html"><div class="rw"><img loading="lazy" src="../icml-2026-scaling-dl-financial-markets/slides/2ZlGAQV3BS5jIYBx.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">在金融市场中扩展深度学习</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<h2 id="s3">局限性与说明</h2>
+<ul><li>本稿英文原文来自 YouTube 自动生成字幕（auto-generated），存在听写误差（如专有名词 AS6=ASIC、Reuben=Rubin、Trainium 多种误拼、TSMC 多种误拼等），已在中英对照稿中做专有名词校正，并保留了部分口语化/重复表达以贴近原貌。</li></ul>
+<ul><li>时间戳由字幕轨道对齐得出，段落为机器按停顿自动切分，可能存在 ±数十秒偏差。</li></ul>
+<ul><li>中文为机器翻译并经专有名词校对，重要引用建议对照英文原文。</li></ul>
+<ul><li>涉及个股与产业判断均为主宾观点，不构成投资建议。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="../sam-altman-agi-compute-agency/index.html"><div class="rw"><img loading="lazy" src="../sam-altman-agi-compute-agency/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Sam Altman：AGI、算力与人类能动性</div></div></a><a class="relcard" href="../ai-agents-investment-research-caughran/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/muzEI6HePb0/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">Fundamental Edge · YouTube Webinar</div><div class="rt">AI Agent 如何改变投资研究（外骨骼假说）</div></div></a><a class="relcard" href="../lattner-mojo-new-language/index.html"><div class="rw"><img loading="lazy" src="../lattner-mojo-new-language/cover.jpg" alt=""></div><div class="rb"><div class="rs">Signals &amp; Threads (Jane Street) · YouTube</div><div class="rt">为什么机器学习需要一门新编程语言</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
