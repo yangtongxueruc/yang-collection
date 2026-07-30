@@ -1,4 +1,4 @@
-<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈 · 总结分析</title><meta name='description' content='NVIDIA 的 Matt Cragun 拆解 Alpamayo 开源 AV 模型家族（模型+AlpaSim 仿真+30万段数据集，建在 Cosmos 之上）与 Hyperion 参考硬件，讲清 NVIDIA 的『AV 安卓』打法：端到端栈+经典栈并行、靠多样性与冗余做仲裁，并直言『把车安全上路远比模型本身复杂』。'><meta property='og:title' content='NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈 · 总结分析'><meta property='og:description' content='NVIDIA 的 Matt Cragun 拆解 Alpamayo 开源 AV 模型家族（模型+AlpaSim 仿真+30万段数据集，建在 Cosmos 之上）与 Hyperion 参考硬件，讲清 NVIDIA 的『AV 安卓』打法：端到端栈+经典栈并行、靠多样性与冗余做仲裁，并直言『把车安全上路远比模型本身复杂』。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>欧洲为何不信任自动驾驶：信任、教育与监管的真相 · 总结分析</title><meta name='description' content='PAVE Europe 董事总经理 Guido Di Pasquale 拆解欧洲自动驾驶的信任缺口：公众误解深、决策者准备不足，恐惧点在治理/就业/数据主权而非安全；欧洲的优势是协作生态，短板是缺 ADS 技术栈冠军与监管碎片化，且不应像美国那样封锁中国 AV。'><meta property='og:title' content='欧洲为何不信任自动驾驶：信任、教育与监管的真相 · 总结分析'><meta property='og:description' content='PAVE Europe 董事总经理 Guido Di Pasquale 拆解欧洲自动驾驶的信任缺口：公众误解深、决策者准备不足，恐惧点在治理/就业/数据主权而非安全；欧洲的优势是协作生态，短板是缺 ADS 技术栈冠军与监管碎片化，且不应像美国那样封锁中国 AV。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
 :root{
   --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
   --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
@@ -295,61 +295,60 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 @media (max-width:560px){
   .grid{grid-template-columns:1fr}
 }
-</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/how-nvidia-alpamayo-is-accelerating" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Substack / Podcast</div><h1>NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</h1><p class="sub">How NVIDIA Alpamayo Is Accelerating Autonomous Driving with Matt Cragun</p><div class="tags"><span class="tag">⏱ 约 35 分钟</span><span class="tag">👤 Matt Cragun（NVIDIA 自动驾驶产品总监，负责车端模型、训练工具链与仿真测试）</span><span class="tag">🗓 2026-07</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/IUBQykSURkA/hqdefault.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/IUBQykSURkA" title="How NVIDIA Alpamayo Is Accelerating Autonomous Driving with Matt Cragun" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一句话结论</a><a href="#s1">嘉宾与背景</a><a href="#s2">Alpamayo 到底是什么</a><a href="#s3">NVIDIA 的 AV 战略：做「基础层」</a><a href="#s4">开源程度与跨芯片：「AV 的安卓」</a><a href="#s5">训练方法：模仿学习打底，强化学习补短板</a><a href="#s6">端到端 AI + 经典架构：双系统 + 仲裁</a><a href="#s7">边缘场景：本质是数据问题</a><a href="#s8">OEM 与 Robotaxi：L4 如何走向消费车</a><a href="#s9">开源模型的取舍</a><a href="#s10">行业现状与 Matt 的个人判断</a><a href="#s11">关键要点回顾</a></nav><main class="content"><h1>用 Alpamayo 加速自动驾驶：NVIDIA 的「AV 安卓」打法</h1>
-<h2 id="s0">一句话结论</h2>
-<p>NVIDIA 不再只卖「芯片」，而是把自动驾驶整套能力打包成一个开源产品家族 <strong>Alpamayo</strong>（模型 + 仿真 + 数据集 + 硬件参考架构 Hyperion），定位成「AV 界的安卓」：任何想造自动驾驶车的人来问「能帮我吗」，答案都应该是 yes。但嘉宾 Matt Cragun 反复强调——<strong>Alpamayo 只是「好原材料」，把车安全地上路远比模型本身复杂得多</strong>。</p>
-<h2 id="s1">嘉宾与背景</h2>
-<ul><li><strong>Matt Cragun</strong>：NVIDIA 自动驾驶（Autonomous Vehicles）组产品总监，团队负责车端模型、构建模型的工具链，以及模型训练时的仿真测试工具。</li></ul>
-<ul><li><strong>主播</strong>：Harry Campbell（The Driverless Digest）。</li></ul>
-<ul><li>节目形式为对谈，约 35 分钟，覆盖 NVIDIA 的 AV 战略、Alpamayo 原理、开源与跨芯片、Hyperion、端到端与经典架构、边缘场景、行业现状。</li></ul>
-<h2 id="s2">Alpamayo 到底是什么</h2>
-<ul><li><strong>名字来源</strong>：秘鲁一座山峰 Alpamayo，据称是「最美也最难爬」的山——寓意这个驾驶模型「挑战很大但值得」。</li></ul>
-<ul><li><strong>它是一个产品家族，不是一个模型</strong>：包含</li></ul>
-<ul><li><strong>Alpamayo 模型</strong>本身（有多种规格 / flavors）；</li></ul>
-<ul><li><strong>AlpaSim</strong>：闭环仿真框架；</li></ul>
-<ul><li>一个<strong>开源驾驶数据集</strong>：约 <strong>30 万段（300,000 clips）</strong> 真实驾驶片段；</li></ul>
-<ul><li>底层还建立在 <strong>NVIDIA Cosmos</strong>（世界基础模型）之上。</li></ul>
-<ul><li>NVIDIA 越来越以「模型」闻名：模型与权重发布在 <strong>Hugging Face</strong>，代码发布在 <strong>GitHub</strong>（Hugging Face 被类比为「模型的 GitHub」）。</li></ul>
-<h2 id="s3">NVIDIA 的 AV 战略：做「基础层」</h2>
-<p>核心原则：如果有人在做自动驾驶车、来问「能帮忙吗」，NVIDIA 的答案应该是 <strong>yes</strong>。客户差异很大——有的只用数据中心 GPU，有的用车端硬件，而现在 NVIDIA 能帮开发者加速「车里跑的那套软件」：</p>
-<ul><li>提供<strong>基础级模型（foundation-level model）</strong>；</li></ul>
-<ul><li>开发者在其上做<strong>额外训练、定制、部署</strong>；</li></ul>
-<ul><li>目标不是替你造完，而是给你一个「running start」（抢跑优势），把 NVIDIA 已经灌进去的数据、训练、算力都借给你。</li></ul>
-<p>对「一人 AV 公司」的起点：需要数据中心 GPU、车载开发套件、传感器组；本质是一套<strong>数据飞轮（flywheel）</strong>——采集数据 → 处理 → 训练新模型 → 测试 → 找短板 → 再循环。</p>
-<h2 id="s4">开源程度与跨芯片：「AV 的安卓」</h2>
-<ul><li>模型可部署到<strong>非 NVIDIA 芯片</strong>上，开源、无锁定（no lock-in）；但 NVIDIA 自身经验主要在自家芯片。</li></ul>
-<ul><li>Hyperion 被比作 <strong>「AV 的 Android」</strong>：一套含传感器的参考硬件架构，驱动已写好、即插即用，厂商也可替换供应商；本质是「把难的部分先做完」，降低开发周期。</li></ul>
-<ul><li>Hyperion <strong>与车型无关（vehicle-agnostic）</strong>：已有 OEM 把车直接建在 Hyperion 传感器组上，开箱即用做开发平台。</li></ul>
-<h2 id="s5">训练方法：模仿学习打底，强化学习补短板</h2>
-<ul><li><strong>模仿学习（imitation learning）</strong>：用观察到的「好行为」样本喂给模型，让它学着模仿。</li></ul>
-<ul><li><strong>强化学习（reinforcement learning）</strong>：让模型自己试验，做对了奖励、做错了惩罚；主要用于<strong>数据少 / 罕见场景</strong>，帮模型在未知情况里「自己找到该怎么做」。</li></ul>
-<ul><li><strong>仿真环境</strong>用于持续测试与评估，尤其支撑强化学习一侧。</li></ul>
-<ul><li>Alpamayo 是 SOTA，但<strong>不完美</strong>：可按地理与数据法规后训练（例如嘉宾坦言<strong>至今没在中国数据上训练过</strong>，零样本能跑但不够好）；也可偏向高速或城区架构。</li></ul>
-<h2 id="s6">端到端 AI + 经典架构：双系统 + 仲裁</h2>
-<p>这是本期最硬核的一段。NVIDIA 在车里并行跑两套系统：</p>
-<p>1. <strong>端到端栈（Alpamayo）</strong>：像素进、轨迹出；从数据学习，能做出人类级复杂行为，但<strong>难以拆解验证「为什么这么做」</strong>——这恰恰让安全论证（validation case）变难。 2. <strong>经典栈（classical stack）</strong>：经典感知 + DNN + 规划控制，由一堆离散模块组成，确定性高、输入输出可检查、准确率达到「几个九」的标准。</p>
-<p><strong>安全靠两件事：多样性（diversity）与冗余（redundancy）</strong>——不能让大家共享同一个单点故障。二者各提出一条轨迹，由一个<strong>仲裁层（arbitration layer）</strong>决定采用哪条。</p>
-<p>嘉宾举了旧金山的例子：前方有双闪违停车辆，需要<strong>借对向车道绕过去</strong>。安全底线行为是「车道内停车」（safe but not preferred）；偏好行为是「借道再并回」（Alpamayo 擅长，因为它看过很多人这么做）；经典栈负责划出「安全可行驶窗口」并给出默认安全行为。仲裁层在经典栈放行时才允许 Alpamayo 走更优轨迹。</p>
-<h2 id="s7">边缘场景：本质是数据问题</h2>
-<ul><li>多数边缘 case 是<strong>数据问题</strong>：扩展采集、积累更多真实数据就能覆盖。</li></ul>
-<ul><li>对极罕见场景，用<strong>合成数据生成（synthetic data generation）</strong>——仿真 / 生成式工具「想象」出新场景，产出可训练的数据。</li></ul>
-<h2 id="s8">OEM 与 Robotaxi：L4 如何走向消费车</h2>
-<ul><li>过去五年，L2/L2++ 里除 AEB、车道保持等已成行业标准的功能外，大多是「锦上添花」；未来这些基础功能会像「巡航控制」一样变成<strong>消费者默认期待的基本配置</strong>。</li></ul>
-<ul><li>很多 OEM 正把车做成 <strong>「L4 capable」</strong>：SOP（量产启动）时未必有完整 L4 功能，但靠一次 <strong>OTA</strong> 就能解锁；最新 <strong>Hyperion（CES 发布）</strong>就被设计成 L4 就绪系统。</li></ul>
-<ul><li>Robotaxi（Waymo 等）目标更直接——去掉司机，所以要更快逼近 L4；而整车厂的设计周期通常 3–5 年，现在就得把硬件需求规划进设计，避免日后被排除在生态外（Uber 正把自己定位成自动驾驶出行的分布式平台）。</li></ul>
-<h2 id="s9">开源模型的取舍</h2>
-<ul><li>模型下载即带<strong>权重与后训练脚本</strong>，可适配你的传感器或行驶区域；还附带一堆「大家本来也得自己造」的组件。</li></ul>
-<ul><li> downside：部分公司极度看重<strong>数据 / 代码主权（sovereignty）</strong>，要全栈自研、零依赖——这完全是一条可走的路。NVIDIA 的期待是：包括自动驾驶在内的大部分软件开发，最终都建在开源之上。</li></ul>
-<h2 id="s10">行业现状与 Matt 的个人判断</h2>
-<ul><li><strong>L2++ 正变成「桌面赌注（table stakes）」</strong>：基础功能成标配，厂商只能靠 L4 能力或「按消费者偏好做更精细的驾驶模型调校」来差异化。</li></ul>
-<ul><li>Matt 入行 <strong>8–9 年</strong>，笑称 L4 曾「永远还有五年」；但他现在真觉得<strong>「不到五年」</strong>，并且「已经能看见路径（line of sight）」——工具迭代速度、行业整体节奏让他有信心。</li></ul>
-<h2 id="s11">关键要点回顾</h2>
-<ul><li>Alpamayo = 开源 AV 模型家族（模型 + AlpaSim 仿真 + 30 万段数据集），建在 Cosmos 之上。</li></ul>
-<ul><li>战略定位「AV 的安卓」：基础层 + 开源 + 跨芯片无锁定；Hyperion 是即插即用的参考硬件。</li></ul>
-<ul><li>训练 = 模仿学习打底 + 强化学习补罕见场景 + 仿真评测。</li></ul>
-<ul><li>安全架构 = 端到端栈 + 经典栈并行，靠多样性/冗余与仲裁层保证可控可验证。</li></ul>
-<ul><li>把车安全上路 &gt;&gt; 模型本身；Alpamayo 是「好原材料」，不是完整答案。</li></ul>
-<ul><li>行业拐点：L2++ 变标配，L4 靠 OTA 解锁，Matt 判断 L4「不到五年」可达。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/xemPH7r300w/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/public-trust-in-autonomous-vehicles" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders · Podcast（AV Market Strategist）</div><h1>欧洲为何不信任自动驾驶：信任、教育与监管的真相</h1><p class="sub">Public Trust in Autonomous Vehicles: What Europeans Actually Fear</p><div class="tags"><span class="tag">⏱ 36:38</span><span class="tag">👤 Guido Di Pasquale（PAVE Europe 董事总经理）</span><span class="tag">🗓 2026-07-29</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/Jd5BzM9F360" title="Public Trust in Autonomous Vehicles: What Europeans Actually Fear" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览（TL;DR）</a><a href="#s1">🔢 关键数据速记</a><a href="#s2">🗝️ 关键金句（附时间戳）</a><a href="#s3">一、PAVE Europe 是什么，又不是什么</a><a href="#s4">二、中立性悖论：谁来买单，谁来决定说什么</a><a href="#s5">三、欧洲人到底在怕什么——以及他们错在哪里</a><a href="#s6">四、鸡生蛋问题：信任来自体验，而欧洲无车可体验</a><a href="#s7">五、无障碍不是选项，是验收标准</a><a href="#s8">六、欧洲真正可防御的优势，与最大的短板</a><a href="#s9">七、该不该像美国一样封锁中国 AV？</a><a href="#s10">八、2030 图景：谁是玩家，谁只是市场</a><a href="#s11">局限性与说明</a></nav><main class="content"><h1>欧洲为何不信任自动驾驶：信任、教育与监管的真相（与 Guido Di Pasquale 对谈）</h1>
+<blockquote>来源：Autonomy Insiders · Podcast（AV Market Strategist）｜ 嘉宾：Guido Di Pasquale（PAVE Europe 董事总经理）｜ 主持人：Daniel Abreu Marques ｜ 时长约 37 分钟 ｜ 发布于 2026-07-29</blockquote>
+<h2 id="s0">📌 核心速览（TL;DR）</h2>
+<ul><li><strong>一句话</strong>：欧洲自动驾驶的真正瓶颈不是技术，而是「几乎没人知道将要发生什么」——公众的误解、决策者的准备不足，以及一套还没跑通的信任机制，才是决定欧洲成为「玩家」还是「市场」的关键。</li></ul>
+<ul><li><strong>三条主线</strong>：① PAVE Europe 作为行业出资、却刻意保持中立的「教育者」，靠成员多样性而非游说立身；② 欧洲人真正恐惧的是治理、就业与数据主权，而非碰撞安全；③ 「鸡生蛋」困局——信任来自体验，而欧洲几乎没有可体验的车。</li></ul>
+<ul><li><strong>最反直觉的判断</strong>：Guido 明确反对欧洲像美国那样封锁中国 AV——欧洲恰恰缺一个 ADS 技术栈冠军，需要中美技术先来落地、撑起教育，再用「数据主权 / 关键基础设施」标准设规则，而非筑墙。</li></ul>
+<ul><li><strong>对 2030 的判断</strong>：会有「有意义的商业部署」（robotaxi、接驳车融入公交、封闭区域、长途货运），但 L4 层面仍看不到 OEM 与 Tier 1 的影子——而这本是欧洲的 heritage（家底）。</li></ul>
+<h2 id="s1">🔢 关键数据速记</h2>
+<table><thead><tr><th>指标</th><th>数值 / 事实</th><th>语境</th></tr></thead><tbody><tr><td>全球不信任比例</td><td><strong>约 65%</strong> 受访者对自动驾驶「不信任 / 没信心」</td><td>EOIDS Register Foundation 全球研究（Guido 自陈已约 4–5 年未更新）</td></tr><tr><td>英国的认知误判</td><td><strong>约 52%</strong> 英国人认为「今天就能买到 L5 全自动驾驶车」</td><td>Thatcham（英国）研究；说明公众感知与现实严重错位</td></tr><tr><td>中国 L4 robotaxi</td><td><strong>40+ 城市</strong>规模化运营</td><td>玩家含百度、小马智行(Pony.ai)、文远知行(WeRide)</td></tr><tr><td>Guido 从业时长</td><td>深度参与欧洲自动驾驶辩论 <strong>超 10 年</strong></td><td>曾任 PAVE Europe 董事总经理</td></tr><tr><td>PAVE Europe 创始构成</td><td><strong>TÜV Rheinland + 三家保险公司 + L4 AV 公司</strong>（聚焦 L4）</td><td>与美国 PAVE 偏向车企/科技截然不同</td></tr><tr><td>关键窗口期</td><td><strong>2026 / 2027</strong> 被视为欧洲部署转折年</td><td>多家大公司已有部署公告</td></tr><tr><td>监管碎片化</td><td>EU 统一型式认证，但 <strong>27 个成员国</strong>各有本地运营/部署规则</td><td>碎片化阻碍企业规模化</td></tr></tbody></table>
+<h2 id="s2">🗝️ 关键金句（附时间戳）</h2>
+<ul><li><strong>[0:30]</strong>「Our success will be measured if we at some point shut down this PAVE Europe, because it means that we are not needed anymore.」——PAVE 的成败标准，是把自己「做没了」。</li></ul>
+<ul><li><strong>[12:51]</strong>「Will I lose my job because of this? Will my personal data be shared with someone in China or the US? So there are still more than safety, I would say.」——欧洲人怕的不是撞车，而是失业与数据外流。</li></ul>
+<ul><li><strong>[17:46]</strong>「The solutions were designed, let&#x27;s be honest, average, white, Western European men, not even women… many others have no access to mobility.」——过去的出行系统是为「平均白人西欧男性」设计的，无障碍必须前置。</li></ul>
+<ul><li><strong>[22:28]</strong>「Our strength in Europe is this collaboration framework… making sure that autonomous vehicles, when they are deployed, they are deployed thinking about how they will be integrated into public transport.」——欧洲的真正优势是「系统之系统」的协作与生态整合能力。</li></ul>
+<ul><li><strong>[24:14]</strong>「We miss a champion in the ADS stack.」——欧洲最缺的是一个自动驾驶系统技术栈的冠军企业。</li></ul>
+<ul><li><strong>[26:47]</strong>「If you make it here, you make it everywhere.」——在欧洲（严苛环境）能做到，在哪里都能做到。</li></ul>
+<ul><li><strong>[26:16]</strong>「They get educated here… and then they work for Waymo or Zoox or someone else in the US and not here.」——欧洲培养了人才，却输送给了别人。</li></ul>
+<ul><li><strong>[30:01]</strong>「Blocking Chinese AV technology protects maybe the European industry, but the same technology could also speed up deployment here… it&#x27;s a real trade-off.」——封锁保护产业，却也延缓了部署与学习，是真实的权衡。</li></ul>
+<h2 id="s3">一、PAVE Europe 是什么，又不是什么</h2>
+<p>Guido 开宗明义：PAVE（Partners for Automated Vehicle Education，自动驾驶教育伙伴）是一个<strong>非营利联盟</strong>，使命是向两类目标群体——普通公众与决策者——提供「清晰、透明、基于事实」的信息，做技术的「中立之声」，而非为某一类厂商代言。</p>
+<p>他同样强调 PAVE Europe「从第一天起」就<strong>不是游说组织、也不是行业协会</strong>：不替某一类主体施压监管，而是代表整个价值链发声。衡量其成功的反向指标很妙——</p>
+<blockquote>如果有一天我们能「关门大吉」，那恰恰说明社会已经不需要我们，技术已被接纳、且被接纳得很好。</blockquote>
+<h2 id="s4">二、中立性悖论：谁来买单，谁来决定说什么</h2>
+<p>最尖锐的问题来了：成员（AV 开发商、保险公司、认证机构）出钱，PAVE 如何还能保持可信的中立教育者？Guido 的回答是<strong>多样性即护城河</strong>——</p>
+<blockquote>我们不是代表单一类别，而是覆盖整个价值链：开发者、保险公司、测试认证机构、公共交通运营商、甚至当局与咨询公司。正因为有太多声音，成员必须先就「要传递什么信息」达成共识，谁也无法凌驾于他人。</blockquote>
+<p>换句话说，出资方买单，但必须和所有人一起协作；这种「平衡对话」本身就是中立性的来源。</p>
+<h2 id="s5">三、欧洲人到底在怕什么——以及他们错在哪里</h2>
+<p>先区分「不信任」与「不理解」。Guido 引用两项研究：一项全球研究（EOIDS Register Foundation）显示约 <strong>65%</strong> 受访者对 AV 没信心；英国 Thatcham 的研究则显示约 <strong>52%</strong> 英国人以为今天就能买到 L5 全自动驾驶车——感知与实际严重错位。</p>
+<p>与美国聚焦「功能是否可信」（不信任就关掉功能不再用）不同，欧洲人真正担心的是<strong>治理与社会层面</strong>：</p>
+<blockquote>安全当然重要，但欧洲人更在意：城市里会不会突然出现成千上万辆 robotaxi？我会不会因此失业？我的个人数据会不会被共享给中国或美国？——这些，比安全更突出。</blockquote>
+<h2 id="s6">四、鸡生蛋问题：信任来自体验，而欧洲无车可体验</h2>
+<p>核心困局：人们只信任自己试过的东西，但欧洲几乎没什么可试的车。PAVE 的解法是双管齐下——在本土组织公民体验日（借助少数已部署成员的车辆），以及把决策者<strong>直接带到美国或中国去看实车</strong>。Guido 尤其看重「考察访问」的杠杆：他曾组织代表团赴美试乘、与同业交流，回国后这些人<strong>直接影响了本国的监管节奏与立法速度</strong>。</p>
+<p>他期待 <strong>2026 / 2027</strong> 成为转折年：在公告之外，出现真正的部署，让普通人开始「看见」。</p>
+<h2 id="s7">五、无障碍不是选项，是验收标准</h2>
+<p>这是本期最有温度的一节。PAVE 刻意把「今天无法自由出行的人」——老人、残障者、盲人、乡村居民、无驾照者——放进使命核心。Guido 直言：</p>
+<blockquote>过去的出行系统，说白了是为「平均白人西欧男性」设计的，连女性都没充分考虑；很多人根本没有出行自由。自动驾驶在部署前就应为所有人设计，否则即便安全，也是一种失败。</blockquote>
+<p>他强调系统必须<strong>与真正有痛点的群体共同设计（co-designed）</strong>——例如倾听盲人的第一手出行体验，那些细节「你永远想不到」。</p>
+<h2 id="s8">六、欧洲真正可防御的优势，与最大的短板</h2>
+<p>放大到整个欧洲 AV 版图，Guido 认为欧洲<strong>真实且可防御的优势</strong>是协作框架：不是空谈，而是把技术公司、公交当局、城市、乘客、骑行者与行人、道路基础设施方都拉进同一张生态网，确保 AV 是被「整合进公共交通」地部署，而非各自为战。他认为这是世界其他地方看不到的能力。</p>
+<p>短板同样清晰：<strong>缺一个 ADS 技术栈冠军企业</strong>，背后是资本规模不足（「欧洲总在谈几百万，但这里需要的是量级」）、27 国监管碎片化，以及产学研脱节——「不缺人才、不缺好大学，缺的是把人才与研究连到产业的生态系统」。</p>
+<p>而这又引出人才外流：欧洲把人培养出来，他们却去了 Waymo、Zoox 或其它美国公司。</p>
+<h2 id="s9">七、该不该像美国一样封锁中国 AV？</h2>
+<p>美国已出手限制中国网联/自动驾驶车辆，欧洲尚无对等禁令。Guido 的短答案很明确：<strong>不应该禁</strong>。理由层层递进——</p>
+<p>1. 欧洲自己还没有 ADS 技术栈（少数起步公司也还需时间），<strong>需要先靠中美技术启动部署</strong>，这也才能支撑 PAVE 的教育使命（有车才能做贴近现实的科普）； 2. 他以比利时 <strong>Leuven</strong> 为例：当地运营商因找不到替代方案而采用中国供应商，却借此学会了车辆上路、其他道路使用者如何反应、如何训练监管人员——直接缓解真实的司机短缺； 3. 但他主张<strong>设标准而非筑墙</strong>：把车辆视为关键基础设施、强调数据主权，「这是我们的规则，想在欧洲部署就得遵守」。</p>
+<blockquote>封锁或许保护了欧洲产业，但同一项技术也能加速这里的部署、让欧洲乘客更早受益、让我们学得更快——这是个难以权衡的 real trade-off。</blockquote>
+<h2 id="s10">八、2030 图景：谁是玩家，谁只是市场</h2>
+<p>对 2030，Guido 并不悲观：会出现「有意义的商业部署」——不是为秀存在感而铺满街头的 robotaxi，而是满足城市/用户真实需求、契合政策目标的部署：更多城市 robotaxi、更多融入公交的接驳车、已在封闭区域跑通的用例，以及被谈论太少的<strong>长途自动驾驶货运</strong>。</p>
+<p>但他点出最关键的缺失：<strong>在 L4 层面，仍然看不到 OEM 与 Tier 1 的身影</strong>。</p>
+<blockquote>我们明明有一大批大型 OEM、一大批大型 Tier 1 供应商，这是欧洲的 heritage——应该把这笔家底用起来。</blockquote>
+<p>这正是「欧洲是玩家还是他人技术的市场」这一终极问题的答案所在。</p>
+<h2 id="s11">局限性与说明</h2>
+<ul><li>本稿基于 faster-whisper（<code>small.en</code>）自动识别的英文逐字稿，经专有名词校正与机器翻译生成中文，<strong>重要引用建议对照英文原文</strong>（见逐字稿页）。</li></ul>
+<ul><li>语音识别可能存在误差：如节目中提到的全球信任研究「EOIDS Register Foundation」为听写还原，原始机构名未能确证；部分人名/机构名（TÜV Rheinland、Thatcham、Wayve、Zoox、Leuven 等）已按常识校正。</li></ul>
+<ul><li>时间戳来自节目官方章节标注，可能与实际语音略有偏差。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/xemPH7r300w/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a><a class="relcard" href="../uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="../uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">拆解 Uber 的自动驾驶战略</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../lyft-hybrid-autonomy-risher/index.html"><div class="rw"><img loading="lazy" src="../lyft-hybrid-autonomy-risher/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Lyft 的自动驾驶混合战略</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
