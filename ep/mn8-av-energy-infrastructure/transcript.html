@@ -1,0 +1,481 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov） · 逐字稿</title><meta name='description' content='自动驾驶最难扩的其实是电：MN8 Energy 战略负责人讲清为什么充电基础设施是 robotaxi 与无人卡车规模化的隐藏瓶颈，以及能源商如何成为 AV 生态的「水电工」。'><meta property='og:title' content='为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov） · 逐字稿'><meta property='og:description' content='自动驾驶最难扩的其实是电：MN8 Energy 战略负责人讲清为什么充电基础设施是 robotaxi 与无人卡车规模化的隐藏瓶颈，以及能源商如何成为 AV 生态的「水电工」。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/building-the-energy-infrastructure" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Podcast</div><h1>为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov）</h1><p class="sub">中英对照逐字稿 · Building the Energy Infrastructure for Autonomous Vehicles with Alex Pischalnikov</p><div class="tags"><span class="tag">⏱ 36:23</span><span class="tag">Alex Pischalnikov（MN8 Energy 战略高级总监）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/djAWfXTKJeE/hqdefault.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">能源基础设施</span><span class="chip" onclick="wbJumpKw(this)">energy infrastructure</span><span class="chip" onclick="wbJumpKw(this)">MN8 Energy</span><span class="chip" onclick="wbJumpKw(this)">Alex Pischalnikov</span><span class="chip" onclick="wbJumpKw(this)">充电</span><span class="chip" onclick="wbJumpKw(this)">EV charging</span><span class="chip" onclick="wbJumpKw(this)">robotaxi</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶车队</span><span class="chip" onclick="wbJumpKw(this)">depot 站点</span><span class="chip" onclick="wbJumpKw(this)">V2G</span><span class="chip" onclick="wbJumpKw(this)">total cost of ownership</span><span class="chip" onclick="wbJumpKw(this)">utility interconnection</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">Introduction to Alex Pischalnikov and MN8 Energy</a><a href="#s1">What verticals is MN8 Energy focused on?</a><a href="#s2">MN8 Energy&#x27;s unique differentiator in the energy sector</a><a href="#s3">Inside MN8 Energy&#x27;s renewable energy infrastructure business</a><a href="#s4">The different types of customers MN8 Energy caters for</a><a href="#s5">Similarities between powering data centers and AVs</a><a href="#s6">How early are we in the AV cycle?</a><a href="#s7">The importance of charging to AV deployments</a><a href="#s8">The major cost factor in AV deployments</a><a href="#s9">How MN8 Energy helps AV companies deploy better</a><a href="#s10">The importance of different depot layouts for effective fleet management</a><a href="#s11">How to locate depots effectively to balance costs and reduce deadheading</a><a href="#s12">The biggest fleet management challenges when scaling AV fleets from hundreds to thousands of vehicles</a><a href="#s13">Lessons the AV fleet charging industry can learn from EV customer charging</a><a href="#s14">The future of AV fleet hubs and what they might look like</a><a href="#s15">Conclusions and final thoughts</a></nav><main class="content"><h1>Building the Energy Infrastructure for Autonomous Vehicles — 中英对照逐字稿</h1>
+<blockquote>来源：The Driverless Digest · 2026-08 · 主持 Harry Campbell，嘉宾 Alex Pischalnikov（MN8 Energy）</blockquote>
+<blockquote>说明：逐字稿取自 Substack 官方稿（<code>?showTranscript=true</code>），已修正自动识别误拼（MN8 曾被误为 MNAT / M&amp;A Energy / Emanate；Alex Pischalnikov 曾被误为 Alex Bishelnikov），并去除开头与 7:47 重复的 &quot;AI on wheels&quot; 独白段。中文为对照翻译，仅供学习参考。</blockquote>
+<h2 id="s0">Introduction to Alex Pischalnikov and MN8 Energy</h2>
+<p class="seg" id="seg-1"><span class="ts">[00:45 – 01:48]</span><div class="seg-body">
+<p class="en">Alex Pischalnikov is a Senior Director of Strategy at MN8 Energy, where he leads growth strategy across electrification and customer-focused clean energy and digital infrastructure solutions. He works at the intersection of strategy, finance, and infrastructure deployment, focusing on project economics. Alex, how are you doing today?</p>
+<p class="zh">Alex Pischalnikov 是 MN8 Energy 的战略高级总监，负责横跨电气化、以客户为中心的清洁能源与数字基础设施解决方案的增长战略。他工作在战略、金融与基础设施部署的交叉点，聚焦项目经济性。Alex，今天还好吗？</p></div></p>
+<p class="seg" id="seg-2"><span class="ts">[00:45 – 01:48]</span><div class="seg-body">
+<p class="en">I&#x27;m great, Harry. Thanks for that intro. Shout out to our comms team for crafting a great one. Yeah, I think I also managed to go through it pretty perfectly. And obviously, you&#x27;ve got a lot going on under your belt. And we&#x27;ve chatted a few times in the past, but I&#x27;m excited to dive into MN8 and everything that&#x27;s going on in your world. I guess kind of a simple fun question. When people meet you at an event or at a party, what do you say it is that you do? Or how do you describe your day-to-day job?</p>
+<p class="zh">我很好，Harry。谢谢你的介绍。给我们的传播团队点个赞，写得真不错。我觉得我也基本一字不差地念下来了。你显然阅历丰富、做过很多事。我们过去聊过几次，但我很兴奋能深入聊聊 MN8 和你那边正在发生的一切。先问个简单好玩的问题：人们在活动或聚会上遇到你，你会怎么介绍自己是做什么的？或者说，你日常的工作怎么描述？</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[01:48 – 02:36]</span><div class="seg-body">
+<p class="en">That&#x27;s a great question. I still can&#x27;t quite describe it to my mother. So she says, I do electricity stuff. So maybe an electrician. Look, the way that I think about it is we build, own and operate infrastructure. And this infrastructure is the input and the foundational need for everything that we do as an industrialized society. Going back 100 years, but now it&#x27;s even that much more important because it&#x27;s driving kind of the next industrial revolution and that is AI. So that gives me a lot of motivation when I tell myself this when I&#x27;m in the office late.</p>
+<p class="zh">好问题。我到现在都没法跟我妈讲清楚。所以她说我是搞电的，那大概是电工吧。我是这么看的：我们建设、拥有并运营基础设施。这类基础设施是我们作为工业化社会做一切事情的&quot;输入&quot;和底层需求。回溯一百年都如此，而如今它更重要了，因为它正在驱动下一轮工业革命——也就是 AI。所以当我深夜还在办公室时，这么想会给我很大动力。</p></div></p>
+<p class="seg" id="seg-4"><span class="ts">[02:36 – 03:07]</span><div class="seg-body">
+<p class="en">For sure. For sure. Yeah. And actually that is kind of a cool aspect, which I&#x27;m sure we&#x27;re going to get into today that, you guys are really building this infrastructure for very new, exciting, cool technology. I don&#x27;t want to throw any other industries under the bus, but if you&#x27;re just like, kind of doing old school electricity, powering a bunch of houses, everyone kind of takes it for granted, right? Even though it&#x27;s very important, but obviously we get jaded and, the new thing on the block, it sounds like that way is what you guys are focused on. What are the verticals that you&#x27;re most interested in and building towards?</p>
+<p class="zh">确实，确实。没错。这其实是个很酷的点，我想我们今天会聊到——你们真的是在为非常新、非常酷的技术建基础设施。我不想踩其他行业，但如果你只是做传统的电、给一堆房子供电，大家都觉得理所当然，对吧？尽管那很重要，但我们容易麻木，而&quot;新来的东西&quot;听起来才是你们聚焦的方向。你最感兴趣、正在建设的垂直领域有哪些？</p></div></p>
+<h2 id="s1">What verticals is MN8 Energy focused on?</h2>
+<p class="seg" id="seg-5"><span class="ts">[03:07 – 03:53]</span><div class="seg-body">
+<p class="en">So MN8 is a company, we have three kind of asset classes or technology lines, but first and foremost, our mission and goal is to serve all sort of manners of energy demand. So we aren&#x27;t necessarily closed off to any particular technology, but right now in our portfolio, we have solar at both the utility and distributed scale, battery storage and EV charging. We see those as the key foundational renewable energy infrastructure asset classes that are sort of the most mature and bankable as types of technology and what our customers are asking for.</p>
+<p class="zh">MN8 是一家公司，我们有三类资产或技术线，但首要使命和目标是服务于各种各样的能源需求。所以我们并不排斥任何特定技术；不过目前我们的资产组合里，有公用事业级和分布式两种规模的太阳能、电池储能，以及 EV 充电。我们把这些看作最关键的可再生能源基础设施资产类别——它们在技术成熟度与可融资性上最成熟，也是客户真正在要的。</p></div></p>
+<h2 id="s2">MN8 Energy&#x27;s unique differentiator in the energy sector</h2>
+<p class="seg" id="seg-6"><span class="ts">[03:53 – 04:08]</span><div class="seg-body">
+<p class="en">Yeah, sounds like my house. I&#x27;ve got solar, I&#x27;ve got an EV that I charge, and I&#x27;m about to install a battery. So I guess that kind of full vertical, are there many companies that are out there doing all the sort of full value chain? Are you guys unique in that aspect?</p>
+<p class="zh">听起来像我家。我有太阳能，有一辆要充电的 EV，马上还要装电池。所以这种全垂直——市面上很多公司都在做类似的某一段吗？你们在这点上是独特的吗？</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[04:08 – 05:05]</span><div class="seg-body">
+<p class="en">I think there&#x27;s a lot of companies doing sort of flavors of it. When you dial into what Wall Street might see as our peer group or comp set, what&#x27;s interesting about us is in our portfolio, we have small kind of distributed generation sites behind the meter. That&#x27;s where we started. That&#x27;s where a lot of our portfolio is on a project basis. So think on a large retailer distributor&#x27;s rooftop. And then we have tremendously scaled what was once the biggest battery in the world in California. Those sort of rankings tend to shift every few months, but that&#x27;s sort of important to recognize that we have generation of various shapes and sizes and then a fairly large EV business, which is uncommon for independent power producers and I think sets us apart a bit.</p>
+<p class="zh">我觉得很多公司都在做某种&quot;版本&quot;的这件事。当你去看华尔街眼中的同业或可比公司时，我们有意思的地方在于：资产组合里有表后（behind-the-meter）的小型分布式发电站点——那是我们起家的地方，也是很多项目的基础，比如大型零售分销商的屋顶。然后我们还把加州一个曾&quot;全球最大&quot;的电池做到了极大规模。这类排名每几个月就会变，但重要的是我们拥有各种形态和规模的发电资产，还有相当大规模的 EV 业务——这在独立发电商里不常见，我觉得这让我们有点与众不同。</p></div></p>
+<p class="seg" id="seg-8"><span class="ts">[05:05 – 05:16]</span><div class="seg-body">
+<p class="en">Yeah, definitely. So the small distributed gen sites, that would be kind of like what you&#x27;re describing, a bunch of solar panels on a roof. Is that what that means?</p>
+<p class="zh">对，没错。那小型分布式发电站点，就是你说的那种——屋顶上一堆太阳能板？是这个意思吗？</p></div></p>
+<p class="seg" id="seg-9"><span class="ts">[05:16 – 05:56]</span><div class="seg-body">
+<p class="en">It could be. So it&#x27;s not quite at the scale of like a home, but it could be a large distribution center for a customer, or it could be a large retail facility. And that could be ground mount as well as rooftop, and it could be carport. So our customers are fairly broad from universities and educational institutions, municipalities, to the big hyperscalers that we do more utility scale, our purchase agreements for, as well as co-located sort of data center focused development.</p>
+<p class="zh">可以是。它没到家庭那种规模，但可能是客户的大型配送中心，或大型零售设施。可以是地面支架、也可以是屋顶，还可以是车棚。所以我们的客户面很广：从大学和教育机构、市政，到我们做更多公用事业级购电协议（PPA）的大型超大规模云厂商，以及与之共址、面向数据中心的开发。</p></div></p>
+<p class="seg" id="seg-10"><span class="ts">[05:56 – 06:23]</span><div class="seg-body">
+<p class="en">Cool. Very interesting. So before we dive into the EV and the AV side of things and the power generation and infrastructure, one more question I had around, I guess, how do you guys describe, I guess, the size or the scope of the company? I know on your website, I remember seeing that you had, different assets listed. And then I think also I saw megawatts, which to be honest, I never remember what that means. I don&#x27;t know if a hundred or a thousand or a million is a lot, but I&#x27;m sure the more the better there.</p>
+<p class="zh">酷，很有意思。在深入 EV 和 AV、以及发电和基础设施之前，我还有个问题：你们怎么描述公司的体量或规模？我记得你们网站上列了不同的资产，还看到&quot;兆瓦&quot;这个数字——老实说我从来记不住那是什么意思，不知道一百、一千还是一百万算多，但我确信越多越好。</p></div></p>
+<h2 id="s3">Inside MN8 Energy&#x27;s renewable energy infrastructure business</h2>
+<p class="seg" id="seg-11"><span class="ts">[06:23 – 07:33]</span><div class="seg-body">
+<p class="en">The more, the better, especially in this day and age where power is a constraint. So we have close to four gigawatts of operating or in construction assets across the United States. That&#x27;s where our entire portfolio is. And it&#x27;s semi-regionally concentrated in wholesale power markets without getting too much into the excruciatingly detailed and specific construct of power and regulation in the US. We kind of have a lot of projects in California, a lot of projects in the mid-Atlantic, and then actually a decent amount of projects sort of scattered across the US. And we are a vertically integrated, independent power producer, an IPP, except we&#x27;re focused solely on renewable generating sources. So that makes us somewhat...</p>
+<p class="zh">越多越好，尤其是在电力成为约束的当下。我们在全美有接近 4 吉瓦（GW）的在运或在建资产，整个组合都在美国。它半区域化地集中在电力批发市场——我就不展开美国电力与监管那套极其细碎的架构了。我们在加州有很多项目，中大西洋有很多，全美各地也散落了相当数量的项目。我们是一家垂直一体化的独立发电商（IPP），只不过我们只聚焦可再生电源。所以这使得我们有点……</p></div></p>
+<h2 id="s4">The different types of customers MN8 Energy caters for</h2>
+<p class="seg" id="seg-12"><span class="ts">[07:33 – 07:47]</span><div class="seg-body">
+<p class="en">So we&#x27;ve talked a little bit about the EV side of things. Can you tell us what does the business look like on the EV? And then I guess we can kind of transition to AV side since I think all AVs are now EVs, right?</p>
+<p class="zh">我们聊了一点 EV 这边。你能讲讲 EV 业务长什么样吗？然后我想过渡到 AV——因为现在所有 AV 都是 EV，对吧？</p></div></p>
+<h2 id="s5">Similarities between powering data centers and AVs</h2>
+<p class="seg" id="seg-13"><span class="ts">[07:47 – 09:56]</span><div class="seg-body">
+<p class="en">Sure. And it&#x27;s interesting to think about what the parallels and the adjacencies are. I mean, when I think about our portfolio and the industrial logic that ties it all together, there&#x27;s two ways, two frames. One is from the customer perspective where a lot of customers that we serve will contract for power behind the meter. So an asset that&#x27;s physically at their site. They will contract for power virtually as a virtual PPA, meaning that they are buying power for a must, but they&#x27;re not physically getting those electrons. And there are attributes to that power that they would like to buy as well. Environmental attributes is what I&#x27;m referencing. And they might also need charging both onsite at their existing facilities or offsite depots or sort of in the wild. So you could serve a single large enterprise customer with all three of those products that we have in our portfolio. And then when I think about the sort of topic du jour, AI, the utility scale projects that we develop help our data centers and data centers are getting larger and larger. Behind the meter power is also necessary to serve data centers to accelerate interconnection and for reliability. And then the EV and AV kind of storyline gets brought in. What is autonomous? What are autonomous vehicles? It&#x27;s basically AI on wheels, right? It is the physical form of AI. And that needs both compute to help it reason and operate. And it needs power from charging infrastructure to help it actually move around on wheels and create that energy. So that&#x27;s how I think about sort of the industrial logic that ties our portfolio together and our customer value prop.</p>
+<p class="zh">当然。想想其中的平行与相邻关系很有意思。当我看我们的资产组合和把一切串起来的产业逻辑时，有两个视角。一是客户视角：我们服务的很多客户会签表后购电——也就是物理上就在他们场站里的资产。他们也会以虚拟 PPA 的形式&quot;虚拟&quot;购电，意思是他们必须买电，但并不物理上拿到那些电子；同时他们也想买这电的&quot;属性&quot;，我指的是环境属性（绿证之类）。他们可能还需要在现有设施现场、或在异地场站、或在&quot;野外&quot;充电。所以你可以用我们组合里的这三样产品，服务同一个大企业客户。然后想到当下的热门话题 AI：我们开发的公用事业级项目在支撑数据中心，而数据中心越来越大。表后电力对服务数据中心、加速并网和保可靠性也必不可少。于是 EV 和 AV 的故事就接上了。什么是自动驾驶？自动驾驶汽车本质上就是轮子上的 AI，对吧？它是 AI 的物理形态，既需要算力来推理和运行，也需要来自充电基础设施的电力来真正上路移动、产生那种能量。所以这就是我把资产组合与客户价值主张串起来的产业逻辑。</p></div></p>
+<p class="seg" id="seg-14"><span class="ts">[09:56 – 10:18]</span><div class="seg-body">
+<p class="en">Yeah. I mean, obviously AI data centers are all the rage right now and everyone&#x27;s talking about them, but I think that is, I think the term people like now is physical AI, right? So like the sort of AVs, I guess, are there synergies that you see, from like a data center to, a charging site? where are they similar and where are they different?</p>
+<p class="zh">对。显然 AI 数据中心现在火得不行，大家都在谈，我觉得现在流行的词是&quot;物理 AI&quot;，对吧？那像 AV 这种，你看到数据中心和充电站之间有什么协同？它们哪里像、哪里又不同？</p></div></p>
+<p class="seg" id="seg-15"><span class="ts">[10:18 – 11:36]</span><div class="seg-body">
+<p class="en">Yeah. I mean, I think there&#x27;s some similarities in that they could face the same types of challenges and constraints in getting access to power. That is really the industry&#x27;s biggest challenge. And it&#x27;s not necessarily as new for the EV charging arena as it has been for data centers, right? When you try to get four or five megawatts of capacity at a large charging depot, that&#x27;s typically difficult. It depends on the state, the city that you&#x27;re in, the jurisdiction, the utility, but it can be very challenging. And those are the same challenges that data centers face, both at the large scale that they&#x27;re being built on today and the more distributed scale. I think an unproven but interesting concept is, is there economic benefit in co-locating the two? I&#x27;m not sure. I haven&#x27;t seen those types of assets in development, but we do know that AVs are large consumers of compute and effectively rely on data center capacity to operate.</p>
+<p class="zh">对。我觉得相似点在于，它们可能面临获取电力的同类挑战与约束——那才是行业最大的难题。而且这对 EV 充电领域来说，并不像对数据中心那样&quot;新鲜&quot;。当你想在一个大型充电场站拿到 4 到 5 兆瓦容量时，通常很难，取决于你所在的州、市、辖区和 utility，可能非常棘手。而这些正是数据中心面对的同类挑战，无论是今天大规模建设的，还是更分布式的。有个未被验证但有趣的概念：把两者共址是否有经济性？我不确定，还没见过这类在开发的项目，但我们知道 AV 是算力的巨大消耗者，实际上依赖数据中心容量来运行。</p></div></p>
+<h2 id="s6">How early are we in the AV cycle?</h2>
+<p class="seg" id="seg-16"><span class="ts">[11:36 – 12:32]</span><div class="seg-body">
+<p class="en">Yeah, for sure. It&#x27;s sort of interesting that the parallels there, even though they might be in different locations are still kind of drawing on them in another way. And we know that&#x27;s obviously very important. one thing that I&#x27;m curious to get your take on is I feel like we&#x27;re kind of if we take a step back. I think we&#x27;re still pretty early. I think I just saw this. I&#x27;m kind of going off these recall notices now. So Waymo&#x27;s fleet, according to these recall notices is 3,871 vehicles, at least according to the recall notice, which I think is a good move. And so that&#x27;s a lot on its own, but it&#x27;s also quite small relative to the number of the millions of Uber and Lyft driver vehicles out there, the tens of millions or hundreds of millions of cars and EVs and all over the world. So I sort of feel like what point do you think we&#x27;re at in the autonomous vehicle landscape as it pertains to your business? Do you think we&#x27;re still early? Do you think people are starting to scale? How do you think about it? How do you look at it?</p>
+<p class="zh">确实。有意思的是，即使它们地理位置不同，这种平行关系还是以另一种方式相互牵引，而我们知道这显然很重要。我好奇想听你的看法：退一步看，我觉得我们还在很早期。我刚看到那些召回通知——据召回通知，Waymo 车队是 3,871 辆车，至少通知上是这么写的，我觉得这动作挺好。单看这个数字已经很多，但相对全球那几百万辆 Uber、Lyft 司机车，还有上千万、上亿辆普通车与 EV 来说，又很小。所以你怎么看我们在自动驾驶版图里的位置、跟你的业务有什么关系？你觉得还在早期吗？还是人们开始规模化了？你怎么看？</p></div></p>
+<p class="seg" id="seg-17"><span class="ts">[12:32 – 14:26]</span><div class="seg-body">
+<p class="en">It&#x27;s interesting to see how far we&#x27;ve come in a short amount of time, right? In the instance of Waymo, I think in March, it was 500,000 or so paid rides, which is a 10X per week, per week, which is a 10X increase from the 50,000 they had in about the same time in 2024, right? So that&#x27;s tremendous. They&#x27;ve grown their operating capacity by 10X in two years. And then if you kinda look at what that could be in five to 10 years, that&#x27;s even more kind of exciting slash maybe terrifying if you&#x27;re speaking to a regulator. So there&#x27;s a lot of growth that is to be expected. I mean, when you look at the commercial fleet today globally, I think there&#x27;s probably something like six to 7,000. I have the status. So Goldman says there&#x27;s about 7,000 vehicles last year that were on the road. Well, that&#x27;s going to grow to six or 7 million by 2035. So that&#x27;s an a thousand X increase. So for us as an infrastructure developer, owner, operator, that is obviously critical to be a part of and to take note of. These are the early innings. And so we are just looking to be as engaged and involved across the ecosystem and support our customers because that&#x27;s our focus is really to support enterprise customers in scaling their business as a partner.</p>
+<p class="zh">短时间内能走这么远，挺有意思，对吧？以 Waymo 为例，今年 3 月大约是 50 万次付费行程/周，相较 2024 年同期的 5 万次，是两年 10 倍。这很惊人。他们的运营能力两年扩了 10 倍。再看五年到十年后会是什么样，对监管者来说可能更令人兴奋、或者说有点&quot;恐怖&quot;。所以增长空间很大。今天全球商用车队大概也就 6,000 到 7,000 辆——我有数据，高盛说去年在路上的是约 7,000 辆。而到 2035 年会涨到 600 到 700 万辆，也就是约 1,000 倍。所以作为基础设施的开发、拥有、运营方，这显然是我们必须参与、必须关注的事。现在还是早期局。我们就是要尽可能深入地参与整个生态、支持客户——因为我们的重心就是作为伙伴，支持企业客户把业务规模化。</p></div></p>
+<h2 id="s7">The importance of charging to AV deployments</h2>
+<p class="seg" id="seg-18"><span class="ts">[14:26 – 14:49]</span><div class="seg-body">
+<p class="en">Yeah, for sure. And so let&#x27;s talk a little bit about the charging aspect now. I mean, I sort of almost want to ask you how important it is, but I think that&#x27;s kind of an obvious one, right? You can&#x27;t have an AV without a charging site, so that might be too easy for you. But how do you see the charging piece as the input into AV? Is it a bottleneck right now? Or how do you think about it as that kind of input?</p>
+<p class="zh">确实。那我们来聊聊充电这块。我几乎想问你它有多重要，但那答案太明显了，对吧？没有充电站就没有 AV，所以这对你来说可能太简单。但你是怎么看充电作为 AV 的&quot;输入&quot;的？它现在是瓶颈吗？你是怎么定位这个输入的？</p></div></p>
+<p class="seg" id="seg-19"><span class="ts">[14:49 – 16:18]</span><div class="seg-body">
+<p class="en">There&#x27;s a few ways to look at it. One aspect of it, right, on a total cost of ownership basis, it&#x27;s actually not very large, right? Like there are tremendous costs, both fixed and variable costs that the TCO is built upon. And it&#x27;s sort of a variable cost that gets lumped into potentially real estate and other things. So on that basis, it&#x27;s small. But in terms of the unlock that it provides for scaling and potential operating leverage, it&#x27;s critical, right? So you need to have a charging strategy when you enter a new market. And that charging strategy needs to be not just focused on your return to base operations, but if you&#x27;re serving a large metro area, you also need to have on the go charging that is reliable and also well positioned relative to your ODD. So it&#x27;s really a critical part of your go to market and any new market. And then at scale, it becomes an unlock to reach sort of more sustainable unit economics.</p>
+<p class="zh">可以从几个角度看。一方面，在总拥有成本（TCO）口径下，它其实占比不大——TCO 建立在巨量的固定与可变成本之上，而充电更像被 lump 进房地产之类的可变成本里，所以单看占比它小。但就它为规模化与潜在运营杠杆提供的解锁而言，它至关重要。你进入新市场时必须有一套充电策略；而且这套策略不能只盯着&quot;回场（return-to-base）&quot;运营，如果你服务一个大都市区，你还需要可靠、且相对你的 ODD（设计运行域）位置合理的&quot;途中充电（on-the-go）&quot;。所以它真的是你进入市场和任何新市场的 GTM 关键部分。而到了规模，它就成了达成更可持续单位经济的解锁点。</p></div></p>
+<h2 id="s8">The major cost factor in AV deployments</h2>
+<p class="seg" id="seg-20"><span class="ts">[16:18 – 16:48]</span><div class="seg-body">
+<p class="en">Got it. Well, I definitely want to dive into what a good charging strategy might look like. But before we go there, you mentioned the total cost of ownership. I guess I was surprised to hear that it&#x27;s, the charging and infrastructure piece isn&#x27;t very large. I guess I imagine there&#x27;s a large upfront cost, but you might be right. real estate and charging, they probably outlast the vehicle, right? You&#x27;re going to have many vehicles over the lifetime of a site. So how do you think about that? What are some of the biggest costs in that total cost of ownership and where do you guys fit in when it comes to charging and infrastructure?</p>
+<p class="zh">明白了。我肯定想深入聊聊好的充电策略长什么样。但在这之前，你提到了 TCO。我有点意外你说充电和基础设施占比不大——我原以为前期投入很大，但你可能是对的。房地产和充电设施大概比车更耐用，对吧？一个场站的寿命里会跑过很多辆车。那你是怎么看的？TCO 里最大的成本有哪些？你们在充电和基础设施这块又处在什么位置？</p></div></p>
+<p class="seg" id="seg-21"><span class="ts">[16:48 – 18:43]</span><div class="seg-body">
+<p class="en">The way that I was referencing it was the benchmark that I&#x27;ve heard thrown around, at least for the rideshare space, is $2 per mile or something like that. And to be cost competitive, you want to approach that parameter. Owning and operating a vehicle in the US is something around like 75 cents to a dollar, probably higher now with gas prices. And the cost stack is very variable. And a lot of that is actually like the hardware, the actual vehicle platform. There&#x27;s also overhead costs that you need to layer onto this. And the way that any sort of new technology, new innovation scales is it goes through this J curve where it&#x27;s expensive, it&#x27;s expensive and you reach an amount of scale and you can amortize those fixed costs over a larger revenue base. That is something that really will rely on entering a lot of new markets quickly and becoming more and more efficient and bringing the cost curve down the vehicle platform and other things. The cost of real estate and the cost of power is only going to continue to go up. But the way that you go about your charging strategy, the way that you enter a new market is very impactful on the other cost categories that you&#x27;re looking at. So although as a percentage of that total cost stack, it&#x27;s a small number, it is very impactful on how you operate in a particular market.</p>
+<p class="zh">我指的基准是，至少网约车圈里常听到的一个数：大约 $2/英里。要具备成本竞争力，你会想逼近这个参数。在美国自有并运营一辆车大概是 $0.75 到 $1/英里，现在油价上去后可能更高。成本堆叠高度可变，其中很大一块其实是硬件——也就是车辆平台本身。还要叠加一层层的 overhead 成本。任何新技术、新创新的规模化都会走一条 J 曲线：先贵，到了一定规模，你才能把固定成本摊薄到更大的收入基盘上。这真的很依赖快速进入很多新市场、越来越高效、把车辆平台等的成本曲线压下来。房地产和电力的成本只会继续上行。但你采取怎样的充电策略、怎样进入新市场，对你关注的其他成本类目影响很大。所以尽管它占总成本堆叠的比例小，它对你在特定市场怎么运营影响巨大。</p></div></p>
+<h2 id="s9">How MN8 Energy helps AV companies deploy better</h2>
+<p class="seg" id="seg-22"><span class="ts">[18:43 – 19:13]</span><div class="seg-body">
+<p class="en">Yeah. So obviously, right now, we talked about Waymo, they&#x27;ve got, close to 4000 vehicles, but there are a lot of other companies that I feel like are right behind, testing dozens or hundreds of vehicles. And so I feel like a lot of them are probably right now sitting there, or maybe have been thinking for the past year or two, what is a good charging strategy for an AV fleet? what would you sort of advise or, if you have clients coming to you, what do you tell them when it comes to, kind of like getting started, right, and launching and testing a new service?</p>
+<p class="zh">对。显然，现在像我们聊的 Waymo 已经接近 4,000 辆车，但还有很多公司紧随其后，在测几十或几百辆。我觉得它们很多现在正坐那儿想——或者过去一两年一直在想——AV 车队好的充电策略是什么？你会给什么建议？或者说，如果有客户来找你，关于起步、启动并测试一项新服务，你会跟他们说什么？</p></div></p>
+<p class="seg" id="seg-23"><span class="ts">[19:13 – 21:40]</span><div class="seg-body">
+<p class="en">Yeah, definitely. And it&#x27;s an interesting stakeholder group. The ecosystem has a lot of this coopetition that&#x27;s happening, not just at the demand level, but also across the vehicle stack and fleet management, which can be sort of independent of the real estate and the power. We are squarely focused on the power infrastructure in that we don&#x27;t necessarily even need to have title or own the real estate on which the infrastructure sits. So that is a more flexible model and it really helps us because we&#x27;re very focused. So the core tension, I think, for particularly a smaller player would be around capital allocation. So if you are still in a R&amp;D mode and you have a pretty high burn rate because you&#x27;re trying to prove out wherever you are in the stack, adding expensive outlays for commercial real estate and chargers, especially on an initial purchase, can be tough. And that&#x27;s sort of where we operate as a financed managed solution. But that might not be right for everyone, right? So vertical integration has been the way that many of these new markets and technologies evolve. Tesla&#x27;s probably the best example of that, highly vertically integrated, but they&#x27;ve actually come back and started to disaggregate. So allowing folks to buy the Tesla supercharger for business. So it&#x27;s understanding what parts of the value chain you wanna own. And if you see the power in the real estate as critical and non-core, coming to an entity like us that can help you both do the initial network planning and strategy on a region, do the site acquisition together, and then figure out sort of a financial model on an OPEX basis that works for you is where we would come in. But there are folks that really want to own the depots. That really want to own the full stack end to end. And, we&#x27;ll see what model kind of wins out in the mid to long term.</p>
+<p class="zh">当然。这是个很有意思的利益相关方群体。生态里大量&quot;竞合（coopetition）&quot;在发生，不仅在需求层，也横跨车辆栈和车队管理——而这些可以独立于房地产和电力。我们牢牢聚焦在电力基础设施上，甚至不一定要拥有基础设施所在地产的产权。所以这是个更灵活的模型，也真的帮到我们，因为我们非常专注。我觉得对较小玩家来说，核心张力在资本配置：如果你还在研发模式、燃 burn 率很高、正努力证明你在栈里的某一段，再砸钱买商业地产和充电桩（尤其首购），会很难。而这正是我们作为&quot;融资 + 托管&quot;方案切入的地方。但这不一定适合所有人，对吧？垂直整合是很多新市场、新技术演化的路径。特斯拉大概是最好的例子——高度垂直整合，但后来又回过头开始拆分，允许企业购买特斯拉超充。所以关键是想清价值链里你想拥有哪一段。如果你认为电力与地产是关键但非核心，那找我们这样的机构：既能帮你做区域的初始网络规划与策略、一起做选址收购，再谈一个适合你的 OPEX 财务模型——这就是我们介入的地方。但也有人真的想拥有场站、想端到端自拥整个栈。中长期哪种模式胜出，我们走着瞧。</p></div></p>
+<h2 id="s10">The importance of different depot layouts for effective fleet management</h2>
+<p class="seg" id="seg-24"><span class="ts">[21:40 – 22:14]</span><div class="seg-body">
+<p class="en">Yeah. And you mentioned a couple terms that I thought were interesting. You said talking about return to base and then on the go charging. And if I had to guess, I imagine that the base, with AV or EV players, they&#x27;ve got some large depot where they do a lot of their charging, but then maybe on the go, is that more flexible, smaller locations or around town? Because I feel like I&#x27;ve been seeing these pop up, I&#x27;ll see a few Waymos charging, in a random parking lot, for example. But then in San Francisco, I know they&#x27;ve got a huge one with hundreds of or thousands of cars. So is that what you were referring to? Or what do you mean there?</p>
+<p class="zh">对。你提到的几个词很有意思：回场（return to base）和途中充电（on the go）。我猜，AV 或 EV 玩家那个&quot;基地&quot;是某个大型场站，他们在那儿充很多电；而&quot;途中&quot;是不是更灵活、更小的点位、散布在城里？因为我感觉这些点正冒出来——比如我会看到几辆 Waymo 在某个随机停车场充电。但旧金山我知道他们有个巨大的场站，停着成百上千辆车。你指的就是这个吗？还是说你指的是别的？</p></div></p>
+<p class="seg" id="seg-25"><span class="ts">[22:14 – 23:10]</span><div class="seg-body">
+<p class="en">Yeah, exactly. Right. So the sort of the home base, the depot is where more of the true kind of fleet management would happen. So the actual maintenance of the vehicles, the overnight parking and storage, these tend to be larger footprint facilities and house more kind of operational employees and capability, whereas like on the go is similar to an EV charging station, but it&#x27;s probably access controlled and may have some staffing and some kind of fleet management and turnover capabilities on site. And my view is those are going to be very, very necessary to support any meaningful deployment across the metro area.</p>
+<p class="zh">对，正是。家基地、也就是 depot，才是更多真正的车队管理发生的地方——车辆的实际维保、过夜停放与仓储。这些往往是更大 footprint 的设施，配置更多运营人员和能力。而途中充电类似 EV 充电站，但可能是受控访问的，可能有驻场人员，以及某种现场车队管理与周转能力。我的看法是：要支撑大都市区任何有规模的部署，后者都&quot;非常、非常必要&quot;。</p></div></p>
+<h2 id="s11">How to locate depots effectively to balance costs and reduce deadheading</h2>
+<p class="seg" id="seg-26"><span class="ts">[23:10 – 23:29]</span><div class="seg-body">
+<p class="en">Yeah. And what are some of the trade-offs to consider with, I&#x27;m guessing a large depot, you probably don&#x27;t want it right and smack in the middle of downtown where real estate is most expensive. You want it a little ways out, but still close enough. And what are some of the trade-offs you have to consider with the big depot and then the on-the-go charging?</p>
+<p class="zh">对。那大 depot 要考虑哪些权衡？我猜你不会把它放在房地产最贵的正市中心，而是稍微往外一点、但又足够近。大 depot 和途中充电各自要考虑哪些权衡？</p></div></p>
+<p class="seg" id="seg-27"><span class="ts">[23:29 – 24:39]</span><div class="seg-body">
+<p class="en">Very broadly, when you think about the physical site selection of those two types of facilities, the Big Depot, you probably want in a close enough to the central business district, but far enough where it&#x27;s not necessarily class A, very sort of expensive real estate. You also want access to power, which is a constraint anywhere and something that you need to work with the utility and potentially a infrastructure partner with. But the on-the-go charging is sited similar to how you see EV charging today, right? It&#x27;s where the demand areas are. It&#x27;s where you&#x27;re traveling. It&#x27;s where you&#x27;re picking up passengers and needing to do some sort of opportunity charging versus the return to base. You could probably have more low-power chargers and more of the facility allocated to maintenance, repair, reposition.</p>
+<p class="zh">笼统地说，当你想这两类设施的实体选址时：大 depot 要离中央商务区够近、又远到不必是 A 类、非常贵的地产；同时你要电力接入——这到处都是约束，需要跟 utility、可能还要跟基础设施伙伴协作。而途中充电的选址逻辑，就像今天你看到的 EV 充电：在需求区、在你通行的路上、在上下客的地方，做&quot;机会充电&quot;而非回场。相比回场，你可以布置更多低功率桩，把更多面积留给维保、整备与重新调度（reposition）。</p></div></p>
+<h2 id="s12">The biggest fleet management challenges when scaling AV fleets from hundreds to thousands of vehicles</h2>
+<p class="seg" id="seg-28"><span class="ts">[24:39 – 25:14]</span><div class="seg-body">
+<p class="en">Have you guys ran into any issues with, I&#x27;ve seen some stories where basically, the only thing with the, AVs, right, is that they can back up or, if they&#x27;re in an area where basically, people are living, right, it could cause, and sometimes it&#x27;s not even related to charging, they&#x27;re just kind of queuing up in someone&#x27;s neighborhood. Like, have there been any kind of considerations that you weren&#x27;t expecting? Like, oh, because of the behavior, now there&#x27;s a line of, Waymo&#x27;s out the door, AV&#x27;s out the door, and then when they reverse, they beep and wake everyone up, right? I feel like there&#x27;s some of these interesting considerations that because they&#x27;re AVs, people have to now discover.</p>
+<p class="zh">你们有没有遇到过这类问题——我看过一些报道，说 AV 吧，它们会倒车，或者停在居民区里，可能造成困扰；有时甚至跟充电无关，只是它们在某户人家附近排队。有没有什么你没预料到的考量？比如，因为这种行为，现在门口排出一串 Waymo、一串 AV，倒车时还会&quot;哔&quot;地把所有人吵醒，对吧？我觉得正因为它们是 AV，人们才不得不去发现这些有趣的新问题。</p></div></p>
+<p class="seg" id="seg-29"><span class="ts">[25:14 – 25:42]</span><div class="seg-body">
+<p class="en">It&#x27;s funny you mentioned that. We have had conversations with the customer that they have now in their preferred spec tightened what they would want to see and ingress and egress and actual location of that because of some of the stories that I&#x27;m sure you&#x27;ve seen. I used to live in Santa Monica, I can only imagine what some of those residents were saying when they saw all the beeping Waymos outside of that one depot.</p>
+<p class="zh">你提这个真好笑。我们确实和客户聊过——因为那些你肯定也见过的故事，他们现在已经把偏好规格收紧了，明确了他们希望看到的进出（ingress/egress）方式和场站实际位置。我以前住圣莫尼卡，我只能想象当居民看到那个 depot 外一排鸣笛的 Waymo 时，会说出什么话来。</p></div></p>
+<p class="seg" id="seg-30"><span class="ts">[25:42 – 25:59]</span><div class="seg-body">
+<p class="en">Yeah, for sure. So, interesting. So, what are some of the biggest challenges you see operators facing when you start to scale from dozens of vehicles to hundreds and then thousands of vehicles?</p>
+<p class="zh">对，确实。很有意思。那当你从几十辆扩到几百、再到几千辆时，你觉得运营方面临的最大挑战有哪些？</p></div></p>
+<p class="seg" id="seg-31"><span class="ts">[25:59 – 28:49]</span><div class="seg-body">
+<p class="en">Yeah. So, I mean, I can speak to it from a infrastructure perspective. It really starts to become kind of a different ballgame when you&#x27;re looking at multiple markets and going from a set of test vehicles to a large operating fleet. You typically are constrained. I mean, putting, the anything can happen from a regulatory perspective to the side. Your constraint really does start to become the power infrastructure and you really need to start the scaling conversation with the utility. We&#x27;ll say 12 to 18 months before you want a site to be placed in service. And we&#x27;ve seen this on a number of occasions where this becomes sort of a sticking point in your load application to the utility for a particular site, you should potentially oversize it with scale in mind. That really becomes a critical factor when you&#x27;re looking to expand operations somewhere. Site selection is really sort of an underappreciated technical problem because for a number of reasons, any particular site could be infeasible or become infeasible. Anything from zoning to more and more, we&#x27;re seeing some community pushback towards these, which I find it to be somewhat nonsensical. But there is a lot of opposition and opinionated folks that don&#x27;t want you to deploy in a particular neighborhood, and that might just be better to sidestep than try to fight that battle. And then future proofing both the site layout and the technology selection of your infrastructure. So a site layout needs to consider serving 200 vehicles right away versus the 50 that you might operate in the first year. And that translates not just for the physical footprint of the building, but also how you&#x27;re scoping your conduit, your transformer size, and anything else of that nature. That is a critical consideration. So scaling basically needs to be thought of right when you enter a market, not after you&#x27;ve seen some kind of positive results and adoption.</p>
+<p class="zh">我从基础设施角度说。当你看多个市场、从一组测试车走向大型运营车队时，局面真的变成另一种球赛。你通常会受约束——先把监管层面&quot;什么都可能发生&quot;放一边——你的约束真的开始变成电力基础设施，而你真的需要提前启动与 utility 的规模化对话。我们建议：在你希望场站投运之前 12 到 18 个月就开始。我们在多个场合见过，这成了你向 utility 报装负荷时的卡点；你应该按未来规模来超配。这真的成了你在某地扩张运营时的关键因子。选址是个被低估的技术难题：出于种种原因，任何具体场站都可能是不可行的、或变得不可行——从分区（zoning）到越来越多的社区反对。我觉得有些反对有点荒唐，但确实有大量反对者和&quot;有主见&quot;的人不希望你部署在某个街区，而绕开它可能比硬刚更划算。然后是场站布局与技术选型的前瞻：布局要能立刻服务 200 辆车，而不是只服务你第一年的 50 辆——这不只是建筑面积的问题，还关系到你怎么规划导管、变压器容量以及诸如此类的东西。这是个关键考量。所以规模化基本上必须在你进入市场时就想清楚，而不是看到某些正向结果和采用之后再补。</p></div></p>
+<p class="seg" id="seg-32"><span class="ts">[28:49 – 29:04]</span><div class="seg-body">
+<p class="en">Got it. I mean, I guess that seems challenging for an operator to plan for if they have to come to you 12 or, have to think about it 12 to 18 months in advance. And then they have to think about the bigger fleet size. I mean, I guess that&#x27;s sort of where you guys come in and help them solve some of these issues.</p>
+<p class="zh">明白了。对运营方来说，要提前 12 到 18 个月就来找你、还要想更大的车队规模，这规划起来挺有挑战的。我猜这正是你们介入、帮他们解决这些问题的地方。</p></div></p>
+<p class="seg" id="seg-33"><span class="ts">[29:04 – 29:41]</span><div class="seg-body">
+<p class="en">Yeah, certainly. And look, it&#x27;s been really fun working with these entities because they have very much of a startup mentality where they want to scale. Given, there&#x27;s what we&#x27;re dealing with. Transportation and mobility. So there&#x27;s a heavy emphasis on safety, but the blitz scaling that some of these operators want to do, they&#x27;ve sort of realized that the harsh reality dealing with regulated utilities and the aging infrastructure of our power system just might not allow it. So the earlier you can start having utility conversations, the better.</p>
+<p class="zh">当然。说真的，和这些机构合作很有意思，因为他们很有创业公司的心态、想规模化。但我们要面对的是交通与出行，所以安全被高度强调；而一些运营方想做的&quot;闪电式扩张&quot;，他们也逐渐意识到：面对受监管的 utility 和我们老化的电力系统基础设施，这个残酷现实可能不允许那么做。所以你越早开始跟 utility 对话越好。</p></div></p>
+<h2 id="s13">Lessons the AV fleet charging industry can learn from EV customer charging</h2>
+<p class="seg" id="seg-34"><span class="ts">[29:41 – 30:10]</span><div class="seg-body">
+<p class="en">For sure. And then kind of wrapping up here, one thing I was curious to ask you about is because I feel like there are a lot of lessons that the AV industry might be able to learn from the EV charging industry. a lot of companies have come and go and gone. And, I feel like there was obviously this huge and is this huge push on the EV side. Where do the needs of autonomous fleets differ? And, what can they sort of learn from this, EV charging push we&#x27;ve had over the past five, 10 years or so?</p>
+<p class="zh">确实。临近结尾，我好奇想问的是：我觉得 AV 行业能从 EV 充电行业学到很多教训——很多公司来了又走了。显然 EV 这边有过、而且现在仍有一股巨大的推动。自动驾驶车队的需求在哪里不同？它们能从过去五到十年这股 EV 充电浪潮里学到什么？</p></div></p>
+<p class="seg" id="seg-35"><span class="ts">[30:10 – 32:22]</span><div class="seg-body">
+<p class="en">Actually, a lot of the lessons that have transferred from public customer charging to fleet charging are very applicable to the AV space because it&#x27;s almost like you&#x27;re building a different asset class. One aspect of it is cost, like the electricity price that you pay is so variable due to the fragmented nature of electric utilities and the tariff structure that you face could be based on time of use. There could be a very high demand charge rate. So you need to have a controlled charging strategy and kind of low profile and understand what the utility is going to charge you and what is the cost that you&#x27;re going to be allocated to build new infrastructure as well. So this is a critical part of a business case that maybe isn&#x27;t thought of initially, both on the fixed infrastructure cost side and on the variable electricity side. Then considering uptime and public charging is maybe a nuisance, right? If you rock up to a EV operator that shall not be named and two chargers are down, you call and ultimately in 35 minutes, you get a ride. That is just not acceptable or tolerable in fleet charging, in particular, AV charging. The utilization of the vehicle is the unit economic measure that these entities earn revenue on. So the utilization and uptime of the charger needs to be designed accordingly. So building in those SLAs, understanding where the break and failure points are, availability is, is, is everything. And that that&#x27;s what we design our solutions to focus on, versus, just being annoyed that you have to go down the street to charge it something slightly slower.</p>
+<p class="zh">其实，很多从公共客户充电迁移到车队充电的经验，对 AV 空间非常适用——因为这就 almost 像在建设一个不同的资产类别。一方面是成本：你付的电价高度可变，因为电力 utility 是碎片化的，而你面对的费率结构可能是分时计价的，还可能有一个很高的需求费（demand charge）率。所以你需要一套受控的充电策略和较低的负荷轮廓，并搞清楚 utility 会向你收多少、以及分配给你建新基础设施的成本是多少。这是商业案例的关键部分，却可能一开始没被想到——无论是固定基础设施成本侧，还是可变电力侧。再说到可用率（uptime）：公共充电顶多算麻烦，对吧？你开到一家&quot;在此不便具名&quot;的 EV 运营商，两个桩坏了，你打个电话，35 分钟后总算叫到车。但在车队充电、尤其是 AV 充电里，这完全不可接受、不可容忍。车辆的利用率就是这些公司挣营收的单位经济指标。所以充电器的利用率和可用率必须相应设计。把那些 SLA 建进去、搞清断点和失效点在哪里——可用率就是一切。这正是我们设计方案时聚焦的东西，而不是仅仅&quot;烦于不得不开到街角用更慢的桩充电&quot;。</p></div></p>
+<h2 id="s14">The future of AV fleet hubs and what they might look like</h2>
+<p class="seg" id="seg-36"><span class="ts">[32:22 – 32:44]</span><div class="seg-body">
+<p class="en">Definitely. And the final one, I thought a fun one to ask you, kind of looking out five to 10 years ahead, I was curious, what do you think the ideal autonomous vehicle fleet hub looks like? I know there&#x27;s a lot of talk right now about automating depots and charging. And where do you guys see this five to 10 years away? Because it&#x27;s not that far.</p>
+<p class="zh">确实。最后一个问题，我觉得挺好玩：往前看五到十年，你心目中最理想的自动驾驶车队枢纽长什么样？我知道现在关于自动化 depot 和充电有很多讨论。你们觉得五到十年后会是什么样？因为那并不远。</p></div></p>
+<p class="seg" id="seg-37"><span class="ts">[32:44 – 35:20]</span><div class="seg-body">
+<p class="en">It&#x27;s not. It&#x27;s not. And in the context of like long, long life infrastructure, five years is nothing, right? I think the hub of 2030 is going to look even different than the hub of 2035. And my maybe selfish view or aspirational view is that these become more than a parking lot or a warehouse with chargers and parking spots, but a more integrated sort of Energy Campus, the way that we&#x27;re seeing digital infrastructure move right now. So potentially onsite solar generation, battery storage, controls and energy management systems that can accommodate new rate structures. Fully robotic kind of charging and charging arms, like maintenance bays that are integrated into all of this. Obviously, connectivity becomes a big factor. So when you think of all of that innovation that can go into a building, like that&#x27;s a wholly new sort of infrastructure product and real estate product and asset class. So that&#x27;s exciting to me. Things like vehicle to grid sort of charging become interesting. It&#x27;s something the industry has talked about for what seems like a long time, but here it might actually make sense because you have so much control of the fleet of vehicles and its operating patterns. And then, I mean, site selection needs to morph to do that. So we have proprietary tools that we look at a bunch of different data layers and try to think about what will be the optimal site location five years from now versus maybe just now based on demographic patterns, based on competitive intelligence, based on hosting capacity and things of that nature. So the cars are obviously probably the most popular part of this, I nerd out on kind of the infrastructure building of the future that enables it.</p>
+<p class="zh">不远，确实不远。但在长寿命基础设施的语境里，五年什么都不是，对吧？我觉得 2030 的枢纽会和 2035 的不同。我有点&quot;私心&quot;或理想化的看法是：这些场站不应只是一个带充电桩和车位的停车场或仓库，而应变成一个更集成的&quot;能源园区（Energy Campus）&quot;——就像我们今天看到数字基础设施正在演化那样。也就是可能有现场光伏发电、电池储能、能适配新费率的控制与能源管理系统；全机器人式的充电、充电臂；以及整合进这一切的维保工位。显然，连接性会变成一大要素。所以当你想到能塞进一栋建筑的所有创新，那是一种全新的基础设施产品、房地产产品和资产类别。这让我兴奋。像 V2G（车到网）充电这类东西变得有趣——行业聊了好像很久，但在这里它可能真的有意义，因为你对车队及其运行模式有极强的控制力。然后，选址也要随之演化。所以我们有专有工具，叠加一堆不同的数据层，基于人口模式、竞争情报、承载容量之类，去想&quot;五年后最优位置&quot;而非只看当下。所以车显然可能是这里面最受欢迎的部分，但我真正着迷的，是让它成为可能的&quot;未来基础设施建筑&quot;。</p></div></p>
+<h2 id="s15">Conclusions and final thoughts</h2>
+<p class="seg" id="seg-38"><span class="ts">[35:20 – 35:51]</span><div class="seg-body">
+<p class="en">Yeah, no, I think that&#x27;s definitely a compelling case for a very cool infrastructure building, maybe a new asset class. I know you mentioned things like vehicle-to-grid, which I&#x27;m looking at putting a Tesla battery in my house right now, and I&#x27;ve got an EV. Why can&#x27;t I just use that as my battery? It&#x27;ll save me a lot of money, right? So definitely some cool and exciting technology that I think is on the way, and I appreciate you giving us a deep dive into. If folks want to reach out or connect with you or learn about MN8, where should they go? Where can they learn more?</p>
+<p class="zh">对，我觉得这为一种很酷的基础设施建筑、也许是一种新资产类别，给出了很有说服力的理由。你提到了 V2G，我正琢磨在我家装个特斯拉电池，而我已经有辆 EV。我干嘛不能直接把它当电池用？能省不少钱，对吧？所以肯定有一些很酷、令人兴奋的技术在路上。谢谢你带我们 deep dive。如果有人想联系你、或了解 MN8，该去哪？在哪能了解更多？</p></div></p>
+<p class="seg" id="seg-39"><span class="ts">[35:51 – 36:23]</span><div class="seg-body">
+<p class="en">MN8.com is a great place to start. Definitely always happy to nerd out about conversations around energy and EV charging. So feel free to reach out to me directly as well. I&#x27;m hoping to come out to the West Coast soon, Harry, as well. So I would love to see you when I&#x27;m back out there.</p>
+<p class="zh">MN8.com 是个很好的起点。关于能源和 EV 充电的话题，我随时乐意深聊。所以也欢迎直接联系我。Harry，我也希望很快去西海岸，回来时很想见你。</p></div></p>
+<p class="seg" id="seg-40"><span class="ts">[35:51 – 36:23]</span><div class="seg-body">
+<p class="en">Yeah, definitely. We&#x27;ll leave your contact info in the show notes, maybe LinkedIn. And then, of course, people can also reach out to me or you guys directly if they&#x27;d like to learn more. So, Alex, thanks for coming on.</p>
+<p class="zh">当然。我们会把你的联系方式放在 show notes 里，也许是 LinkedIn。当然，想了解更多也可以直接联系我或你们团队。Alex，谢谢你来。</p></div></p>
+<p class="seg" id="seg-41"><span class="ts">[35:51 – 36:23]</span><div class="seg-body">
+<p class="en">Thanks, Harry.</p>
+<p class="zh">谢谢，Harry。</p></div></p>
+<p class="seg" id="seg-42"><span class="ts">[35:51 – 36:23]</span><div class="seg-body">
+<p class="en">Take care.</p>
+<p class="zh">保重。</p></div></p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["能源基础设施", "energy infrastructure", "MN8 Energy", "Alex Pischalnikov", "充电", "EV charging", "robotaxi", "自动驾驶车队", "depot 站点", "V2G", "total cost of ownership", "utility interconnection"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><div id='wbToast'></div></body></html>
