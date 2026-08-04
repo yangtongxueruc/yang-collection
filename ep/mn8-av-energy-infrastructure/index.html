@@ -1,0 +1,385 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov） · 总结分析</title><meta name='description' content='自动驾驶最难扩的其实是电：MN8 Energy 战略负责人讲清为什么充电基础设施是 robotaxi 与无人卡车规模化的隐藏瓶颈，以及能源商如何成为 AV 生态的「水电工」。'><meta property='og:title' content='为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov） · 总结分析'><meta property='og:description' content='自动驾驶最难扩的其实是电：MN8 Energy 战略负责人讲清为什么充电基础设施是 robotaxi 与无人卡车规模化的隐藏瓶颈，以及能源商如何成为 AV 生态的「水电工」。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/building-the-energy-infrastructure" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Podcast</div><h1>为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov）</h1><p class="sub">Building the Energy Infrastructure for Autonomous Vehicles with Alex Pischalnikov</p><div class="tags"><span class="tag">⏱ 36:23</span><span class="tag">👤 Alex Pischalnikov（MN8 Energy 战略高级总监）</span><span class="tag">🗓 2026-08</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/djAWfXTKJeE/hqdefault.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/djAWfXTKJeE" title="Building the Energy Infrastructure for Autonomous Vehicles with Alex Pischalnikov" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览</a><a href="#s1">🔢 关键数据 / 事实速记</a><a href="#s2">🗝️ 关键金句（原文摘录）</a><a href="#s3">一、MN8 是谁：垂直一体化的可再生 IPP</a><a href="#s4">二、工业逻辑：AV 是&quot;轮子上的 AI&quot;</a><a href="#s5">三、数据中心与 AV：同一条&quot;电的约束&quot;</a><a href="#s6">四、&quot;我们还在早期&quot;：1,000 倍增长曲线</a><a href="#s7">五、充电为何关键：占比小，却是解锁点</a><a href="#s8">六、TCO 里真正的成本大头</a><a href="#s9">七、MN8 如何帮 AV 公司更好部署</a><a href="#s10">八、两种场站：回场 depot 与途中充电</a><a href="#s11">九、选址权衡：离 CBD 够近，但别是 A 类贵地</a><a href="#s12">十、被低估的&quot;邻里外部性&quot;</a><a href="#s13">十一、从几十到几千辆：规模化的真实关卡</a><a href="#s14">十二、从 EV 公共充电学到的教训</a><a href="#s15">十三、未来枢纽：从停车场到&quot;能源园区&quot;</a><a href="#s16">🧭 核心框架：两类场站的分工</a><a href="#s17">🔗 关联阅读</a><a href="#s18">👥 适合谁听</a><a href="#s19">十四、关键结论</a><a href="#s20">局限与说明</a></nav><main class="content"><h1>为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov）</h1>
+<blockquote>来源：*The Driverless Digest*（Harry Campbell）· 2026-08</blockquote>
+<blockquote>嘉宾：Alex Pischalnikov — MN8 Energy 战略高级总监，负责电气化、清洁能源与数字基础设施的增长战略</blockquote>
+<blockquote>主持：Harry Campbell · 时长约 36 分钟</blockquote>
+<h2 id="s0">📌 核心速览</h2>
+<ul><li><strong>一句话定位</strong>：自动驾驶最被低估的瓶颈不是算法，而是<strong>电</strong>——充电基础设施的获取、选址与可靠性，才是 robotaxi 与无人卡车从几百辆扩到几千辆时的真实约束。</li></ul>
+<ul><li><strong>最反直觉的判断</strong>：充电基础设施在总拥有成本（TCO）里占比其实<strong>很小</strong>，但它是规模化与单位经济性的<strong>关键解锁点</strong>——没它，车根本跑不起来。</li></ul>
+<ul><li><strong>最硬的数据点</strong>：全球商用 AV 车队目前约 <strong>6,000–7,000 辆</strong>（高盛口径），到 <strong>2035 年预计达 600–700 万辆</strong>，是约 <strong>1,000 倍</strong>的增长；对能源基建商而言，&quot;现在就是早期局&quot;。</li></ul>
+<ul><li><strong>本集立场</strong>：能源商正在成为 AV 生态的&quot;水电工&quot;——不一定要拥有地产，而是提供&quot;融资 + 托管&quot;的电力基础设施，让车队公司专注于车与运营。</li></ul>
+<h2 id="s1">🔢 关键数据 / 事实速记</h2>
+<ul><li><strong>MN8 Energy 规模</strong>：全美约 <strong>4 吉瓦（GW）</strong>在运或在建资产，半区域化集中于加州、中大西洋及分散各州；垂直一体化的可再生独立发电商（IPP）。</li></ul>
+<ul><li><strong>三类资产</strong>：公用事业级与分布式<strong>太阳能</strong>、<strong>电池储能</strong>、<strong>EV 充电</strong>——MN8 同时做这三块且 EV 业务规模在 IPP 中少见。</li></ul>
+<ul><li><strong>Waymo 增速</strong>：2026 年 3 月约 <strong>50 万次/周</strong>付费行程，较 2024 年同期的 5 万次<strong>两年 10 倍</strong>；运营能力两年扩 10 倍。</li></ul>
+<ul><li><strong>车队增长曲线</strong>：商用 AV 全球约 7,000 辆（去年）→ 2035 年 600–700 万辆（<strong>1,000 倍</strong>）。</li></ul>
+<ul><li><strong>并网前置期</strong>：大型充电场站向公用事业公司（utility）申请负荷，需提前 <strong>12–18 个月</strong>启动；应按未来规模<strong>超配</strong>容量。</li></ul>
+<ul><li><strong>TCO 基准</strong>：网约车约 <strong>$2/英里</strong>才具成本竞争力；美国自有运营一辆车约 <strong>$0.75–1/英里</strong>（油价上行后更高），最大头是车辆硬件平台。</li></ul>
+<ul><li><strong>功率门槛</strong>：一个大型充电场站要拿 <strong>4–5 MW</strong> 容量通常很难，与数据中心面临的并网约束同源。</li></ul>
+<h2 id="s2">🗝️ 关键金句（原文摘录）</h2>
+<blockquote>&quot;自动驾驶汽车本质上就是<strong>轮子上的 AI</strong>——它是 AI 的物理形态，既需要算力来推理与运行，也需要来自充电基础设施的电力来真正上路移动。&quot;</blockquote>
+<blockquote>&quot;在总拥有成本里，充电基础设施的占比其实不大；但就<strong>规模化与运营杠杆的解锁</strong>而言，它至关重要。&quot;</blockquote>
+<blockquote>&quot;你的约束最终会变成<strong>电力基础设施</strong>——你必须提前 12 到 18 个月就去找公用事业公司谈。&quot;</blockquote>
+<blockquote>&quot;公共快充桩坏了，你顶多等 35 分钟换一家；但在车队充电、尤其是 AV 充电里，<strong>可用率就是一切</strong>——车辆的利用率就是这些公司的单位经济命脉。&quot;</blockquote>
+<blockquote>&quot;未来的枢纽不只是带充电桩的停车场或仓库，而是一个更集成的<strong>能源园区（Energy Campus）</strong>。&quot;</blockquote>
+<h2 id="s3">一、MN8 是谁：垂直一体化的可再生 IPP</h2>
+<p>Alex 把 MN8 定义为&quot;建设、拥有并运营基础设施&quot;的公司——这类基础设施是工业化社会的输入与基础需求。MN8 是聚焦<strong>可再生电源</strong>的垂直一体化独立发电商（IPP），全美约 4 GW 在运/在建资产，半区域化集中在加州、中大西洋及分散各州。</p>
+<p>三大资产类别构成其&quot;地基&quot;：<strong>公用事业级与分布式太阳能、电池储能、EV 充电</strong>。起步于表后（behind-the-meter）分布式发电——比如大型零售商的屋顶光伏，曾拥有加州一度&quot;全球最大&quot;的电池（排名每月浮动）。其中 EV 业务规模在独立发电商中并不常见，构成其差异化。</p>
+<h2 id="s4">二、工业逻辑：AV 是&quot;轮子上的 AI&quot;</h2>
+<p>Alex 提出贯穿全场的框架：自动驾驶汽车就是<strong>轮子上的 AI</strong>——它既需要算力推理运行，也需要充电基础设施供电力上路。这条逻辑把 MN8 的投资组合与&quot;客户价值主张&quot;串了起来。</p>
+<p>从客户视角看，MN8 能用同一套组合服务一个大企业客户：表后购电（虚拟 PPA）、环境属性（绿电凭证）、以及现有设施或异地场站的充电。延伸到 AI 话题——其公用事业级项目服务于越来越大的数据中心，而 EV/AV 正是这条故事的延伸。</p>
+<h2 id="s5">三、数据中心与 AV：同一条&quot;电的约束&quot;</h2>
+<p>两者的相似点在于都面临<strong>获取电力的同等挑战与约束</strong>——这其实是行业最大的难题。在大型充电场站拿 4–5 MW 容量通常很难，取决于州、市、辖区与 utility，这与数据中心（无论大规模还是分布式）面对的是同一类问题。</p>
+<p>一个尚未被验证但有趣的概念是：把数据中心与充电场站<strong>共址</strong>是否带来经济性？Alex 尚未见过此类在开发项目，但 AV 显然是算力的巨大消耗者，本质上依赖数据中心容量运行。</p>
+<h2 id="s6">四、&quot;我们还在早期&quot;：1,000 倍增长曲线</h2>
+<p>以 Waymo 为例，2026 年 3 月约 50 万次/周付费行程，较 2024 年同期的 5 万次为两年 10 倍。放到五年到十年维度更令人兴奋（对监管者或许&quot;恐怖&quot;）。</p>
+<p>全球商用 AV 车队目前约 6,000–7,000 辆（高盛口径去年约 7,000），到 2035 年预计达 600–700 万辆——约 <strong>1,000 倍</strong>增长。对基建开发/拥有/运营商而言，这是必须参与的早期局，MN8 的目标是作为伙伴支持企业客户规模化。</p>
+<h2 id="s7">五、充电为何关键：占比小，却是解锁点</h2>
+<p>在 TCO 口径下，充电基础设施占比不大（被 lump 进房地产等可变成本），但就&quot;进入新市场的解锁&quot;和&quot;可持续单位经济&quot;而言至关重要。进入新市场必须有充电策略，且不止覆盖&quot;回场（return-to-base）&quot;，在服务于大都市区时还必须有<strong>可靠、且相对 ODD（设计运行域）位置合理</strong>的&quot;途中充电（on-the-go）&quot;。</p>
+<h2 id="s8">六、TCO 里真正的成本大头</h2>
+<p>网约车成本基准约 $2/英里才有竞争力；美国自有运营一辆车约 $0.75–1/英里，成本堆叠高度可变，最大头其实是<strong>车辆硬件平台</strong>。新技术走 J 曲线：先贵，到一定规模后把固定成本摊薄到更大收入基盘。房地产与电力的成本只会继续上行——但<strong>充电策略与新市场进入方式，会显著影响其他成本类目</strong>。所以尽管占比小，它对市场打法影响很大。</p>
+<h2 id="s9">七、MN8 如何帮 AV 公司更好部署</h2>
+<p>生态里充满&quot;竞合（coopetition）&quot;。MN8 只聚焦<strong>电力基础设施</strong>，甚至不需要拥有其上的地产——这让它更灵活。对较小玩家，核心张力是<strong>资本配置</strong>：还在研发高 Burning 阶段，再砸钱买商业地产和充电桩（尤其首购）很难。MN8 以&quot;融资 + 托管（financed managed）&quot;方案切入。</p>
+<p>垂直整合是新市场常见演化路径（特斯拉最典型），但特斯拉近年又<strong>拆分</strong>出面向企业的超充。关键在于想清价值链里要拥有哪一段；若认为电力与地产是非核心，就找 MN8 做区域网络规划、联合选址，再谈一个 OPEX 财务模型。也有人坚持端到端自拥场站——中长期哪种模式胜出尚待观察。</p>
+<h2 id="s10">八、两种场站：回场 depot 与途中充电</h2>
+<p><strong>家基地 / depot</strong>：承担真正的车队管理——车辆维保、过夜停放与仓储，多为大 footprint、配置更多运营人员。</p>
+<p><strong>途中充电（on-the-go）</strong>：类似受控访问的 EV 充电站，可能有驻场人员与现场车队管理/周转能力——对支撑大都市区任何有规模的部署都&quot;非常必要&quot;。</p>
+<h2 id="s11">九、选址权衡：离 CBD 够近，但别是 A 类贵地</h2>
+<p>大 depot 要离中央商务区够近、又远到不必是昂贵的 A 类地产；同时要<strong>电力接入</strong>（到处都紧，需与 utility 及基础设施伙伴协作）。途中充电则像今天 EV 充电的选址逻辑——在需求区、在通行与上下客处做&quot;机会充电&quot;；相比回场，可布置更多低功率桩，把更多面积留给维保、整备与重新调度。</p>
+<h2 id="s12">十、被低估的&quot;邻里外部性&quot;</h2>
+<p>AV 在居民区排队、倒车时蜂鸣吵醒居民——这类因&quot;车是自主的&quot;才暴露的新问题，客户已在偏好规格里<strong>收紧</strong>了进出（ingress/egress）与场站位置要求。Alex 笑称自己住过圣莫尼卡，能想象居民看到 depot 外一排鸣笛 Waymo 的心情。</p>
+<h2 id="s13">十一、从几十到几千辆：规模化的真实关卡</h2>
+<p>从多市场、从测试车到大型运营车队，是&quot;完全不同的球赛&quot;。放下监管不确定性不谈，<strong>约束最终变成电力基础设施</strong>——必须提前 12–18 个月启动与 utility 的规模化对话；负荷申请常卡在这一点，应按未来规模超配。</p>
+<p>选址是被低估的技术难题：任何具体场站都可能因分区（zoning）或越来越多的<strong>社区反对</strong>而不可行（Alex 认为部分反对&quot;有点荒唐&quot;，但绕开比硬刚更划算）。还要对<strong>场站布局与技术选型做前瞻</strong>——布局要能服务&quot;立刻 200 辆&quot;而非&quot;第一年只 50 辆&quot;，这关系到导管、变压器容量等。规模化必须在<strong>进入市场时</strong>就想清楚，而不是看到正反馈后再补。</p>
+<h2 id="s14">十二、从 EV 公共充电学到的教训</h2>
+<p>从公共客户充电迁移到车队充电的许多经验，对 AV 极适用——几乎像在建设一个不同的资产类别：</p>
+<ul><li><strong>成本可变性</strong>：电价因 utility 碎片化与费率结构（分时、需求费）高度可变，需要受控充电策略与低负荷轮廓；新建基建的分配成本也是商业案例关键，却常被初始忽略。</li></ul>
+<ul><li><strong>可用率就是一切</strong>：公共桩坏了你顶多等 35 分钟换一家；但车队/AV 充电里，<strong>车辆利用率就是单位经济命脉</strong>，充电器的可用率与停机点必须按 SLA 设计。这正是 MN8 方案的聚焦点。</li></ul>
+<h2 id="s15">十三、未来枢纽：从停车场到&quot;能源园区&quot;</h2>
+<p>5 年对长寿命基建而言什么都不是。2030 的枢纽会与 2035 不同。Alex 的&quot;私心&quot;愿景：这些场站不只是带充电桩的停车场/仓库，而是更集成的<strong>能源园区（Energy Campus）</strong>——现场光伏、电池储能、可适配新费率的能源管理系统、全机器人充电臂、集成维保工位、强连接性；<strong>V2G（车到网）</strong>在此反而真正有意义，因为车队运行模式高度可控。选址也要随之演化：MN8 用专有工具叠加人口、竞争情报、承载容量等数据层，预判&quot;五年后最优位置&quot;而非只看当下。</p>
+<h2 id="s16">🧭 核心框架：两类场站的分工</h2>
+<table><thead><tr><th>维度</th><th>回场 Depot（家基地）</th><th>途中充电（On-the-go）</th></tr></thead><tbody><tr><td>主要功能</td><td>维保、过夜停放、仓储、运营人员</td><td>受控访问的机会充电、现场周转</td></tr><tr><td>选址逻辑</td><td>离 CBD 够近但避开 A 类贵地；需电力接入</td><td>在需求/通行/上下客处；机会充电</td></tr><tr><td>设备倾向</td><td>更多维保/整备/重新调度面积</td><td>可更多低功率桩</td></tr><tr><td>必要性</td><td>车队管理内核</td><td>支撑大都市区规模部署的关键</td></tr></tbody></table>
+<h2 id="s17">🔗 关联阅读</h2>
+<ul><li>[为所有人设计无人驾驶汽车（而不只是尝鲜者）](../../driverless-cars-for-everyone/)：当车自己跑，座舱里&quot;没人设计的部分&quot;如何决定信任与规模化——本集&quot;电力是隐藏瓶颈&quot;的互补视角。</li></ul>
+<ul><li>[Einride 的自动驾驶货运之路](../../einride-autonomous-freight/)：无人卡车车队的运营与商业化——本集&quot;从几十到几千辆&quot;规模化的货运侧注脚。</li></ul>
+<ul><li>[Waymo 的数据揭示了&quot;到底谁在坐 robotaxi&quot;](../../waymo-data-who-rides-robotaxis/)：真实骑手规模与采用动机，呼应&quot;我们还在早期&quot;的增长曲线。</li></ul>
+<ul><li>[从自动驾驶试点到公共服务](../../av-pilot-to-public-service/)：远程协助阈值与运营可扩展性——与&quot;可用率就是一切&quot;同源。</li></ul>
+<h2 id="s18">👥 适合谁听</h2>
+<ul><li>自动驾驶 / robotaxi / 无人卡车公司的运营、站点网络与基建负责人；</li></ul>
+<ul><li>能源 / 充电 / 储能行业的战略与项目投资人士；</li></ul>
+<ul><li>关注&quot;AV 规模化最后一公里&quot;的城市交通与电网规划者；</li></ul>
+<ul><li>投资人（理解为何&quot;能源基建&quot;是 AV 单位经济里被低估的隐藏成本）；</li></ul>
+<ul><li>任何好奇&quot;没有司机的车队，电从哪来、桩在哪&quot;的普通读者。</li></ul>
+<h2 id="s19">十四、关键结论</h2>
+<p>1. <strong>电是隐藏瓶颈</strong>：AV 规模化的真实约束是电力基础设施的获取、选址与可靠性，而非算法。 2. <strong>占比小却是解锁点</strong>：充电基建在 TCO 中占比不大，但决定新市场进入与单位经济可持续性。 3. <strong>提前 12–18 个月谈电</strong>：规模化必须从进入市场起就启动与 utility 的对话，并按未来规模超配。 4. <strong>两类场站缺一不可</strong>：回场 depot 做管理与维保，途中充电支撑大都市区部署。 5. <strong>可用率就是一切</strong>：车队/AV 充电的停机不可容忍，须按 SLA 与可用性设计。 6. <strong>未来是能源园区</strong>：现场光储 + 机器人充电臂 + V2G，选址要靠数据预判五年后最优位。</p>
+<h2 id="s20">局限与说明</h2>
+<p>本分析由智能体基于节目官方逐字稿（Substack <code>?showTranscript=true</code>）主笔并翻译；其中具体表述与金句的最终核对，请以中英对照逐字稿中的英文原文为准（自动语音识别 + 机器翻译 + 人工校对，仅供学习与参考）。</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><div id='wbToast'></div></body></html>
