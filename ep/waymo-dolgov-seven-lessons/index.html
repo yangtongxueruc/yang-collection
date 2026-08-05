@@ -1,0 +1,401 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Waymo 七条物理世界 AI 经验（Dmitri Dolgov @ Startup School） · 总结分析</title><meta name='description' content='Waymo 联合 CEO Dmitri Dolgov 把 15 年造自动驾驶的经验压成七条：demo 只占 1%、可靠性活在「九」的指数阶梯、多模态感知、结构增强端到端、闭环世界模型仿真、智能体—仿真器—批评者飞轮，以及「评估才是战略护城河」。'><meta property='og:title' content='Waymo 七条物理世界 AI 经验（Dmitri Dolgov @ Startup School） · 总结分析'><meta property='og:description' content='Waymo 联合 CEO Dmitri Dolgov 把 15 年造自动驾驶的经验压成七条：demo 只占 1%、可靠性活在「九」的指数阶梯、多模态感知、结构增强端到端、闭环世界模型仿真、智能体—仿真器—批评者飞轮，以及「评估才是战略护城河」。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
+  --line:#e7e4de; --line-soft:#efece6;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1080px;
+  --title-font:"Ubuntu",var(--sans);
+}
+[data-theme="dark"]{
+  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
+  --line:#262a31; --line-soft:#20242b;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
+.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
+             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero>*{position:relative;z-index:1}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
+.noresult.show{display:block}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=Gp4zrV3-6N8" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">YouTube · Startup School (YC)</div><h1>Waymo 七条物理世界 AI 经验（Dmitri Dolgov @ Startup School）</h1><p class="sub">Seven Lessons from Building AI for the Physical World — Dmitri Dolgov (Waymo)</p><div class="tags"><span class="tag">⏱ 49:23</span><span class="tag">👤 Dmitri Dolgov（Waymo 联合 CEO / 联合 CTO）</span><span class="tag">🗓 2026-08-03</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap"><iframe src="https://www.youtube.com/embed/Gp4zrV3-6N8" title="Seven Lessons from Building AI for the Physical World — Dmitri Dolgov (Waymo)" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">📌 核心速览</a><a href="#s1">🔢 关键数据 / 事实速记</a><a href="#s2">🗝️ 关键金句（原文摘录，附时间戳）</a><a href="#s3">一、为什么物理 AI 截然不同：四道鸿沟</a><a href="#s4">二、经验一：Demo 与产品之间隔着一条鸿沟（&quot;1% 法则&quot;）</a><a href="#s5">三、经验二：选对技术曲线（&quot;九&quot;决定架构）</a><a href="#s6">四、经验三：踏准每一波技术浪潮（统一 &gt; 炫技）</a><a href="#s7">五、Waymo 基础模型：架构拆解</a><a href="#s8">六、经验四：苦涩的教训依然成立（结构增强端到端）</a><a href="#s9">七、经验五：每个物理 AI 公司都需要仿真器（闭环世界模型）</a><a href="#s10">八、经验六：构建 AI 飞轮（智能体 + 仿真器 + 批评者）</a><a href="#s11">九、经验七：评测是你的战略护城河</a><a href="#s12">🧭 核心框架：七条经验如何咬合</a><a href="#s13">🔗 关联阅读</a><a href="#s14">👥 适合谁听</a><a href="#s15">🔚 收尾与局限</a><a href="#s16">局限与说明</a></nav><main class="content"><h1>深度分析 · Waymo 七条物理世界 AI 经验</h1>
+<blockquote>来源：*YouTube · Startup School*（Y Combinator）主题演讲 · 主讲 <strong>Dmitri Dolgov</strong>（Waymo 联合 CEO / 联合 CTO，2009 年起主导 Waymo 驾驶栈）</blockquote>
+<blockquote>时长：约 49 分钟 · 中英对照逐字稿见同目录 <code>bilingual_transcript.md</code></blockquote>
+<h2 id="s0">📌 核心速览</h2>
+<ul><li><strong>一句话定位</strong>：物理世界 AI（自动驾驶、机器人等）与数字 AI 之间隔着四道结构性鸿沟，而把 demo 变成真正能上路的产品的关键，是<strong>对&quot;九&quot;（可靠性指数）的敬畏</strong>和一套由评估驱动的研发飞轮。</li></ul>
+<ul><li><strong>最反直觉的判断</strong>：一个能跑的 demo，最多只占全部工作的 <strong>1%</strong>；剩下 99% 是那一长串&quot;九&quot;——每多一个&quot;九&quot;所需努力约翻十倍。</li></ul>
+<ul><li><strong>Waymo 的护城河不是模型，而是&quot;评估 + 指标 + 安全框架&quot;</strong>：模型可以被泄露、算法可以被复制，但数亿英里全自动驾驶 + 证据级公开审计，极难复制。</li></ul>
+<ul><li><strong>安全成绩单</strong>：基于 2.2 亿+ 英里全自动驾驶，在致人重伤的事故上比人类驾驶员好约 <strong>17 倍</strong>，相当于每 8 天防止一起重伤。</li></ul>
+<h2 id="s1">🔢 关键数据 / 事实速记</h2>
+<ul><li><strong>规模</strong>：每周约 50 万次行程、400+ 万英里全自动驾驶，覆盖美国 15 座城市；累计 2000 万+ 行程、2 亿+ 英里。</li></ul>
+<ul><li><strong>时间线</strong>：2009 年立项 → 约 2010 年达成&quot;能力完备&quot;的 demo → 又约 10 年才开始提供服务 → 再 5 年扩到每周 50 万次 → 如今指数级扩张（第一个 1 亿英里用 15 年，下一个 1 亿英里只用约 7 个月）。</li></ul>
+<ul><li><strong>四道鸿沟（物理 AI vs 数字 AI）</strong>：错误代价（生命 vs token）、延迟（毫秒级 vs 秒级）、数据（无&quot;物理世界互联网&quot;）、验证（上线即高置信度 vs 先发布再迭代）。</li></ul>
+<ul><li><strong>安全曲线见顶</strong>：弱感知（纯视觉）会让安全曲线过早趋于平缓，达不到&quot;强超人&quot;所需的长尾覆盖。</li></ul>
+<ul><li><strong>多模态感知</strong>：摄像头（高分辨率/色彩，被动，暗光与眩光退化）+ 激光雷达（直接测 3D 结构，主动，全天候）+ 雷达（穿透雾雨雪，多普勒测速）。</li></ul>
+<ul><li><strong>硬件代际</strong>：已到第六代 Waymo Driver 硬件套件；每代在提升能力的同时大幅降低成本。</li></ul>
+<h2 id="s2">🗝️ 关键金句（原文摘录，附时间戳）</h2>
+<blockquote>[06:52] *&quot;A working demo is 1% at best of the work that you have to do. The many nines of performance, the many nines of reliability that follow, that&#x27;s where the real work happens.&quot;*（一个能跑的 demo 最多只占你全部工作的 1%；之后那许许多多个&quot;九&quot;级的性能与可靠性，才是真正的工作所在。）</blockquote>
+<blockquote>[11:34] *&quot;reliability and performance live on this exponential ladder of nines... every next nine you want to add takes about ten times more effort.&quot;*（可靠性与性能活在这架&quot;九&quot;的指数阶梯上……每多要一个&quot;九&quot;，所需努力约翻十倍。）</blockquote>
+<blockquote>[13:23] *&quot;every hype cycle produces a wave of absolutely spectacular demos and very few real products. The recurring mistake of every cycle is spending on the demo what you should be saving for the nines.&quot;*（每个炒作周期都产出一波叹为观止的 demo，却只有极少数真正的产品。每个周期的重复错误，是把本该留给&quot;九&quot;的投入花在了 demo 上。）</blockquote>
+<blockquote>[24:43] *&quot;The Waymo Foundation model is a multimodal world action language model.&quot;*（Waymo 基础模型是一个多模态世界—动作—语言模型。）</blockquote>
+<blockquote>[30:09] *&quot;methods that scale best with compute and data always win out.&quot;*（最能随算力和数据扩展的方法，总会胜出。）</blockquote>
+<blockquote>[34:14] *&quot;structure that fights scale will always lose, and structure that channels scale always wins.&quot;*（对抗扩展的结构终将落败，而疏导扩展的结构总会赢。）</blockquote>
+<blockquote>[36:41] *&quot;to build and safely deploy an agent in the physical world, it is absolutely critical to have a good large-scale, realistic, high-fidelity simulator.&quot;*（要在物理世界构建并安全部署智能体，绝对关键的是拥有一个好的、大规模、真实的高保真仿真器。）</blockquote>
+<blockquote>[42:29] *&quot;your model is really table stakes, but eval and metrics, that&#x27;s your most important, that&#x27;s your strategic moat.&quot;*（模型其实只是入场券，而评估与指标，才是你最重要的、才是你的战略护城河。）</blockquote>
+<blockquote>[46:09] *&quot;the Waymo Driver is about 17 times better than human drivers when it comes to crashes that cause serious injury.&quot;*（在致人重伤的事故上，Waymo Driver 比人类驾驶员好约 17 倍。）</blockquote>
+<h2 id="s3">一、为什么物理 AI 截然不同：四道鸿沟</h2>
+<p>Dolgov 开篇就点明，物理 AI 不是&quot;把大模型装上车&quot;那么简单。它与数字 AI 有四个本质差异：</p>
+<p>1. <strong>错误代价</strong>：语言模型答错，代价是一次重试；一辆车的误判，代价是生命，没有&quot;撤销&quot;按钮。 2. <strong>延迟</strong>：高速上一秒移动约百英尺，决策必须在毫秒级、在车端计算单元上完成。 3. <strong>数据</strong>：数字 AI 有整个互联网做预训练语料；物理世界没有数字化的&quot;互联网&quot;。 4. <strong>验证</strong>：数字产品可以&quot;先发布、用户帮你找边界情况&quot;；物理 AI 在开出第一英里前就必须具备极高安全置信度。</p>
+<p>由此引出一个朴素却常被忽视的结论：<strong>面对原子而不是比特时，&quot;快速行动、打破陈规&quot;要改成&quot;快速行动、安全交付&quot;。</strong></p>
+<h2 id="s4">二、经验一：Demo 与产品之间隔着一条鸿沟（&quot;1% 法则&quot;）</h2>
+<p>Waymo 在 2010 年前后就&quot;能力完备&quot;——白天黑夜、行人骑行者、施工区、高速地面都能开。但真正规模化服务用了约 15 年。Dolgov 把这条鸿沟量化成一句话：<strong>能跑的 demo 最多占 1%，剩下 99% 是可靠性与性能的&quot;九&quot;。</strong></p>
+<p>这里真正的工程真相是：可靠性活在<strong>指数阶梯</strong>上。做到 90% 或 99% 容易；每多一个&quot;九&quot;，努力约翻十倍。而且<strong>达到后面的&quot;九&quot;必须换完全不同的方法</strong>——前几个靠规范工程，再往上要靠完全冗余系统、分层降级架构。在规模化下，长尾（百万分之一概率的罕见事件）就是你的全部问题空间。</p>
+<blockquote>给创业者的提醒：每个炒作周期都产出大量炫目 demo、极少真正产品。反复犯的错误是&quot;把该留给&#x27;九&#x27;的投入，花在了 demo 上&quot;。先数清你的&quot;九&quot;，再去数 demo 播放量。</blockquote>
+<h2 id="s5">三、经验二：选对技术曲线（&quot;九&quot;决定架构）</h2>
+<p>一旦你知道产品需要几个&quot;九&quot;，它就从根本上<strong>决定了架构与技术路线</strong>。每项技术都有&quot;性能—投入&quot;曲线：先陡升、后平台。</p>
+<p>常见失败模式：选了早期爬升最快的技术，乘着陡坡以为&quot;海阔天空&quot;，结果在达到产品所需性能之前早早见顶。Dolgov 以<strong>感知传感器</strong>为例说明这一点：若目标只是&quot;大致匹配人类表现&quot;，纯视觉足矣（人类只用眼睛）；但若要<strong>强超人</strong>表现，弱感知会让安全曲线过早见顶。</p>
+<p>Waymo 因此采用<strong>多模态</strong>：摄像头 + 激光雷达 + 雷达互补融合。激光雷达直接测 3D 结构、雷达用多普勒直接测速、二者都是主动传感器，在黑夜与刺眼夕阳下照样工作。冗余还能避免&quot;一片叶子遮住传感器就停摆&quot;的窘境。</p>
+<p>硬件上还有一个忠告：<strong>不要锚定今天的元器件价格</strong>。Waymo 已到第六代硬件，每代都既提升能力又大幅降本；把公司押在今天的硬件价格上，等于押在一个很快过期的数字。</p>
+<h2 id="s6">四、经验三：踏准每一波技术浪潮（统一 &gt; 炫技）</h2>
+<p>技术迭代极快。Waymo 几乎在每一波 AI 突破上都重建了 Driver：2013 年卷积网络做感知，2017 年重注 Transformer（感知 + 行为预测/规划），如今用视觉语言模型与前沿世界模型。</p>
+<p>Dolgov 强调真正难练的肌肉不是&quot;用上新模型&quot;（这相对直接），而是：</p>
+<ul><li><strong>把尖端研究带进安全至上的生产环境而不回退</strong>；</li></ul>
+<ul><li><strong>在加能力的同时降低碎片化与复杂度</strong>（统一 &gt; 炫技）；</li></ul>
+<ul><li><strong>在多波创新中反复做到这一点</strong>。</li></ul>
+<p>两条建议：① 启动新技术项目前，先想清楚成功后的完整路径，避免&quot;成功后走进死胡同&quot;；② 不只问&quot;它给了我什么能力&quot;，还要问&quot;它简化了技术栈吗？带来的是统一还是碎片化？&quot;——把上线门槛设为<strong>既要突破性性能，又要彻底简化与统一</strong>。</p>
+<h2 id="s7">五、Waymo 基础模型：架构拆解</h2>
+<p>核心是 <strong>Waymo Foundation Model——多模态世界—动作—语言模型</strong>：</p>
+<ul><li><strong>多模态</strong>：处理摄像头/激光雷达/雷达输入；</li></ul>
+<ul><li><strong>世界模型</strong>：理解物理、动力学、社会与语义；</li></ul>
+<ul><li><strong>动作模型</strong>：理解自身动作对世界的效应，能分辨好坏；</li></ul>
+<ul><li><strong>语言对齐</strong>：从视觉语言模型解锁通用世界知识，补长尾语义。</li></ul>
+<p>架构为编码器—解码器端到端，采用<strong>系统一/系统二（快思考/慢思考）</strong>：</p>
+<ul><li><strong>快思考</strong>：融合原始传感数据，毫秒级做安全攸关决策（如行人突入瞬间刹车）——&quot;蜥蜴脑&quot;，处理几何任务；</li></ul>
+<ul><li><strong>慢思考</strong>：负责复杂语义/场景理解（如识别&quot;路边着火的车&quot;的语义，决定换路线），可承受更多延迟换更高推理；</li></ul>
+<ul><li><strong>生成（解码器）</strong>：理解并产出行为，做预测与规划。</li></ul>
+<p>该模型驱动第五/六代硬件、捷豹 I-PACE、Ojai、现代 Ioniq 等多平台；未来扩展至卡车、私家车。把复杂度上移到共享大基础模型，车端专门化层因此很轻量。</p>
+<h2 id="s8">六、经验四：苦涩的教训依然成立（结构增强端到端）</h2>
+<p>Richard Sutton 2019 年提出的&quot;苦涩的教训&quot;——能随算力/数据扩展的通用方法终将胜出——在 Waymo 每一波突破中都成立。Waymo 押注高容量基础模型，得到更优扩展定律，再蒸馏到车端小模型。</p>
+<p>但 Dolgov 给出了精妙的分寸：<strong>结构本身不必然违反苦涩教训</strong>。关键在——结构是在&quot;对抗扩展&quot;还是&quot;疏导扩展&quot;。他用围棋作思想实验：19×19 棋盘这个简单中间表征并不限制解空间，反而利于扩展。物理世界没有那么干净的表征，所以仍需要端到端与学习嵌入；但物理世界<strong>确有结构</strong>（物理定律、交规、可预测的物体运动）。</p>
+<p>Waymo 的答案是 <strong>&quot;结构增强端到端&quot;（structure-augmented end-to-end）</strong>：在原生端到端之上，用<strong>显式化的结构化表征</strong>增强学习嵌入。三大好处：① 推理时可做实时正确性/安全性验证（不再是黑盒）；② 训练与评估可在&quot;紧凑结构化表征空间&quot;与&quot;完整端到端空间&quot;间混搭，大幅提升效率；③ 获得强而可验证的反馈信号，支撑强化学习。</p>
+<h2 id="s9">七、经验五：每个物理 AI 公司都需要仿真器（闭环世界模型）</h2>
+<p>要在物理世界安全部署，绝对关键的是<strong>大规模、真实、高保真仿真器</strong>。训练/评估分两种：<strong>开环</strong>（被动观察输入—输出对）与<strong>闭环</strong>（采取行动→观察对世界的影响→更新视图→再行动）。闭环才能评估&quot;反事实&quot;（counterfactual），这对安全至上的智能体不可或缺。</p>
+<p>真正的仿真器本身就是一个<strong>大 AI 模型</strong>——一个高精度的生成式<strong>世界模型</strong>。Waymo 早年就建&quot;行为世界模型&quot;，如今端到端时代还需&quot;感知世界模型&quot;。借助结构增强表征，行为世界模型在结构化中间表征空间运作，耦合的传感器世界模型生成真实传感仿真，并融合了 Google DeepMind <strong>Genie 3</strong>。这使得 Waymo 不仅能评估真实遇到过的场景，还能在<strong>纯合成、真实中从未见过的罕见场景</strong>（飞机降落高速、大象过路口、金门大桥积雪、恐龙游荡）中训练与评估。</p>
+<blockquote>经验：闭环仿真对评估是绝对必需的，对训练也极有价值。你需要高度真实、大规模的仿真。</blockquote>
+<h2 id="s10">八、经验六：构建 AI 飞轮（智能体 + 仿真器 + 批评者）</h2>
+<p>复杂问题不能&quot;造个模型就收工&quot;，要建<strong>生态系统 + 飞轮</strong>。需要三个 AI：</p>
+<ul><li><strong>智能体</strong>（开车的 Driver）；</li></ul>
+<ul><li><strong>仿真器</strong>（虚拟 playground）；</li></ul>
+<ul><li><strong>批评者（critic）</strong>：严格评估并告诉智能体如何改进。</li></ul>
+<p>三者底层推理/生成能力共享，故建立在<strong>同一基础世界模型</strong>上。飞轮：真实部署产生数据 → 夯实仿真器 → 生成更难的边界情况供批评者打分、供智能体学习 → 智能体更聪明 → 再部署产生更多数据。但飞轮可能原地空转或转向错误，<strong>必须用指标来引导方向</strong>。</p>
+<h2 id="s11">九、经验七：评测是你的战略护城河</h2>
+<p>最后一条、也是 Dolgov 最强调的一条：<strong>先造评估，再造技术；先造评估与指标，再造产品</strong>。无法定量定义&quot;足够好&quot;，就只是在 demo 上迭代。模型架构已广为人知、新点子传播飞快，数据重要但没有好指标就是&quot;盲飞&quot;。</p>
+<p>对物理 AI，还要更深更广：评估<strong>每一个组件</strong>——物理层、车载行为层、车外组件、整套运营流程。Waymo 称之为<strong>&quot;安全与就绪框架&quot;</strong>，是其最重要资产之一。</p>
+<p>为什么这么重？因为在物理世界<strong>信任就是一切</strong>。信任不是靠炫技 demo 赢得，而是日复一日在真实场域里证明系统安全有效。Waymo 因此<strong>公开发布安全数据与持续安全研究</strong>——赢得的信任成为终极商业优势：模型可泄露、算法可复制，但数亿英里全自动驾驶 + 证据级评估 + 公开审计，难以复制。</p>
+<h2 id="s12">🧭 核心框架：七条经验如何咬合</h2>
+<table><thead><tr><th>经验</th><th>核心动作</th><th>解决的&quot;九&quot;问题</th></tr></thead><tbody><tr><td>一 · 1% 法则</td><td>别把 demo 当产品</td><td>承认长尾才是全部问题</td></tr><tr><td>二 · 选对曲线</td><td>按所需&quot;九&quot;选架构</td><td>避免技术在达标前见顶</td></tr><tr><td>三 · 技术浪潮</td><td>统一而非碎片化</td><td>持续乘上突破而不回退</td></tr><tr><td>四 · 苦涩教训</td><td>结构增强端到端</td><td>在扩展与可验证间取平衡</td></tr><tr><td>五 · 仿真器</td><td>闭环高保真世界模型</td><td>安全评估反事实、造罕见场景</td></tr><tr><td>六 · AI 飞轮</td><td>智能体+仿真器+批评者</td><td>数据→更真实→更聪明 的复利</td></tr><tr><td>七 · 评测护城河</td><td>评估先于产品</td><td>用指标引导飞轮方向</td></tr></tbody></table>
+<p>这些经验单独都不惊人，但<strong>复合叠加</strong>才让 Waymo 取得强超人安全表现。</p>
+<h2 id="s13">🔗 关联阅读</h2>
+<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：从&quot;运营/远程协助&quot;视角看物理 AI 的脆弱面，与本期&quot;安全框架&quot;互补。</li></ul>
+<ul><li>[Waymo 的数据揭示了：到底谁在坐 Robotaxi](../../waymo-data-who-rides-robotaxis/)：从用户与城市层面看自动驾驶落地，与本期&quot;技术侧打法&quot;互补。</li></ul>
+<ul><li>[AI for Autonomous Driving at Scale（Waymo @ NeurIPS 2024）](../../neurips-2024-av-at-scale/)：更偏论文/技术细节的 Waymo 驾驶栈，可对照本期&quot;基础模型&quot;一节的工程化表述。</li></ul>
+<h2 id="s14">👥 适合谁听</h2>
+<ul><li>自动驾驶 / 机器人 / 物理 AI 方向的创业者与工程师；</li></ul>
+<ul><li>关注&quot;demo→产品&quot;鸿沟、可靠性工程、仿真与评测体系的技术负责人；</li></ul>
+<ul><li>想理解 Waymo 技术战略与护城河的投资人；</li></ul>
+<ul><li>任何被&quot;AI 进入物理世界&quot;叙事吸引、又想看清水有多深的人。</li></ul>
+<h2 id="s15">🔚 收尾与局限</h2>
+<p>Dolgov 在结尾把物理 AI 比作&quot;几年前的数字 AI&quot;：生成式世界模型、架构、可负担算力与感知、被验证的扩展定律、规模运行中的产品，要素齐备。他认为<strong>下一个十年属于物理世界 AI</strong>，但提醒创业者&quot;记住你在为谁而造&quot;——使命与客户才是要紧事，否则技术只是科学项目。</p>
+<h2 id="s16">局限与说明</h2>
+<ul><li>本分析主笔时已从逐字稿抽取关键原文金句（已标注 <code>[mm:ss]</code> 时间戳，依据 YouTube 官方章节线性插值），<strong>完整逐字对照见 <code>bilingual_transcript.md</code></strong>，引用时建议对照英文原文。</li></ul>
+<ul><li>英文为官方逐字稿、中文为人工校译；专业术语（如 nine/九、open loop/开环、closed loop/闭环、bitter lesson/苦涩的教训、structure-augmented end-to-end/结构增强端到端）已做本地化，专业表述以英文为准。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/9uwPufsIllM/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../nvidia-alpamayo-accelerating/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/IUBQykSURkA/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / Podcast</div><div class="rt">NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><div id='wbToast'></div></body></html>
