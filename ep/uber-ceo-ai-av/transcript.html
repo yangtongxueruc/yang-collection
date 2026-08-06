@@ -1,8 +1,8 @@
-<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Uber CEO 谈 AI、自动驾驶与出行的未来 · 逐字稿</title><meta name='description' content='Uber CEO Dara Khosrowshahi 做客 Invest Like The Best：AI 撞上物理世界，Uber 要做「数字司机」的上市通道与最大需求聚合器；自动驾驶是又一个万亿美元市场，胜负手是「拿到供给」。'><meta property='og:title' content='Uber CEO 谈 AI、自动驾驶与出行的未来 · 逐字稿'><meta property='og:description' content='Uber CEO Dara Khosrowshahi 做客 Invest Like The Best：AI 撞上物理世界，Uber 要做「数字司机」的上市通道与最大需求聚合器；自动驾驶是又一个万亿美元市场，胜负手是「拿到供给」。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700&display=swap' rel='stylesheet'><style>
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Uber CEO 谈 AI、自动驾驶与出行的未来 · 逐字稿</title><meta name='description' content='Uber CEO Dara Khosrowshahi 做客 Invest Like The Best：AI 撞上物理世界，Uber 要做「数字司机」的上市通道与最大需求聚合器；自动驾驶是又一个万亿美元市场，胜负手是「拿到供给」。'><meta property='og:title' content='Uber CEO 谈 AI、自动驾驶与出行的未来 · 逐字稿'><meta property='og:description' content='Uber CEO Dara Khosrowshahi 做客 Invest Like The Best：AI 撞上物理世界，Uber 要做「数字司机」的上市通道与最大需求聚合器；自动驾驶是又一个万亿美元市场，胜负手是「拿到供给」。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/uber-ceo-ai-av/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
 :root{
-  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#faf9f6;
-  --ink:#16181d; --ink-2:#3a3e47; --muted:#6c7079;
-  --line:#e7e4de; --line-soft:#efece6;
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
   --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
   --teal:#0e9f9a; --amber:#b4730a;
   --mark:#ffe08a; --mark-ink:#3a2c00;
@@ -13,13 +13,14 @@
   --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
   --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
   --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
-  --maxw:1080px;
+  --maxw:1200px;
   --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
 }
 [data-theme="dark"]{
-  --bg:#0c0d10; --surface:#15171c; --surface-2:#1a1d23;
-  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#969cab;
-  --line:#262a31; --line-soft:#20242b;
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
   --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
   --teal:#34d6c8; --amber:#e0a64b;
   --mark:#7a5b12; --mark-ink:#ffe9b0;
@@ -35,6 +36,8 @@ body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
 img{max-width:100%}
 a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
 
 #wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
   background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
@@ -49,6 +52,11 @@ a:hover{text-decoration:underline}
 .topnav .grow{flex:1}
 .topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
 .topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
 .icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
   background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
   display:inline-flex;align-items:center;gap:6px;transition:.2s}
@@ -95,6 +103,7 @@ nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:up
 nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
   font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
 nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
 main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
   border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
 
@@ -118,10 +127,10 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
 [data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
 [data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
 
-.content h1{font-size:25px;margin:0 0 14px;color:var(--ink)}
-.content h2{font-size:22px;margin:30px 0 12px;color:var(--ink);font-weight:720;
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
   padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
-.content h3{font-size:17.5px;margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
 .content p{margin:12px 0;color:var(--ink-2)}
 .content strong{color:var(--ink);font-weight:700}
 .content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
@@ -176,16 +185,28 @@ body.lang-en .seg .zh{display:none}
 .btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
 .btn.ghost:hover{background:var(--accent-soft)}
 
-.hero{position:relative;overflow:hidden;border-radius:26px;padding:54px 44px;margin-bottom:22px;color:#fff;
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
   background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
 [data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
-.hero::after{content:"";position:absolute;inset:0;
-  background:radial-gradient(110% 130% at 88% -15%,rgba(52,214,200,.24),transparent 55%),
-             radial-gradient(80% 100% at 5% 120%,rgba(111,141,255,.22),transparent 50%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
 .hero>*{position:relative;z-index:1}
-.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
-.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.15;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
-.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.85);max-width:680px;font-family:var(--title-font)}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
 
 .searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
 .searchbar .field{position:relative;flex:1;max-width:520px}
@@ -208,16 +229,22 @@ body.lang-en .seg .zh{display:none}
   color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
 .ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
   color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
-.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
 .ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
   border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
-  transition:transform .22s cubic-bezier(.2,.7,.3,1),box-shadow .22s,border-color .22s}
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
 .ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
 .ecard.hidden{display:none}
-.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
 .ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
 .ecard:hover .thumb{transform:scale(1.045)}
 .ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
 .ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
   background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
 .ecard:hover .play{background:var(--accent);color:#fff}
@@ -228,8 +255,14 @@ body.lang-en .seg .zh{display:none}
 .ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
 .ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
 .ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
-.noresult{display:none;text-align:center;color:var(--muted);padding:40px 0;font-size:15px}
-.noresult.show{display:block}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
 
 .relwrap{margin:30px 0 0}
 .relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
@@ -281,6 +314,28 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
   box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
 #wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
 @media (max-width:860px){
   .layout{flex-direction:column}
   nav.toc{position:static;flex:none;width:100%;max-height:none}
@@ -295,7 +350,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 @media (max-width:560px){
   .grid{grid-template-columns:1fr}
 }
-</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=ThMtheE5eO0" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Invest Like The Best · Podcast</div><h1>Uber CEO 谈 AI、自动驾驶与出行的未来</h1><p class="sub">中英对照逐字稿 · Uber CEO on AI, Autonomous Vehicles, and the Future of Transportation</p><div class="tags"><span class="tag">⏱ 71:17</span><span class="tag">Dara Khosrowshahi</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">Uber</span><span class="chip" onclick="wbJumpKw(this)">Dara Khosrowshahi</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">物理AI</span><span class="chip" onclick="wbJumpKw(this)">需求聚合</span><span class="chip" onclick="wbJumpKw(this)">供给优先</span><span class="chip" onclick="wbJumpKw(this)">Uber Eats</span><span class="chip" onclick="wbJumpKw(this)">Uber One</span><span class="chip" onclick="wbJumpKw(this)">资本配置</span><span class="chip" onclick="wbJumpKw(this)">Barry Diller</span><span class="chip" onclick="wbJumpKw(this)">机器人出租车</span><span class="chip" onclick="wbJumpKw(this)">无人机配送</span><span class="chip" onclick="wbJumpKw(this)">万亿美元机会</span><span class="chip" onclick="wbJumpKw(this)">Invest Like The Best</span><span class="chip" onclick="wbJumpKw(this)">出行</span><span class="chip" onclick="wbJumpKw(this)">AI原生</span><span class="chip" onclick="wbJumpKw(this)">Nuro</span><span class="chip" onclick="wbJumpKw(this)">Lucid</span><span class="chip" onclick="wbJumpKw(this)">Santander</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">Intro</a><a href="#s1">Bringing Order to Uber’s Chaos</a><a href="#s2">Managing Stress, Immigrant Drive, and Going All In</a><a href="#s3">Why Uber Is at the Center of AI and the Physical World</a><a href="#s4">How Uber Plans to Win in Autonomous Vehicles</a><a href="#s5">The Trillion-Dollar AV Opportunity</a><a href="#s6">Drones, Robotaxis, and Global Adoption</a><a href="#s7">Uber Eats, Uber One, and Aggregating Supply</a><a href="#s8">Hotels, Travel, Marketing, and the Future of the Uber App</a><a href="#s9">Lessons from Barry Diller, Capital Allocation, and Leadership</a></nav><main class="content"><h2 id="s0">Intro</h2>
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=ThMtheE5eO0" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Invest Like The Best · Podcast</div><h1>Uber CEO 谈 AI、自动驾驶与出行的未来</h1><p class="sub">中英对照逐字稿 · Uber CEO on AI, Autonomous Vehicles, and the Future of Transportation</p><div class="tags"><span class="tag">⏱ 71:17</span><span class="tag">Dara Khosrowshahi</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">Uber</span><span class="chip" onclick="wbJumpKw(this)">Dara Khosrowshahi</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">物理AI</span><span class="chip" onclick="wbJumpKw(this)">需求聚合</span><span class="chip" onclick="wbJumpKw(this)">供给优先</span><span class="chip" onclick="wbJumpKw(this)">Uber Eats</span><span class="chip" onclick="wbJumpKw(this)">Uber One</span><span class="chip" onclick="wbJumpKw(this)">资本配置</span><span class="chip" onclick="wbJumpKw(this)">Barry Diller</span><span class="chip" onclick="wbJumpKw(this)">机器人出租车</span><span class="chip" onclick="wbJumpKw(this)">无人机配送</span><span class="chip" onclick="wbJumpKw(this)">万亿美元机会</span><span class="chip" onclick="wbJumpKw(this)">Invest Like The Best</span><span class="chip" onclick="wbJumpKw(this)">出行</span><span class="chip" onclick="wbJumpKw(this)">AI原生</span><span class="chip" onclick="wbJumpKw(this)">Nuro</span><span class="chip" onclick="wbJumpKw(this)">Lucid</span><span class="chip" onclick="wbJumpKw(this)">Santander</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">Intro</a><a href="#s1">Bringing Order to Uber’s Chaos</a><a href="#s2">Managing Stress, Immigrant Drive, and Going All In</a><a href="#s3">Why Uber Is at the Center of AI and the Physical World</a><a href="#s4">How Uber Plans to Win in Autonomous Vehicles</a><a href="#s5">The Trillion-Dollar AV Opportunity</a><a href="#s6">Drones, Robotaxis, and Global Adoption</a><a href="#s7">Uber Eats, Uber One, and Aggregating Supply</a><a href="#s8">Hotels, Travel, Marketing, and the Future of the Uber App</a><a href="#s9">Lessons from Barry Diller, Capital Allocation, and Leadership</a></nav><main class="content"><h2 id="s0">Intro</h2>
 <p class="seg" id="seg-1"><span class="ts">[00:00 – 02:43]</span><div class="seg-body">
 <p class="en">Every single year that I&#x27;ve been in Uber has been a challenge and obviously the challenge and the opportunity now is the rise of AI. You don&#x27;t just exist in the digital sphere, right? Our experiences encompass digital first in terms of your interaction with our platform, but then they are delivered or fulfilled in the real world. The rise of physical AI, autonomous vehicles, drones, etc., they are going to change how we interact with consumers in the real world. We think it&#x27;s another trillion dollar marketplace. It will change how society operates. So I think I have to begin with the story you were just telling me about how you took the job here, how you heard about it. And the reason I start there is because I want to know what it was like, what the company felt like to you when you showed up, how that&#x27;s evolved. I&#x27;ll ask all sorts of questions around this and then very importantly like what the current moment feels like, which I think is the most interesting question for the business possible. But I love the origins. So I would love to hear how did you hear about this job in the first place? What was the backtory? &gt;&gt; Yeah. So I&#x27;ve been at Expedia for 13 years. uh CEO working with Barry Diller and um and loved the experience and I loved where I was and at the time like Uber was in the news all the time, right? It was in the business if you&#x27;re if you&#x27;re interested. So obviously I was reading about the situation at Uber. It was seemed pretty chaotic uh and pretty difficult. And then a head hunter called me out of the blue and said, &quot;Are you interested in the Uber CEO job?&quot; And at the time I said, you know, no effing way like uh who who would even think about it uh at the time and I had a considerably lower profile as as you can imagine. So I kind of blew it off and um I was at the Sun Valley conference uh Allen company conference and uh was having a drink with Daniel Ek and my wife &gt;&gt; and Daniel said, &quot;Hey Dar, did a head hunter call you? I recommended you for the job. I thought you&#x27;d be great for the job.&quot; And I was like, &quot;Oh, that&#x27;s why it happened. Like what? Like what are you crazy?&quot; And he said, &quot;Why? I think you&#x27;d be great for the job.&quot; And I said, &quot;Listen, I&#x27;ve been at Expedia for 13 years. I&#x27;m so happy with what I&#x27;m doing.&quot; And I remember Daniel like he looks at me, he&#x27;s like, &quot;Laura, since when is life about happiness?&quot; Interesting comment. He&#x27;s like, &quot;It&#x27;s about impact.&quot; And Uber is a company that has impact on the world. It&#x27;s important. It&#x27;s in trouble. Why wouldn&#x27;t you take a shot at this? I think you&#x27;d be great. I think a lot of people come</p>
 <p class="zh">我在 Uber 工作的每一年都是一个挑战，显然现在的挑战和机遇就是人工智能的崛起。你不仅仅存在于数字领域，对吗？我们的体验首先包括您与我们平台的互动方面的数字化，然后在现实世界中交付或实现。物理人工智能、自动驾驶汽车、无人机等的兴起，它们将改变我们在现实世界中与消费者互动的方式。我们认为这是另一个万亿美元的市场。它将改变社会的运作方式。所以我想我必须从你刚才告诉我的故事开始，关于你是如何接受这份工作的，你是如何听说的。我从这里开始的原因是因为我想知道它是什么样的，当你出现时公司对你的感觉如何，它是如何演变的。我会围绕这个问题提出各种各样的问题，然后非常重要的是比如当前时刻的感觉，我认为这对企业来说是最有趣的问题。但我喜欢它的起源。所以我很想听听您最初是如何知道这份工作的？背景故事是什么？ &gt;&gt; 是的。我在 Expedia 工作已经 13 年了。嗯，首席执行官与巴里·迪勒（Barry Diller）一起工作，嗯，很喜欢这种经历，我很喜欢我当时所处的位置，就像 Uber 一直出现在新闻中一样，对吧？如果你有兴趣的话，那就是在生意上。显然我正在阅读有关 Uber 的情况。这看起来相当混乱呃而且相当困难。然后一位猎头突然打电话给我说：“你对 Uber CEO 的职位感兴趣吗？”当时我说，你知道，没有像呃谁甚至会考虑这个呃当时的方式，正如你可以想象的那样，我的形象相当低调。所以我有点把它搞砸了，嗯，我正在参加太阳谷会议，呃艾伦公司会议，呃，正在和丹尼尔·埃克和我的妻子喝一杯&gt;&gt;，丹尼尔说，“嘿，达尔，猎头给你打电话了吗？我推荐你接受这份工作。我认为你非常适合这份工作。”我当时想，“哦，这就是为什么会发生这种事。比如什么？比如你疯了什么？”他说：“为什么？我认为你非常适合这份工作。”我说：“听着，我在 Expedia 工作了 13 年。我对自己所做的事情感到非常满意。”我记得丹尼尔看着我的样子，他说，“劳拉，生活从什么时候开始是关于幸福的？”有趣的评论。他说，“这与影响力有关。”而Uber是一家对世界有影响力的公司。这很重要。它有麻烦了。你为什么不尝试一下这个呢？我想你会很棒的。我想很多人都会来</p></div></p>
@@ -424,4 +479,7 @@ function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElem
   segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
   var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
 wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
 </script><div id='wbToast'></div></body></html>
