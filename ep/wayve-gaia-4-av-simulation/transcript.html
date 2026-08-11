@@ -1,0 +1,475 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Wayve 的 GAIA-4 与世界模型：自动驾驶仿真的未来 · 逐字稿</title><meta name='description' content='Wayve 工程副总裁 Brandon Basso 拆解世界模型如何驱动自动驾驶的离线测试与验证：GAIA-4 的闭环仿真、多传感器（含雷达）生成，以及 AV 1.0 与 AV 2.0 的根本分歧。'><meta property='og:title' content='Wayve 的 GAIA-4 与世界模型：自动驾驶仿真的未来 · 逐字稿'><meta property='og:description' content='Wayve 工程副总裁 Brandon Basso 拆解世界模型如何驱动自动驾驶的离线测试与验证：GAIA-4 的闭环仿真、多传感器（含雷达）生成，以及 AV 1.0 与 AV 2.0 的根本分歧。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/wayve-gaia-4-av-simulation/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/wayves-gaia-4-and-the-future-of-av" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Substack</div><h1>Wayve 的 GAIA-4 与世界模型：自动驾驶仿真的未来</h1><p class="sub">中英对照逐字稿 · Wayve&#x27;s GAIA-4 and the Future of AV Simulation with Brandon Basso</p><div class="tags"><span class="tag">⏱ 33:00</span><span class="tag">Brandon Basso（Wayve 工程副总裁）、Ben Hubbard（The Driverless Digest 主编，采访者）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">Wayve</span><span class="chip" onclick="wbJumpKw(this)">GAIA-4</span><span class="chip" onclick="wbJumpKw(this)">世界模型</span><span class="chip" onclick="wbJumpKw(this)">world model</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">AV 2.0</span><span class="chip" onclick="wbJumpKw(this)">闭环仿真</span><span class="chip" onclick="wbJumpKw(this)">closed-loop simulation</span><span class="chip" onclick="wbJumpKw(this)">开环仿真</span><span class="chip" onclick="wbJumpKw(this)">open-loop</span><span class="chip" onclick="wbJumpKw(this)">雷达仿真</span><span class="chip" onclick="wbJumpKw(this)">radar</span><span class="chip" onclick="wbJumpKw(this)">Brandon Basso</span><span class="chip" onclick="wbJumpKw(this)">Ben Hubbard</span><span class="chip" onclick="wbJumpKw(this)">The Driverless Digest</span><span class="chip" onclick="wbJumpKw(this)">端到端模型</span><span class="chip" onclick="wbJumpKw(this)">end-to-end</span><span class="chip" onclick="wbJumpKw(this)">仿真验证</span><span class="chip" onclick="wbJumpKw(this)">离线测试</span><span class="chip" onclick="wbJumpKw(this)">AV 1.0</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">开场：主持人交接与嘉宾登场</a><a href="#s1">一、日常角色与 Wayve AI Driver</a><a href="#s2">二、世界模型：预测世界，而非预测&quot;车该怎么开&quot;</a><a href="#s3">三、边缘案例的极限与 &quot;escapes&quot;</a><a href="#s4">四、GAIA-4：闭环仿真</a><a href="#s5">五、多模态与雷达仿真</a><a href="#s6">六、闭环举例：鹿跳出来之后</a><a href="#s7">七、AV 1.0 vs AV 2.0</a><a href="#s8">八、性能提升的尺度与四个维度</a><a href="#s9">九、舒适性的难题</a><a href="#s10">十、代价：可解释性缺失与验证难题</a><a href="#s11">十一、结语</a></nav><main class="content"><h2 id="s0">开场：主持人交接与嘉宾登场</h2>
+<p class="seg" id="seg-1"><span class="ts">[00:00 – 00:40]</span><div class="seg-body">
+<p class="en">It&#x27;s impossible for Wayve and many companies in the AV space once they reach a certain level of maturity to go test the vehicle in the real world. So why Gaia 4? Why world models? Why simulation in general? It&#x27;s to evaluate the vehicle densely across scenarios around the entire world, but doing it within the confines of an offline testing tool.</p>
+<p class="zh">一旦 Wayve 以及自动驾驶领域里许多公司成熟到一定程度，再去真实世界里测车就变得不可能了。那么为什么要做 GAIA-4？为什么要做世界模型？为什么要做仿真？原因就是：要在全球范围内的各种场景里密集地评估车辆，但这一切都发生在一个离线测试工具之内。</p></div></p>
+<p class="seg" id="seg-2"><span class="ts">[00:40 – 02:05]</span><div class="seg-body">
+<p class="en">All right, so today I&#x27;m excited for our new editor, Ben Hubbard, to take the interviewer&#x27;s seat for the first time on the podcast. Ben has spent the past six years covering the sustainable mobility sector, reporting on everything from autonomous vehicles and delivery robots to drones, eVTOLs. And the wider mobility ecosystem, you might have seen his writing over on The Driverless Digest. So I&#x27;m excited to present this interview today that Ben is going to host. And in this episode, he&#x27;s going to be speaking with WAYVE&#x27;s Vice President of Engineering, Brandon Basso, about their new generation world model, GAIA-4, and how AI is shaping the next era of autonomous driving. All right, let&#x27;s hear from Ben.</p>
+<p class="zh">好，今天我很高兴地请到我们的新任主编 Ben Hubbard，第一次坐上这档播客的主持人位置。Ben 过去六年都在报道可持续出行领域，从自动驾驶、配送机器人到无人机、eVTOL，以及更广阔的出行生态——你大概在 The Driverless Digest 上读过他的文章。所以今天我很高兴呈现这场由 Ben 来主持的访谈。在这一期里，他会和 Wayve 的工程副总裁 Brandon Basso 聊聊他们新一代的世界模型 GAIA-4，以及 AI 如何塑造自动驾驶的下一个时代。好，下面交给 Ben。</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[02:05 – 04:05]</span><div class="seg-body">
+<p class="en">Brandon Basso leads WAYVE&#x27;s simulation data, evaluation and validation systems, which are central to measuring the performance and safety of WAYVE&#x27;s autonomous driving technology as it scales across global markets. Brandon brings more than a decade of experience delivering safety critical AI and robotic systems in real world environments. He previously held senior leadership roles at Cruise and General Motors, where he supported the commercial deployment of driverless robotaxi services across multiple US cities. Brandon, how are you doing today? — Doing well. Thanks so much for having me, Ben. No worries. Thank you. Thanks for coming on the podcast. I must say your name has got a very nice ring to it. With the alliteration on B. — Yeah, thanks. It alliterates. Thanks to my parents. So obviously, WAYVE is a big name in the AVE industry. But before we kind of get into this research report that you just launched, I would love to kind of understand a little bit more about your day to day role and what that looks like.</p>
+<p class="zh">Brandon Basso 负责 Wayve 的仿真数据、评估与验证系统，这些系统是衡量 Wayve 自动驾驶技术在全球市场扩展时的性能与安全的核心。Brandon 拥有十几年在真实环境中交付安全关键型 AI 与机器人系统的经验，此前在 Cruise 和通用汽车担任高级领导职务，支持过无人出租车服务在美国多个城市商业化部署。Brandon，今天状态怎么样？——挺好的，非常感谢邀请我，Ben。——不客气，谢谢你来上节目。我得说你的名字读起来特别顺口，B 开头的头韵。——是啊，谢谢，是押头韵，得感谢我父母。那么，Wayve 显然在自动驾驶行业是个响当当的名字。不过在我们聊你刚发布的这份研究报告之前，我想先多了解一下你日常的角色到底是什么样子的。</p></div></p>
+<h2 id="s1">一、日常角色与 Wayve AI Driver</h2>
+<p class="seg" id="seg-4"><span class="ts">[02:25 – 03:08]</span><div class="seg-body">
+<p class="en">Day to day, I&#x27;m involved in the simulation and offline test and validation of the AI driver. This involves working directly with all the people, all the fantastic engineers, product managers, operations folks who help build that stack and especially test it offline. In some ways, it looks like a standard management role, but Wayve is a very unique company. There&#x27;s a lot of nuance and technical direction and working with the teams directly involved in the day-to-day.</p>
+<p class="zh">日常来说，我参与 AI Driver 的仿真，以及离线测试与验证。这涉及直接和各种人合作——那些出色的工程师、产品经理、运营同学，他们帮助搭建这套技术栈，尤其是离线测试它。从某些角度看，它像个标准的管理岗，但 Wayve 是一家非常独特的公司，里面有很多细微差别、技术方向上的事，以及和一线团队的直接协作。</p></div></p>
+<p class="seg" id="seg-5"><span class="ts">[03:08 – 04:05]</span><div class="seg-body">
+<p class="en">For someone who&#x27;s new to Wayve, what actually is the Wayve AI driver? — Yeah, so the Wayve AI Driver is also called the Autonomy Stack. It is the collection of software and models that allow the vehicle to operate on public roads, so not just in the UK, not just in Tokyo, but in many markets throughout the world. And it is the thing that outputs all of the driving actions. It takes in all the sensor data, radar, camera, et cetera, and it outputs the driving actions in the form of steering and braking. And it makes all the real-time decisions about how to behave in comfortable, safe, and legally compliant ways depending on the market that it&#x27;s in.</p>
+<p class="zh">对刚接触 Wayve 的人，Wayve AI Driver 到底是个什么？——嗯，Wayve AI Driver 也叫 Autonomy Stack（自动驾驶技术栈）。它是一套软件和模型的集合，让车辆能在公共道路上行驶——不只是英国、不只是东京，而是全球很多市场。它负责输出所有的驾驶动作：接收全部传感器数据（雷达、相机等等），再以转向和刹车的形式输出驾驶动作。它会根据所在市场，实时决定如何以舒适、安全、合规的方式行驶。</p></div></p>
+<h2 id="s2">二、世界模型：预测世界，而非预测&quot;车该怎么开&quot;</h2>
+<p class="seg" id="seg-6"><span class="ts">[04:05 – 05:11]</span><div class="seg-body">
+<p class="en">You&#x27;ve been building generative AI world models since 2018, right? And I believe you call them Gaia&#x27;s. What is a world model and why is it useful for teaching an AI how to drive? — And to clarify, I&#x27;m in charge of the world modeling side, not the AI driver side. There&#x27;s a very talented team that&#x27;s behind that at Wayve. But roughly speaking, world models in the industry are networks that predict the future actions of the world as opposed to predicting the actions of how a car should drive. So it&#x27;s everything around the car. That is evolving. This includes all of the vehicles in the scene, all of the people, all of the background objects that might affect the driving. And it&#x27;s a model that fundamentally understands physics and how the world behaves as opposed to how the ego vehicle, the AI driver should behave. And this is a super challenging problem. It&#x27;s a hot topic in research today. It&#x27;s one of our largest models at Wayve. Gaia, the one that you mentioned, and one that we&#x27;ve recently launched our fourth generation of, and that&#x27;s Gaia 4.</p>
+<p class="zh">你们从 2018 年就开始构建生成式 AI 世界模型了，对吧？而且我记得你们管它们叫 Gaia。什么是世界模型，它为什么有助于教 AI 开车？——先澄清一下，我负责的是世界模型这一侧，不是 AI Driver 那一侧，Wayve 那边有一支非常厉害的团队。但大致来说，行业里的世界模型，是去预测「世界」未来会如何行动的网络，而不是预测「车该怎么开」。所以它关注车周围的一切、那些在演化的东西：场景里所有的车辆、所有的人、所有可能影响驾驶的背景物体。它是一个本质上理解物理、理解世界如何运转的模型，而不是理解自车（也就是 AI Driver）该如何表现的模型。这是个超级难的问题，也是当下研究的热门方向。它是 Wayve 最大的模型之一。你提到的 Gaia，我们最近已经发布到第四代，也就是 GAIA-4。</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[05:09 – 05:19]</span><div class="seg-body">
+<p class="en">So with these world models, what&#x27;s the end result? What&#x27;s the final problem that you&#x27;re trying to solve with it?</p>
+<p class="zh">那么用这些世界模型，最终要得到什么？你真正想用它解决的根本问题是什么？</p></div></p>
+<p class="seg" id="seg-8"><span class="ts">[05:19 – 06:27]</span><div class="seg-body">
+<p class="en">The wonderful thing about working on this particular aspect of simulation and evaluation and validation is you can go see the output. So if you go check out the blog post that we recently put up, you can see what the output is. But I think the spirit of your question is, well, why? Why is it useful? And the crux of it is this, is it&#x27;s impossible for Wayve and many companies in the AV space once they reach a certain level of maturity to go test the vehicle in the real world. It&#x27;s expensive to do. So in some cases, it&#x27;s risky to do so, especially if you&#x27;re trying to test the vehicle at the limits of performance. And also, it&#x27;s just impossible to collect all the data that you need to either train the vehicle or evaluate it against all the scenarios it needs to see. So why Gaia 4? Why world models? Why simulation in general? It&#x27;s to evaluate the vehicle densely across scenarios around the entire world, but doing it within the confines of an offline testing tool.</p>
+<p class="zh">做仿真、评估、验证这一块最妙的地方，是你真能去看到输出。如果你去看我们刚发的博客文章，就能看到输出长什么样。但我想你问题的精神是：到底为什么？它有什么用？核心就在这里——一旦 Wayve 和自动驾驶领域许多公司成熟到一定程度，去真实世界测车就不可能了。这么做很贵；某些情况下还很危险，尤其是你想在性能极限上去测车的时候。而且，你也根本不可能收集到所有需要的数据，来训练车辆、或让它在所有该见的场景上做评估。所以为什么要 GAIA-4？为什么要世界模型？为什么要仿真？就是为了在全球范围内的各种场景里密集地评估车辆，但这一切都发生在一个离线测试工具之内。</p></div></p>
+<p class="seg" id="seg-9"><span class="ts">[06:27 – 08:03]</span><div class="seg-body">
+<p class="en">So you&#x27;re trying to get an exact replica of a real world situation. And working out all of the intricacies and all of the blind spots, all of the edge cases and wrapping that up into one singular model. — Yeah, I mean, exact replica is, it can be really nuanced. What we&#x27;re trying to do is capture all of the nuance in the world, literally all of the nuance, how reflections work, how a vehicle behaves around puddles and potholes, how cyclists behave in Tokyo versus London. All of that nuance, all of that rich detail and generate plausible situations. Sometimes we call them counterfactuals. If we started from a real world scenario and we&#x27;re trying to generate what other things could have happened, we can also generate scenarios in a novel way from scratch. But yeah, we&#x27;re trying to capture all of the nuance. In as real of a way as possible, a plausible way as possible of how the world could have evolved.</p>
+<p class="zh">所以你们是想拿到真实世界情境的一个精确复刻，把所有的微妙之处、所有盲区、所有边缘案例都梳理出来，打包进一个单一的模型里。——对，不过「精确复刻」这个词，其实可以非常微妙。我们想做的是捕捉世界里所有的细微差别—— literally 所有的细微差别：反光是怎么工作的、车辆在水坑和坑洼旁怎么表现、东京和伦敦的骑行者行为有何不同。所有这些细微差别、所有这些丰富的细节，然后生成可信的情景。有时候我们管这叫反事实（counterfactuals）。如果我们从一个真实场景出发，想生成「本来还可能发生什么」，也可以完全从零开始新颖地生成场景。但没错，我们想捕捉所有的细微差别，以尽可能真实、尽可能可信的方式，去呈现世界本可能如何演化。</p></div></p>
+<p>So in that sense, it&#x27;s quite literally a world prediction engine where it&#x27;s trying to figure out the ways in which the world can evolve. In some cases, we try and do that in a very, very, very constrained way. For example, the blog post goes into this, we have a mode that we can run Gaia called World on Rails, which basically takes exactly what happened in the real world, changes it zero, that&#x27;s the goal, and allows us to evaluate new software against a world that we can interact with, but is largely static with respect to how we recorded it previously.</p>
+<p class="zh">从这个意义上说，它简直就是一个「世界预测引擎」，试图找出世界可能演化的各种方式。某些情况下，我们会用一种非常非常受限的方式去做。比如博客里写到的，我们有个叫 &quot;World on Rails&quot; 的模式：它基本就是把真实世界里实际发生的事原封不动地拿来（改动为零，这就是目标），让我们能在一个「可交互、但相对于之前的录制基本是静态的」世界上评估新软件。</p></div></p>
+<h2 id="s3">三、边缘案例的极限与 &quot;escapes&quot;</h2>
+<p class="seg" id="seg-10"><span class="ts">[08:03 – 09:21]</span><div class="seg-body">
+<p class="en">Before we get into the Gaia new model, we&#x27;ve seen Waymo struggling in floods. We&#x27;ve seen the 4th of July incident in San Francisco. Are there kind of certain situations where no matter how much simulation you have, you just can&#x27;t predict human behavior and edge cases? — Well, I think, I would like to say, never say never, that it&#x27;s not something that&#x27;s unsolvable. But yeah, it is really hard to predict all of those situations. And really, you&#x27;re trying to predict the joints of how the world evolves in complex ways and how the vehicle interacts with it. And that really is the task of simulation. Gaia gets better every day as we feed it more data and rich data throughout the world. And one of the core concepts that we have is if we can feed it enough data, if we can run it performantly, that&#x27;s a huge mandate that we have to be able to run it performantly, i.e. low cost and fast enough. We can capture all of the important richness of the world, especially around these rare and critical situations like the ones that you alluded to. And we can reliably test the vehicle in those ways. We can&#x27;t do all that today, but that&#x27;s the goal.</p>
+<p class="zh">在聊 Gaia 新模型之前——我们见过 Waymo 在洪水里挣扎，见过旧金山的独立日事件。是不是存在某些情境，无论你有多少仿真，就是预测不了人类行为和边缘案例？——嗯，我想说「永远别说永远」，这不是无解的。但没错，预测所有这些情况真的很难。你真正要做的是预测世界以复杂方式演化的「关节点」，以及车辆如何与之互动——而这恰恰就是仿真的任务。随着我们往里喂更多数据、更丰富的全球数据，Gaia 每天都在变好。我们的一个核心思路是：只要喂的数据足够多，只要能高效地跑它——「高效」是个硬性要求，也就是成本够低、速度够快——我们就能捕捉到世界里所有重要的丰富性，尤其是你提到的那些罕见且关键的情境，并且能可靠地用这些方式测车。今天我们还没法做到全部，但那正是目标。</p></div></p>
+<p class="seg" id="seg-11"><span class="ts">[09:21 – 11:31]</span><div class="seg-body">
+<p class="en">How far off do you think we are? — Oh, well, that is a very hard question to answer. And the signal that we look at to answer it is what we call escapes, a common topic in software engineering in general, which is essentially, how often are you surprised by how your software model behaves when subject to real conditions? So what we look at is how often are we surprised? How often do we learn something from the real world? The great thing about a Gaia and a sort of fundamentally ML world modeling based simulator is as soon as we see an escape, we can use that as training data to improve the model. But we are generally, a very, very general answer, generally completely unsurprised by things that we see all the time in the markets that we drive in. And then two areas where we have to get data to learn is areas we&#x27;ve never seen before. I&#x27;ll give you a concrete example. A lot of the recent work in Gaia 4 was improving how we drive on test tracks because it&#x27;s very important for us to go drive on test tracks. Well, as it turns out, we have people in vehicles behaving in ways that we haven&#x27;t seen before. A million X more data for driving in the real world than driving on test tracks, right? So that&#x27;s one area where we need to improve how the simulator predicts the world and behaves because test tracks, in fact, are a fairly novel scenario. You and I have probably never driven on one, for example. So they look different. Never been on one. Yeah, so that&#x27;s like one of these nuances that&#x27;s sort of non-obvious until you see it, that it&#x27;s an area where you need data in order for the model to correctly predict the world. How far are we? Hard to say. But generally speaking, for the most common scenarios that we see on the road and the most common critical scenarios, we have a lot of data around those and can generally correctly predict how they would have evolved or could have evolved under different circumstances.</p>
+<p class="zh">你觉得离（覆盖所有情况）还有多远？——哦，这是个很难回答的问题。我们用来回答它的信号，叫 escapes（逃逸），这在软件工程里也是个常见话题，本质上就是：当你的软件模型置于真实条件下时，你被它的行为「惊到」的频率有多高？所以我们看的是：我们被惊到的频率是多少？我们从真实世界学到东西的频率是多少？基于 Gaia、以及从根本上用 ML 世界模型搭建的仿真器，最妙的地方是：一旦我们看到一个 escape，就能把它当训练数据去改进模型。不过给一个非常非常笼统的回答：对于我们在运营市场里天天见到的东西，我们基本完全不会被惊到。而需要拿数据去学习的，是我们从没见过的新领域。给你个具体例子：GAIA-4 最近的很多工作，是在改进我们在测试场上的驾驶——因为去测试场开对我们非常重要。结果我们发现，测试场里有人在车里做出我们没见过的行为。真实世界驾驶的数据比测试场多一百万倍，对吧？所以这是一个我们需要改进仿真器「如何预测世界、如何表现」的地方，因为测试场其实是个相当新颖的场景——比如你我大概都没在测试场上开过车，所以它们看起来不一样。从未开过。对，所以这就是那种「不看到就不会意识到」的细微差别：在这个领域，你需要数据，模型才能正确预测世界。还有多远？难说。但笼统讲，对于路上最常见的场景、最常见的关键场景，我们有大量相关数据，通常能正确预测它们在不同的情况下本应如何演化、或可能如何演化。</p></div></p>
+<h2 id="s4">四、GAIA-4：闭环仿真</h2>
+<p class="seg" id="seg-12"><span class="ts">[11:31 – 12:06]</span><div class="seg-body">
+<p class="en">Great, thank you. Let&#x27;s get on to Gaia 4 then. So you&#x27;ve just released this new generation, this new model. This is a big milestone for Wayve, correct me if I&#x27;m wrong. What does it allow you to do that wasn&#x27;t possible before? — Yeah. A couple of key things. There&#x27;s many in the blog post, but I&#x27;ll drill into two. One of them is closed loop, and then the other is multi-modality different sensors.</p>
+<p class="zh">好，谢谢。那我们进入 GAIA-4。你们刚发布了新一代、这个新模型。对 Wayve 来说这是个重大里程碑，如果我没说错的话。它能让你做到哪些以前做不到的事？——对，有几个关键点。博客里写了很多，我挑两个深入讲：一个是闭环（closed loop），另一个是多模态、也就是不同的传感器。</p></div></p>
+<p class="seg" id="seg-13"><span class="ts">[12:06 – 14:30]</span><div class="seg-body">
+<p class="en">So the first one, closed loop versus open loop. There&#x27;s a nice picture that explains it a little bit better, but really in self-driving cars, autonomous vehicles, and robotics in general, you have two ways of evaluating a system offline. You have something called Open-Loop, which is replaying pre-recorded data through a new version of the software or the model and seeing what the outputs are. So that&#x27;s called Open-Loop. Closed-Loop, which is the advancement with Gaia, is replaying that real world data through the autonomy stack and then taking the actions that the simulated autonomous vehicle does, the AI driver, and feeding that back into the world model and saying, well, how does the world evolve as a result of these actions? Now, that&#x27;s kind of a mind blowing thing to think that you could predict, for example, so that says in simulation of the car, the AI driver decides to slow down, we should expect to see the view and the simulation to reflect slowing down. You should see the camera view from a different vantage point. And we&#x27;ll get to this in a second. You should also see the radar returns from a different vantage point. If you slow down or if you speed up, you should expect to see perhaps the other actors react to you differently. And we talk about different modes of interaction. We could put Gaia and we mentioned World on Rails. There&#x27;s also one that we can do with reactive agents, which is another one of the advancements mentioned. So close loop is actually absolutely critical to our offline test capability because it&#x27;s how, when you and I go drive, it&#x27;s how we experience the world. When we drive a certain way, when we slow down or speed up or take a left-hand turn versus a right-hand turn, we see different stuff and we feed that back into our sensors, our eyes primarily, and we drive differently. So closing the loop is a huge, huge advancement for Gaia and for these class of world models in general. It is a thing that the industry has been able to do for a while, to be clear, but with very different styles of simulation. These are more procedural simulators, rendering-based simulators, game engine-style simulators. The industry, going back to as long as I&#x27;ve been in it, has been able to do closed-loop simulation. This is a specific advancement about us being able to do it with a world model.</p>
+<p class="zh">第一个，闭环对开环。有张不错的图能解释得更清楚，但说白了，在自动驾驶、自动驾驶车和广义机器人里，离线评估一个系统有两种方式。一种是开环（Open-Loop）：把预录数据重放进软件或模型的新版本，看输出是什么。这就是开环。而闭环（Closed-Loop）——这是 GAIA 带来的进步——是把真实世界数据重放进自动驾驶技术栈，然后取出模拟自动驾驶车（也就是 AI Driver）做出的动作，把它反馈回世界模型，问：这些动作导致世界如何演化？这事想起来挺震撼的——比如，在仿真里，AI Driver 决定减速，我们就应当看到仿真里的画面反映出减速：你会从一个不同的视角看到相机画面；稍后我们还会聊到，你还应当看到雷达回波也来自不同视角。你减速或加速，就应当看到其他交通参与者对你做出不同的反应。我们谈到了不同的交互模式：除了前面提到的 World on Rails，还有一种带反应式智能体（reactive agents）的模式，那也是提到的进步之一。所以闭环对我们的离线测试能力绝对关键，因为它就是你我开车时体验世界的方式——我们以一种特定方式开，减速、加速、左转还是右转，看到的东西就不一样，再把这些反馈回我们的传感器（主要是眼睛），于是我们开得不一样。所以闭环对 Gaia、对这一类世界模型整体，都是巨大的进步。不过要讲清楚：行业其实早就能做闭环了，只是用非常不同的仿真风格——更多是程序化仿真、基于渲染的仿真、游戏引擎式仿真。从我入行起，行业就能做闭环仿真了。这里具体的进步是：我们能用世界模型来做闭环。</p></div></p>
+<h2 id="s5">五、多模态与雷达仿真</h2>
+<p class="seg" id="seg-14"><span class="ts">[14:30 – 15:27]</span><div class="seg-body">
+<p class="en">The second one I&#x27;ll touch on briefly. I talked about reactive agents. The second one is multimodality, so different sensors. So if you go look at the wayve vehicles, if you go look at other L2, L2 plus systems out there, and especially on up to L4 systems, you&#x27;ll notice they have more than just cameras on them. And it&#x27;s incredibly critical that we&#x27;re able to simulate those sensors. So the big advancement that we mentioned in Gaia is our ability to simulate radar. I&#x27;ll also note that radar is a notoriously hard thing to model and simulate for procedural simulators. If you think about the physics models that would go into simulating how radar works, it&#x27;s very complex. So us being able to do that inside of a single model and have those returns overlaid with the camera information, as you can see in the blog post, we have some nice videos on it, is huge. And even more important that actually the end goal is, does it matter? Do we see differences in performance in simulation? And we have a nice example in the post showing where we did.</p>
+<p class="zh">第二个我简单提一下。我刚讲了反应式智能体，第二个是多模态，也就是不同的传感器。如果你去看 Wayve 的车，去看其它 L2、L2+ 系统，尤其是往上的 L4 系统，你会注意到它们身上不止有相机。能仿真那些传感器是极其关键的。所以我们在 GAIA 里提到的大进步，是我们仿真雷达的能力。我还要指出，对程序化仿真来说，雷达是出了名的难建模、难仿真——你想想仿真雷达工作原理所需的物理模型，那是相当复杂的。所以我们能在一个单一模型里做到这一点，并让雷达回波和相机信息叠加（你在博客里能看到一些不错的视频），这非常了不起。而更关键的是，真正的最终目标是：这有用吗？我们在仿真里能看到性能差异吗？我们在文章里就给了一个不错的例子，展示了确实看到了差异。</p></div></p>
+<h2 id="s6">六、闭环举例：鹿跳出来之后</h2>
+<p class="seg" id="seg-15"><span class="ts">[15:27 – 15:57]</span><div class="seg-body">
+<p class="en">Yeah, can we go back to the closed loop simulation? So can you give us like an example? So say if somebody was driving down the road and a deer jumped out, and can you give us an analogy of like what the model could do previously in that situation and what the model can do now with the closed loop? So you&#x27;re saying that the closed loop, it can kind of see all of the actions past the point of the deer jumping into the road. How did everyone react after that event? Is that right?</p>
+<p class="zh">好，我们能回到闭环仿真吗？你能给个例子吗？假设有人开车在路上，一只鹿突然跳出来——你能否类比一下，模型以前在这种情境下能做什么、现在有了闭环能做什么？你是说，闭环能看见鹿跳到路上之后、所有后续的行动，大家在那件事之后都是怎么反应的，对吗？</p></div></p>
+<p class="seg" id="seg-16"><span class="ts">[15:57 – 17:38]</span><div class="seg-body">
+<p class="en">Yeah, the way I would describe it is that it models how the world evolves due the actions of the autonomous vehicle and how the autonomous vehicle, the AI driver, sees things from a different perspective due to how the world evolved and then feeds that signal back into the driving model. It&#x27;s exactly how you and I drive is the best way to explain it, which is if we make different choices, we see the world from different places and different vantage points, and then we drive differently. So closing the loop quite literally means taking those new vantage points that we see and feeding that back into the driving model so that we can have a consistent simulation cycle over cycle. It&#x27;s useful to think about what it looks like in a non-closed loop fashion. And what that looks like is that the model, the AI driver now I&#x27;m talking about, does not see the new vantage point of the sensor data. So it does not necessarily react how you would react from the real world. What we call this in the open loop world is a consistency issue or a divergence issue. And to make it clear, we use open loop simulation all the time. It&#x27;s incredibly valuable. It&#x27;s extremely cheap for us to run. And there is valuable signal that we can get out of it. But for highly dynamic situations where you would expect a very different action or you want to explore how things could have evolved differently, you need closed loop simulation.</p>
+<p class="zh">对，我的描述是：它建模「世界如何因自动驾驶车的动作而演化」，以及自动驾驶车（AI Driver）如何因世界的演化而从不同视角看事物，再把那个信号反馈回驾驶模型。最好的解释方式就是：它跟你我是怎么开车的完全一样——如果我们做出不同选择，就从不同地点、不同视角看世界，于是开得不一样。所以「闭环」字面意思就是：把我们看到的那些新视角拿过来，反馈回驾驶模型，从而让仿真能一圈接一圈地保持一致。想想非闭环会是什么样也很有用——那样的话，我说的这个 AI Driver 模型，看不到传感器数据的新视角，所以它未必会像真实世界里那样反应。我们在开环世界里管这叫一致性问题或发散问题。要讲清楚：我们一直都在用开环仿真，它极有价值、运行极便宜，也能从中得到有价值的信号。但对于高度动态的情境——你预期会有非常不同的动作，或者你想探索事物本可能如何不同地演化——你就必须用闭环仿真。</p></div></p>
+<h2 id="s7">七、AV 1.0 vs AV 2.0</h2>
+<p class="seg" id="seg-17"><span class="ts">[17:27 – 22:36]</span><div class="seg-body">
+<p class="en">Can you talk about the difference between AV 1.0 and AV 2.0? What&#x27;s the main difference there and why does that kind of shift matter? — Yeah, I would love to. I think I can speak to it because most of my career I&#x27;ve spent not working on AV 2.0. This is a recent thing for me. So AV 1.0 versus 2.0, this is the way that Wayve describes the difference in approaches, both philosophically and technically, to developing the driving stack. So if you think about in the limit, and by the way, this is a spectrum. So there&#x27;s companies live anywhere on the spectrum, but to paint it in terms of the endpoints, AV 1.0 is defined by driving systems that largely have interpretable components and subcomponents that determine the output behavior of the vehicle. The input output is the same, sensor data in, driving policy out, trajectories out. But the intermediate is very different. In AV 1.0, you might have heard of perception systems. You might have even heard of prediction systems going way back when. And then there&#x27;s planning systems or behavior systems. Lower level, there&#x27;s even other subsystems, control systems, and then even low level like motor control systems, actuators. But AV 1.0, 2.0 is really focused on that trajectory out portion of the system. In 1.0, you have these separable components. They can either be learned or they can be analytical. In many cases, it&#x27;s a mixture of both. And they have these boundaries that are human interpretable. So the output of a perception system is typically things like boundaries. Bounding boxes, objects like this is a pedestrian, this is the space it occupies. You might even have in a prediction system a prediction of the future trajectory and then the planning system outputs a trajectory or the behavior system. So that&#x27;s AV 1.0. AV 1.0 has a lot of benefits and it&#x27;s also where the industry&#x27;s been for a while. One of the benefits is you can directly interpret each individual component and you can reason about it with human logic, like, is this a person or not? Is this bounding box correct or not? That&#x27;s a huge benefit just for understanding, right? Okay, so clearly there&#x27;s a reason for doing AV 2.0. AV 2.0 is WAYVE&#x27;s approach to developing autonomous vehicles, and it&#x27;s specifically with an end-to-end model. So those intermediate subsystems don&#x27;t exist inside of our model. There is no representation inside of the model explicitly for bounding boxes or perception. Why would you do such a thing? Well, it turns out that what we found over years and years of working on this is that it is extremely efficient to develop a single model that can reach very high levels of performance that works end to end. So quite literally, it is all the sensor data in, single trajectory out. The way that these models are trained and improved is by feeding in more data from the real world.</p>
+<p class="zh">能讲讲 AV 1.0 和 AV 2.0 的区别吗？主要差别在哪，这种转变为什么重要？——当然，我很乐意。我想我能讲清楚，因为我职业生涯大部分时间都不是在做 AV 2.0，这对我来说是最近的事。AV 1.0 对 2.0，是 Wayve 用来描述驾驶技术栈开发方式在理念和技术上差异的说法。先说明，这其实是一个谱系——各公司处在谱系的不同位置；但用两端来描绘的话：AV 1.0 的特征是，驾驶系统主要由可解释（interpretable）的组件和子组件构成，它们决定车辆的最终行为。输入输出是一样的：传感器数据进、驾驶策略出、轨迹出。但中间过程非常不同。在 AV 1.0 里，你可能听过感知系统，更早之前还可能听过预测系统，然后是规划系统或行为系统；更底层还有其它子系统，比如控制系统，再往下还有电机控制系统、执行器。不过 AV 1.0 和 2.0 真正聚焦的，都是系统「输出轨迹」那一段。在 1.0 里，你有这些可分离的组件，它们可以是学得来的，也可以是分析出来的，很多时候是两者混合，而且它们的边界是人类可解释的。感知系统的输出通常是边界、边界框、对象——「这是个行人、这是它占据的空间」。预测系统里甚至可能有对未来轨迹的预测，然后规划系统或行为系统输出一条轨迹。这就是 AV 1.0。AV 1.0 有很多好处，行业也在它上面待了一阵子。好处之一是你能直接解释每个单独组件，并用人类逻辑去推理它，比如「这是不是一个人？这个边界框对不对？」单就「可理解」这一点，就是巨大的好处，对吧？好，那显然做 AV 2.0 是有理由的。AV 2.0 是 Wayve 开发自动驾驶的方式，具体地说是用一个端到端模型。所以那些中间子系统在我们的模型里根本不存在——模型内部没有显式表示边界框或感知。为什么要这么做？因为我们这些年发现：开发一个单一模型、让它端到端地达到很高水平的性能，效率极高。所以字面意思就是：所有传感器数据进，单一轨迹出。这类模型训练和提升的方式，就是往里喂更多来自真实世界的数据。</p></div></p>
+<p>One thing I really want to highlight about the difference between 1.0 and 2.0 is sometimes I think that interpretability and separability and that property of 1.0 systems is viewed as an intrinsic safety property. It is in fact not an intrinsic safety property. It just means that you can reason about it in different ways than you can a 2.0 system. There&#x27;s many properties that we see of our system, in particular the safety outputs of the system, so the outputs of the system, the heads of the model that produce braking maneuvers in situations where hard braking is required. There are many cases where we see highly, highly advanced emergent safety properties of that system in cases where 1.0 systems struggle. So for example, temporary signage. Our system, because it does not rely on a pre-cached mastermind. We see failures like this in the industry all the time where, oh, that was a temporary sign, it was a construction zone, something highly dynamic. Our system does not distinguish between those, so it tends to behave very naturally and correctly as you and I would when these situations arrive that are not pre-cached in an offline map. And that&#x27;s a safety property. That&#x27;s an intrinsic property of the system where it understands the fundamental dynamics of the world and says, that&#x27;s a traffic light just because it&#x27;s not one hanging off a pole and it&#x27;s hanging off this temporary thing in this construction site. It&#x27;s one I still need to obey in the same way I would all the other traffic lights.</p>
+<p class="zh">关于 1.0 和 2.0 的区别，有一件事我特别想强调：有时候人们把 1.0 系统的可解释性、可分离性当成一种「内在的安全属性」。它其实<strong>不是</strong>内在的安全属性，只是意味着你能用不同于 2.0 系统的方式去推理它。我们看到自己系统有很多特性，尤其是安全输出——也就是模型里那些在需要急刹时产生刹车动作的「头」（heads）。在很多 1.0 系统会吃力的案例里，我们看到这个系统展现出非常非常先进、涌现出来的安全特性。比如临时标志。我们的系统不依赖一个预先缓存的「大脑」。行业里经常看到这类失败：哦，那是临时标志、是施工区、是高度动态的东西。我们的系统不区分这些，所以当这些没被离线地图预先缓存的情况出现时，它会像你我一样，表现得非常自然、正确。这就是一种安全属性，是系统内在的属性——它理解世界的基本动力学，会说：那是个红绿灯，只不过它不是挂在杆子上，而是挂在这个施工区的临时物上；但我仍然要像遵守其它红绿灯一样遵守它。</p></div></p>
+<h2 id="s8">八、性能提升的尺度与四个维度</h2>
+<p class="seg" id="seg-18"><span class="ts">[22:36 – 25:34]</span><div class="seg-body">
+<p class="en">Can you share a little bit more about the performance increases that you&#x27;re talking about? What sort of scale are we talking about? — Yes, I&#x27;m speaking about those performance increases relative to WAYVE and how we see the performance of our system increase cycle over cycle. Again, I want to caveat, I&#x27;m not the person who leads this effort at WAYVE, but what we see, and this is a trend that we see in frontier labs that work on large language models and lots of other areas, is that with our approach to learning, with our model architecture and single end-to-end model, that is, what we see is that we can feed the model and we see direct improvement on the things that we want to improve on. There are no hard boundaries in the system where if a perception system flickers, the vehicle will hard break, for example. No such boundary in the system. There&#x27;s no such hard boundary in the system where if someone mislabeled a traffic light, the vehicle will blow through it. So the system just directly gets better from data. We measure performance in four different dimensions. One is safety. And very directly collision safety, but then also near miss. We measure compliance to traffic rules, and that&#x27;s different in different geos. We measure a thing that we call comfort, which is probably the vaguest of all of them. You can broadly interpret it as your perception of how comfortable the ride is. I think we all have an intuition for what this feels like. It&#x27;s the difference between a one-star ride-hailed ride versus a five-star maybe sometimes. It matters a lot. And then we also measure other types of special classes of issues. But taken all together, what we see is that cycle over cycle, and we train models literally every day and we put them on the car, we&#x27;re generally able to improve orders of magnitude year on year on our driving performance. We&#x27;re not there yet, of course, but our systems, and hopefully we can get you in the car someday. I think you have been in the car, right? I actually haven&#x27;t, but Harry Campbell has. That&#x27;s right. Okay. Well, Ben, a formal invite. Hopefully we can get you in the car someday. You can experience it directly, but what we do see is tremendous improvement, and we benchmark this against other players in L2. I&#x27;m not able to quote the exact performance statistics, but generally speaking, as the person who works on the evaluation side of things, it is impossible in a single ride or in a collection of rides over thousands of kilometers to see a concerning issue. We generally have to find them in simulation because unless something has gone wrong, there&#x27;s a major issue or major bug, we generally don&#x27;t see them in road driving anymore, which is as it should be. The definition of success here is the absence of issues in small numbers of miles and kilometers.</p>
+<p class="zh">能再多讲讲你说的性能提升吗？我们说的是什么量级？——好，我说的是相对于 Wayve 自身、我们看到的系统性能「一代比一代」的提升。再次声明，我不是在 Wayve 领导这项工作的人，但我们的观察——也是前沿实验室（做大模型和很多其它领域的）都看到的趋势——是：用我们的学习方法、用我们的模型架构和单一端到端模型，往模型里喂数据，就能在「我们想改进的东西」上看到直接的改善。系统里没有那种硬边界，比如「感知系统一闪，车就急刹」。系统里没有这种硬边界，也没有「有人把红绿灯标错了，车就冲过去」这种硬边界。所以系统纯粹随数据变好。我们从四个维度衡量性能：一是安全——很直接，碰撞安全，还有近失（near miss）；二是交规合规，不同地区不一样；三是我们叫「舒适」的东西，这可能是最模糊的一个，你可以宽泛地理解为「你对这趟乘坐有多舒服的感知」，我想大家凭直觉都懂那是什么感觉——它是一星网约车和五星网约车的差别，差别很大；四是其它特殊类别的问题。但综合来看，一代接一代——我们几乎每天都在训练模型、装到车上——我们的驾驶性能通常能实现年同比数量级的提升。当然还没到终点，但我们的系统……希望哪天能让你上车体验。你上过车了吧？其实我还没，但 Harry Campbell 上过。对。那好，Ben，正式邀请你，希望哪天能让你上车直接体验。但我们确实看到了巨大的改善，我们也拿它和 L2 的其它玩家做基准对比。我不能引用确切的性能数字，但笼统讲，作为做评估侧工作的人，在单次乘坐、或在几千公里的一堆乘坐里，已经不可能看到令人担忧的问题了。我们通常得在仿真里才能找到它们——因为除非出了大事、大 bug，我们在道路驾驶里基本看不到了，而这本该如此。这里成功的定义，就是小里程数里没有问题。</p></div></p>
+<h2 id="s9">九、舒适性的难题</h2>
+<p class="seg" id="seg-19"><span class="ts">[25:34 – 27:02]</span><div class="seg-body">
+<p class="en">Yeah, I can&#x27;t, I&#x27;m just thinking about rating the performance of a ride and, you give the example of rating a ride after an Uber trip and, you give it three stars, but why do you give it three stars? It could be so many different reasons. It could be, because you went over a bump and it just felt a bit uneasy, or it could be something that the driver said to you that you didn&#x27;t like, and trying to capture all of those different elements must be quite a challenge. — It is challenging. I think comfort is one of the hardest and most nuanced and probably one the most frontier problems for our industry in general, whether we&#x27;re talking about L2 vehicles that you can go out and own, so these are owner operated vehicles like we see out on the road today on up to robo taxis. It&#x27;s the same issue. And it&#x27;s not just about harsh breaks and swerves. It could be about really, really nuanced behavior. What was the site selected for a pickup and a drop off location? Did the vehicle pull into the parking spot you expected? Now, these are things that we might not exactly be the same as comfort, but they&#x27;re all part of the overall ride experience. They matter greatly to our partners, like our public partnerships with Uber. It&#x27;s hugely important. It&#x27;s quite core to their business. So it&#x27;s something that we focus on. And the best part of the AI driver is, again, I&#x27;ll return to the point, is it gets better with data. You give it data, and it gets better at problems. And what we generally find is that for tasks that are really challenging to describe with a set of rules that might be a more germane approach to self-driving development in AV 1.0, describe to me in rules what a good parking spot is, very hard to do. For problems like that where you and I generally do it correctly, we can feed the model data. In general, we see tremendous performance right out of the box, zero shot, simply because of this great property that we have that it learns directly from data.</p>
+<p class="zh">我在想给一趟乘坐打分这件事——你举了网约车行程后打分的例子，给了三星，但为什么给三星？原因可能千差万别：可能是过了个坑、让你有点不安，也可能只是司机说了句你不爱听的话。要把所有这些不同因素都捕捉到，一定相当难吧。——确实难。我觉得舒适是我们整个行业最难的、最细微的、可能也最前沿的问题之一，不管是我们今天路上能买到的 L2 车主自营车，还是往上到 robotaxi，都是同一个问题。而且它不只是急刹和急转，还可能是非常非常微妙的行为：上下车点选在哪？车停进了你预期的那个车位吗？这些也许不完全等同于「舒适」，但都是整体乘坐体验的一部分。它们对我们的合作伙伴极其重要，比如我们和 Uber 的公开合作——对他们业务非常核心。所以这是我们聚焦的事。而 AI Driver 最好的一点——我再次回到这个点上——就是它随数据变好。给它数据，它就在问题上变好。我们通常发现：对于那些极难用一套规则描述的任务（那可能是 AV 1.0 更对口的方式——「用规则告诉我什么是好车位」，很难做到），像你我一般都能做对的这类问题，我们给模型喂数据，通常开箱即零样本就有极好的表现，就因为我们这个「直接从数据学习」的优秀特性。</p></div></p>
+<h2 id="s10">十、代价：可解释性缺失与验证难题</h2>
+<p class="seg" id="seg-20"><span class="ts">[27:36 – 30:55]</span><div class="seg-body">
+<p class="en">What are some of the downsides to WAYVE&#x27;s AI model and approach? You&#x27;ve obviously got this new model. And you&#x27;re backing it, but yeah, what are the, if you have to kind of scrutinize it, hold it account, what are some of the downsides? — Yeah, for sure. I mean, there&#x27;s downsides on the development side that, like I mentioned, like introspection property. So when something&#x27;s going wrong, it&#x27;s not as simple as saying, ah, well, this pedestrian was misunderstood as a signpost or something like that. Generally speaking, we have to be very, and in a lot of cases, those tools look like data mining tools and search tools for figuring out what exact data do we need to feed back to the model? What are the active learning loops that we need to make sure that we improve the failure modes that we see on the road? And again, Wayve has been doing this singular approach for eight years now. So we&#x27;ve done a really good job of developing those sorts of tools. So that&#x27;s on the driver&#x27;s side. One thing we haven&#x27;t really touched on yet is validation. So validation is the process of certifying a software release and saying, we think that this is exactly these performance statistics and this is why we think it&#x27;s okay to ship. And here&#x27;s specifically why we think that. What is the credibility score for each of those measures and why we think it&#x27;s okay to ship. So it&#x27;s a report and it&#x27;s a stamp of certification. That is an extremely hard thing to do for an AV 2.0 system. And the thing that makes it challenging is that lots of these reports in an AV 1.0 context say things like, well, here&#x27;s exactly the rate with which stop signs or traffic lights are not obeyed or marginally obeyed. That&#x27;s a very simple thing to measure in a system that knows where all the stoplights and traffic lights are. For us, that&#x27;s a challenging process. We are making a lot of progress on this problem, and I do think that the solution that we have here is more robust, again, because we treat it like a data problem. So we feed data into classifiers that classify performance. The great thing that we see about these classifiers for, let&#x27;s say, stop sign compliance is that they generalize really well across different geos. So stop sign compliance might be a very hard thing to write a rule about if you want that rule to be generic across the entire world. Where&#x27;s the stop line? What&#x27;s the norm in that geography? However, if we treat it like a learning problem and a classification problem, we see great generalization of that same Validation 2.0, when is that coming out? Well, we&#x27;re working on it right now internal to the company. It&#x27;s in fact the approach that Wayve has been on since the very beginning. But we&#x27;ll have more to share soon on specifically the pillars of that approach. One thing I can share is absolutely central to that approach is Gaia and Gaia 4. Why? Because certain classes of events we have to simulate in closed loop. And of course, we have to simulate with radar. There is a line somewhere in every validation case that says, here&#x27;s how a vehicle performs when it&#x27;s foggy out or in rain or at night when radar really does matter. And if we can&#x27;t simulate that, and again, and this is all predicated on the idea that these events are so rare, you&#x27;re just never going to be able to drive enough real world miles to collect all the edge cases. You&#x27;re never going to be able to do the hazard analysis in any sufficient way based on just real world data. Well, then what do we do? We have to be able to simulate those things. And we have to be able to simulate them with incredibly high fidelity. By that, I mean sensor fidelity and camera fidelity. In order to have a credible claim at the end of the day that here&#x27;s why you should trust this simulation of all of these highly nuanced events in the real world. So Gaia, Gaia 4 in particular is absolutely central, one of several pillars of validation to data.</p>
+<p class="zh">Wayve 的 AI 模型和方法有哪些缺点？你显然有了这个新模型而且在力挺它，但如果你要审视它、让它负责，缺点是什么？——当然有。开发侧就有缺点，就像我提到的——可内省性（introspection）这个属性。出问题时，不能简单说「哦，这个行人被误认成了路牌」之类。笼统讲，我们得非常……而且在很多情况下，那些工具看起来像数据挖掘工具和搜索工具，用来搞清楚：我们到底需要把哪些确切的数据喂回模型？为了保证改善路上看到的失败模式，我们需要建哪些主动学习回路？再说一次，Wayve 用这种单一路线已经八年了，所以建这类工具我们做得相当好。这是驾驶侧的事。还有一件事我们基本没聊到，就是验证（validation）。验证是为一版软件发布做认证的过程：我们说「我们认为这就是这些性能数字，这就是我们认为可以发布的原因，具体为什么」，每个指标的置信分是多少、为什么认为可以发。所以它是一份报告，也是一个认证章。对 AV 2.0 系统来说，这是件极难的事。难点在于：在 AV 1.0 的语境里，这类报告会说「这里是停止标志 / 红绿灯不被遵守或勉强被遵守的确切频率」——在一个知道所有红绿灯在哪里的系统里，这很好测。对我们来说，这是个有挑战的过程。我们在这问题上进展很大，而且我认为我们的解法更稳健，原因还是我们把它当成数据问题：把数据喂给分类器去分类性能。我们看到这类分类器（比如停车标志合规）的一个妙处是跨地区泛化极好。如果你想写一条「放之全球而皆准」的规则，停车标志合规可能极难写——停止线在哪？那个地区的规范是什么？但如果我们把它当学习问题、分类问题，就看到很好的泛化。验证 2.0 什么时候出？嗯，我们公司内部正在做，事实上这是 Wayve 从一开始就走的路线，但我们很快会更多分享这种方法的具体支柱。有一点我能说：绝对处于这个方法核心的，是 Gaia 和 GAIA-4。为什么？因为某些类别的事件，我们必须用闭环仿真，而且当然要带雷达。每个验证案例里都有一行写着：雾天、雨天或夜间（雷达真正关键时）车辆表现如何。如果我们仿真不了这个——而且这全都基于一个前提：这些事件太罕见，你永远开不够真实里程去收集所有边缘案例，你也永远没法只靠真实数据就做充分的危险分析。那我们怎么办？我们必须能仿真这些事，而且必须能以极高的保真度仿真——我指的是传感器保真和相机保真。这样最后才能拿出可信的主张：这就是为什么你应该信任这套对真实世界里所有高度细微事件的仿真。所以 Gaia、尤其是 GAIA-4，绝对是核心，是「数据驱动验证」好几根支柱之一。</p></div></p>
+<h2 id="s11">十一、结语</h2>
+<p class="seg" id="seg-21"><span class="ts">[30:55 – 32:27]</span><div class="seg-body">
+<p class="en">Brandon, thank you so much for such detailed explanation. It&#x27;s been a real pleasure to talk to you. And yeah, I think we&#x27;re going to have to wrap things up, but I really appreciate you coming on the podcast. — Absolutely. It was a pleasure, Ben. And hopefully we can get you in the car soon.</p>
+<p class="zh">Brandon，非常感谢你这么详尽的解释。能和你聊很愉快。我们得收尾了，但真的很感激你能来上节目。——绝对地，很愉快，Ben。希望很快能让你上车体验。</p></div></p>
+<hr>
+<p>*说明：本逐字稿为 The Driverless Digest 官方逐字稿（Substack <code>?showTranscript=true</code>）的译文。英文为官方原文整理（已做专名 / 术语归一化），中文为人工翻译。节目含 YouTube / Spotify / Apple Podcasts 多平台音视频版本；本页仅呈现文字稿。原始链接见详情页。*</p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-dolgov-seven-lessons/index.html"><div class="rw"><img loading="lazy" src="../waymo-dolgov-seven-lessons/cover.jpg" alt=""></div><div class="rb"><div class="rs">YouTube · Startup School (YC)</div><div class="rt">Waymo 七条物理世界 AI 经验（Dmitri Dolgov @ Startup School）</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../nvidia-alpamayo-accelerating/index.html"><div class="rw"><img loading="lazy" src="../nvidia-alpamayo-accelerating/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / Podcast</div><div class="rt">NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["Wayve", "GAIA-4", "世界模型", "world model", "自动驾驶", "AV 2.0", "闭环仿真", "closed-loop simulation", "开环仿真", "open-loop", "雷达仿真", "radar", "Brandon Basso", "Ben Hubbard", "The Driverless Digest", "端到端模型", "end-to-end", "仿真验证", "离线测试", "AV 1.0"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
