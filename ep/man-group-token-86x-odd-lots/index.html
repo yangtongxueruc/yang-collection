@@ -1,0 +1,441 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>全球最大对冲基金之一的 Token 支出为何暴增 86 倍 · 总结分析</title><meta name='description' content='Man Group——全球最大的上市对冲基金之一——CTO Gary Collier 与数据与 AI 负责人 Tushar Fernando 向 Odd Lots 披露：公司内部 token 消耗自今年 1 月以来暴涨 86 倍，且增长早已越过技术团队（财务、运营、人事都在用 agentic coding 工作流）；约 15-20 个由 AI 从想法生成一路走到信号构建与验证的量化模型已通过人工投资委员会审核。但真正的洞见是：前沿模型本身不构成 alpha——精心打标签的数据、统一的语义层、机构知识与交易基础设施组成的『生态系统』才是护城河；而公司不建自动模型路由，选择预算联邦化 + 员工教育，因为『试图只用前沿模型会一无所获』。'><meta property='og:title' content='全球最大对冲基金之一的 Token 支出为何暴增 86 倍 · 总结分析'><meta property='og:description' content='Man Group——全球最大的上市对冲基金之一——CTO Gary Collier 与数据与 AI 负责人 Tushar Fernando 向 Odd Lots 披露：公司内部 token 消耗自今年 1 月以来暴涨 86 倍，且增长早已越过技术团队（财务、运营、人事都在用 agentic coding 工作流）；约 15-20 个由 AI 从想法生成一路走到信号构建与验证的量化模型已通过人工投资委员会审核。但真正的洞见是：前沿模型本身不构成 alpha——精心打标签的数据、统一的语义层、机构知识与交易基础设施组成的『生态系统』才是护城河；而公司不建自动模型路由，选择预算联邦化 + 员工教育，因为『试图只用前沿模型会一无所获』。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/man-group-token-86x-odd-lots/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=LgwCPSgzGTg" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Bloomberg Odd Lots · YouTube</div><h1>全球最大对冲基金之一的 Token 支出为何暴增 86 倍</h1><p class="sub">One of the World&#x27;s Largest Hedge Funds on its 86x Growth in Token Spending</p><div class="tags"><span class="tag">⏱ 53:29</span><span class="tag">👤 Gary Collier（Man Group CTO）、Tushar Fernando（Man Group 数据与 AI 负责人）</span><span class="tag">🗓 2026-07-09</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.youtube.com/watch?v=LgwCPSgzGTg" target="_blank" rel="noopener">▶ 在 YouTube 观看</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一、背景：86 倍不是故事的全部，只是冰山一角</a><a href="#s1">二、研究增强：AI 最先改变的是信息覆盖边界</a><a href="#s2">三、Agent 进产线：15–20 个模型走完「想法→信号→验证」全流程</a><a href="#s3">四、数据三层架构：alpha 的真正来源</a><a href="#s4">五、模型治理：预算联邦化 + 教育，而不是自动路由</a><a href="#s5">六、86 倍的驱动：模型能力 × harness 的耦合</a><a href="#s6">七、可解释性与风控：交易必须能讲清楚</a><a href="#s7">八、真正的瓶颈：不是算力不是数据，是「安全地快速前进」</a><a href="#s8">九、人才与组织：指挥家、前沿部署工程师、民主化</a><a href="#s9">十、Token 经济学：从技术预算到劳动力替代</a><a href="#s10">十一、Alpha 护城河：是生态系统，不是单点</a><a href="#s11">十二、局限性与说明</a></nav><main class="content"><h1>Man Group 的 Token 支出为何暴增 86 倍：从「研究增强」到「Agent 进产线」</h1>
+<blockquote>Odd Lots × Man Group CTO Gary Collier / 数据与 AI 负责人 Tushar Fernando · 2026-07-09 录制</blockquote>
+<blockquote>核心数字：<strong>内部 token 消耗自 2026 年 1 月以来增长 86 倍</strong>；约 <strong>15–20 个由 AI 全流程生成的量化模型</strong>已通过人工投资委员会审核。</blockquote>
+<h2 id="s0">一、背景：86 倍不是故事的全部，只是冰山一角</h2>
+<p>开场主持人抛出的数字就足够震撼：Man Group 内部的 token 消耗自今年 1 月以来<strong>增长了 86 倍</strong>。Tushar 坦言「我们完全没预料到用量会是这样」——而且增长不是技术部门的独角戏，财务、运营、人事团队都在用 agentic coding 工作流：</p>
+<blockquote>&quot;We have seen people in finance, people in operations, people in the people team using agentic coding workflows. And as a technologist, that&#x27;s just super exciting to give this new capability, to see this new power to people who haven&#x27;t been able to use it before.&quot;</blockquote>
+<blockquote>「我们在财务、运营、人事团队都看到有人在用 agentic coding 工作流。作为一个技术人员，看到这种新能力、这种新力量落到以前用不上它的人手里，非常兴奋。」</blockquote>
+<p>这期对话的价值在于：它不是讨论「AI 能不能用于投资」的务虚，而是 Man Group 两位技术最高负责人<strong>现场披露一家大型主动资产管理机构里 AI 到底被怎么用</strong>——以及更关键的，<strong>alpha 到底从哪来</strong>。</p>
+<h2 id="s1">二、研究增强：AI 最先改变的是信息覆盖边界</h2>
+<p>对基本面/主观投资，AI 的价值不是「替你选股」，而是解决一个长期痛点：<strong>信息越来越多，但人的时间没有变多</strong>。一个覆盖几十家公司名字的长仓分析师，要读财报、经纪研报、另类数据、播客——「一天只有几个小时，却有 50 个名字要覆盖」。</p>
+<p>Man Group 的解法是让 AI agent 异步消化多模态信息、蒸馏出与投资论点相关的「变化」：</p>
+<blockquote>&quot;So the PM can asynchronously get that insight. They could go away for a coffee... And then the agent has actually distilled a change that&#x27;s happened on the internet and given them the insight that&#x27;s meaningful to their portfolio, to their investment thesis.&quot;</blockquote>
+<blockquote>「PM 可以异步拿到洞察，可以去喝杯咖啡……agent 已经把互联网上发生的变化蒸馏出来，把对他们组合、对他们投资论点有意义的洞察交到手上。」</blockquote>
+<p><strong>最有说服力的例子</strong>：一位覆盖 AI 交易的 PM，判断行情的下一步要看「瓶颈在哪」。某个大型 hyperscaler 工程负责人在播客里说：训练模型越来越需要 GPU，但<strong>数据中心本身变得稀缺</strong>，且未来需要更强大的数据中心间网络。这个人不会参加投资者电话会，卖方研报也不会覆盖——但 AI agent 转录并合成了这段播客，让 PM 捕捉到了「GPU 稀缺 + 数据中心间网络升级」两个投资信号。这正是「AI 扩大研究带宽」的具象化。</p>
+<h2 id="s2">三、Agent 进产线：15–20 个模型走完「想法→信号→验证」全流程</h2>
+<p>主持人的问题很尖锐：「端到端 agentic workflow——研究、生成想法、测试假设、甚至执行——是你们在追求的目标，还是太遥远？」答案是：<strong>不遥远，已经在跑</strong>。</p>
+<p>量化侧已经建设了一年半的系统：多个 agent 分工——读论文和标注数据集、推理其中的经济假设 → 另一个 agent 写代码封装想法、取市场数据、跑回测 → 再一个 agent 评估前一个 agent 的输出。</p>
+<blockquote>&quot;There&#x27;ve been a bunch, I think, 15, 20 models at the last count, that have gone all the way through. They started off as models that were ideating, went all the way through signal construction, the validation process, were reviewed and validated by a human investment committee and things like fit and proper to triage our client&#x27;s assets. So this is very real, it&#x27;s not make believe at this point.&quot;</blockquote>
+<blockquote>「大约有 15–20 个模型完整走完了流程。它们从想法生成起步，一路走到信号构建、验证流程，由人工投资委员会审核，并符合『适当性』要求以管理客户资产。这是非常真实的，不是纸上谈兵。」</blockquote>
+<p>注意这个链路的关键设计：<strong>生成假设的 agent 会先写一段自然语言描述信号背后的 rationale</strong>，然后才写代码。这与后文的可解释性要求互为表里。</p>
+<h2 id="s3">四、数据三层架构：alpha 的真正来源</h2>
+<p>被问到「你们的数据管线长什么样」，Tushar 给出三层架构：</p>
+<p>1. <strong>市场数据</strong>：高度结构化，每天仅 tick 数据就近 <strong>1TB</strong>； 2. <strong>另类/非结构化数据</strong>：脏、格式混乱，关键是<strong>打标签、连接、统一语义</strong>； 3. <strong>机构知识（新出现的第三层）</strong>：教会 AI 公司的流程——「正确的跑回测方法是什么」「迁移（数据）该怎么说」，让 AI「speak our language」。</p>
+<p>被问到「前沿模型 vs 打标签数据哪个更重要」，答案直白：</p>
+<blockquote>&quot;If you&#x27;re looking at a coding task, you really want the latest frontier models. But for a quant research task, I think the underlying data is what fuels alpha research. Trying to just use a frontier model will get you nowhere.&quot;</blockquote>
+<blockquote>「编码任务确实要最新前沿模型；但对量化研究任务，底层数据才是 alpha 研究的燃料。试图只用前沿模型会一无所获。」</blockquote>
+<p>所以他们的投入重点不是微调模型（只在少数场景做过），而是<strong>给数据加「颜色」</strong>：用自然语言描述告诉模型「这一行的含义是一个人进店买了一样东西」；再建一套<strong>共享语义层</strong>，让 AI 能跨数据集连接 ticker、行业、公司。这正是 Bridgewater 那篇论文的逻辑延伸：开源模型 + 专有数据 &gt; 最前沿闭源模型。</p>
+<h2 id="s4">五、模型治理：预算联邦化 + 教育，而不是自动路由</h2>
+<p>很多公司想做「把查询路由到性价比最优模型的分类器」，Man Group <strong>刻意不做</strong>：</p>
+<blockquote>&quot;We could do that. We&#x27;ve chosen not to... we want people to understand the dynamics of how best to use AI, and which models to use. So what we&#x27;ve leaned on instead is education.&quot;</blockquote>
+<blockquote>「我们本来能做，但选择不做……我们希望人们理解如何最好地使用 AI、该用哪个模型。所以我们依靠的是教育。」</blockquote>
+<p>他们的做法：</p>
+<ul><li><strong>预算联邦化</strong>：去年底就按用户分类/用例预估了公司会变成什么样，今年把预算下放到各业务单元，预算可挪用（部门可以削减别处支出来买更多 token）；</li></ul>
+<ul><li><strong>平台提供丰富模型选择</strong>：所有主流前沿模型 + 多个开源 open-weight 模型，但<strong>没有自动路由</strong>；</li></ul>
+<ul><li><strong>透明 + 教育</strong>：公开各团队 token 消耗；发现常见低级错误——员工在同一个 context window 里「一边写投资论点、一边问午饭吃什么、一边问明天天气」；教大家把 git 这类简单工具调用拦在 LLM 循环之外，省下的成本还能「贡献回平台」。</li></ul>
+<h2 id="s5">六、86 倍的驱动：模型能力 × harness 的耦合</h2>
+<p>主持人问：从 1 月到 7 月陡增 86 倍，是模型本身变强（opus 从 4.5→4.6），还是发现了好用的「harness」（如 Claude Code）？答案：<strong>两者耦合</strong>。</p>
+<blockquote>&quot;Every seven months or so, the amount of time an agentic workflow can go away and do a task is doubling. So now you can ask an agent to do a task that would take a human 16 hours... It&#x27;s the scalability that has allowed larger tasks to be completed that has resulted in larger token usage.&quot;</blockquote>
+<blockquote>「大约每 7 个月，agentic 工作流能独立完成的任务时长就翻一倍。现在你可以让 agent 去做要花人类 16 小时的任务……正是这种可规模化让更大的任务能被完成，从而带来更大的 token 用量。」</blockquote>
+<p>引用的是 <strong>METR 基准</strong>（衡量 agent 能持续工作多久）：从「写一个单元测试」到「构建整个应用功能」——任务颗粒度变大，token 自然指数增长。</p>
+<h2 id="s6">七、可解释性与风控：交易必须能讲清楚</h2>
+<p>Man Group 明确表态：<strong>不是高频交易业务</strong>，持有期是「数天到数月」，因此所有交易决策必须可解释：</p>
+<blockquote>&quot;We never want to be in a position where we don&#x27;t know why that trade happened. The AI did it.&quot;</blockquote>
+<blockquote>「我们绝不想处于这种境地：不知道为什么发生了这笔交易，只知道是 AI 干的。」</blockquote>
+<p>落地方式：agent 在写代码之前，先产出<strong>投资假设的自然语言描述</strong>（rationale）；再由人工投资委员会做最终把关。这与前面「15–20 个模型走完全流程」呼应——AI 负责端到端生成，人类负责最后一道验证。</p>
+<h2 id="s7">八、真正的瓶颈：不是算力不是数据，是「安全地快速前进」</h2>
+<p>问「你们最缺什么」，Gary 的回答出乎意料：算力和数据「总是多多益善」，但<strong>更大的瓶颈是组织层面的</strong>——AI 能力边界扩张太快，跟上它很难；而作为受监管、负有受托义务的机构，必须在最低风险下部署：</p>
+<blockquote>&quot;We need to make sure that the things we&#x27;re doing, the things we&#x27;re deploying are done with a minimum amount of risk. And there&#x27;s a lot of work in this field that I really think the industry doesn&#x27;t have answers to yet — evaluations, testing the results of AI processes, thinking about how we run agents across the business in a safe and controlled fashion.&quot;</blockquote>
+<blockquote>「我们必须确保所做的、所部署的都以最低风险进行。这个领域有大量行业还没找到答案的工作——AI 流程的评估与测试、如何安全可控地在全公司运行 agent。」</blockquote>
+<p>「不小心删了收件箱/照片」的梗在个人场景是笑话，企业级不能发生。</p>
+<h2 id="s8">九、人才与组织：指挥家、前沿部署工程师、民主化</h2>
+<p><strong>人才门槛</strong>：Gary 表示，现在招聘任何人「无论什么岗位，都应当抬高 AI 能力下限」。而 Tushar 补充了一个更有趣的转变：技术人员要从「扎进细节」（debug、写代码）转向<strong>「指挥 agent、负责端到端流程」</strong>——像「懂技术的经理」：</p>
+<blockquote>&quot;You want to be a kind of a conductor of these agents. You want to be in charge of the end-to-end process rather than necessarily being in the weeds.&quot;</blockquote>
+<blockquote>「你要成为这些 agent 的指挥家，负责端到端流程，而不是陷在细节里。」</blockquote>
+<p><strong>超级明星 vs 民主化</strong>：两者都在发生，但按规模看「更多是后者」——近 1800 人的公司几乎人人每天在用 AI。难点在于让多团队从「各自执行」转向「协作规划跨团队工作流」。</p>
+<p><strong>组织形态</strong>：当主持人提到微软的「Frontier Company」和 Anthropic 派驻 Goldman 的「前沿部署工程师」时，Gary 笑了——<strong>Man Group 大约 15 年前就是这么运作的</strong>：平台团队 + 坐在 quants 和主观经理旁边的工程师，以至于「走过交易台，你分不清谁是工程师谁是 quant」。</p>
+<h2 id="s9">十、Token 经济学：从技术预算到劳动力替代</h2>
+<p>Joe 抛出 2026 年夏天市场最热的话题：软件公司叙事已转向「AI 不吃软件市场，吃的是劳动力市场」，token 支出对工资的比例就是那个 TAM。Man Group 的坦诚回答：</p>
+<ul><li><strong>还没开始正式讨论</strong>「工资 vs token 支出」的比例，但「到时候会来」——公司会按「哪里产出最好的经济结果」分配资源；</li></ul>
+<ul><li>更前沿的问题：<strong>token 越来越多是 agent 消耗的，而 agent 属于工作流，工作流归哪个部门所有？</strong>「这是我们还没解决的新问题」；</li></ul>
+<ul><li>两位主播的收尾判断值得一提：<strong>86x 增长而公司仍处于「鼓励实验、尚未强制节约」的阶段——这本身对 token 支出是看多信号</strong>（还没到「必须开征 token 紧缩」的时刻）。</li></ul>
+<h2 id="s10">十一、Alpha 护城河：是生态系统，不是单点</h2>
+<p>关于「AI 驱动的 alpha 会不会像 HFT 一样被竞争抹平」，Tushar 的判断：</p>
+<blockquote>&quot;It is easier for people to onboard data sets, analyze them, and build features, but that doesn&#x27;t mean that they can trade them. We&#x27;ve been doing this for decades... it&#x27;s this whole network, this whole ecosystem that together, I think, drives alpha.&quot;</blockquote>
+<blockquote>「人们更容易上手数据集、分析并构建特征了，但这不意味着他们能交易它们。我们做这行几十年了……正是这张网络、这个生态系统一起驱动 alpha。」</blockquote>
+<p>他指着一个事实：<strong>Man Group 里没有一个「alpha 代码仓库」</strong>——alpha 来自市场接入、经纪关系、独有数据、回测/算力基础设施相互作用的网络。部分数据特征会从 alpha 变成 table stakes（人人都有 → 变成风险因子），但那不是唯一的赚钱方式。</p>
+<h2 id="s11">十二、局限性与说明</h2>
+<ul><li>本期为 Odd Lots 对谈，由 YouTube 自动字幕 + Google 翻译生成，人名/专有名词已尽量校正（如 Qwen、METR、Claude Code、Tushar Fernando），个别语音识别误差仍可能存在；</li></ul>
+<ul><li>86 倍是<strong>内部 token 消耗量</strong>（用量），不等于成本 86 倍——文中也提到员工在主动优化单次任务 token 效率；</li></ul>
+<ul><li>「15–20 个模型通过投资委员会」为嘉宾口径，未披露具体策略与业绩贡献；</li></ul>
+<ul><li>Bridgewater 论文细节（用 Qwen 微调识别新闻价值）为主持人转述，可作为独立线索跟进。</li></ul>
+<hr>
+<p><strong>一句话总结</strong>：当 AI 从「研究工具」变成「研究生产线」的一部分（token 86 倍、agent 全流程生成模型过会），Man Group 给出的护城河答案是——<strong>模型人人可得，但精心标注的数据、统一语义层、机构知识、市场接入与交易基础设施组成的网络不可复制；而组织能否「安全地快速前进」，才是决定谁能吃到这波红利的分水岭。</strong></p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../gavin-baker-ai-economics/index.html"><div class="rw"><img loading="lazy" src="../gavin-baker-ai-economics/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">GPU、TPU 与 AI 经济学解析</div></div></a><a class="relcard" href="../ai-agents-investment-research-caughran/index.html"><div class="rw"><img loading="lazy" src="../ai-agents-investment-research-caughran/cover.jpg" alt=""></div><div class="rb"><div class="rs">Fundamental Edge · YouTube Webinar</div><div class="rt">AI Agent 如何改变投资研究（外骨骼假说）</div></div></a><a class="relcard" href="../hrt-ai-odd-lots/index.html"><div class="rw"><img loading="lazy" src="../hrt-ai-odd-lots/cover.jpg" alt=""></div><div class="rb"><div class="rs">Bloomberg Odd Lots · YouTube</div><div class="rt">Hudson River Trading 究竟如何用 AI</div></div></a><a class="relcard" href="../trucking-booming-odd-lots/index.html"><div class="rw"><img loading="lazy" src="../trucking-booming-odd-lots/cover.jpg" alt=""></div><div class="rb"><div class="rs">Bloomberg Odd Lots · YouTube</div><div class="rt">卡车运输又火了，但司机们并不开心</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
