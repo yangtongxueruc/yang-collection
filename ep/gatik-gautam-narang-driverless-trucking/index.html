@@ -1,0 +1,422 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>与 Gatik CEO Gautam Narang 谈自动驾驶卡车规模化 · 总结分析</title><meta name='description' content='Gatik CEO Gautam Narang 拆解中程（middle-mile）无人驾驶货运规模化路径：以「仓到仓（dock-to-dock）」动态线路服务沃尔玛 / 百事 / Kroger 等零售巨头的区域物流网络；截至 2026 年初已部署 10+ 辆完全无人驾驶卡车，目标年底破 100 辆、合约收入超 6 亿美元；技术采用「AI 优先性能层 + 并行确定性安全层」混合架构与 Gatik Driver 四大支柱，并以一次历时 18 个月的独立安全审计作为撤出司机的信任背书。'><meta property='og:title' content='与 Gatik CEO Gautam Narang 谈自动驾驶卡车规模化 · 总结分析'><meta property='og:description' content='Gatik CEO Gautam Narang 拆解中程（middle-mile）无人驾驶货运规模化路径：以「仓到仓（dock-to-dock）」动态线路服务沃尔玛 / 百事 / Kroger 等零售巨头的区域物流网络；截至 2026 年初已部署 10+ 辆完全无人驾驶卡车，目标年底破 100 辆、合约收入超 6 亿美元；技术采用「AI 优先性能层 + 并行确定性安全层」混合架构与 Gatik Driver 四大支柱，并以一次历时 18 个月的独立安全审计作为撤出司机的信任背书。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/gatik-gautam-narang-driverless-trucking/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/scaling-autonomous-trucking-with" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Substack</div><h1>与 Gatik CEO Gautam Narang 谈自动驾驶卡车规模化</h1><p class="sub">Scaling Autonomous Trucking with Gatik CEO Gautam Narang</p><div class="tags"><span class="tag">⏱ 37:51</span><span class="tag">👤 Gautam Narang（Gatik 联合创始人兼 CEO）；主持人 Ben Hubbard（The Driverless Digest）</span><span class="tag">🗓 2026-08</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.thedriverlessdigest.com/p/scaling-autonomous-trucking-with" target="_blank" rel="noopener">▶ 在来源站观看视频</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一句话结论</a><a href="#s1">1. 公司定位与关键里程碑</a><a href="#s2">2. 商业模式：中程 + 仓到仓（middle-mile / dock-to-dock）</a><a href="#s3">3. 运营网络与动态线路</a><a href="#s4">4. 技术架构：Gatik Driver 四大支柱 + 混合架构</a><a href="#s5">5. 安全框架：把「信任」做成可执行流程</a><a href="#s6">6. 美国 AV 安全标准的「真空」</a><a href="#s7">7. 劳动力与成本逻辑</a><a href="#s8">8. 资本与生态：利益对齐的「股东名册」</a><a href="#s9">9. 竞争格局研判</a><a href="#s10">10. 风险与待验证点</a><a href="#s11">来源与引用</a></nav><main class="content"><h1>与 Gatik CEO Gautam Narang 谈自动驾驶卡车规模化 · 深度分析</h1>
+<blockquote>整理自 The Driverless Digest 对 Gatik 联合创始人兼 CEO Gautam Narang 的访谈（主持人 Ben Hubbard）。</blockquote>
+<blockquote>英文为 Whisper 语音识别逐字稿，中文为模型翻译并经专有名词校对；以下分析基于逐字稿内容，并结合 Gatik 公开融资信息交叉验证。</blockquote>
+<h2 id="s0">一句话结论</h2>
+<p>Gatik 是「中程（middle-mile）无人驾驶货运」这条最务实路线的代表：它不追逐长途干线，而是从零售商高频、可重复的「仓到仓（dock-to-dock）」区域物流网络切入，把自动驾驶技术收敛成一个可规模化履约的商业问题。其护城河不在某一项黑科技，而在「真实合同 + 深度 IT 集成 + 独立安全背书 + OEM/客户/资本利益对齐」构成的系统性黏性。截至访谈时点，Gatik 已部署 10+ 辆完全无人驾驶卡车，目标 2026 年底破 100 辆，合约收入超 6 亿美元（且仍在增长）。</p>
+<h2 id="s1">1. 公司定位与关键里程碑</h2>
+<ul><li><strong>定位</strong>：为最大型的零售商、杂货商与快消品（CPG）企业自动化「区域物流网络」的自动驾驶货运公司。</li></ul>
+<ul><li><strong>里程碑</strong>：2025 年中，在完成一次「严格、全面的独立安全审计」后，正式从真实商业部署中撤出司机（pull the driver out），成为北美首家规模化部署完全无人驾驶卡车的公司之一。</li></ul>
+<ul><li><strong>规模曲线</strong>：2025 年中从 2 辆车起步 → 2026 年初 10+ 辆商业部署的无人驾驶车 → 目标 2026 年底超 100 辆 → 未来 12–18 个月持续扩张。</li></ul>
+<ul><li><strong>商业储备</strong>：2026 年初宣布合约收入（contracted revenue）超 6 亿美元，且为多年期、不可取消（non-cancellable）承诺，非无约束力的 MOU。该数字此后仍在增长。</li></ul>
+<blockquote>交叉验证：公开报道显示，Gatik 于 <strong>2026 年 8 月 25 日</strong> 完成由 Qatar Investment Authority 与 Koch Disruptive Technologies 共同领投的 <strong>2 亿美元（Series D）</strong> 融资，并披露「合约收入超 6 亿美元」「已完成 85,000 单完全无人驾驶订单」「99% 准时交付」。访谈中主持人称「raised over 300 million」，应为历轮累计口径（含 2020 年 A 轮 2500 万、2021 年 B 轮 8500 万、2024 年 Isuzu 3000 万及本轮 2 亿）。</blockquote>
+<h2 id="s2">2. 商业模式：中程 + 仓到仓（middle-mile / dock-to-dock）</h2>
+<p>Gatik 的「逆势赌注」是：要拿下万亿美元级的自动驾驶卡车市场，正确切入点是 <strong>3000 亿美元（美加）的中程 / 区域货运</strong>，而非长途干线。</p>
+<p>早期与客户共创出的关键洞察是：<strong>客户期望货物「从自家月台一路运到自家月台」</strong>。因此 Gatik 做的是真正的 dock-to-dock——既能跑高速，也能跑地面街道（surface streets），在取货点与卸货点都「靠上码头（bump the docks）」，而非被限制在高速公路或堆场内。</p>
+<p>这与长途玩家形成鲜明对比：后者曾寄望「只在高速运营 + 在高速旁建中转站、把自动牵引车换成人驾牵引车」的模式，但该模式并未起飞——行业误判了首尾一公里（一路开到月台）的真实成本。如今长途玩家被迫把运营域扩展到地面街道，Gatik 则凭先发优势与对「客户堆场 + 接口交互」的深刻理解占据主动。</p>
+<h2 id="s3">3. 运营网络与动态线路</h2>
+<ul><li><strong>网络形态</strong>：服务沃尔玛、百事、Kroger 等，覆盖<strong>数百个取货 / 卸货点</strong>的完整区域物流网络，而非点对点、几辆车的小打小闹。</li></ul>
+<ul><li><strong>线路动态化</strong>：早期是固定线路，如今在大型物流网络内<strong>线路完全动态</strong>——可按当天销量与货量增站、跳站、重排停靠顺序。这与 Robotaxi「地理围栏内任意点接驳」的开放用例不同，Gatik 的用例更受限、因而更易规模化。</li></ul>
+<ul><li><strong>客户交互层</strong>：通过 <strong>Gatik Omni</strong> 车队管理平台（连接仓库 / 堆场 / 在途数据的「结缔组织」）与 <strong>Havi（Human-AV Interface，人与自动驾驶接口）</strong>，客户完成装货、卸货、指派月台与「装卸完毕、出发」等指令。与客户的 IT / 后台深度集成，构成了长期粘性。</li></ul>
+<h2 id="s4">4. 技术架构：Gatik Driver 四大支柱 + 混合架构</h2>
+<p><strong>Gatik Driver 四大支柱</strong>： 1. 自动驾驶软件栈（车上运行的核心）； 2. 平台硬件（与 Isuzu 及一级供应商共研，已完全验证于 Isuzu 平台）； 3. 车外基础设施 <strong>Gatik AI Foundation</strong>（端到端神经模拟器、数据采集 / 增强 / 训练）； 4. 安全框架（所有安全声明均有硬证据支撑）。</p>
+<p><strong>AI 优先 + 并行安全层的混合架构</strong>：</p>
+<ul><li>性能层完全基于 AI，含两大核心模型：<strong>场景表征（scene representation，感知环境）</strong> 与 <strong>场景推理（scene reasoning，行为规划）</strong>。</li></ul>
+<ul><li>并行一个<strong>更偏向启发式、更具确定性的安全层</strong>，确保两大模型的每一层输出都「可验证、可追溯」，避免运行黑箱。</li></ul>
+<ul><li>价值：AI 性能层保证核心技术可扩展、可泛化（进新市场无需重训权重）；并行安全层持续评估 AI 输出的置信度与不确定性，确保不妥协安全。Narang 强调，这是真正能规模化这类技术的「正确架构」。</li></ul>
+<p><strong>车辆规格</strong>：当前为 7 级（Class 7）车辆，GVWR 33,000 磅，有效载荷约 15,000 磅；技术平台无关（platform-agnostic），同套核心可跑 6 级 / 7 级 / 更低级别车辆，并据载重相应调整制动距离与驾驶行为。</p>
+<h2 id="s5">5. 安全框架：把「信任」做成可执行流程</h2>
+<ul><li><strong>独立审计前置</strong>：Gatik 公开承诺「安全框架经安全专家独立审计后才撤司机」。2024 年立约，2025 年中完成审计，随后启动无人驾驶运营。审计覆盖核心软件设计、硬件 / 平台设计、日常运营全貌，而非走马观花；整个工作历时 <strong>18 个月</strong>，报告广泛分享给客户、一线应急响应方与监管机构。</li></ul>
+<ul><li><strong>边缘案例处理</strong>：运营域为晴天条件下的高速 + 地面街道（小雪小雨可，暴雨暴雪预计次年解锁）。遇极端异常触发 <strong>MRC（最小风险条件 / Minimum Risk Condition）</strong>——视严重程度降速「跛行模式」、靠路肩停车或平稳停车；并引入<strong>人在回路</strong>的远程监督员：基于警报而非持续监督，系统先自行安全停车再呼叫监督员「批准高层决策 / 给新途经点」，底层决策始终在车端。新市场撤司机时，MRC 触发阈值刻意设低，再随时间调高（「迈小步」）。</li></ul>
+<ul><li><strong>安全记录</strong>：Narang 称在「系统激活且我方负有责任（at-fault）」情形下零事故，并以「重建场景判定责任归属」的剧本与监管方透明沟通。</li></ul>
+<h2 id="s6">6. 美国 AV 安全标准的「真空」</h2>
+<p>访谈点出一个行业现实：美国<strong>没有统一 AV 安全标准</strong>，企业不得不自定「信心门槛」。Narang 主张，标准不应由开发者单方决定，而应把采用者（客户）、一线应急响应方、监管机构共同请上桌，定义「可接受的安全门槛与风险」。Gatik 卡车常印有客户 logo——客户也在共担责任。这恰与同主播对 Kodiak CEO Don Burnette 的访谈（亦收录于本收藏库）形成呼应：两家都强调「透明度 + 统计 / 论证层面的安全证明」是规模化前提。</p>
+<h2 id="s7">7. 劳动力与成本逻辑</h2>
+<p>Narang 把自动驾驶卡车定位为「填补缺口」而非「简单取代」：</p>
+<ul><li>到 2050 年货运量将增超 50%，而美国已缺 10 万司机且缺口扩大，长途缺口尤甚；</li></ul>
+<ul><li>司机面临堵车、长时间等待装卸、无甩挂导致装载耗时数小时、每日应对城市交通等现实痛点；</li></ul>
+<ul><li>更关键的是<strong>终端消费者驱动的高频配送需求</strong>：门店后仓空间有限，零售商宁愿「每周多次配送」也不愿囤库存。物流利润率极薄，客户无法靠持续加薪解决短缺，也不愿把成本转嫁给消费者——Gatik 由此切入：「更频繁运货 + 不增加额外成本 + 更高安全性」。</li></ul>
+<h2 id="s8">8. 资本与生态：利益对齐的「股东名册」</h2>
+<p>Gatik 很早就让核心规模化伙伴在<strong>资本层面利益对齐</strong>：</p>
+<ul><li>OEM 端 <strong>Isuzu</strong>（自 2021 年合作五年，共研自动驾驶底盘）在股东名册；</li></ul>
+<ul><li>另一家大型制造伙伴、多家商业客户同为投资者；</li></ul>
+<ul><li>车队合作伙伴 <strong>Ryder、Goodyear、Itochu</strong> 等以多种方式（含股东名册）支持。</li></ul>
+<p>公司据称资金充裕、跑道强劲，重点是把 6 亿美元+ 合同储备落地，并拿下 3000 亿中程市场的大部分；对上市「探索所有选择」，但当前更是一个「执行故事」。</p>
+<h2 id="s9">9. 竞争格局研判</h2>
+<ul><li><strong>vs 长途玩家</strong>：长途干线因「首尾一公里成本误判」被迫回补地面街道能力，Gatik 已占先机。</li></ul>
+<ul><li><strong>vs Kodiak 等</strong>：Narang 强调 Gatik 的差异化在于「已证明技术可规模化 + 真实商业证据点」——据其称拥有美国最大自动驾驶卡车队，且是真正规模化部署的无人驾驶卡车；服务的更是沃尔玛 / 百事等最复杂供应链（数百取卸货点、动态线路）。</li></ul>
+<ul><li><strong>壁垒本质</strong>：不是单车技术，而是「合同 + IT 深度集成 + 安全背书 + 多方利益对齐」的系统黏性，后来者难以快速复制。</li></ul>
+<h2 id="s10">10. 风险与待验证点</h2>
+<p>1. <strong>规模化安全暴露</strong>：从 10+ 辆迈向 100+ 辆，道路暴露度与风险骤增，at-fault 零事故的记录能否在更大基数下保持，是信任的关键变量。 2. <strong>合约收入 ≠ 已确认收入</strong>：6 亿美元为「已签合同、预期分期服务」口径，未披露已确认收入、定价、毛利或是否盈利；取消条款亦未公开。 3. <strong>天气域限制</strong>：暴雨 / 暴雪仍待次年解锁，极端天气下的 MRC 与远程协助频次将考验运营效率。 4. <strong>标准与监管</strong>：美国无统一标准，Gatik 以「独立审计 + 透明」自证，但监管若出台硬性 KPI，可能改变竞争门槛。 5. <strong>依赖大客户</strong>：深度 IT 集成带来粘性，也意味着客户集中度与议价权风险。</p>
+<h2 id="s11">来源与引用</h2>
+<ul><li>访谈逐字稿：The Driverless Digest · Substack，《Scaling Autonomous Trucking with Gatik CEO Gautam Narang》（主持人 Ben Hubbard），<code>https://www.thedriverlessdigest.com/p/scaling-autonomous-trucking-with</code></li></ul>
+<ul><li>融资与运营数据交叉验证：Gatik 2026-08-25 Series D 公告（QIA 与 Koch 领投，2 亿美元；合约收入超 6 亿美元、85,000 单无人驾驶订单、99% 准时交付）；Isuzu 2024 年 3000 万美元投资与自动驾驶底盘合作披露</li></ul>
+<ul><li>同主播关联访谈（本收藏库）：Kodiak AI CEO Don Burnette 谈无人驾驶卡车规模化</li></ul>
+<p>*免责声明：本分析基于公开访谈与融资信息整理，仅供学习与参考，不构成任何投资建议。Gatik 相关运营 / 财务数据以公司官方披露为准。*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../kodiak-don-burnette-driverless-trucking/index.html"><div class="rw"><img loading="lazy" src="../kodiak-don-burnette-driverless-trucking/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">与 Kodiak AI CEO Don Burnette 谈无人驾驶卡车规模化</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a><a class="relcard" href="../wayve-gaia-4-av-simulation/index.html"><div class="rw"><img loading="lazy" src="../wayve-gaia-4-av-simulation/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">Wayve 的 GAIA-4 与世界模型：自动驾驶仿真的未来</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
