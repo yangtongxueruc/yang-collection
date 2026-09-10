@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -358,19 +360,14 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>他对自己角色转变的体感很直白：从「在电脑前写代码的软件工程师」到「必须经营一家公司的人」，除了技术还有融资、投资者关系。这是一个「R&amp;D 阶段做了很久、现在该换件事做」的拐点时刻。</p>
 <h2 id="s1">二、Kodiak 的定位：一套「车辆无关」的实体 AI 系统</h2>
 <p>Kodiak 自我定义为 <strong>physical AI（实体 AI）公司</strong>——写与现实世界交互的软件算法，落地载体恰好是商业运输。关键点在于「通用性」：</p>
-<ul><li><strong>跨车型</strong>：皮卡、F-150 乘用车、中型与重型卡车都跑过同一套系统；</li></ul>
-<ul><li><strong>跨环境</strong>：既做「结构化自主」（道路、车道线、城市、高速），也做「非结构化自主」（土路、越野、雨林、河流）；</li></ul>
-<ul><li><strong>单一 corpus 训练</strong>：不为越野/公路分设产品，全部是「一个 AI 系统」。</li></ul>
+<ul><li><strong>跨车型</strong>：皮卡、F-150 乘用车、中型与重型卡车都跑过同一套系统；</li><li><strong>跨环境</strong>：既做「结构化自主」（道路、车道线、城市、高速），也做「非结构化自主」（土路、越野、雨林、河流）；</li><li><strong>单一 corpus 训练</strong>：不为越野/公路分设产品，全部是「一个 AI 系统」。</li></ul>
 <blockquote>「最棒的是这都是一个人工智能系统……它是根据一组数据进行训练的。我们认为，这最终会使系统作为市场上的产品更加耐用、可靠和强大。」</blockquote>
 <p>这种「模块化、不被单一车型或场景绑定」的设计，是其能同时切入国防、工业、长途三大市场的前提。</p>
 <h2 id="s2">三、三大市场与落地节奏</h2>
 <h3>3.1 工业：二叠纪盆地已部署 35 台 24/7 无人驾驶卡车</h3>
 <p>Kodiak 的工业落地客户是 <strong>Atlas Energy Solutions</strong>（压裂砂公司），在德州西部二叠纪盆地把砂从矿场运到油井，路线 10–40+ 英里，路况是「坑洼遍布、毫无结构」的非结构化世界。</p>
 <p>几个值得记的数字与事实：</p>
-<ul><li>已部署 <strong>35 台</strong>无人驾驶卡车，<strong>24/7 全天候</strong>运行；</li></ul>
-<ul><li>这些车<strong>归客户 Atlas 所有并运营</strong>——Burnette 强调这是比「自己运营车队」高得多的可靠性门槛；</li></ul>
-<ul><li>私道不受公路 8 万磅限制，Atlas 用双挂/三挂可载到 <strong>27.5 万磅</strong>；</li></ul>
-<ul><li>德州 Southern Corridor 已获公私道路运营许可，因此「私道更容易部署」在运营上并非主约束。</li></ul>
+<ul><li>已部署 <strong>35 台</strong>无人驾驶卡车，<strong>24/7 全天候</strong>运行；</li><li>这些车<strong>归客户 Atlas 所有并运营</strong>——Burnette 强调这是比「自己运营车队」高得多的可靠性门槛；</li><li>私道不受公路 8 万磅限制，Atlas 用双挂/三挂可载到 <strong>27.5 万磅</strong>；</li><li>德州 Southern Corridor 已获公私道路运营许可，因此「私道更容易部署」在运营上并非主约束。</li></ul>
 <blockquote>「我们独一无二地很早就进入了这个领域，现在正用一台完全无人驾驶的、昼夜雨淋日晒运行的车辆服务客户。」</blockquote>
 <h3>3.2 长途：目标 2026 年底撤出司机</h3>
 <p>长途是「任何商业自动驾驶公司的终极目标」。Kodiak 已与 Werner、J.B. Hunt、Rail 在美南多州跑货运多年，但目前<strong>驾驶舱内仍有安全员</strong>。公司 100% 聚焦的目标：<strong>2026 年底移除司机</strong>——这一时间表自 2025 年夏上市前就公开立下。</p>
@@ -380,26 +377,18 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>国防与通用动力地面系统（General Dynamics Land Systems）、Textron 等合作，把算法集成到军用地面平台供 DOD 使用。Burnette 认为难点不在技术或安全，而在「产品支柱」——士兵拿到车就想干所有事，系统却要定义清楚「产品到底做什么、谁用、怎么用、怎么培训、怎么实时反馈」。</p>
 <h2 id="s3">四、安全论证：用统计学证明「不劣于人类司机」</h2>
 <p>这是 2026 年底前撤司机的核心门槛（监管他认为已就绪）。Kodiak 的 &quot;safety case&quot; 流程：</p>
-<ul><li>对<strong>所有可能的场景</strong>做文档化证明，系统至少达到人类司机水平；</li></ul>
-<ul><li>行业 launch 的隐性标准即「是否优于人类司机」；</li></ul>
-<ul><li>依赖<strong>实车里程、仿真、功能安全分析</strong>——他直言「这一块 AI 帮不上太多」，没有捷径，必须逐个打勾；</li></ul>
-<ul><li>截至 <strong>2026 年 7 月已完成 91%</strong>，年底冲到 100% 即 launch。</li></ul>
+<ul><li>对<strong>所有可能的场景</strong>做文档化证明，系统至少达到人类司机水平；</li><li>行业 launch 的隐性标准即「是否优于人类司机」；</li><li>依赖<strong>实车里程、仿真、功能安全分析</strong>——他直言「这一块 AI 帮不上太多」，没有捷径，必须逐个打勾；</li><li>截至 <strong>2026 年 7 月已完成 91%</strong>，年底冲到 100% 即 launch。</li></ul>
 <p>关于事故与透明，他的判断很有意思：行业目前<strong>没有统一的政府安全标准</strong>，各公司自定置信门槛；但 L4 系统的价值在于「可毫秒级重建现场」——加速度、速度、谁在做什么、事件序列全部可还原，把人际扯皮的模糊与情绪剥离，厘清责任。</p>
 <blockquote>「人类在退化，机器在上升，它们终将拉开差距。我们会经历部署早期的断奶期，但很快会被接受——这些就是路上最安全的车。」</blockquote>
 <h2 id="s4">五、指标体系：用「付费无人驾驶小时数」穿透遮掩</h2>
 <p>他主张用 <strong>paid driverless hours（付费无人驾驶小时数）</strong> 作为首要 KPI，而非车辆数量：</p>
-<ul><li>已累计 <strong>超 4 万小时</strong>付费无人驾驶运营（环比 +71%）；</li></ul>
-<ul><li>「100 台车 24/7 跑」与「100 台车停地库、一周跑一次」天差地别，只有运行小时能切穿这种遮掩；</li></ul>
-<ul><li>不论长途、工业还是 robotaxi，「人被按时间付费」，所以系统运行并被付费的小时数，才是为客户创造价值的真实指标。</li></ul>
+<ul><li>已累计 <strong>超 4 万小时</strong>付费无人驾驶运营（环比 +71%）；</li><li>「100 台车 24/7 跑」与「100 台车停地库、一周跑一次」天差地别，只有运行小时能切穿这种遮掩；</li><li>不论长途、工业还是 robotaxi，「人被按时间付费」，所以系统运行并被付费的小时数，才是为客户创造价值的真实指标。</li></ul>
 <h2 id="s5">六、竞争观与市场规模判断</h2>
-<ul><li><strong>不视对手为零和</strong>：Kodiak 拥有「全球最大无人驾驶卡车队」（且由客户自有运营），但强调这是 tiny industry 的早期（「第一局上半」），Waymo 的进展对整个行业是利好；行业不再因某一家公司出事而被整体惩罚。</li></ul>
-<ul><li><strong>TAM 判断</strong>：长途货运美国近 <strong>1 万亿美元</strong>、全球 <strong>4 万亿美元</strong>；Robotaxi（Waymo 私有估值超 1000 亿美元）「更像 nice to have，而货运是 need」。他偏好攻击「无聊、肮脏、危险」（dull, dirty, dangerous）的场景。</li></ul>
+<ul><li><strong>不视对手为零和</strong>：Kodiak 拥有「全球最大无人驾驶卡车队」（且由客户自有运营），但强调这是 tiny industry 的早期（「第一局上半」），Waymo 的进展对整个行业是利好；行业不再因某一家公司出事而被整体惩罚。</li><li><strong>TAM 判断</strong>：长途货运美国近 <strong>1 万亿美元</strong>、全球 <strong>4 万亿美元</strong>；Robotaxi（Waymo 私有估值超 1000 亿美元）「更像 nice to have，而货运是 need」。他偏好攻击「无聊、肮脏、危险」（dull, dirty, dangerous）的场景。</li></ul>
 <h2 id="s6">七、关键结论</h2>
-<p>1. <strong>商业化拐点是真拐点</strong>：技术可行已不是瓶颈，产品、客户、市场叙事与规模运营才是新战场。 2. <strong>「车辆无关 + 单一 AI 系统」是 Kodiak 的差异化底座</strong>，使其能横跨国防/工业/长途。 3. <strong>工业场景已实质规模化</strong>（35 台客户自有、24/7），长途以「2026 年底撤司机」为明确里程碑，安全论证 91% 完成度是可跟踪的硬指标。 4. <strong>指标话语权重要</strong>：用「付费无人驾驶小时数」而非车辆数，能更诚实地反映商业化进度——对一家上市公司尤其关键。 5. <strong>长期 TAM 叙事偏向货运</strong>：在 Burnette 的框架里，长途卡车的结构性需求使其市场规模终将大于 Robotaxi。</p>
+<ol><li><strong>商业化拐点是真拐点</strong>：技术可行已不是瓶颈，产品、客户、市场叙事与规模运营才是新战场。</li><li><strong>「车辆无关 + 单一 AI 系统」是 Kodiak 的差异化底座</strong>，使其能横跨国防/工业/长途。</li><li><strong>工业场景已实质规模化</strong>（35 台客户自有、24/7），长途以「2026 年底撤司机」为明确里程碑，安全论证 91% 完成度是可跟踪的硬指标。</li><li><strong>指标话语权重要</strong>：用「付费无人驾驶小时数」而非车辆数，能更诚实地反映商业化进度——对一家上市公司尤其关键。</li><li><strong>长期 TAM 叙事偏向货运</strong>：在 Burnette 的框架里，长途卡车的结构性需求使其市场规模终将大于 Robotaxi。</li></ol>
 <h2 id="s7">八、局限与说明</h2>
-<ul><li>本分析基于节目<strong>官方逐字稿</strong>（Substack Transcript），非语音识别产物；个别专名（如转录稿中的 &quot;shredded tanks&quot;）可能为原文转录痕，已按语境标注。</li></ul>
-<ul><li>文中「4 万小时」「91% 完成度」「2026 年底撤司机」等均为<strong>嘉宾口径、截至 2026-07/2026-08</strong> 的表述，引用时请以 Kodiak 后续官方披露为准。</li></ul>
-<ul><li>主持人 Harry Campbell 为 The Rideshare Guy 创始人；Burnette 更正上市地点为 <strong>NASDAQ</strong>（非 NYSE）。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../nvidia-alpamayo-accelerating/index.html"><div class="rw"><img loading="lazy" src="../nvidia-alpamayo-accelerating/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / Podcast</div><div class="rt">NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a><a class="relcard" href="../wayve-gaia-4-av-simulation/index.html"><div class="rw"><img loading="lazy" src="../wayve-gaia-4-av-simulation/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">Wayve 的 GAIA-4 与世界模型：自动驾驶仿真的未来</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li>本分析基于节目<strong>官方逐字稿</strong>（Substack Transcript），非语音识别产物；个别专名（如转录稿中的 &quot;shredded tanks&quot;）可能为原文转录痕，已按语境标注。</li><li>文中「4 万小时」「91% 完成度」「2026 年底撤司机」等均为<strong>嘉宾口径、截至 2026-07/2026-08</strong> 的表述，引用时请以 Kodiak 后续官方披露为准。</li><li>主持人 Harry Campbell 为 The Rideshare Guy 创始人；Burnette 更正上市地点为 <strong>NASDAQ</strong>（非 NYSE）。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../gatik-gautam-narang-driverless-trucking/index.html"><div class="rw"><img loading="lazy" src="../gatik-gautam-narang-driverless-trucking/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">与 Gatik CEO Gautam Narang 谈自动驾驶卡车规模化</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a><a class="relcard" href="../nvidia-alpamayo-accelerating/index.html"><div class="rw"><img loading="lazy" src="../nvidia-alpamayo-accelerating/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / Podcast</div><div class="rt">NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

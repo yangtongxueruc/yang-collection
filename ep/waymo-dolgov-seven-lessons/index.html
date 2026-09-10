@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -354,17 +356,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote>来源：*YouTube · Startup School*（Y Combinator）主题演讲 · 主讲 <strong>Dmitri Dolgov</strong>（Waymo 联合 CEO / 联合 CTO，2009 年起主导 Waymo 驾驶栈）</blockquote>
 <blockquote>时长：约 49 分钟 · 中英对照逐字稿见同目录 <code>bilingual_transcript.md</code></blockquote>
 <h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：物理世界 AI（自动驾驶、机器人等）与数字 AI 之间隔着四道结构性鸿沟，而把 demo 变成真正能上路的产品的关键，是<strong>对&quot;九&quot;（可靠性指数）的敬畏</strong>和一套由评估驱动的研发飞轮。</li></ul>
-<ul><li><strong>最反直觉的判断</strong>：一个能跑的 demo，最多只占全部工作的 <strong>1%</strong>；剩下 99% 是那一长串&quot;九&quot;——每多一个&quot;九&quot;所需努力约翻十倍。</li></ul>
-<ul><li><strong>Waymo 的护城河不是模型，而是&quot;评估 + 指标 + 安全框架&quot;</strong>：模型可以被泄露、算法可以被复制，但数亿英里全自动驾驶 + 证据级公开审计，极难复制。</li></ul>
-<ul><li><strong>安全成绩单</strong>：基于 2.2 亿+ 英里全自动驾驶，在致人重伤的事故上比人类驾驶员好约 <strong>17 倍</strong>，相当于每 8 天防止一起重伤。</li></ul>
+<ul><li><strong>一句话定位</strong>：物理世界 AI（自动驾驶、机器人等）与数字 AI 之间隔着四道结构性鸿沟，而把 demo 变成真正能上路的产品的关键，是<strong>对&quot;九&quot;（可靠性指数）的敬畏</strong>和一套由评估驱动的研发飞轮。</li><li><strong>最反直觉的判断</strong>：一个能跑的 demo，最多只占全部工作的 <strong>1%</strong>；剩下 99% 是那一长串&quot;九&quot;——每多一个&quot;九&quot;所需努力约翻十倍。</li><li><strong>Waymo 的护城河不是模型，而是&quot;评估 + 指标 + 安全框架&quot;</strong>：模型可以被泄露、算法可以被复制，但数亿英里全自动驾驶 + 证据级公开审计，极难复制。</li><li><strong>安全成绩单</strong>：基于 2.2 亿+ 英里全自动驾驶，在致人重伤的事故上比人类驾驶员好约 <strong>17 倍</strong>，相当于每 8 天防止一起重伤。</li></ul>
 <h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>规模</strong>：每周约 50 万次行程、400+ 万英里全自动驾驶，覆盖美国 15 座城市；累计 2000 万+ 行程、2 亿+ 英里。</li></ul>
-<ul><li><strong>时间线</strong>：2009 年立项 → 约 2010 年达成&quot;能力完备&quot;的 demo → 又约 10 年才开始提供服务 → 再 5 年扩到每周 50 万次 → 如今指数级扩张（第一个 1 亿英里用 15 年，下一个 1 亿英里只用约 7 个月）。</li></ul>
-<ul><li><strong>四道鸿沟（物理 AI vs 数字 AI）</strong>：错误代价（生命 vs token）、延迟（毫秒级 vs 秒级）、数据（无&quot;物理世界互联网&quot;）、验证（上线即高置信度 vs 先发布再迭代）。</li></ul>
-<ul><li><strong>安全曲线见顶</strong>：弱感知（纯视觉）会让安全曲线过早趋于平缓，达不到&quot;强超人&quot;所需的长尾覆盖。</li></ul>
-<ul><li><strong>多模态感知</strong>：摄像头（高分辨率/色彩，被动，暗光与眩光退化）+ 激光雷达（直接测 3D 结构，主动，全天候）+ 雷达（穿透雾雨雪，多普勒测速）。</li></ul>
-<ul><li><strong>硬件代际</strong>：已到第六代 Waymo Driver 硬件套件；每代在提升能力的同时大幅降低成本。</li></ul>
+<ul><li><strong>规模</strong>：每周约 50 万次行程、400+ 万英里全自动驾驶，覆盖美国 15 座城市；累计 2000 万+ 行程、2 亿+ 英里。</li><li><strong>时间线</strong>：2009 年立项 → 约 2010 年达成&quot;能力完备&quot;的 demo → 又约 10 年才开始提供服务 → 再 5 年扩到每周 50 万次 → 如今指数级扩张（第一个 1 亿英里用 15 年，下一个 1 亿英里只用约 7 个月）。</li><li><strong>四道鸿沟（物理 AI vs 数字 AI）</strong>：错误代价（生命 vs token）、延迟（毫秒级 vs 秒级）、数据（无&quot;物理世界互联网&quot;）、验证（上线即高置信度 vs 先发布再迭代）。</li><li><strong>安全曲线见顶</strong>：弱感知（纯视觉）会让安全曲线过早趋于平缓，达不到&quot;强超人&quot;所需的长尾覆盖。</li><li><strong>多模态感知</strong>：摄像头（高分辨率/色彩，被动，暗光与眩光退化）+ 激光雷达（直接测 3D 结构，主动，全天候）+ 雷达（穿透雾雨雪，多普勒测速）。</li><li><strong>硬件代际</strong>：已到第六代 Waymo Driver 硬件套件；每代在提升能力的同时大幅降低成本。</li></ul>
 <h2 id="s2">🗝️ 关键金句（原文摘录，附时间戳）</h2>
 <blockquote>[06:52] *&quot;A working demo is 1% at best of the work that you have to do. The many nines of performance, the many nines of reliability that follow, that&#x27;s where the real work happens.&quot;*（一个能跑的 demo 最多只占你全部工作的 1%；之后那许许多多个&quot;九&quot;级的性能与可靠性，才是真正的工作所在。）</blockquote>
 <blockquote>[11:34] *&quot;reliability and performance live on this exponential ladder of nines... every next nine you want to add takes about ten times more effort.&quot;*（可靠性与性能活在这架&quot;九&quot;的指数阶梯上……每多要一个&quot;九&quot;，所需努力约翻十倍。）</blockquote>
@@ -377,7 +371,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote>[46:09] *&quot;the Waymo Driver is about 17 times better than human drivers when it comes to crashes that cause serious injury.&quot;*（在致人重伤的事故上，Waymo Driver 比人类驾驶员好约 17 倍。）</blockquote>
 <h2 id="s3">一、为什么物理 AI 截然不同：四道鸿沟</h2>
 <p>Dolgov 开篇就点明，物理 AI 不是&quot;把大模型装上车&quot;那么简单。它与数字 AI 有四个本质差异：</p>
-<p>1. <strong>错误代价</strong>：语言模型答错，代价是一次重试；一辆车的误判，代价是生命，没有&quot;撤销&quot;按钮。 2. <strong>延迟</strong>：高速上一秒移动约百英尺，决策必须在毫秒级、在车端计算单元上完成。 3. <strong>数据</strong>：数字 AI 有整个互联网做预训练语料；物理世界没有数字化的&quot;互联网&quot;。 4. <strong>验证</strong>：数字产品可以&quot;先发布、用户帮你找边界情况&quot;；物理 AI 在开出第一英里前就必须具备极高安全置信度。</p>
+<ol><li><strong>错误代价</strong>：语言模型答错，代价是一次重试；一辆车的误判，代价是生命，没有&quot;撤销&quot;按钮。</li><li><strong>延迟</strong>：高速上一秒移动约百英尺，决策必须在毫秒级、在车端计算单元上完成。</li><li><strong>数据</strong>：数字 AI 有整个互联网做预训练语料；物理世界没有数字化的&quot;互联网&quot;。</li><li><strong>验证</strong>：数字产品可以&quot;先发布、用户帮你找边界情况&quot;；物理 AI 在开出第一英里前就必须具备极高安全置信度。</li></ol>
 <p>由此引出一个朴素却常被忽视的结论：<strong>面对原子而不是比特时，&quot;快速行动、打破陈规&quot;要改成&quot;快速行动、安全交付&quot;。</strong></p>
 <h2 id="s4">二、经验一：Demo 与产品之间隔着一条鸿沟（&quot;1% 法则&quot;）</h2>
 <p>Waymo 在 2010 年前后就&quot;能力完备&quot;——白天黑夜、行人骑行者、施工区、高速地面都能开。但真正规模化服务用了约 15 年。Dolgov 把这条鸿沟量化成一句话：<strong>能跑的 demo 最多占 1%，剩下 99% 是可靠性与性能的&quot;九&quot;。</strong></p>
@@ -391,20 +385,13 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s6">四、经验三：踏准每一波技术浪潮（统一 &gt; 炫技）</h2>
 <p>技术迭代极快。Waymo 几乎在每一波 AI 突破上都重建了 Driver：2013 年卷积网络做感知，2017 年重注 Transformer（感知 + 行为预测/规划），如今用视觉语言模型与前沿世界模型。</p>
 <p>Dolgov 强调真正难练的肌肉不是&quot;用上新模型&quot;（这相对直接），而是：</p>
-<ul><li><strong>把尖端研究带进安全至上的生产环境而不回退</strong>；</li></ul>
-<ul><li><strong>在加能力的同时降低碎片化与复杂度</strong>（统一 &gt; 炫技）；</li></ul>
-<ul><li><strong>在多波创新中反复做到这一点</strong>。</li></ul>
+<ul><li><strong>把尖端研究带进安全至上的生产环境而不回退</strong>；</li><li><strong>在加能力的同时降低碎片化与复杂度</strong>（统一 &gt; 炫技）；</li><li><strong>在多波创新中反复做到这一点</strong>。</li></ul>
 <p>两条建议：① 启动新技术项目前，先想清楚成功后的完整路径，避免&quot;成功后走进死胡同&quot;；② 不只问&quot;它给了我什么能力&quot;，还要问&quot;它简化了技术栈吗？带来的是统一还是碎片化？&quot;——把上线门槛设为<strong>既要突破性性能，又要彻底简化与统一</strong>。</p>
 <h2 id="s7">五、Waymo 基础模型：架构拆解</h2>
 <p>核心是 <strong>Waymo Foundation Model——多模态世界—动作—语言模型</strong>：</p>
-<ul><li><strong>多模态</strong>：处理摄像头/激光雷达/雷达输入；</li></ul>
-<ul><li><strong>世界模型</strong>：理解物理、动力学、社会与语义；</li></ul>
-<ul><li><strong>动作模型</strong>：理解自身动作对世界的效应，能分辨好坏；</li></ul>
-<ul><li><strong>语言对齐</strong>：从视觉语言模型解锁通用世界知识，补长尾语义。</li></ul>
+<ul><li><strong>多模态</strong>：处理摄像头/激光雷达/雷达输入；</li><li><strong>世界模型</strong>：理解物理、动力学、社会与语义；</li><li><strong>动作模型</strong>：理解自身动作对世界的效应，能分辨好坏；</li><li><strong>语言对齐</strong>：从视觉语言模型解锁通用世界知识，补长尾语义。</li></ul>
 <p>架构为编码器—解码器端到端，采用<strong>系统一/系统二（快思考/慢思考）</strong>：</p>
-<ul><li><strong>快思考</strong>：融合原始传感数据，毫秒级做安全攸关决策（如行人突入瞬间刹车）——&quot;蜥蜴脑&quot;，处理几何任务；</li></ul>
-<ul><li><strong>慢思考</strong>：负责复杂语义/场景理解（如识别&quot;路边着火的车&quot;的语义，决定换路线），可承受更多延迟换更高推理；</li></ul>
-<ul><li><strong>生成（解码器）</strong>：理解并产出行为，做预测与规划。</li></ul>
+<ul><li><strong>快思考</strong>：融合原始传感数据，毫秒级做安全攸关决策（如行人突入瞬间刹车）——&quot;蜥蜴脑&quot;，处理几何任务；</li><li><strong>慢思考</strong>：负责复杂语义/场景理解（如识别&quot;路边着火的车&quot;的语义，决定换路线），可承受更多延迟换更高推理；</li><li><strong>生成（解码器）</strong>：理解并产出行为，做预测与规划。</li></ul>
 <p>该模型驱动第五/六代硬件、捷豹 I-PACE、Ojai、现代 Ioniq 等多平台；未来扩展至卡车、私家车。把复杂度上移到共享大基础模型，车端专门化层因此很轻量。</p>
 <h2 id="s8">六、经验四：苦涩的教训依然成立（结构增强端到端）</h2>
 <p>Richard Sutton 2019 年提出的&quot;苦涩的教训&quot;——能随算力/数据扩展的通用方法终将胜出——在 Waymo 每一波突破中都成立。Waymo 押注高容量基础模型，得到更优扩展定律，再蒸馏到车端小模型。</p>
@@ -416,9 +403,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote>经验：闭环仿真对评估是绝对必需的，对训练也极有价值。你需要高度真实、大规模的仿真。</blockquote>
 <h2 id="s10">八、经验六：构建 AI 飞轮（智能体 + 仿真器 + 批评者）</h2>
 <p>复杂问题不能&quot;造个模型就收工&quot;，要建<strong>生态系统 + 飞轮</strong>。需要三个 AI：</p>
-<ul><li><strong>智能体</strong>（开车的 Driver）；</li></ul>
-<ul><li><strong>仿真器</strong>（虚拟 playground）；</li></ul>
-<ul><li><strong>批评者（critic）</strong>：严格评估并告诉智能体如何改进。</li></ul>
+<ul><li><strong>智能体</strong>（开车的 Driver）；</li><li><strong>仿真器</strong>（虚拟 playground）；</li><li><strong>批评者（critic）</strong>：严格评估并告诉智能体如何改进。</li></ul>
 <p>三者底层推理/生成能力共享，故建立在<strong>同一基础世界模型</strong>上。飞轮：真实部署产生数据 → 夯实仿真器 → 生成更难的边界情况供批评者打分、供智能体学习 → 智能体更聪明 → 再部署产生更多数据。但飞轮可能原地空转或转向错误，<strong>必须用指标来引导方向</strong>。</p>
 <h2 id="s11">九、经验七：评测是你的战略护城河</h2>
 <p>最后一条、也是 Dolgov 最强调的一条：<strong>先造评估，再造技术；先造评估与指标，再造产品</strong>。无法定量定义&quot;足够好&quot;，就只是在 demo 上迭代。模型架构已广为人知、新点子传播飞快，数据重要但没有好指标就是&quot;盲飞&quot;。</p>
@@ -428,19 +413,13 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <table><thead><tr><th>经验</th><th>核心动作</th><th>解决的&quot;九&quot;问题</th></tr></thead><tbody><tr><td>一 · 1% 法则</td><td>别把 demo 当产品</td><td>承认长尾才是全部问题</td></tr><tr><td>二 · 选对曲线</td><td>按所需&quot;九&quot;选架构</td><td>避免技术在达标前见顶</td></tr><tr><td>三 · 技术浪潮</td><td>统一而非碎片化</td><td>持续乘上突破而不回退</td></tr><tr><td>四 · 苦涩教训</td><td>结构增强端到端</td><td>在扩展与可验证间取平衡</td></tr><tr><td>五 · 仿真器</td><td>闭环高保真世界模型</td><td>安全评估反事实、造罕见场景</td></tr><tr><td>六 · AI 飞轮</td><td>智能体+仿真器+批评者</td><td>数据→更真实→更聪明 的复利</td></tr><tr><td>七 · 评测护城河</td><td>评估先于产品</td><td>用指标引导飞轮方向</td></tr></tbody></table>
 <p>这些经验单独都不惊人，但<strong>复合叠加</strong>才让 Waymo 取得强超人安全表现。</p>
 <h2 id="s13">🔗 关联阅读</h2>
-<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：从&quot;运营/远程协助&quot;视角看物理 AI 的脆弱面，与本期&quot;安全框架&quot;互补。</li></ul>
-<ul><li>[Waymo 的数据揭示了：到底谁在坐 Robotaxi](../../waymo-data-who-rides-robotaxis/)：从用户与城市层面看自动驾驶落地，与本期&quot;技术侧打法&quot;互补。</li></ul>
-<ul><li>[AI for Autonomous Driving at Scale（Waymo @ NeurIPS 2024）](../../neurips-2024-av-at-scale/)：更偏论文/技术细节的 Waymo 驾驶栈，可对照本期&quot;基础模型&quot;一节的工程化表述。</li></ul>
+<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：从&quot;运营/远程协助&quot;视角看物理 AI 的脆弱面，与本期&quot;安全框架&quot;互补。</li><li>[Waymo 的数据揭示了：到底谁在坐 Robotaxi](../../waymo-data-who-rides-robotaxis/)：从用户与城市层面看自动驾驶落地，与本期&quot;技术侧打法&quot;互补。</li><li>[AI for Autonomous Driving at Scale（Waymo @ NeurIPS 2024）](../../neurips-2024-av-at-scale/)：更偏论文/技术细节的 Waymo 驾驶栈，可对照本期&quot;基础模型&quot;一节的工程化表述。</li></ul>
 <h2 id="s14">👥 适合谁听</h2>
-<ul><li>自动驾驶 / 机器人 / 物理 AI 方向的创业者与工程师；</li></ul>
-<ul><li>关注&quot;demo→产品&quot;鸿沟、可靠性工程、仿真与评测体系的技术负责人；</li></ul>
-<ul><li>想理解 Waymo 技术战略与护城河的投资人；</li></ul>
-<ul><li>任何被&quot;AI 进入物理世界&quot;叙事吸引、又想看清水有多深的人。</li></ul>
+<ul><li>自动驾驶 / 机器人 / 物理 AI 方向的创业者与工程师；</li><li>关注&quot;demo→产品&quot;鸿沟、可靠性工程、仿真与评测体系的技术负责人；</li><li>想理解 Waymo 技术战略与护城河的投资人；</li><li>任何被&quot;AI 进入物理世界&quot;叙事吸引、又想看清水有多深的人。</li></ul>
 <h2 id="s15">🔚 收尾与局限</h2>
 <p>Dolgov 在结尾把物理 AI 比作&quot;几年前的数字 AI&quot;：生成式世界模型、架构、可负担算力与感知、被验证的扩展定律、规模运行中的产品，要素齐备。他认为<strong>下一个十年属于物理世界 AI</strong>，但提醒创业者&quot;记住你在为谁而造&quot;——使命与客户才是要紧事，否则技术只是科学项目。</p>
 <h2 id="s16">局限与说明</h2>
-<ul><li>本分析主笔时已从逐字稿抽取关键原文金句（已标注 <code>[mm:ss]</code> 时间戳，依据 YouTube 官方章节线性插值），<strong>完整逐字对照见 <code>bilingual_transcript.md</code></strong>，引用时建议对照英文原文。</li></ul>
-<ul><li>英文为官方逐字稿、中文为人工校译；专业术语（如 nine/九、open loop/开环、closed loop/闭环、bitter lesson/苦涩的教训、structure-augmented end-to-end/结构增强端到端）已做本地化，专业表述以英文为准。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../uber-ceo-ai-av/index.html"><div class="rw"><img loading="lazy" src="../uber-ceo-ai-av/cover.jpg" alt=""></div><div class="rb"><div class="rs">Invest Like The Best · Podcast</div><div class="rt">Uber CEO 谈 AI、自动驾驶与出行的未来</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li>本分析主笔时已从逐字稿抽取关键原文金句（已标注 <code>[mm:ss]</code> 时间戳，依据 YouTube 官方章节线性插值），<strong>完整逐字对照见 <code>bilingual_transcript.md</code></strong>，引用时建议对照英文原文。</li><li>英文为官方逐字稿、中文为人工校译；专业术语（如 nine/九、open loop/开环、closed loop/闭环、bitter lesson/苦涩的教训、structure-augmented end-to-end/结构增强端到端）已做本地化，专业表述以英文为准。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../wayve-gaia-4-av-simulation/index.html"><div class="rw"><img loading="lazy" src="../wayve-gaia-4-av-simulation/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">Wayve 的 GAIA-4 与世界模型：自动驾驶仿真的未来</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

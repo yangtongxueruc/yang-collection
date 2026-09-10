@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -357,12 +359,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote><strong>访谈时间：</strong> 2026 年 5 月前后</blockquote>
 <hr>
 <h2 id="s0">📌 核心速览（TL;DR）</h2>
-<ul><li><strong>战略本质没变：</strong> Uber 是一家&quot;双边平台&quot;，AV 威胁的是供给侧的价差；Uber 要做的始终是让多家 AV 供应商彼此压价，保住那道利润空间。</li></ul>
-<ul><li><strong>变的是紧迫感：</strong> 2024 年 Waymo 在旧金山上线，成为首个可信的纯 AV 替代者；同期投资者电话会上 <strong>约 71% 的问题都与 AV 相关</strong>，把战略从&quot;稳步推进&quot;改写成&quot;现在就得成&quot;。</li></ul>
-<ul><li><strong>护城河在&quot;运营层&quot;不在&quot;造车&quot;：</strong> 通过 <strong>Uber Autonomous Solutions（UAS）</strong> 包揽 depot/维护/充电，把 AV 公司锁定在自己生态里。</li></ul>
-<ul><li><strong>&quot;特洛伊木马&quot;暴露软肋：</strong> Uber 敢聚合 Waymo 的供给，却不敢给 Waymo 独立入口，怕&quot;用户意图被夺走&quot;。</li></ul>
-<ul><li><strong>Waymo 的最大风险是&quot;车不够&quot;：</strong> 技术领先 + 3–4 年独家窗口，却只铺了约 <strong>3,000 台车</strong>，规模远不及 Uber/Lyft 单一城市日单量。</li></ul>
-<ul><li><strong>被低估的战场是配送：</strong> 当点餐比做饭便宜（中国样本：上海/北京人均下单是纽约的 <strong>5 倍</strong>），需求被引爆，机器人是压低成本的核心杠杆。</li></ul>
+<ul><li><strong>战略本质没变：</strong> Uber 是一家&quot;双边平台&quot;，AV 威胁的是供给侧的价差；Uber 要做的始终是让多家 AV 供应商彼此压价，保住那道利润空间。</li><li><strong>变的是紧迫感：</strong> 2024 年 Waymo 在旧金山上线，成为首个可信的纯 AV 替代者；同期投资者电话会上 <strong>约 71% 的问题都与 AV 相关</strong>，把战略从&quot;稳步推进&quot;改写成&quot;现在就得成&quot;。</li><li><strong>护城河在&quot;运营层&quot;不在&quot;造车&quot;：</strong> 通过 <strong>Uber Autonomous Solutions（UAS）</strong> 包揽 depot/维护/充电，把 AV 公司锁定在自己生态里。</li><li><strong>&quot;特洛伊木马&quot;暴露软肋：</strong> Uber 敢聚合 Waymo 的供给，却不敢给 Waymo 独立入口，怕&quot;用户意图被夺走&quot;。</li><li><strong>Waymo 的最大风险是&quot;车不够&quot;：</strong> 技术领先 + 3–4 年独家窗口，却只铺了约 <strong>3,000 台车</strong>，规模远不及 Uber/Lyft 单一城市日单量。</li><li><strong>被低估的战场是配送：</strong> 当点餐比做饭便宜（中国样本：上海/北京人均下单是纽约的 <strong>5 倍</strong>），需求被引爆，机器人是压低成本的核心杠杆。</li></ul>
 <p><strong>关键数据速记：</strong> 投资者 AV 提问率 ≈ 71% ｜ Waymo 已部署 ≈ 3,000 台 ｜ Zoox 目标量产 ≈ 10,000 台/年 ｜ Tesla 日产整车 ≈ 5,000 台 ｜ Waymo 周单量 ≈ 50 万次 vs Uber+Lyft 纽约单城日合计 ≈ 70 万次 ｜ 中国人均下单 ≈ 纽约 5 倍。</p>
 <hr>
 <h2 id="s1">🗝️ 关键金句（原文摘录）</h2>
@@ -377,8 +374,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <hr>
 <h2 id="s2">一、起点：Uber 是一家&quot;双边平台&quot;，但两侧逻辑完全不同</h2>
 <p>要理解 Uber 的 AV 战略，Rojas 认为必须先拆开它的&quot;双边平台&quot;结构：</p>
-<ul><li><strong>需求侧（demand side）是软件生意。</strong> 做出一款产品后，每个新增用户的边际成本趋近于零。胜负靠的是&quot;需求与意图的占有&quot;——当用户饿肚子、赶时间、赴约晚点时，脑子里第一个蹦出来的是&quot;叫个 Uber&quot;，Uber 就赢了。</li></ul>
-<ul><li><strong>供给侧（supply side）是物流 / 运营市场。</strong> 胜负靠的是&quot;供给的流动性&quot;（liquidity）——要有足够多的司机在线。但每拉新一名司机都有成本（背景审查、激励），Uber 的利润来自<strong>需求端愿意支付的最高价</strong>与<strong>供给端愿意接单的最低价</strong>之间的差价（spread）。</li></ul>
+<ul><li><strong>需求侧（demand side）是软件生意。</strong> 做出一款产品后，每个新增用户的边际成本趋近于零。胜负靠的是&quot;需求与意图的占有&quot;——当用户饿肚子、赶时间、赴约晚点时，脑子里第一个蹦出来的是&quot;叫个 Uber&quot;，Uber 就赢了。</li><li><strong>供给侧（supply side）是物流 / 运营市场。</strong> 胜负靠的是&quot;供给的流动性&quot;（liquidity）——要有足够多的司机在线。但每拉新一名司机都有成本（背景审查、激励），Uber 的利润来自<strong>需求端愿意支付的最高价</strong>与<strong>供给端愿意接单的最低价</strong>之间的差价（spread）。</li></ul>
 <p>在这个框架下，<strong>自动驾驶（AV）的出现直接威胁的是供给侧的&quot;价差&quot;</strong>：</p>
 <blockquote>今天 Uber 平台上有成千上万名人类司机彼此竞争，这保证了低价格。但如果你把&quot;成百上千竞争的司机&quot;换成&quot;少数几个 AV 供应商&quot;，这些供应商的议价权会骤然上升，需求与供给之间的价差被压缩，Uber 的盈利空间也就被挤压。</blockquote>
 <p>所以 Rojas 一针见血地指出：<strong>Uber 的 AV 战略从第一天起就是——维持 AV 供给侧的充分竞争，让多家供应商彼此压价，从而保住那道价差。</strong> 这与 Uber 过去对人类司机的策略一脉相承（他用 Trip Radar 举例：把 10 个订单同时推给司机，让司机自己挑，Uber 总能以更低成本撮合）。战略本身&quot;没有变&quot;，变的是<strong>紧迫感</strong>。</p>
@@ -392,7 +388,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <hr>
 <h2 id="s4">三、Uber 的应对：合作 + 投资 + UAS 运营层&quot;锁定&quot;</h2>
 <p>面对&quot;只有 Waymo 一个可信 AV 方案&quot;的焦虑，Uber 做了什么？Rojas 总结出一套连贯动作：</p>
-<p>1. <strong>识别并清除行业 blocker。</strong> Uber 自己发过两份 AV 行业深度分析（一份 2025 年初、一份 2026 年），核心结论是&quot;AV 行业有个 OEM 问题——它们没有车&quot;。于是 Uber 去和 <strong>Lucid</strong> 等整车厂签合作；发现有些公司还有&quot;资金问题&quot;，就直接下场投资（<strong>Nuro、Wayve、Lucid</strong> 等生态）。 2. <strong>用运营层把 AV 公司&quot;锁&quot;在自己身上。</strong> 这就是 <strong>Uber Autonomous Solutions（UAS）</strong>：Uber 包揽 depot（场站）、support、maintenance、charging 等&quot;围绕车辆的一切&quot;。逻辑是——AV 公司若把部署周边的事都交给 Uber，就会更依赖 Uber，也更愿意给出一个有竞争力的低价。</p>
+<ol><li><strong>识别并清除行业 blocker。</strong> Uber 自己发过两份 AV 行业深度分析（一份 2025 年初、一份 2026 年），核心结论是&quot;AV 行业有个 OEM 问题——它们没有车&quot;。于是 Uber 去和 <strong>Lucid</strong> 等整车厂签合作；发现有些公司还有&quot;资金问题&quot;，就直接下场投资（<strong>Nuro、Wayve、Lucid</strong> 等生态）。</li><li><strong>用运营层把 AV 公司&quot;锁&quot;在自己身上。</strong> 这就是 <strong>Uber Autonomous Solutions（UAS）</strong>：Uber 包揽 depot（场站）、support、maintenance、charging 等&quot;围绕车辆的一切&quot;。逻辑是——AV 公司若把部署周边的事都交给 Uber，就会更依赖 Uber，也更愿意给出一个有竞争力的低价。</li></ol>
 <blockquote>&quot;Uber 想要的是：充足的供给时长（abundant supply hours）、可靠的供给、以及低价格。&quot; 而 UAS 正是把&quot;多家供应商竞争低价&quot;这个终极目标落到运营实处的抓手。</blockquote>
 <p>这里有个精妙的博弈观：Rojas 在开场就抛出核心命题——</p>
 <blockquote><strong>&quot;不与 Uber 合作，你就逼着 Uber 去重金投资你的竞争对手。&quot;</strong></blockquote>
@@ -400,8 +396,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <hr>
 <h2 id="s5">四、模型之争：垂直整合 vs 聚合，以及&quot;混合模式&quot;的合理性</h2>
 <p>围绕 Waymo（垂直整合、第一方）与 Uber（聚合供需的市场模式）谁会赢，Rojas 给出了一个更细腻的视角——他把它拆成&quot;<strong>固定车队 vs 波动需求</strong>&quot;的矛盾：</p>
-<ul><li>Waymo 的车队是<strong>固定投资</strong>，但需求在日内、日间、月月间剧烈波动。于是 Waymo 被迫二选一：要么车队小、利用率高，但高峰等待时间与价格飙升；要么车队大、却要承受大量闲置。</li></ul>
-<ul><li><strong>混合模式（hybrid）</strong> 更合理：在 UberX 里，用户可能匹配到 AV，也可能匹配到人类司机；高峰期用人类司机补位，平峰期 AV 顶上。Rojas 认为未来 10–30 年 hybrid 都更合理，<strong>只有到 AV 成本真的极低、闲置车的成本不再是问题时，纯 AV 平台才有意义。</strong></li></ul>
+<ul><li>Waymo 的车队是<strong>固定投资</strong>，但需求在日内、日间、月月间剧烈波动。于是 Waymo 被迫二选一：要么车队小、利用率高，但高峰等待时间与价格飙升；要么车队大、却要承受大量闲置。</li><li><strong>混合模式（hybrid）</strong> 更合理：在 UberX 里，用户可能匹配到 AV，也可能匹配到人类司机；高峰期用人类司机补位，平峰期 AV 顶上。Rojas 认为未来 10–30 年 hybrid 都更合理，<strong>只有到 AV 成本真的极低、闲置车的成本不再是问题时，纯 AV 平台才有意义。</strong></li></ul>
 <p>主持人补充了现实证据：在旧金山、洛杉矶，高峰期 Waymo 的 ETA 常达 10–20 分钟，价格甚至高于 Uber 和 Lyft Black——固定车队的&quot;供给天花板&quot;在尖峰时段暴露无遗。</p>
 <hr>
 <h2 id="s6">五、&quot;特洛伊木马&quot;策略：Uber 为何不敢做&quot;纯 AV 选项&quot;</h2>
@@ -413,18 +408,14 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s7">六、Waymo 的&quot;车&quot;问题：技术领先，却错失三年窗口</h2>
 <p>Rojas 对 Waymo 下了一个尖锐判断：<strong>Waymo 有出色的自动驾驶技术，却有一个&quot;车&quot;的问题——它没有足够的车。</strong></p>
 <p>他的&quot;重大失误论&quot;：Waymo 曾有 <strong>3–4 年的独家窗口期</strong>（市场上几乎没有其他可信 AV 供应商），但到现在只部署了约 <strong>3,000 台车</strong>。对比之下——</p>
-<ul><li><strong>Zoox</strong> 目标量产爬坡后每年 10,000 台；</li></ul>
-<ul><li><strong>Tesla</strong> 日产约 5,000 台整车；</li></ul>
-<ul><li>中国有三家公司已在运营。</li></ul>
+<ul><li><strong>Zoox</strong> 目标量产爬坡后每年 10,000 台；</li><li><strong>Tesla</strong> 日产约 5,000 台整车；</li><li>中国有三家公司已在运营。</li></ul>
 <blockquote>&quot;它们本该更激进，现在就该有 1 万、2 万、3 万台车，建立一道后来者难以逾越的领先优势。&quot;</blockquote>
 <p>主持人用数据印证了这点：Waymo 周单量约 50 万次，而 Uber + Lyft 仅在纽约一个城市每天就合计约 70 万次——Waymo 在全美的体量不过是 Uber/Lyft 单一市场的零头。增长曲线虽&quot;向右上&quot;，但<strong>绝对规模仍受限于车辆供给</strong>。</p>
 <p>Rojas 还从 Waymo 的角度给了解释：既然车不够，把有限的车部署在自己第一方平台（及与 Lyft 的合作）上 ROI 最高。但他预判，当车辆不再受限时，Waymo 应该让车出现在每一个可用平台——&quot;更多行程 → 更多收入 → 更好工程师 → 更好产品&quot;才是飞轮。他还顺带预言：<strong>Lyft 与 Waymo 是天作之合</strong>（Lyft 市值约 50 亿美元，对 Google 而言是笔极小的交易），双方都能从&quot;不排他、多平台&quot;中获益。</p>
 <hr>
 <h2 id="s8">七、被忽视的战场：自动驾驶配送与厨房机器人</h2>
 <p>访谈后半段转向了&quot;投资人几乎不问、却可能更具爆发力&quot;的自动驾驶配送。</p>
-<ul><li><strong>叙事错位：</strong> 投资者 100% 的问题都围着出行（mobility）转，几乎没人问 Uber 的自动驾驶配送。但 Rojas 点出 Uber 的&quot;输不起&quot;心态——<strong>DoorDash</strong> 在该领域极其激进，Uber 即便优先级不高，也绝不会把这块让出去。</li></ul>
-<ul><li><strong>落地远比想象复杂：</strong> 他在 Uber 时把配送机器人部署设计成一个&quot;漏斗&quot;——选城市 → 选城区 → 商户接入率（stores 是 opt-in，这是行业谈得不够多的真实 blocker）→ 适配机器人的订单比例 → 车队的就近供给与调度。连&quot;店里店员怎么知道哪单归机器人、机器人到了怎么沟通、小店店员能不能走出柜台装货&quot;这种细枝末节，都是规模化路上的真实障碍。</li></ul>
-<ul><li><strong>解法在美国 vs 中国：</strong> 美国人力成本高、且不能靠压低时薪解决，所以<strong>机器人 + 模块化（单一公司无需自建全栈）</strong> 是关键。Rojas 自己正据此创业，做一套&quot;快且低成本&quot;的自动驾驶配送方案。</li></ul>
+<ul><li><strong>叙事错位：</strong> 投资者 100% 的问题都围着出行（mobility）转，几乎没人问 Uber 的自动驾驶配送。但 Rojas 点出 Uber 的&quot;输不起&quot;心态——<strong>DoorDash</strong> 在该领域极其激进，Uber 即便优先级不高，也绝不会把这块让出去。</li><li><strong>落地远比想象复杂：</strong> 他在 Uber 时把配送机器人部署设计成一个&quot;漏斗&quot;——选城市 → 选城区 → 商户接入率（stores 是 opt-in，这是行业谈得不够多的真实 blocker）→ 适配机器人的订单比例 → 车队的就近供给与调度。连&quot;店里店员怎么知道哪单归机器人、机器人到了怎么沟通、小店店员能不能走出柜台装货&quot;这种细枝末节，都是规模化路上的真实障碍。</li><li><strong>解法在美国 vs 中国：</strong> 美国人力成本高、且不能靠压低时薪解决，所以<strong>机器人 + 模块化（单一公司无需自建全栈）</strong> 是关键。Rojas 自己正据此创业，做一套&quot;快且低成本&quot;的自动驾驶配送方案。</li></ul>
 <p>最触动人的数据点是<strong>中国样本</strong>：在上海、北京，人均下单量是纽约的 <strong>5 倍</strong>，根因是&quot;点餐成本已逼近自炊成本&quot;——当点外卖和自己做一样便宜，需求就被引爆。Rojas 因此看好&quot;<strong>配送机器人 + 厨房机器人</strong>&quot;双线压低边际成本，把配送的 TAM 推向近乎无限（毕竟人一天吃三顿、还得喝咖啡，高频刚需的边际成本越接近零，市场越大）。</p>
 <hr>
 <h2 id="s9">🧭 一图看懂：Uber 的 AV 博弈框架</h2>
@@ -432,22 +423,16 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>一句话：Uber 不造车，它赌的是&quot;<strong>谁供给都不重要，只要供给充分竞争、且离不开我的运营层</strong>&quot;。</p>
 <hr>
 <h2 id="s10">🔗 关联阅读</h2>
-<ul><li><strong>[Lessons from the Great Waymo Outage of 2025（Brad Templeton）](/ep/waymo-outage-2025-templeton/)</strong> —— 本集从一次真实 outage 的实证角度，正好补上了上面&quot;Waymo 的车 / 远程运营瓶颈&quot;这一判断：当远程协助（teleoperation）成为规模化瓶颈、 outage 让 robotaxi 整城趴窝，Rojas 口中的&quot;车不够&quot;之外，又多了一层&quot;运营韧性&quot;的考题。</li></ul>
-<ul><li><strong>[Who Rides Robotaxis（Waymo 用户画像）](/ep/waymo-data-who-rides-robotaxis/)</strong> —— 从需求侧数据看 Waymo 实际服务的用户群，可与本集&quot;占有意图&quot;的命题互为印证。</li></ul>
+<ul><li><strong>[Lessons from the Great Waymo Outage of 2025（Brad Templeton）](/ep/waymo-outage-2025-templeton/)</strong> —— 本集从一次真实 outage 的实证角度，正好补上了上面&quot;Waymo 的车 / 远程运营瓶颈&quot;这一判断：当远程协助（teleoperation）成为规模化瓶颈、 outage 让 robotaxi 整城趴窝，Rojas 口中的&quot;车不够&quot;之外，又多了一层&quot;运营韧性&quot;的考题。</li><li><strong>[Who Rides Robotaxis（Waymo 用户画像）](/ep/waymo-data-who-rides-robotaxis/)</strong> —— 从需求侧数据看 Waymo 实际服务的用户群，可与本集&quot;占有意图&quot;的命题互为印证。</li></ul>
 <hr>
 <h2 id="s11">👥 适合谁听</h2>
-<ul><li>关注出行 / 自动驾驶行业战略与商业模式的人；</li></ul>
-<ul><li>想理解&quot;平台型公司如何对付垂直整合型颠覆者&quot;的产品 / 战略从业者；</li></ul>
-<ul><li>跟踪 Uber、Waymo、Zoox、Lucid、Nuro、Wayve 等公司的投资者；</li></ul>
-<ul><li>对&quot;自动驾驶配送 / 机器人&quot;赛道机会感兴趣的创业者。</li></ul>
+<ul><li>关注出行 / 自动驾驶行业战略与商业模式的人；</li><li>想理解&quot;平台型公司如何对付垂直整合型颠覆者&quot;的产品 / 战略从业者；</li><li>跟踪 Uber、Waymo、Zoox、Lucid、Nuro、Wayve 等公司的投资者；</li><li>对&quot;自动驾驶配送 / 机器人&quot;赛道机会感兴趣的创业者。</li></ul>
 <hr>
 <h2 id="s12">✅ 关键结论</h2>
-<p>1. <strong>Uber 的 AV 战略本质没变：维持供给侧竞争、保住价差。</strong> 变的是 2024 年后由 Waymo 上线 + 投资者 71% 提问率带来的&quot;生存级紧迫感&quot;。 2. <strong>Uber 的护城河在&quot;运营层&quot;，不在&quot;造车&quot;。</strong> 通过 UAS 包揽 depot/维护/充电，把 AV 公司锁定在自己生态里，再用海量需求与高利用率赋能车队——这是它对抗垂直整合型对手的差异化打法。 3. <strong>&quot;特洛伊木马&quot;暴露了 Uber 的软肋：</strong> 它敢聚合 Waymo 的供给，却不敢给 Waymo 独立入口，怕&quot;意图被夺走&quot;。一旦多个 AV 成熟，这套平衡术将面临考验。 4. <strong>Waymo 的最大风险是&quot;车不够&quot;。</strong> 技术领先 + 3–4 年独家窗口，却只铺了约 3,000 台车；若不能更激进扩产，领先优势会被 Zoox、Lucid、Wayve 及中国玩家快速蚕食。 5. <strong>混合模式（hybrid）在中长期更稳。</strong> 固定车队扛不住波动需求，人类司机补位是务实选择；纯 AV 平台要等成本足够低才成立。 6. <strong>配送是被低估的战场，中国是最前沿的样本。</strong> 当点餐比做饭便宜，需求爆发；机器人（配送 + 厨房）是压低成本的核心杠杆。</p>
+<ol><li><strong>Uber 的 AV 战略本质没变：维持供给侧竞争、保住价差。</strong> 变的是 2024 年后由 Waymo 上线 + 投资者 71% 提问率带来的&quot;生存级紧迫感&quot;。</li><li><strong>Uber 的护城河在&quot;运营层&quot;，不在&quot;造车&quot;。</strong> 通过 UAS 包揽 depot/维护/充电，把 AV 公司锁定在自己生态里，再用海量需求与高利用率赋能车队——这是它对抗垂直整合型对手的差异化打法。</li><li><strong>&quot;特洛伊木马&quot;暴露了 Uber 的软肋：</strong> 它敢聚合 Waymo 的供给，却不敢给 Waymo 独立入口，怕&quot;意图被夺走&quot;。一旦多个 AV 成熟，这套平衡术将面临考验。</li><li><strong>Waymo 的最大风险是&quot;车不够&quot;。</strong> 技术领先 + 3–4 年独家窗口，却只铺了约 3,000 台车；若不能更激进扩产，领先优势会被 Zoox、Lucid、Wayve 及中国玩家快速蚕食。</li><li><strong>混合模式（hybrid）在中长期更稳。</strong> 固定车队扛不住波动需求，人类司机补位是务实选择；纯 AV 平台要等成本足够低才成立。</li><li><strong>配送是被低估的战场，中国是最前沿的样本。</strong> 当点餐比做饭便宜，需求爆发；机器人（配送 + 厨房）是压低成本的核心杠杆。</li></ol>
 <hr>
 <h2 id="s13">⚠️ 局限性与说明</h2>
-<ul><li>本分析基于播客音频的自动语音识别（ASR）逐字稿整理，已对品牌与专名做校正（如 Serve Robotics、Nuro、Zoox、Wayve、Lucid、Rappi、Colombia、Trojan horse、Uber Eats、AV data、Max Wiethe 等）。个别数字（如股价涨跌幅、车辆与单量数据）为嘉宾口述，引用时建议以 Uber / Waymo 官方财报与公告为准。</li></ul>
-<ul><li>部分论述（如&quot;Waymo 重大失误论&quot;&quot;Lyft–Waymo 合并预言&quot;）属嘉宾个人判断与预测，不代表事实结论；访谈时间为 2026 年 5 月前后，部分展望（&quot;未来 6–12 个月出现替代者&quot;&quot;约 2027 年中叙事可能转变&quot;）需结合后续行业进展验证。</li></ul>
-<ul><li>本集属于行业观点访谈，非投资建议；涉及股价与市值的内容仅供理解战略语境，不构成任何投资意见。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../lyft-hybrid-autonomy-risher/index.html"><div class="rw"><img loading="lazy" src="../lyft-hybrid-autonomy-risher/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Lyft 的自动驾驶混合战略</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../uber-ceo-ai-av/index.html"><div class="rw"><img loading="lazy" src="../uber-ceo-ai-av/cover.jpg" alt=""></div><div class="rb"><div class="rs">Invest Like The Best · Podcast</div><div class="rt">Uber CEO 谈 AI、自动驾驶与出行的未来</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li>本分析基于播客音频的自动语音识别（ASR）逐字稿整理，已对品牌与专名做校正（如 Serve Robotics、Nuro、Zoox、Wayve、Lucid、Rappi、Colombia、Trojan horse、Uber Eats、AV data、Max Wiethe 等）。个别数字（如股价涨跌幅、车辆与单量数据）为嘉宾口述，引用时建议以 Uber / Waymo 官方财报与公告为准。</li><li>部分论述（如&quot;Waymo 重大失误论&quot;&quot;Lyft–Waymo 合并预言&quot;）属嘉宾个人判断与预测，不代表事实结论；访谈时间为 2026 年 5 月前后，部分展望（&quot;未来 6–12 个月出现替代者&quot;&quot;约 2027 年中叙事可能转变&quot;）需结合后续行业进展验证。</li><li>本集属于行业观点访谈，非投资建议；涉及股价与市值的内容仅供理解战略语境，不构成任何投资意见。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../lyft-hybrid-autonomy-risher/index.html"><div class="rw"><img loading="lazy" src="../lyft-hybrid-autonomy-risher/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Lyft 的自动驾驶混合战略</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../uber-ceo-ai-av/index.html"><div class="rw"><img loading="lazy" src="../uber-ceo-ai-av/cover.jpg" alt=""></div><div class="rb"><div class="rs">Invest Like The Best · Podcast</div><div class="rt">Uber CEO 谈 AI、自动驾驶与出行的未来</div></div></a><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -359,15 +361,11 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>但 Bern Grush 提出一个反直觉的判断：当行业真正开始规模化运营，真正卡住它的不是 AI，而是<strong>「最后十米」——车辆到底停在哪里、由谁决定、以及当成千上万辆车在早上 8 点同时想要同一条路缘时会发生什么</strong>。他把这称为 robotaxi 行业的「阿喀琉斯之踵」（Achilles heel）。</p>
 <h2 id="s1">核心论点：瓶颈是路缘（PUDO），不是 AI</h2>
 <p>Grush 的论证逻辑很清晰：</p>
-<ul><li><strong>安全是工程问题，工程问题最终会被解决。</strong> 他并不否认安全的重要性，但指出在「每辆车」的口径上，robotaxi 的事故率随着技术成熟持续下降，只是因为车队规模扩大，总事故数仍在增加、新闻更多。</li></ul>
-<ul><li><strong>但上下客（PUDO：Pick-Up / Drop-Off）不是工程问题，而是空间管理问题（spatial management problem）。</strong> 这不是机电安全（mechatronic safety），而是物流与运营（logistics and operations）。</li></ul>
-<ul><li><strong>每一辆新增的 robotaxi，都在和路上的每一辆车（不只其他 robotaxi）争夺同一块固定的路缘资源，而且这种竞争是无序的（unstructured）。</strong></li></ul>
+<ul><li><strong>安全是工程问题，工程问题最终会被解决。</strong> 他并不否认安全的重要性，但指出在「每辆车」的口径上，robotaxi 的事故率随着技术成熟持续下降，只是因为车队规模扩大，总事故数仍在增加、新闻更多。</li><li><strong>但上下客（PUDO：Pick-Up / Drop-Off）不是工程问题，而是空间管理问题（spatial management problem）。</strong> 这不是机电安全（mechatronic safety），而是物流与运营（logistics and operations）。</li><li><strong>每一辆新增的 robotaxi，都在和路上的每一辆车（不只其他 robotaxi）争夺同一块固定的路缘资源，而且这种竞争是无序的（unstructured）。</strong></li></ul>
 <p>由此得出的核心预测是：<strong>随着行业规模化，它会「同时变得更安全、也更拥堵」</strong>——安全沿近似直线改善，而路缘冲突与由此而来的拥堵会随规模<strong>复利式恶化</strong>。最终，抑制规模化的不是技术，而是拥堵。他把这个问题命名为 <strong>PUDO orchestration（上下客编排）</strong>。</p>
 <h2 id="s2">路缘到底出什么问题</h2>
 <p>具体来看，路缘上的冲突表现为：</p>
-<ul><li>一辆 robotaxi 停错位置，就可能堵住自行车道、公交车道，甚至在极端情况下挡住消防车。</li></ul>
-<ul><li>当多个运营商的车队在没有协调层（coordination layer）的情况下同时涌向同一个目的地（例如一场体育赛事散场时的同一段路缘），混乱会成倍放大。</li></ul>
-<ul><li>一个地址同时出现 5 辆车，就足以让一条街「崩溃」。</li></ul>
+<ul><li>一辆 robotaxi 停错位置，就可能堵住自行车道、公交车道，甚至在极端情况下挡住消防车。</li><li>当多个运营商的车队在没有协调层（coordination layer）的情况下同时涌向同一个目的地（例如一场体育赛事散场时的同一段路缘），混乱会成倍放大。</li><li>一个地址同时出现 5 辆车，就足以让一条街「崩溃」。</li></ul>
 <p>数量级尤其触目惊心：Grush 估算，<strong>一个 1000 辆规模的 robotaxi 车队，每年会产生约 2500 万次上下客与临停（staging）事件</strong>。哪怕失败率很低，乘以这个基数，每年也会制造出约<strong>一百万次</strong>「堵住自行车道 / 公交车道 / 消防车」的机会。</p>
 <h2 id="s3">为什么更好的 AI 也解决不了这个社会性冲突</h2>
 <p>这是本期最关键的洞见：<strong>AI 无法复制人类在路缘处的即兴协调（improvisation）。</strong> 人类司机在路边临时判断「这儿能停两分钟」、和行人/快递员/公交互相让一下的那种社会默契，本质上是对稀缺公共空间的实时协商。它不是一个感知-决策的技术问题，而是一个<strong>社会性的资源分配问题</strong>。</p>
@@ -375,30 +373,22 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>美国的情况更特殊：Grush 指出，<strong>美国各州通过立法 preempt（ preempted）了自己的城市介入路缘管理</strong>——也就是说，在 robotaxi 试点和早期运营阶段，城市被禁止干预车队的运营。这等于把最该管路缘的一级政府排除在外。</p>
 <h2 id="s4">Pudocity 的解法：Curb Reserver 编排层</h2>
 <p>Pudocity 做的产品叫 <strong>Curb Reserver</strong>，定位是 robotaxi（以及更广泛的自动化车辆）的<strong>路缘预约/编排层（orchestration layer）</strong>：</p>
-<ul><li>它让车辆「预约」路缘的某个时段与位置，而不是到了现场无序抢占。</li></ul>
-<ul><li>Grush 强调，<strong>这个编排层必须是独立的（independent）</strong>——不能由某一家运营商自己掌控，否则就会变成某一方的私有协调，无法被竞争对手和城市信任。</li></ul>
-<ul><li>商业模式上，涉及「谁授权（licenses it）、谁付费（who pays）、谁拥有数据（who owns the data）」三方关系的设计：城市授权、运营商或相关方付费、数据归属需要明确。</li></ul>
+<ul><li>它让车辆「预约」路缘的某个时段与位置，而不是到了现场无序抢占。</li><li>Grush 强调，<strong>这个编排层必须是独立的（independent）</strong>——不能由某一家运营商自己掌控，否则就会变成某一方的私有协调，无法被竞争对手和城市信任。</li><li>商业模式上，涉及「谁授权（licenses it）、谁付费（who pays）、谁拥有数据（who owns the data）」三方关系的设计：城市授权、运营商或相关方付费、数据归属需要明确。</li></ul>
 <p>在 robotaxi 之外，同样的路缘编排逻辑也适用于货物配送、充电、临停（staging）以及私人自动驾驶车（personal AVs）。</p>
 <h2 id="s5">护城河：专利、标准、网络效应</h2>
 <p>Grush 给自己画的护城河有三层：</p>
-<p>1. <strong>专利</strong>——Curb Reserver 的方法与系统。 2. <strong>标准</strong>——他本人是相关 ISO 标准的主笔人，包括 <strong>ISO 4448</strong> 与 <strong>ISO 25614</strong>（节目中以「去术语化」方式解释，核心是规范自动化车辆与机器人如何使用路缘和人行道）。 3. <strong>网络效应</strong>——当足够多的运营商与城市接入同一个独立编排层，它就成为基础设施。</p>
+<ol><li><strong>专利</strong>——Curb Reserver 的方法与系统。</li><li><strong>标准</strong>——他本人是相关 ISO 标准的主笔人，包括 <strong>ISO 4448</strong> 与 <strong>ISO 25614</strong>（节目中以「去术语化」方式解释，核心是规范自动化车辆与机器人如何使用路缘和人行道）。</li><li><strong>网络效应</strong>——当足够多的运营商与城市接入同一个独立编排层，它就成为基础设施。</li></ol>
 <p>他反复强调：<strong>杠杆点在于标准，而不是游说（lobbying）。</strong> 标准一旦写进部署许可（deployment permits），就能以最低的摩擦重塑行业行为。被问到「标准会不会过早冻结尚未成熟的技术」时，他的立场是标准应当聚焦于<strong>接口与协调规则</strong>，而非锁定具体技术实现，从而避免在技术快速演进期被锁死。</p>
 <h2 id="s6">美国 vs 欧洲：密度与监管窗口</h2>
 <p>对欧洲市场，Grush 给出更尖锐的判断：</p>
-<ul><li>美国的州级立法让城市无法管理路缘；而<strong>欧洲城市密度是美国的三到四倍</strong>，路缘冲突的尖锐程度完全不同。</li></ul>
-<ul><li>因此，欧洲存在一个<strong>现在就敞开的窗口</strong>：在部署许可（deployment permits）里写进「一条 clauses（条款）」，把路缘协调作为准入条件。错过这个窗口，后期再补成本极高。</li></ul>
-<ul><li>他甚至给出给每一位交通部长的具体建议：在许可里写进关于路缘预约与数据共享的那一条。</li></ul>
+<ul><li>美国的州级立法让城市无法管理路缘；而<strong>欧洲城市密度是美国的三到四倍</strong>，路缘冲突的尖锐程度完全不同。</li><li>因此，欧洲存在一个<strong>现在就敞开的窗口</strong>：在部署许可（deployment permits）里写进「一条 clauses（条款）」，把路缘协调作为准入条件。错过这个窗口，后期再补成本极高。</li><li>他甚至给出给每一位交通部长的具体建议：在许可里写进关于路缘预约与数据共享的那一条。</li></ul>
 <p>关于谁该拥有路缘数据，他的倾向是把<strong>公共空间的协调数据</strong>交到公共手里，而非被单一私营平台独占。</p>
 <h2 id="s7">给运营商、城市与投资者的下一步</h2>
 <p>Grush 在结尾给出了分角色的下一步：</p>
-<ul><li><strong>运营商</strong>：不要假设 PUDO 会随规模自行解决；尽早接入独立的路缘编排层。</li></ul>
-<ul><li><strong>城市</strong>：利用当前的监管窗口，把路缘协调写进 robotaxi 部署许可。</li></ul>
-<ul><li><strong>投资者</strong>：把「能否解决最后十米」当作评估 robotaxi 规模化可行性的关键变量，而不只是看自动驾驶技术指标。</li></ul>
+<ul><li><strong>运营商</strong>：不要假设 PUDO 会随规模自行解决；尽早接入独立的路缘编排层。</li><li><strong>城市</strong>：利用当前的监管窗口，把路缘协调写进 robotaxi 部署许可。</li><li><strong>投资者</strong>：把「能否解决最后十米」当作评估 robotaxi 规模化可行性的关键变量，而不只是看自动驾驶技术指标。</li></ul>
 <p>他还指出一个「很多人坚信、但其实错误的 AV 信念」：认为只要 AI 足够强，所有运营问题都会自动消失。本期节目正是要拆掉这个幻觉。</p>
 <h2 id="s8">局限性与说明</h2>
-<ul><li>本分析基于播客逐字稿（Whisper 语音识别 + 机器翻译，并做了专有名词校正），人声识别偶有偏差，专有名词（如 Pudocity、Bern Grush、ISO 编号）已尽量核对，具体表述请以英文原声为准。</li></ul>
-<ul><li>节目中的具体数字（如 1000 辆车 / 2500 万次事件 / 100 万次冲突机会、欧洲密度 3–4 倍）来自嘉宾口述估计，用于说明量级，非精确统计。</li></ul>
-<ul><li>相关标准与法规状态（ISO 4448 / 25614、各州 preempt 立法）请以最新官方文件为准。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-data-who-rides-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../waymo-data-who-rides-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast (The AV Market Strategist)</div><div class="rt">Waymo 的数据揭示了：到底谁在坐 Robotaxi</div></div></a><a class="relcard" href="../mn8-av-energy-infrastructure/index.html"><div class="rw"><img loading="lazy" src="../mn8-av-energy-infrastructure/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">为自动驾驶车队建造能源基础设施（MN8 Energy 的 Alex Pischalnikov）</div></div></a><a class="relcard" href="../aseon-labs-av-ops/index.html"><div class="rw"><img loading="lazy" src="../aseon-labs-av-ops/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonocast Podcast</div><div class="rt">Aseon Labs：用机器人维修舱解决 Robotaxi 的运维与空驶难题</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li>本分析基于播客逐字稿（Whisper 语音识别 + 机器翻译，并做了专有名词校正），人声识别偶有偏差，专有名词（如 Pudocity、Bern Grush、ISO 编号）已尽量核对，具体表述请以英文原声为准。</li><li>节目中的具体数字（如 1000 辆车 / 2500 万次事件 / 100 万次冲突机会、欧洲密度 3–4 倍）来自嘉宾口述估计，用于说明量级，非精确统计。</li><li>相关标准与法规状态（ISO 4448 / 25614、各州 preempt 立法）请以最新官方文件为准。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-data-who-rides-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../waymo-data-who-rides-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast (The AV Market Strategist)</div><div class="rt">Waymo 的数据揭示了：到底谁在坐 Robotaxi</div></div></a><a class="relcard" href="../robot-pit-stops-for-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../robot-pit-stops-for-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 的「机器人维修站」：Aseon Labs 用分布式服务 pod 砍掉空驶里程</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

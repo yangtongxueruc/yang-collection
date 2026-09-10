@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -355,17 +357,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote>演讲者：Loren Puchalla Fiore、Lucas Baker（主持：Kelly Martin、Annalise Field）</blockquote>
 <blockquote>时长：约 77 分钟 · 来源：[SlidesLive / ICML 虚拟页](https://icml.cc/virtual/2026/75722)</blockquote>
 <h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：在量化金融上做 agent，<strong>benchmark / 方法学比模型选型更重要</strong>——因为市场非平稳、延迟预算紧、时序推理的细微错误会让整条研究管线失效。</li></ul>
-<ul><li><strong>最反复出现的元规则</strong>：<strong>&quot;Complexity needs to be earned.&quot;</strong>（复杂度必须被挣来）——任何更复杂的方案都必须能改善指标，否则只是噪声。</li></ul>
-<ul><li><strong>最反直觉的研究结论</strong>：<strong>&quot;Time travel is the default failure mode.&quot;</strong>——公开 benchmark 的最大陷阱是时间穿越（用未来数据污染 backtest）。</li></ul>
-<ul><li><strong>给工程的三条忠告</strong>：premature specialization 是万恶之源；多 agent 不是默认答案；自动研究只盯一个 metric 会崩坏其他维度。</li></ul>
+<ul><li><strong>一句话定位</strong>：在量化金融上做 agent，<strong>benchmark / 方法学比模型选型更重要</strong>——因为市场非平稳、延迟预算紧、时序推理的细微错误会让整条研究管线失效。</li><li><strong>最反复出现的元规则</strong>：<strong>&quot;Complexity needs to be earned.&quot;</strong>（复杂度必须被挣来）——任何更复杂的方案都必须能改善指标，否则只是噪声。</li><li><strong>最反直觉的研究结论</strong>：<strong>&quot;Time travel is the default failure mode.&quot;</strong>——公开 benchmark 的最大陷阱是时间穿越（用未来数据污染 backtest）。</li><li><strong>给工程的三条忠告</strong>：premature specialization 是万恶之源；多 agent 不是默认答案；自动研究只盯一个 metric 会崩坏其他维度。</li></ul>
 <h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>Jump Trading</strong>：1999 年成立于芝加哥的自营量化公司，12+ 城市，无外部投资人，所有 P&amp;L 来自自有资金。</li></ul>
-<ul><li><strong>量化约束三件套</strong>：数据非平稳（regime 漂移）、延迟预算紧（毫秒即套利窗口）、时序推理错误会让 backtest 浪费数周甚至数月。</li></ul>
-<ul><li><strong>Point-in-time Eval 四步</strong>：挖真实对话 → 标注 point-in-time 信息 → LM 生成 eval case → 存全 artifacts（cases/runs/traces/对比）。</li></ul>
-<ul><li><strong>Effort Ladder（由便宜到贵）</strong>：单 prompt → 加 context → 加 tool → 改 harness/子 agent → post-train → mid-train → 预训练。</li></ul>
-<ul><li><strong>多 agent 信息上界</strong>：overfit gap 上界由 token 携带量决定，<strong>与系统复杂度无关</strong>——把系统做复杂不会让你&quot;看到更多&quot;。</li></ul>
-<ul><li><strong>Jump 数据栈</strong>：15+ 年 packet capture 原始数据；自定义网络测光速差；point-in-time 重建。</li></ul>
+<ul><li><strong>Jump Trading</strong>：1999 年成立于芝加哥的自营量化公司，12+ 城市，无外部投资人，所有 P&amp;L 来自自有资金。</li><li><strong>量化约束三件套</strong>：数据非平稳（regime 漂移）、延迟预算紧（毫秒即套利窗口）、时序推理错误会让 backtest 浪费数周甚至数月。</li><li><strong>Point-in-time Eval 四步</strong>：挖真实对话 → 标注 point-in-time 信息 → LM 生成 eval case → 存全 artifacts（cases/runs/traces/对比）。</li><li><strong>Effort Ladder（由便宜到贵）</strong>：单 prompt → 加 context → 加 tool → 改 harness/子 agent → post-train → mid-train → 预训练。</li><li><strong>多 agent 信息上界</strong>：overfit gap 上界由 token 携带量决定，<strong>与系统复杂度无关</strong>——把系统做复杂不会让你&quot;看到更多&quot;。</li><li><strong>Jump 数据栈</strong>：15+ 年 packet capture 原始数据；自定义网络测光速差；point-in-time 重建。</li></ul>
 <h2 id="s2">🗝️ 关键金句（原文摘录）</h2>
 <blockquote>&quot;Time travel is the default failure mode.&quot;（时间穿越是默认失败模式。）</blockquote>
 <blockquote>&quot;Complexity needs to be earned.&quot;（复杂度必须被挣来。）</blockquote>
@@ -382,29 +376,20 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>可调维度被画成一个 k-dimensional hypercube（模型 / Harness / Tools / Context / Workflow / Budget / 问题类型）。Loren 把范围收敛到一窄切片——<strong>market analyst 任务</strong>——然后开始做对比。</p>
 <h3>2.2 Point-in-time Eval：为什么公开 benchmark 不够</h3>
 <p>Loren 把 quant 上公开 benchmark 不足的原因归纳为三件事：</p>
-<ul><li><strong>Temporal leakage</strong>：模型预训练里见过未来数据；backtest 在 cutoff 前看着漂亮，cutoff 后立即崩。他用一句话点出本质：&quot;<strong>Time travel is the default failure mode.</strong>&quot;</li></ul>
-<ul><li><strong>私域 workflow 与数据</strong>：内部数据 schema、问数习惯、research workflow 在任何公开 benchmark 里都没有对应。</li></ul>
-<ul><li><strong>任务类型的差异</strong>：金融任务的多模态（订单簿、内部状态、新闻、基本面）和时序耦合是独特的。</li></ul>
+<ul><li><strong>Temporal leakage</strong>：模型预训练里见过未来数据；backtest 在 cutoff 前看着漂亮，cutoff 后立即崩。他用一句话点出本质：&quot;<strong>Time travel is the default failure mode.</strong>&quot;</li><li><strong>私域 workflow 与数据</strong>：内部数据 schema、问数习惯、research workflow 在任何公开 benchmark 里都没有对应。</li><li><strong>任务类型的差异</strong>：金融任务的多模态（订单簿、内部状态、新闻、基本面）和时序耦合是独特的。</li></ul>
 <p>为此 Jump 搭了一套 point-in-time agent eval pipeline（挖真实对话 → 标注 point-in-time 信息 → LM 生成 eval case → 存全 artifacts）。</p>
 <h3>2.3 SpaceX IPO 案例：从抽象到具体</h3>
 <p>Loren 用一个具体例子把方法论落到地面：SpaceX 预期 6/12 IPO，问&quot;首日收盘价&quot;。</p>
-<ul><li><strong>冻结 point-in-time</strong>：&quot;这道题是 6/5 提出的，比 IPO 早一周&quot;；要求给出 evidence、uncertainty quantification、可追溯 artifacts。</li></ul>
-<ul><li><strong>模型轴</strong>：固定 harness 换模型——新版 frontier 模型更好（4.8 &gt; 4.7 …）。</li></ul>
-<ul><li><strong>Harness 轴</strong>：两个 custom harness 的端到端分数略差于 baseline，但 <strong>trace analysis 显著更好</strong>——把两个 orthogonal 的 harness 合并（h1+h2），最终 trace 和 end-to-end 同时超过 baseline。</li></ul>
+<ul><li><strong>冻结 point-in-time</strong>：&quot;这道题是 6/5 提出的，比 IPO 早一周&quot;；要求给出 evidence、uncertainty quantification、可追溯 artifacts。</li><li><strong>模型轴</strong>：固定 harness 换模型——新版 frontier 模型更好（4.8 &gt; 4.7 …）。</li><li><strong>Harness 轴</strong>：两个 custom harness 的端到端分数略差于 baseline，但 <strong>trace analysis 显著更好</strong>——把两个 orthogonal 的 harness 合并（h1+h2），最终 trace 和 end-to-end 同时超过 baseline。</li></ul>
 <p><strong>Takeaway</strong>：更好的模型不是处处更强。在窄子任务上，更小、更专门的模型或 harness 仍能赢过 frontier。</p>
 <h2 id="s5">三、Lucas：哲学、工程与多 agent 的&quot;何时该上&quot;</h2>
 <h3>3.1 Multi-agent 不是默认答案</h3>
 <p>Lucas 开场就引用 ICLR 那篇 talk 的观点：&quot;throw away your multi-agent system unless you have a really good reason for it.&quot; 但他也承认业界（Claude、CodeX 等）正在默认打包 sub-agent。真正的问题是<strong>哪种模式匹配哪种任务</strong>：</p>
-<ul><li><strong>Decentralized</strong>：适合工具调用（多个 agent 各自 fetch、互不依赖）。</li></ul>
-<ul><li><strong>Orchestrator-Worker (centralized)</strong>：适合结构化、可并行的推理——前提是子 agent 有清晰 roles / personas。</li></ul>
-<ul><li><strong>Single agent</strong>：适合强 sequential 任务。</li></ul>
-<ul><li><strong>Hybrid</strong>：介于以上几种之间。</li></ul>
+<ul><li><strong>Decentralized</strong>：适合工具调用（多个 agent 各自 fetch、互不依赖）。</li><li><strong>Orchestrator-Worker (centralized)</strong>：适合结构化、可并行的推理——前提是子 agent 有清晰 roles / personas。</li><li><strong>Single agent</strong>：适合强 sequential 任务。</li><li><strong>Hybrid</strong>：介于以上几种之间。</li></ul>
 <h3>3.2 Effort Ladder：什么时候该往哪一层走</h3>
 <p>他把&quot;做 agent&quot;的努力画成一个梯子：单 prompt → 加 prompt/context → 加 tool → 改 harness/子 agent → post-train → mid-train → 预训练。每一层都比上一层贵得多；每上一层都应该是因为&quot;下一层已经不够了&quot;。他的元问题：<strong>&quot;你在为 specialization 什么？&quot;</strong>——答不上来就别 specialize。</p>
 <h3>3.3 三维度：performance / latency / cost</h3>
-<ul><li><strong>Performance</strong>：选最适合子任务的模型或 harness——不一定要 frontier。</li></ul>
-<ul><li><strong>Latency</strong>：注意是 <strong>time-to-last-token</strong>（完整分析完成、可行动的时间），不是 time-to-first-token。</li></ul>
-<ul><li><strong>Cost</strong>：trading firm 通常对模型花费不敏感，但 Jevons paradox 在起作用——成本下降让我们能跑更多调用。</li></ul>
+<ul><li><strong>Performance</strong>：选最适合子任务的模型或 harness——不一定要 frontier。</li><li><strong>Latency</strong>：注意是 <strong>time-to-last-token</strong>（完整分析完成、可行动的时间），不是 time-to-first-token。</li><li><strong>Cost</strong>：trading firm 通常对模型花费不敏感，但 Jevons paradox 在起作用——成本下降让我们能跑更多调用。</li></ul>
 <h3>3.4 多 agent 合并的信息上界</h3>
 <p>Lucas 给了一个信息论结果（&quot;don&#x27;t try to use this in practice&quot;——Bonferroni on steroids）：系统的 overfit gap 的上界由 token 携带量决定，<strong>与系统复杂度无关</strong>。含义很直接：把系统做复杂不会让你&quot;看到更多&quot;。</p>
 <h3>3.5 Auto Research：时间、并行度、资源</h3>
@@ -413,10 +398,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h3>4.1 最小可工作的 closed system</h3>
 <p>Lucas 强调：&quot;If you&#x27;re taking four days of compute per job, you might as well have the human do it.&quot; 正确的顺序是：先有最小可工作的 closed system → 快速迭代测可靠性 → 让它尽可能快 → 让小系统变鲁棒 → 然后再展开。</p>
 <h3>4.2 四条工程哲学定律</h3>
-<ul><li><strong>Gall&#x27;s law</strong>：能工作的复杂系统必然源自能工作的简单系统。</li></ul>
-<ul><li><strong>Hyrum&#x27;s law</strong>：用户足够多时，任何可观察的行为都会被某个人依赖。</li></ul>
-<ul><li><strong>Amdahl&#x27;s law</strong>：单部分加速的天花板由它在整体里占的比重决定——所以<strong>并行 + 连接 boxes</strong> 比单纯优化单个 box 更重要。</li></ul>
-<ul><li><strong>Amara&#x27;s law</strong>：技术的影响总是短期被高估、长期被低估（在 agentic 场景里叫 <strong>capability overhang</strong>）。</li></ul>
+<ul><li><strong>Gall&#x27;s law</strong>：能工作的复杂系统必然源自能工作的简单系统。</li><li><strong>Hyrum&#x27;s law</strong>：用户足够多时，任何可观察的行为都会被某个人依赖。</li><li><strong>Amdahl&#x27;s law</strong>：单部分加速的天花板由它在整体里占的比重决定——所以<strong>并行 + 连接 boxes</strong> 比单纯优化单个 box 更重要。</li><li><strong>Amara&#x27;s law</strong>：技术的影响总是短期被高估、长期被低估（在 agentic 场景里叫 <strong>capability overhang</strong>）。</li></ul>
 <h3>4.3 Scorecard 而非单指标</h3>
 <p>真实系统不是单指标。Lucas 展示了一张&quot;匿名真实 scorecard&quot;——多指标 Pareto frontier 加阈值、约束、trade-off 的矩阵。<strong>自动研究只盯一个 metric 会崩坏其他维度</strong>——难点不在 agent，在 scorecard 的可表达性。</p>
 <h3>4.4 程序员的三大美德 + 第四</h3>
@@ -426,21 +408,14 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s7">🧭 核心框架：Effort Ladder（由便宜到贵）</h2>
 <p><code>`</code> 单 prompt → +context → +tool → 改 harness/子 agent → post-train → mid-train → 预训练 <code>`</code> 每上一层都应是因为&quot;下一层已经不够了&quot;；premature specialization 是万恶之源。</p>
 <h2 id="s8">🔗 关联阅读</h2>
-<ul><li>[在金融市场中扩展深度学习（HRT @ ICML 2026）](../../icml-2026-scaling-dl-financial-markets/)：同届 ICML Expo，这场讲&quot;市场数据本身作为建模对象的 scaling 与架构&quot;，与本集&quot;研究组织方式&quot;互补。</li></ul>
-<ul><li>[用 LLM 拆解金融文本数据（Citadel Securities @ NeurIPS 2024）](../../neurips-2024-financial-text-llm/)：金融文本上如何落地 LLM（RAG / 先验 / 精度—召回），同属&quot;AI + 金融&quot;研究面。</li></ul>
-<ul><li>[AI Agent 如何改变投资研究（Fundamental Edge）](../../ai-agents-investment-research-caughran/)：从&quot;买方研究员如何用 agent&quot;的视角，看本集方法学在真实研究流程里的落地。</li></ul>
+<ul><li>[在金融市场中扩展深度学习（HRT @ ICML 2026）](../../icml-2026-scaling-dl-financial-markets/)：同届 ICML Expo，这场讲&quot;市场数据本身作为建模对象的 scaling 与架构&quot;，与本集&quot;研究组织方式&quot;互补。</li><li>[用 LLM 拆解金融文本数据（Citadel Securities @ NeurIPS 2024）](../../neurips-2024-financial-text-llm/)：金融文本上如何落地 LLM（RAG / 先验 / 精度—召回），同属&quot;AI + 金融&quot;研究面。</li><li>[AI Agent 如何改变投资研究（Fundamental Edge）](../../ai-agents-investment-research-caughran/)：从&quot;买方研究员如何用 agent&quot;的视角，看本集方法学在真实研究流程里的落地。</li></ul>
 <h2 id="s9">👥 适合谁听</h2>
-<ul><li>量化基金 / 自营公司的研究工程师与 ML 平台负责人；</li></ul>
-<ul><li>做 agent / eval / 多智能体系统的 AI 工程师；</li></ul>
-<ul><li>关注&quot;如何避免 backtest 时间穿越&quot;的量化研究员；</li></ul>
-<ul><li>想理解工程哲学（Gall&#x27;s / Amdahl&#x27;s / Amara&#x27;s law）如何落到 AI 系统的技术管理者。</li></ul>
+<ul><li>量化基金 / 自营公司的研究工程师与 ML 平台负责人；</li><li>做 agent / eval / 多智能体系统的 AI 工程师；</li><li>关注&quot;如何避免 backtest 时间穿越&quot;的量化研究员；</li><li>想理解工程哲学（Gall&#x27;s / Amdahl&#x27;s / Amara&#x27;s law）如何落到 AI 系统的技术管理者。</li></ul>
 <h2 id="s10">五、Takeaways</h2>
-<p>1. <strong>把 harness 设计匹配任务</strong>——能简单就简单；需要复杂角色时明确定义 roles。 2. <strong>一切以 eval 支撑</strong>——point-in-time / artifact 来源 / scorecard 维度都要在 eval 里被捕获。 3. <strong>Bound the process</strong>——多 agent 团队的风险由&quot;系统能通信什么&quot;决定，不是由其内部决定。 4. <strong>Auto research in place 之后，建 box</strong>：从小 steerable 版本起步 → 一般化 → 连接 boxes → 最一般化系统。</p>
+<ol><li><strong>把 harness 设计匹配任务</strong>——能简单就简单；需要复杂角色时明确定义 roles。</li><li><strong>一切以 eval 支撑</strong>——point-in-time / artifact 来源 / scorecard 维度都要在 eval 里被捕获。</li><li><strong>Bound the process</strong>——多 agent 团队的风险由&quot;系统能通信什么&quot;决定，不是由其内部决定。</li><li><strong>Auto research in place 之后，建 box</strong>：从小 steerable 版本起步 → 一般化 → 连接 boxes → 最一般化系统。</li></ol>
 <h2 id="s11">局限与说明</h2>
-<ul><li><strong>原 talk slides 未录制 / 不可获取</strong>：SlidesLive 这集 Expo Panel 只录了演讲者中景画面，真实 slides 未烧进视频、官方接口也返回空。本稿件里出现的&quot;章节要点&quot;卡片是<strong>基于演讲内容推断</strong>的章节笔记，并非原始幻灯片。</li></ul>
-<ul><li><strong>时长与覆盖</strong>：77 分钟的 panel 覆盖非常广，每个点的技术深度有限，更像产业经验总结而非技术教程。</li></ul>
-<ul><li><strong>转写与翻译</strong>：英文转写由 faster-whisper <code>small.en int8</code> 生成，已做主要人名 / 产品名校正。中文翻译由 Google Translate 自动生成。</li></ul>
-<p>*Generated as part of 🐑的收藏库 · 标签：量化*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../icml-2026-scaling-dl-financial-markets/index.html"><div class="rw"><img loading="lazy" src="../icml-2026-scaling-dl-financial-markets/slides/2ZlGAQV3BS5jIYBx.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">在金融市场中扩展深度学习</div></div></a><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="../neurips-2024-sequence-modeling-finance/index.html"><div class="rw"><img loading="lazy" src="../neurips-2024-sequence-modeling-finance/slides/2BTZO3XMEQgX4Itk.webp" alt=""></div><div class="rb"><div class="rs">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><div class="rt">金融服务中的序列建模：Capital One 在消费银行表格数据上的探索</div></div></a><a class="relcard" href="../neurips-2024-financial-text-llm/index.html"><div class="rw"><img loading="lazy" src="../neurips-2024-financial-text-llm/slides/6rPwg0QWRQjnjjM6.webp" alt=""></div><div class="rb"><div class="rs">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><div class="rt">拆解金融文本数据：LLM 在交易决策中的应用</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li><strong>原 talk slides 未录制 / 不可获取</strong>：SlidesLive 这集 Expo Panel 只录了演讲者中景画面，真实 slides 未烧进视频、官方接口也返回空。本稿件里出现的&quot;章节要点&quot;卡片是<strong>基于演讲内容推断</strong>的章节笔记，并非原始幻灯片。</li><li><strong>时长与覆盖</strong>：77 分钟的 panel 覆盖非常广，每个点的技术深度有限，更像产业经验总结而非技术教程。</li><li><strong>转写与翻译</strong>：英文转写由 faster-whisper <code>small.en int8</code> 生成，已做主要人名 / 产品名校正。中文翻译由 Google Translate 自动生成。</li></ul>
+<p>*Generated as part of 🐑的收藏库 · 标签：量化*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../icml-2026-scaling-dl-financial-markets/index.html"><div class="rw"><img loading="lazy" src="../icml-2026-scaling-dl-financial-markets/slides/2ZlGAQV3BS5jIYBx.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">在金融市场中扩展深度学习</div></div></a><a class="relcard" href="../janestreet-signal-in-noise-ml/index.html"><div class="rw"><img loading="lazy" src="../janestreet-signal-in-noise-ml/cover.jpg" alt=""></div><div class="rb"><div class="rs">Signals and Threads · Jane Street · YouTube</div><div class="rt">Jane Street：在噪声里寻找信号</div></div></a><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="../poker-ai-to-trading-schmid/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/Sb8M01z1tk8/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">Martin Schmid（EquiLibre Technologies）· 捷克语数学研讨会录像</div><div class="rt">从扑克 AI 到交易：强化学习的应用简史</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

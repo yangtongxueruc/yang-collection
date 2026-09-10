@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -355,78 +357,48 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote>嘉宾：Stefanie Berliner（Holo DACH 业务负责人）、Anders Toft（Holo 运营负责人）</blockquote>
 <blockquote>时长约 70 分钟 · 中英对照逐字稿见同目录 <code>bilingual_transcript.md</code></blockquote>
 <h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：行业叙事重心已从&quot;证明技术（proving technology）&quot;转向&quot;<strong>证明运营可扩展性（proving operational scalability）</strong>&quot;——车辆本身是最容易的部分，真正的难点在车之外。</li></ul>
-<ul><li><strong>全篇最重要洞见</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问永远只找许可持有者，公众却直觉以为是&quot;车企/品牌&quot;责任。</li></ul>
-<ul><li><strong>最反直觉的运营细节</strong>：远程协助不远程开车，只在车辆受阻时给&quot;A/B 场景&quot;决策建议；人车比财务可行区间约 <strong>1:15 到 1:20+</strong>（冬季奥斯陆可降到 1:8）。</li></ul>
-<ul><li><strong>对城市的忠告</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
+<ul><li><strong>一句话定位</strong>：行业叙事重心已从&quot;证明技术（proving technology）&quot;转向&quot;<strong>证明运营可扩展性（proving operational scalability）</strong>&quot;——车辆本身是最容易的部分，真正的难点在车之外。</li><li><strong>全篇最重要洞见</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问永远只找许可持有者，公众却直觉以为是&quot;车企/品牌&quot;责任。</li><li><strong>最反直觉的运营细节</strong>：远程协助不远程开车，只在车辆受阻时给&quot;A/B 场景&quot;决策建议；人车比财务可行区间约 <strong>1:15 到 1:20+</strong>（冬季奥斯陆可降到 1:8）。</li><li><strong>对城市的忠告</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
 <h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>软件更新频率</strong>：每 1–2 个月一次，会改变车辆行为（感知、让行、进出环岛等）。</li></ul>
-<ul><li><strong>远程协助响应阈值</strong>：交通场景 ≤ 5 秒决断；安全/乘客紧急 ≤ 2 秒。</li></ul>
-<ul><li><strong>人车比（operator-to-vehicle）</strong>：1:15 ~ 1:20+（参考 Waymo/Baidu/WeRide）；冬季奥斯陆 ~1:8。</li></ul>
-<ul><li><strong>Mobileye → MOIA 迁移红利</strong>：许可申请仅 <strong>3 个月</strong>拿到；安全驾驶员培训 5 天→3 天；整体部署阶段<strong>至少缩短 1–1.5 年</strong>。</li></ul>
-<ul><li><strong>监管对比</strong>：挪威（开放、以风险评估为基础）vs 瑞士（数据密集、指标导向、倒逼 SMS）。</li></ul>
+<ul><li><strong>软件更新频率</strong>：每 1–2 个月一次，会改变车辆行为（感知、让行、进出环岛等）。</li><li><strong>远程协助响应阈值</strong>：交通场景 ≤ 5 秒决断；安全/乘客紧急 ≤ 2 秒。</li><li><strong>人车比（operator-to-vehicle）</strong>：1:15 ~ 1:20+（参考 Waymo/Baidu/WeRide）；冬季奥斯陆 ~1:8。</li><li><strong>Mobileye → MOIA 迁移红利</strong>：许可申请仅 <strong>3 个月</strong>拿到；安全驾驶员培训 5 天→3 天；整体部署阶段<strong>至少缩短 1–1.5 年</strong>。</li><li><strong>监管对比</strong>：挪威（开放、以风险评估为基础）vs 瑞士（数据密集、指标导向、倒逼 SMS）。</li></ul>
 <h2 id="s2">🗝️ 关键金句（核心判断摘录）</h2>
 <blockquote>&quot;车辆本身是最容易的部分；真正的难点在车之外——安全治理、责任归属、十几家公司的日常协作、以及整个组织的转型。&quot;</blockquote>
 <blockquote>&quot;下一个十年是&#x27;证明服务能运营&#x27;，而非&#x27;证明车能开&#x27;。&quot;</blockquote>
 <blockquote>&quot;若运营商无法追溯车辆&#x27;为什么这么做&#x27;，就不能对许可负责，也无法预判其行为——透明度是要&#x27;争&#x27;来的。&quot;</blockquote>
 <blockquote>&quot;按道路类型拆分自动驾驶率，比只看总里程更诚实。&quot;</blockquote>
 <h2 id="s3">一、行业拐点：为什么&quot;只想要一辆展示车&quot;会被拒绝</h2>
-<ul><li>OEM 与技术提供商不再为纯试点免费提供车辆——&quot;证明技术&quot;的时代已经结束。</li></ul>
-<ul><li>现在他们要的是 <strong>可扩展性、运营就绪度、更大的车队</strong>。</li></ul>
-<ul><li>城市/市长最常提的需求仍是&quot;我们就想要一辆 showcase 车证明技术能跑&quot;，但 <strong>这种需求现在会被挡回去</strong>。</li></ul>
+<ul><li>OEM 与技术提供商不再为纯试点免费提供车辆——&quot;证明技术&quot;的时代已经结束。</li><li>现在他们要的是 <strong>可扩展性、运营就绪度、更大的车队</strong>。</li><li>城市/市长最常提的需求仍是&quot;我们就想要一辆 showcase 车证明技术能跑&quot;，但 <strong>这种需求现在会被挡回去</strong>。</li></ul>
 <h2 id="s4">二、真实部署中的角色分工（谁做什么）</h2>
 <table><thead><tr><th>角色</th><th>说明</th><th>本案例中的对应方</th></tr></thead><tbody><tr><td><strong>Permit Holder（许可持有者）</strong></td><td>向当局申请、对日常运营负责、承担法律责任</td><td><strong>Holo</strong>（在奥斯陆同时是运营商+许可持有者）</td></tr><tr><td><strong>PTA / 公共服务提供方</strong></td><td>面向乘客的品牌方（涂装、客服）</td><td><strong>Ruter</strong>（奥斯陆公共交通局）</td></tr><tr><td><strong>Software Provider（软件提供商）</strong></td><td>提供自动驾驶平台</td><td><strong>MOIA</strong>（底层与 <strong>Mobileye</strong> 合作）</td></tr><tr><td><strong>OEM</strong></td><td>车辆制造</td><td>车辆平台提供方</td></tr></tbody></table>
 <p>关键洞察：<strong>乘客看到的是 Ruter 涂装的品牌车、接到的是 Ruter 客服</strong>——Holo 在公众层面&quot;隐身&quot;，专心做技术和安全。</p>
 <h2 id="s5">三、责任归属：许可持有者才是真正的&quot;兜底方&quot;</h2>
-<ul><li><strong>公众直觉</strong>：出事 = 车辆/车企（即 Ruter 品牌）责任。</li></ul>
-<ul><li><strong>法律现实</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问，永远只找许可持有者，不会直接找软件商或 PTA。</li></ul>
-<ul><li>合同内部用 <strong>&quot;黑箱（black box）&quot;数据</strong> 确定根因，再在联盟内部分摊。</li></ul>
-<ul><li>即便进入 <strong>L4（无安全员）</strong>，运营商对当局仍要为&quot;车辆做了什么&quot;负责。</li></ul>
+<ul><li><strong>公众直觉</strong>：出事 = 车辆/车企（即 Ruter 品牌）责任。</li><li><strong>法律现实</strong>：<strong>许可持有者（运营商）才是责任主体</strong>。当局有任何疑问，永远只找许可持有者，不会直接找软件商或 PTA。</li><li>合同内部用 <strong>&quot;黑箱（black box）&quot;数据</strong> 确定根因，再在联盟内部分摊。</li><li>即便进入 <strong>L4（无安全员）</strong>，运营商对当局仍要为&quot;车辆做了什么&quot;负责。</li></ul>
 <h2 id="s6">四、依赖关系制造的运营风险</h2>
-<ul><li>存在 <strong>安全利益 vs 商业利益</strong> 的张力：&quot;多快能推送更新&quot; 与 &quot;多安全才行&quot; 的时间线未必重合。</li></ul>
-<ul><li>一旦某个安全关键部件出问题，运营商会 <strong>停摆整个车队</strong>——这是服务退化，不是 PTA 想要的。</li></ul>
+<ul><li>存在 <strong>安全利益 vs 商业利益</strong> 的张力：&quot;多快能推送更新&quot; 与 &quot;多安全才行&quot; 的时间线未必重合。</li><li>一旦某个安全关键部件出问题，运营商会 <strong>停摆整个车队</strong>——这是服务退化，不是 PTA 想要的。</li></ul>
 <h2 id="s7">五、事故管理：根因分析 + &quot;局部 vs 全局&quot;的关键判断</h2>
 <p><strong>每次异常都做根因分析（RCA）</strong>。事发后最初几分钟的流程：现场安全驾驶员先 securing 现场 → 升级到监控团队（控制塔）→ 事故经理记录开 ticket → <strong>核心判断：这是局部事故，还是潜在全局事故？</strong> 软件自身发生无法解释的、有安全隐患的行为 → 可能是全局问题 → 立即停摆整个车队。</p>
 <h2 id="s8">六、监管对比：挪威（开放）vs 瑞士（数据密集）</h2>
 <table><thead><tr><th>维度</th><th>挪威 / 奥斯陆</th><th>瑞士</th></tr></thead><tbody><tr><td>监管风格</td><td>开放、以 <strong>风险评估</strong> 为基础</td><td>数据密集、指标导向</td></tr><tr><td>数据要求</td><td>无预设数据点；风险上升即报告</td><td>实时定位、连通延迟、<strong>脱离率</strong>、按道路类型的行为</td></tr><tr><td>目标</td><td>风险可控即可</td><td>倒逼运营商建立 <strong>安全管理体系(SMS)</strong></td></tr><tr><td>ODD 复杂度</td><td>郊区为主</td><td>城市核心（苏黎世/巴塞尔）复杂度高得多</td></tr></tbody></table>
 <p>嘉宾强调：<strong>欧洲难就难在每个国家规则不同</strong>，没有统一剧本。</p>
 <h2 id="s9">七、可追溯性（Traceability）：无法解释，就无法担责</h2>
-<ul><li>若运营商 <strong>无法追溯车辆&quot;为什么这么做&quot;</strong>，就<strong>不能对许可负责</strong>。</li></ul>
-<ul><li>但决策数据（&quot;他们的大脑&quot;）<strong>掌握在软件商手中</strong>；运营商不需要、也看不到底层方程，只需看到&quot;结果层&quot;。</li></ul>
-<ul><li>因此 <strong>透明度是要&quot;争&quot;来的</strong>。Mobileye 案例：作为首个外部运营商部署，Holo 持续施压获取数据，过程艰难但最终双赢。</li></ul>
+<ul><li>若运营商 <strong>无法追溯车辆&quot;为什么这么做&quot;</strong>，就<strong>不能对许可负责</strong>。</li><li>但决策数据（&quot;他们的大脑&quot;）<strong>掌握在软件商手中</strong>；运营商不需要、也看不到底层方程，只需看到&quot;结果层&quot;。</li><li>因此 <strong>透明度是要&quot;争&quot;来的</strong>。Mobileye 案例：作为首个外部运营商部署，Holo 持续施压获取数据，过程艰难但最终双赢。</li></ul>
 <h2 id="s10">八、安全是&quot;组织任务&quot;，不止技术问题</h2>
-<ul><li>必须把 <strong>&quot;人的安全管理体系&quot;</strong> 与 <strong>&quot;技术安全管理体系&quot;</strong> 融合。</li></ul>
-<ul><li>这是 <strong>零容忍行业</strong>：以 Cruise 为例，一个小问题就能摧毁整个业务。</li></ul>
-<ul><li>Holo 的做法：频繁 <strong>事故演练</strong>、专门安全页面、全员安全意识培训、招聘环节即测试安全素养。</li></ul>
+<ul><li>必须把 <strong>&quot;人的安全管理体系&quot;</strong> 与 <strong>&quot;技术安全管理体系&quot;</strong> 融合。</li><li>这是 <strong>零容忍行业</strong>：以 Cruise 为例，一个小问题就能摧毁整个业务。</li><li>Holo 的做法：频繁 <strong>事故演练</strong>、专门安全页面、全员安全意识培训、招聘环节即测试安全素养。</li></ul>
 <h2 id="s11">九、按道路类型的自动驾驶水平（比总里程更诚实）</h2>
-<ul><li>单纯的 <strong>&quot;每公里自动驾驶率&quot;</strong> 会骗人：好路与住宅区小路差异巨大。</li></ul>
-<ul><li><strong>按道路类型拆分</strong> 能揭示真实差距，也便于向当局和 Ruter 展示风险与缓解策略。</li></ul>
-<ul><li>实践意义：<strong>逐道路类型逐步放开 L4</strong>，而不是一次性全域放开。</li></ul>
+<ul><li>单纯的 <strong>&quot;每公里自动驾驶率&quot;</strong> 会骗人：好路与住宅区小路差异巨大。</li><li><strong>按道路类型拆分</strong> 能揭示真实差距，也便于向当局和 Ruter 展示风险与缓解策略。</li><li>实践意义：<strong>逐道路类型逐步放开 L4</strong>，而不是一次性全域放开。</li></ul>
 <h2 id="s12">十、远程协助：阈值与&quot;一人管多少车&quot;</h2>
-<ul><li><strong>远程协助操作员不执行动态驾驶任务（DDT）</strong>，不远程开车；只在车辆受阻时给&quot;A/B 场景&quot;决策建议，或处理乘客紧急事件。</li></ul>
-<ul><li><strong>响应阈值</strong>：交通场景 ≤ 5 秒；安全/乘客紧急 ≤ 2 秒。</li></ul>
-<ul><li><strong>人车比</strong>：财务可行区间约 <strong>1:15 到 1:20+</strong>；冬季奥斯陆可能降到 <strong>1:8</strong>。</li></ul>
+<ul><li><strong>远程协助操作员不执行动态驾驶任务（DDT）</strong>，不远程开车；只在车辆受阻时给&quot;A/B 场景&quot;决策建议，或处理乘客紧急事件。</li><li><strong>响应阈值</strong>：交通场景 ≤ 5 秒；安全/乘客紧急 ≤ 2 秒。</li><li><strong>人车比</strong>：财务可行区间约 <strong>1:15 到 1:20+</strong>；冬季奥斯陆可能降到 <strong>1:8</strong>。</li></ul>
 <h2 id="s13">十一、运营方与技术提供方最常&quot;彼此误解&quot;的地方</h2>
-<ul><li>技术方视角：&quot;系统按设计工作&quot;（为避让行人停车）= 成功。</li></ul>
-<ul><li>运营方视角：结果却是 <strong>15 名乘客被搁浅、堵住车站、客户投诉</strong>——真正的麻烦才开始。</li></ul>
+<ul><li>技术方视角：&quot;系统按设计工作&quot;（为避让行人停车）= 成功。</li><li>运营方视角：结果却是 <strong>15 名乘客被搁浅、堵住车站、客户投诉</strong>——真正的麻烦才开始。</li></ul>
 <h2 id="s14">🧭 核心框架：从&quot;试点&quot;到&quot;公共服务&quot;的跃迁</h2>
 <table><thead><tr><th>阶段</th><th>关注点</th><th>决胜能力</th></tr></thead><tbody><tr><td>证明技术</td><td>车能不能开</td><td>驾驶栈</td></tr><tr><td>证明运营可扩展性</td><td>服务能不能稳定跑</td><td>责任切分 / 远程协助 / 变更管理 / SMS</td></tr></tbody></table>
 <h2 id="s15">🔗 关联阅读</h2>
-<ul><li>[为所有人设计无人驾驶汽车](../../driverless-cars-for-everyone/)：远程操作员的情境意识上限与&quot;人环&quot;设计——本集运营侧的人因注脚。</li></ul>
-<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：远程协助请求积压导致整城瘫痪——本集&quot;2 秒内决断&quot;的现实压力测试。</li></ul>
-<ul><li>[Einride 的自动驾驶货运战略](../../einride-autonomous-freight/)：同为&quot;重运营&quot;路线，看货运侧如何做 per-site 许可与渐进式安全。</li></ul>
+<ul><li>[为所有人设计无人驾驶汽车](../../driverless-cars-for-everyone/)：远程操作员的情境意识上限与&quot;人环&quot;设计——本集运营侧的人因注脚。</li><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：远程协助请求积压导致整城瘫痪——本集&quot;2 秒内决断&quot;的现实压力测试。</li><li>[Einride 的自动驾驶货运战略](../../einride-autonomous-freight/)：同为&quot;重运营&quot;路线，看货运侧如何做 per-site 许可与渐进式安全。</li></ul>
 <h2 id="s16">👥 适合谁听</h2>
-<ul><li>自动驾驶运营商、许可持有者、安全/合规负责人；</li></ul>
-<ul><li>城市交通局与 PTA（理解&quot;别只想要展示车&quot;）；</li></ul>
-<ul><li>想进入欧洲 AV 市场的技术/软件提供商；</li></ul>
-<ul><li>关注 AV 责任链与保险结构的投资人。</li></ul>
+<ul><li>自动驾驶运营商、许可持有者、安全/合规负责人；</li><li>城市交通局与 PTA（理解&quot;别只想要展示车&quot;）；</li><li>想进入欧洲 AV 市场的技术/软件提供商；</li><li>关注 AV 责任链与保险结构的投资人。</li></ul>
 <h2 id="s17">十二、给四类参与者的启示</h2>
-<ul><li><strong>城市/交通局</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li></ul>
-<ul><li><strong>运营商</strong>：构建软件/数据/安全能力是核心竞争力；<strong>许可持有者既是责任中心，也是价值中心</strong>。</li></ul>
-<ul><li><strong>技术/软件提供商</strong>：补齐&quot;运营视角&quot;，用透明度换取更高质量的运营反馈。</li></ul>
-<ul><li><strong>行业与投资方</strong>：范式已从 *Can it drive?* 转向 *Can it operate as a service?*</li></ul>
+<ul><li><strong>城市/交通局</strong>：别只想要&quot;展示车&quot;；准备好组织转型、招标流程、明确责任主体。</li><li><strong>运营商</strong>：构建软件/数据/安全能力是核心竞争力；<strong>许可持有者既是责任中心，也是价值中心</strong>。</li><li><strong>技术/软件提供商</strong>：补齐&quot;运营视角&quot;，用透明度换取更高质量的运营反馈。</li><li><strong>行业与投资方</strong>：范式已从 *Can it drive?* 转向 *Can it operate as a service?*</li></ul>
 <h2 id="s18">附：主要人物与机构对照</h2>
-<table><thead><tr><th>名称</th><th>角色</th></tr></thead><tbody><tr><td>Daniel Abreu Marques</td><td>主持人（Autonomy Insiders）</td></tr><tr><td>Stefanie Berliner</td><td>Holo DACH（德奥瑞）业务负责人</td></tr><tr><td>Anders Toft</td><td>Holo 运营负责人</td></tr><tr><td><strong>Holo</strong></td><td>北欧自动驾驶运营商，为 Ruter 运营奥斯陆车队</td></tr><tr><td><strong>Ruter</strong></td><td>奥斯陆公共交通运输局（PTA）</td></tr><tr><td><strong>MOIA</strong></td><td>软件提供商（与 Mobileye 合作）</td></tr><tr><td><strong>Mobileye</strong></td><td>自动驾驶技术栈/底层供应商</td></tr><tr><td><strong>Vegvesen</strong></td><td>挪威公共道路管理局</td></tr></tbody></table></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../einride-autonomous-freight/index.html"><div class="rw"><img loading="lazy" src="../einride-autonomous-freight/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">Einride 的自动驾驶货运战略</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="../eu-type-approval-autonomous/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<table><thead><tr><th>名称</th><th>角色</th></tr></thead><tbody><tr><td>Daniel Abreu Marques</td><td>主持人（Autonomy Insiders）</td></tr><tr><td>Stefanie Berliner</td><td>Holo DACH（德奥瑞）业务负责人</td></tr><tr><td>Anders Toft</td><td>Holo 运营负责人</td></tr><tr><td><strong>Holo</strong></td><td>北欧自动驾驶运营商，为 Ruter 运营奥斯陆车队</td></tr><tr><td><strong>Ruter</strong></td><td>奥斯陆公共交通运输局（PTA）</td></tr><tr><td><strong>MOIA</strong></td><td>软件提供商（与 Mobileye 合作）</td></tr><tr><td><strong>Mobileye</strong></td><td>自动驾驶技术栈/底层供应商</td></tr><tr><td><strong>Vegvesen</strong></td><td>挪威公共道路管理局</td></tr></tbody></table></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../einride-autonomous-freight/index.html"><div class="rw"><img loading="lazy" src="../einride-autonomous-freight/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">Einride 的自动驾驶货运战略</div></div></a><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

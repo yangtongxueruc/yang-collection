@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -359,20 +361,14 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>文远知行 2017 年成立，现已在纳斯达克与港交所双重上市，测试或运营覆盖 13 国 60+ 城、持有 8 国自动驾驶牌照。本期 45 分钟全程高信息密度，以下按访谈主线逐层拆解。</p>
 <h2 id="s0">一、从终身教职到 Baidu AI Lab：九年创业的起点</h2>
 <p>Tony Han 的开场背景值得整段引用，因为它解释了 WeRide 的「技术底子」从哪来：他曾是美国终身教授，利用学术休假（sabbatical）发出两封邮件——一封给 Google X（被拒，「我们是不接待访问学者的秘密实验室」），一封给吴恩达（Andrew Ng），后者回复「我们目前没有自动驾驶项目，但有一个非常令人兴奋的深度学习项目」。</p>
-<ul><li>他由此进入百度 AI Lab（当时约 10 人），与 <strong>Dario Amodei（Anthropic 创始人）同日入职</strong>、成为同桌搭子；实验室里还有后来创立 AI for Math 公司的 Shubhro 等一批研究者。</li></ul>
-<ul><li>他们做出了 <strong>Deep Speech 2——第一个端到端深度学习语音识别</strong>，在单句语境下击败人类表现（ICML 2016）。</li></ul>
-<ul><li>「我们拿了 5700 万美元种子轮，靠简历和这笔钱就起步了。九年后，我们已在约 40–50 座城市、近 9 国部署。」——注意，访谈中 Tony 说的是 40–50 城 / 近 9 国，而节目介绍口径为 13 国 60+ 城，二者差异来自统计时点与口径（测试/运营 vs 正式部署）。</li></ul>
+<ul><li>他由此进入百度 AI Lab（当时约 10 人），与 <strong>Dario Amodei（Anthropic 创始人）同日入职</strong>、成为同桌搭子；实验室里还有后来创立 AI for Math 公司的 Shubhro 等一批研究者。</li><li>他们做出了 <strong>Deep Speech 2——第一个端到端深度学习语音识别</strong>，在单句语境下击败人类表现（ICML 2016）。</li><li>「我们拿了 5700 万美元种子轮，靠简历和这笔钱就起步了。九年后，我们已在约 40–50 座城市、近 9 国部署。」——注意，访谈中 Tony 说的是 40–50 城 / 近 9 国，而节目介绍口径为 13 国 60+ 城，二者差异来自统计时点与口径（测试/运营 vs 正式部署）。</li></ul>
 <h2 id="s1">二、哲学与自动驾驶：道家、罗素与「大道至简」</h2>
 <p>当被问到哲学背景如何影响自动驾驶时，Tony 的回答非常个人化：道家（老庄）、孔子、《罗素悖论》、霍金《大设计》。他把这些读物的价值落到公司方法论上：</p>
 <blockquote>「道之简（Da Dao Zhi Jian，大道至简）——宇宙的大原则是简单的。我们看起来复杂，但核心如此简单：自动驾驶技术。它是一根树干，分出不同的产品，共享同一套计算平台、AI 基础设施、数据标注与技术。」</blockquote>
 <p>这段引文的落点很关键：WeRide 的五条产品线（robotaxi / robobus / robovan / robosweeper / ADAS）不是「摊大饼」，而是<strong>同一棵技术树干上的分支</strong>——都要处理红绿灯、车道线、行人、违章横穿、事故现场这些公共道路问题，只是载荷与场景不同。</p>
 <h2 id="s2">三、五条产品线，五种商业模式（以及一条铁律）</h2>
 <p>Tony 逐一拆了各线的赚钱方式：</p>
-<ul><li><strong>robotaxi</strong>：国际市场与 Uber 合作，自有 App「WeRide Go」，国内还有微信小程序入口。「我们本质上是造『机器司机』，与打车平台分 taxi fare；如果自持车队，就拿下整份车费。」</li></ul>
-<ul><li><strong>robobus</strong>：自称「全球唯一能交付公共道路全无人驾驶小巴的公司」——「你在公共道路上看到一辆全无人小巴，不用想是哪家，一定是 WeRide」。它天然适合欧洲：公交成本高、司机福利贵，小城市压力极大。</li></ul>
-<ul><li><strong>robovan</strong>：物流场景，受京东等物流巨头采用。</li></ul>
-<ul><li><strong>robosweeper</strong>：城市环卫，总部所在岛每条街道都由机器人清扫车完成。</li></ul>
-<ul><li><strong>ADAS</strong>：向车厂收授权费（打包进车价，一次买断，非订阅制）；已拿下中国智能驾驶挑战赛<strong>六连冠</strong>，上季度交付约 3 万辆，合作车型（GAC、Chery 等）在售规模达十万级。</li></ul>
+<ul><li><strong>robotaxi</strong>：国际市场与 Uber 合作，自有 App「WeRide Go」，国内还有微信小程序入口。「我们本质上是造『机器司机』，与打车平台分 taxi fare；如果自持车队，就拿下整份车费。」</li><li><strong>robobus</strong>：自称「全球唯一能交付公共道路全无人驾驶小巴的公司」——「你在公共道路上看到一辆全无人小巴，不用想是哪家，一定是 WeRide」。它天然适合欧洲：公交成本高、司机福利贵，小城市压力极大。</li><li><strong>robovan</strong>：物流场景，受京东等物流巨头采用。</li><li><strong>robosweeper</strong>：城市环卫，总部所在岛每条街道都由机器人清扫车完成。</li><li><strong>ADAS</strong>：向车厂收授权费（打包进车价，一次买断，非订阅制）；已拿下中国智能驾驶挑战赛<strong>六连冠</strong>，上季度交付约 3 万辆，合作车型（GAC、Chery 等）在售规模达十万级。</li></ul>
 <p>而<strong>铁律</strong>是「不做不共享技术栈的生意」：不做 40 吨级自动驾驶卡车（高速场景的控制/规划与小客车不同），不做矿卡（非结构化矿场场景不同）。「如果这个业务不能共享同一套技术，我们就不做——因为我们想用一套版本覆盖所有应用。」</p>
 <h2 id="s3">四、车队结构与 80% 新车上 Robotaxi：跟着订单走，不跟着计划走</h2>
 <p>主持人给出硬数据：7 月底 L4 车队约 <strong>3,400 辆</strong>，其中 robotaxi 超过 <strong>1,800 辆</strong>；且最近一个季度新增车辆「绝大多数是 robotaxi」（robotaxi 环比增约 500 辆、全车队增约 600 辆）。</p>
@@ -381,9 +377,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>他把不同市场对车型的偏好讲得很具体：欧洲城市更想先要 robobus（缓解市政公交财政压力）；中东 45°C 高温下，没人愿意在公交站等车，「我跳进一辆有空调的 robotaxi 不想在车站等」。<strong>车型组合是市场需求的自变量，不是战略的自变量。</strong></p>
 <h2 id="s4">五、阿布扎比三方结构：Uber 管平台，WeRide 管技术，运营方管车队</h2>
 <p>中东是 WeRide 国际化的核心样本：<strong>一个季度内从约 200 辆翻倍到 400 辆</strong>。阿布扎比的结构被主持人称为「three-way structure」：</p>
-<ul><li><strong>WeRide</strong>：提供技术与车辆；</li></ul>
-<ul><li><strong>Uber</strong>：提供叫车平台（阿布扎比/迪拜 Uber 渗透率高，且对国际旅客友好——出机场打开 App 输入地址即可叫车，无需讲当地语言）；</li></ul>
-<ul><li><strong>运营方</strong>（Tavassool，阿联酋本地交通运营公司）：负责车队运营。</li></ul>
+<ul><li><strong>WeRide</strong>：提供技术与车辆；</li><li><strong>Uber</strong>：提供叫车平台（阿布扎比/迪拜 Uber 渗透率高，且对国际旅客友好——出机场打开 App 输入地址即可叫车，无需讲当地语言）；</li><li><strong>运营方</strong>（Tavassool，阿联酋本地交通运营公司）：负责车队运营。</li></ul>
 <p>关键权力问题「谁决定每天跑多少辆车」——Tony 的回答是：<strong>部署计划由 Uber 与 WeRide 管理团队共同决定</strong>，双方频繁沟通，按区域逐步扩区、逐步加车，最终让各运营区连成整座城。</p>
 <h2 id="s5">六、Uber 上线「自动驾驶」分类后：惊喜不在乘客涌入，而在行为理性</h2>
 <p>2025 年 9 月，Uber 在阿布扎比 App 全球首发「自动驾驶」独立分类，据称周订单量上升约 20%。但 Tony 认为真正的「意外」是乘客的选择逻辑极其理性：</p>
@@ -403,8 +397,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>这是 Tony 对行业路径之争（L2++ 升维 vs L4 降维）的完整论证：</p>
 <blockquote>「从 L4 到 L2，我称之为 projection（投影）——高维到低维，相对容易；从低维到高维是 lifting（举重），难得多。哪个更难取决于公司怎么解题。」</blockquote>
 <p>他据此提出（约一年前）一个可证伪的<strong>资格测试（qualification process）</strong>：</p>
-<ul><li><strong>L4 公司→ADAS</strong>：系统必须真正进入量产车、被消费者购买使用（WeRide 已达成：GAC/Chery 等车型在售十万级，北京、广东、迪拜等地可随时打到全无人 robotaxi）；</li></ul>
-<ul><li><strong>L2/ADAS 公司→robotaxi</strong>：至少 <strong>100 辆车面向公众</strong>、持续运营 <strong>180 天</strong>、无重大事故且未被监管叫停。</li></ul>
+<ul><li><strong>L4 公司→ADAS</strong>：系统必须真正进入量产车、被消费者购买使用（WeRide 已达成：GAC/Chery 等车型在售十万级，北京、广东、迪拜等地可随时打到全无人 robotaxi）；</li><li><strong>L2/ADAS 公司→robotaxi</strong>：至少 <strong>100 辆车面向公众</strong>、持续运营 <strong>180 天</strong>、无重大事故且未被监管叫停。</li></ul>
 <blockquote>「我提出这个测试一年了，WeRide 早已通过；但我提到的那些公司，没有一家通过反向版本。他们的『robotaxi』里坐着安全员——如果安全员坐在方向盘后面，我自己就能开，要你做 robotaxi 干什么？」</blockquote>
 <p>这个「100 辆 × 180 天」标准，是把「demo 级能力」与「运营级能力」一刀切开的硬门槛，也是本期对「谁才算 robotaxi 公司」最锋利的回答。</p>
 <h2 id="s9">十、长期赢家：盈利 + 份额，结果自己会说话</h2>

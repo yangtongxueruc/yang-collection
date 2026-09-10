@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -355,16 +357,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote>来源：NeurIPS 2024 Expo Talk Panel｜时长约 62 分钟｜SlidesLive pid 39031401</blockquote>
 <blockquote>说明：基于 Whisper 英文识别稿 + 机器翻译中文稿整理，专有名词（Waymo、BEV、SWFormer、MODAR、Motion LM、Scene Diffuser、Gemini、EMA 等）已人工校对。</blockquote>
 <h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：这场演讲把&quot;自动驾驶规模化&quot;拆成一条完整技术叙事——<strong>感知（SWFormer/BEV）→ 行为（Motion LM/联合预测/Scene Diffuser）→ 数据飞轮（自动标注/MODAR）→ 闭环（BC+RL）→ 大模型（VLM/基础模型）</strong>。</li></ul>
-<ul><li><strong>最反直觉的研究结论</strong>：<strong>运动的 scaling law 与传统 LLM 完全不同</strong>——因为语言是 Zipf 分布而&quot;运动&quot;不是；不要想当然套用 LLM 的 scaling law。</li></ul>
-<ul><li><strong>贯穿全场的&quot;双刃剑&quot;思维</strong>：稠密 vs 稀疏、中间表示 vs 端到端、行为克隆 vs RL、单系统 vs 分城市——Waymo 几乎总是&quot;承认两边都有代价，再找折中/组合&quot;。</li></ul>
-<ul><li><strong>安全底线</strong>：大模型进车是&quot;监督/蒸馏&quot;而非&quot;直接接管&quot;，安全护栏永远在 AI 组件之外。</li></ul>
+<ul><li><strong>一句话定位</strong>：这场演讲把&quot;自动驾驶规模化&quot;拆成一条完整技术叙事——<strong>感知（SWFormer/BEV）→ 行为（Motion LM/联合预测/Scene Diffuser）→ 数据飞轮（自动标注/MODAR）→ 闭环（BC+RL）→ 大模型（VLM/基础模型）</strong>。</li><li><strong>最反直觉的研究结论</strong>：<strong>运动的 scaling law 与传统 LLM 完全不同</strong>——因为语言是 Zipf 分布而&quot;运动&quot;不是；不要想当然套用 LLM 的 scaling law。</li><li><strong>贯穿全场的&quot;双刃剑&quot;思维</strong>：稠密 vs 稀疏、中间表示 vs 端到端、行为克隆 vs RL、单系统 vs 分城市——Waymo 几乎总是&quot;承认两边都有代价，再找折中/组合&quot;。</li><li><strong>安全底线</strong>：大模型进车是&quot;监督/蒸馏&quot;而非&quot;直接接管&quot;，安全护栏永远在 AI 组件之外。</li></ul>
 <h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>Waymo 运营规模</strong>：旧金山、凤凰城、洛杉矶、奥斯汀全公开运营，每周 <strong>15 万+ 付费行程</strong>。</li></ul>
-<ul><li><strong>安全数据</strong>：安全气囊展开类碰撞 <strong>−81%</strong>、致伤碰撞 <strong>−72%</strong>、警方记录碰撞 <strong>−57%</strong>（对比人类驾驶基线）。</li></ul>
-<ul><li><strong>VLM 应用</strong>：用 Gemini 微调做运动预测，效果<strong>不逊于精心手调的专用系统</strong>。</li></ul>
-<ul><li><strong>规模化涌现故障</strong>：扩充电车库时，夜间多车互相&quot;礼让&quot;导致<strong>互相按喇叭</strong>（训练数据里没有的故障模式）。</li></ul>
-<ul><li><strong>研究模型不直接控车</strong>：EMA 等大模型当前只是 teacher，把灵活性&quot;蒸馏&quot;进带完整安全护栏的车端模型。</li></ul>
+<ul><li><strong>Waymo 运营规模</strong>：旧金山、凤凰城、洛杉矶、奥斯汀全公开运营，每周 <strong>15 万+ 付费行程</strong>。</li><li><strong>安全数据</strong>：安全气囊展开类碰撞 <strong>−81%</strong>、致伤碰撞 <strong>−72%</strong>、警方记录碰撞 <strong>−57%</strong>（对比人类驾驶基线）。</li><li><strong>VLM 应用</strong>：用 Gemini 微调做运动预测，效果<strong>不逊于精心手调的专用系统</strong>。</li><li><strong>规模化涌现故障</strong>：扩充电车库时，夜间多车互相&quot;礼让&quot;导致<strong>互相按喇叭</strong>（训练数据里没有的故障模式）。</li><li><strong>研究模型不直接控车</strong>：EMA 等大模型当前只是 teacher，把灵活性&quot;蒸馏&quot;进带完整安全护栏的车端模型。</li></ul>
 <h2 id="s2">🗝️ 关键金句（原文摘录）</h2>
 <blockquote>*&quot;81% fewer airbag deployment crashes, 72% fewer injury causing crashes, 57% fewer police reported crashes…&quot;*</blockquote>
 <blockquote>*&quot;All of this, you think of it as, oh, this is really rare, but at scale, this is not something rare. This is something that happens all the time.&quot;*（长尾场景在规模化后&quot;不再罕见&quot;。）</blockquote>
@@ -374,48 +369,34 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <p>演讲以一组数字开场：Waymo 目前在<strong>旧金山、凤凰城、洛杉矶、奥斯汀</strong>全公开运营，每周服务 <strong>15 万+ 付费行程</strong>。配套的<strong>安全数据</strong>是基调锚点：安全气囊展开类碰撞减少 81%、致伤碰撞减少 72%、警方记录碰撞减少 57%。讲者坦承自己加入 Waymo 仅约半年，<strong>&quot;这活儿没有一件是我的&quot;</strong>，只是代言人。</p>
 <h2 id="s4">二、为什么自动驾驶是个&quot;难问题&quot;</h2>
 <p>核心论点：自动驾驶在形式上很简单——<strong>两自由度系统</strong>（转向 + 加减速），难点全在&quot;感知与理解世界&quot;：</p>
-<p>1. <strong>环境极度复杂且不可控</strong>：天气多变、输入高维、大量不守规则的 agent，还要应对&quot;非 nominal&quot;的异常情形。 2. <strong>长尾场景 dominate the equation</strong>：罕见事件在规模化后&quot;不再罕见&quot;——施工区并线、迎面卡车需倒车让行、节庆人群、坏掉的红绿灯、幼儿冲进马路、高速公路上的烧烤架、倒树、洪水…… 3. <strong>实时 + 可靠硬约束</strong>：所有推理必须在<strong>车端、实时</strong>完成。</p>
+<ol><li><strong>环境极度复杂且不可控</strong>：天气多变、输入高维、大量不守规则的 agent，还要应对&quot;非 nominal&quot;的异常情形。</li><li><strong>长尾场景 dominate the equation</strong>：罕见事件在规模化后&quot;不再罕见&quot;——施工区并线、迎面卡车需倒车让行、节庆人群、坏掉的红绿灯、幼儿冲进马路、高速公路上的烧烤架、倒树、洪水……</li><li><strong>实时 + 可靠硬约束</strong>：所有推理必须在<strong>车端、实时</strong>完成。</li></ol>
 <h2 id="s5">三、AI 怎么进来：感知 → 预测 → 规划的栈</h2>
 <p>典型栈是 <strong>传感器 → 感知 → 预测/规划 → 控制</strong>。Waymo 感知的核心理念是把所有信息<strong>聚合到一张以自车为中心的鸟瞰图（BEV）</strong>，作为描述场景的中间表示。<strong>BEV 中间表示是一把双刃剑</strong>：极易泛化、可验证（方便仿真/反事实），但需要大量特征设计与人工标注。</p>
 <h2 id="s6">四、模型架构：SWFormer（稀疏窗口 Transformer 做长距离 3D 检测）</h2>
 <p>感知的工程矛盾：要覆盖数百米跨度、又要厘米/毫米级精度。Waymo 的解法：<strong>&quot;两个都很糟，那就两者都要&quot;</strong>——<strong>SWFormer</strong>，用稀疏窗口做多尺度信息聚合的 Transformer，把超长距离的稀疏点云分块聚合、再跨尺度通信。</p>
 <h2 id="s7">五、行为建模：从运动预测到&quot;把驾驶当语言&quot;</h2>
-<ul><li><strong>联合预测 vs 独立预测</strong>：把驾驶视为 agent 之间的&quot;视觉对话&quot;，用 motion-token 序列自回归生成，解码器用因果交叉注意力建模因果关系——联合预测下两 agent 不再相撞。</li></ul>
-<ul><li><strong>扩散模型 Scene Diffuser</strong>：用扩散过程&quot;边去噪边 rollout&quot;未来轨迹。</li></ul>
+<ul><li><strong>联合预测 vs 独立预测</strong>：把驾驶视为 agent 之间的&quot;视觉对话&quot;，用 motion-token 序列自回归生成，解码器用因果交叉注意力建模因果关系——联合预测下两 agent 不再相撞。</li><li><strong>扩散模型 Scene Diffuser</strong>：用扩散过程&quot;边去噪边 rollout&quot;未来轨迹。</li></ul>
 <h2 id="s8">六、规模化定律：运动的 scaling law 与 LLM 完全不同</h2>
 <p>Waymo 为 Motion LM 拟合了随参数量、训练数据变化的<strong>缩放定律</strong>：</p>
-<p>1. <strong>运动的 scaling law 与传统 LLM 量级上完全不同</strong>——数据分布性质变了，scaling law 就变。 2. <strong>推理时也存在 scaling law</strong>：采样更多/更少、用更大/更小模型之间不是&quot;越大越好&quot;，取决于你愿花多少推理算力。</p>
+<ol><li><strong>运动的 scaling law 与传统 LLM 量级上完全不同</strong>——数据分布性质变了，scaling law 就变。</li><li><strong>推理时也存在 scaling law</strong>：采样更多/更少、用更大/更小模型之间不是&quot;越大越好&quot;，取决于你愿花多少推理算力。</li></ol>
 <h2 id="s9">七、自动标注与 MODAR：用&quot;未来点&quot;补遮挡</h2>
-<ul><li><strong>时序聚合自动标注</strong>：跨时间步聚合 3D 框，融合 lidar 几何 + 相机语义，得到全自动标注。</li></ul>
-<ul><li><strong>MODAR（Motion-augmented Detection And Ranging）</strong>：用运动预测把点云里的点&quot;传送&quot;到未来位置，生成虚拟点——对<strong>遮挡场景</strong>极有用（前车挡住后车导致没有 lidar 回波，但系统&quot;知道车不会凭空消失&quot;）。</li></ul>
+<ul><li><strong>时序聚合自动标注</strong>：跨时间步聚合 3D 框，融合 lidar 几何 + 相机语义，得到全自动标注。</li><li><strong>MODAR（Motion-augmented Detection And Ranging）</strong>：用运动预测把点云里的点&quot;传送&quot;到未来位置，生成虚拟点——对<strong>遮挡场景</strong>极有用（前车挡住后车导致没有 lidar 回波，但系统&quot;知道车不会凭空消失&quot;）。</li></ul>
 <h2 id="s10">八、闭环训练与强化学习：行为克隆 + RL 按需切换</h2>
 <p>多数模型在<strong>人类驾驶示范（行为克隆）</strong>上训练，真实感强但短于反事实；RL 反之。Waymo 的实用折中：<strong>在分布内用行为克隆，一旦检测到分布外（out-of-distribution）就切到 RL</strong>。例如有人从车里钻出来，行为克隆模型会贴得很近不避让，RL 模型则会主动往远离人的方向挪。</p>
 <h2 id="s11">九、VLM / LLM 进驾驶：机会与短板</h2>
-<ul><li><strong>零样本标注与蒸馏</strong>：VLM 能识别吉普、推土机并映射到 lidar 点；Gemini 微调做运动预测效果不逊专用系统。</li></ul>
-<ul><li><strong>思维链（CoT）推理</strong>：先产出&quot;等高线意图&quot;（wait / nudge / drive forward）再执行。</li></ul>
-<ul><li><strong>短板</strong>：① 空间推理弱；② 缺长期记忆；③ 实时性/算力效率需能上车。</li></ul>
+<ul><li><strong>零样本标注与蒸馏</strong>：VLM 能识别吉普、推土机并映射到 lidar 点；Gemini 微调做运动预测效果不逊专用系统。</li><li><strong>思维链（CoT）推理</strong>：先产出&quot;等高线意图&quot;（wait / nudge / drive forward）再执行。</li><li><strong>短板</strong>：① 空间推理弱；② 缺长期记忆；③ 实时性/算力效率需能上车。</li></ul>
 <h2 id="s12">十、工程化与落地：三个 Q&amp;A 揭示的真相</h2>
-<p>1. <strong>AV 与 AV 的互害</strong>：夜间多车互相&quot;礼让&quot;导致互相按喇叭——规模化涌现的新故障。 2. <strong>单一系统 vs 分城市定制</strong>：目前是一个系统扩展到不同地理，每次新城市按需微调；监管差异必须 case-by-case。 3. <strong>研究模型如何接入生产栈</strong>：大模型当前只是 teacher，间接蒸馏进带安全护栏的车端模型。</p>
+<ol><li><strong>AV 与 AV 的互害</strong>：夜间多车互相&quot;礼让&quot;导致互相按喇叭——规模化涌现的新故障。</li><li><strong>单一系统 vs 分城市定制</strong>：目前是一个系统扩展到不同地理，每次新城市按需微调；监管差异必须 case-by-case。</li><li><strong>研究模型如何接入生产栈</strong>：大模型当前只是 teacher，间接蒸馏进带安全护栏的车端模型。</li></ol>
 <h2 id="s13">🧭 核心框架：Waymo 的技术叙事链</h2>
 <p><code>`</code> 感知(BEV/SWFormer) → 行为(Motion LM/联合预测/Scene Diffuser) → 数据飞轮(自动标注/MODAR) → 闭环(BC+RL) → 大模型(VLM/基础模型) <code>`</code> 每条边都是&quot;双刃剑&quot;取舍：稠密↔稀疏、中间表示↔端到端、BC↔RL、单系统↔分城市。</p>
 <h2 id="s14">🔗 关联阅读</h2>
-<ul><li>[Waymo 的数据揭示了&quot;到底谁在坐 robotaxi&quot;](../../waymo-data-who-rides-robotaxis/)：从城市/运营侧看 Waymo，与本集技术侧互补。</li></ul>
-<ul><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：技术再强，远程协助积压也能让整城停摆——&quot;运营 &gt; AI&quot;的极端注脚。</li></ul>
-<ul><li>[从自动驾驶试点到公共服务](../../av-pilot-to-public-service/)：L4 落地所需的许可、责任与远程协助运营体系。</li></ul>
+<ul><li>[Waymo 的数据揭示了&quot;到底谁在坐 robotaxi&quot;](../../waymo-data-who-rides-robotaxis/)：从城市/运营侧看 Waymo，与本集技术侧互补。</li><li>[从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性](../../waymo-outage-2025-templeton/)：技术再强，远程协助积压也能让整城停摆——&quot;运营 &gt; AI&quot;的极端注脚。</li><li>[从自动驾驶试点到公共服务](../../av-pilot-to-public-service/)：L4 落地所需的许可、责任与远程协助运营体系。</li></ul>
 <h2 id="s15">👥 适合谁听</h2>
-<ul><li>自动驾驶感知/预测/规划方向的算法工程师与研究员；</li></ul>
-<ul><li>关注 scaling law、世界模型、VLM 上车的 AI 系统研究者；</li></ul>
-<ul><li>想理解&quot;大模型如何（不）直接控车&quot;的技术决策者。</li></ul>
+<ul><li>自动驾驶感知/预测/规划方向的算法工程师与研究员；</li><li>关注 scaling law、世界模型、VLM 上车的 AI 系统研究者；</li><li>想理解&quot;大模型如何（不）直接控车&quot;的技术决策者。</li></ul>
 <h2 id="s16">十一、总结与启示</h2>
-<ul><li><strong>中间表示（BEV）是工程取舍的核心</strong>，它的&quot;需要标注&quot;痛点催生了自动标注与 MODAR。</li></ul>
-<ul><li><strong>把驾驶建模成&quot;语言/对话&quot;</strong> 是统一感知与行为的一条主线。</li></ul>
-<ul><li><strong>scaling law 不能想当然套用 LLM</strong>——数据分布决定一切，推理时算力也是可调旋钮。</li></ul>
-<ul><li><strong>大模型进车是&quot;监督/蒸馏&quot;而非&quot;直接接管&quot;</strong>，安全护栏永远在 AI 组件之外。</li></ul>
-<ul><li><strong>规模化会暴露训练数据里没有的故障</strong>（车库鸣笛），这是&quot;at scale&quot;最诚实的注脚。</li></ul>
+<ul><li><strong>中间表示（BEV）是工程取舍的核心</strong>，它的&quot;需要标注&quot;痛点催生了自动标注与 MODAR。</li><li><strong>把驾驶建模成&quot;语言/对话&quot;</strong> 是统一感知与行为的一条主线。</li><li><strong>scaling law 不能想当然套用 LLM</strong>——数据分布决定一切，推理时算力也是可调旋钮。</li><li><strong>大模型进车是&quot;监督/蒸馏&quot;而非&quot;直接接管&quot;</strong>，安全护栏永远在 AI 组件之外。</li><li><strong>规模化会暴露训练数据里没有的故障</strong>（车库鸣笛），这是&quot;at scale&quot;最诚实的注脚。</li></ul>
 <h2 id="s17">局限说明</h2>
-<ul><li>本分析基于机器语音识别（Whisper）与机器翻译，专有名词已尽可能校对，但个别术语或口误仍可能有偏差；<strong>引文以英文原文为准</strong>。</li></ul>
-<ul><li>演讲为 Expo 概览性质，技术细节多为&quot;点到的方向&quot;而非完整方法；具体配方请参考 Waymo 后续正式论文与海报。</li></ul>
-<ul><li>讲者本人注明仅加入 Waymo 约半年，内容代表团队多年体系，非其个人最新研究。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../waymo-dolgov-seven-lessons/index.html"><div class="rw"><img loading="lazy" src="../waymo-dolgov-seven-lessons/cover.jpg" alt=""></div><div class="rb"><div class="rs">YouTube · Startup School (YC)</div><div class="rt">Waymo 七条物理世界 AI 经验（Dmitri Dolgov @ Startup School）</div></div></a><a class="relcard" href="../aseon-labs-av-ops/index.html"><div class="rw"><img loading="lazy" src="../aseon-labs-av-ops/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonocast Podcast</div><div class="rt">Aseon Labs：用机器人维修舱解决 Robotaxi 的运维与空驶难题</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li>本分析基于机器语音识别（Whisper）与机器翻译，专有名词已尽可能校对，但个别术语或口误仍可能有偏差；<strong>引文以英文原文为准</strong>。</li><li>演讲为 Expo 概览性质，技术细节多为&quot;点到的方向&quot;而非完整方法；具体配方请参考 Waymo 后续正式论文与海报。</li><li>讲者本人注明仅加入 Waymo 约半年，内容代表团队多年体系，非其个人最新研究。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-safety-robotaxis-yoshida/index.html"><div class="rw"><img loading="lazy" src="../av-safety-robotaxis-yoshida/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">重新思考 AV 安全：当 robotaxi 开始规模化</div></div></a><a class="relcard" href="../waymo-outage-2025-templeton/index.html"><div class="rw"><img loading="lazy" src="../waymo-outage-2025-templeton/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">从 2025 年 Waymo 大瘫痪看 Robotaxi 的可靠性</div></div></a><a class="relcard" href="../france-driverless-transport-rules/index.html"><div class="rw"><img loading="lazy" src="../france-driverless-transport-rules/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">法国的无人驾驶公共交通审批规则，由评估方亲解</div></div></a><a class="relcard" href="../kodiak-don-burnette-driverless-trucking/index.html"><div class="rw"><img loading="lazy" src="../kodiak-don-burnette-driverless-trucking/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">与 Kodiak AI CEO Don Burnette 谈无人驾驶卡车规模化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};

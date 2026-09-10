@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -364,9 +366,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s2">二、时间跨度的谱系：从 100 纳秒到数小时</h2>
 <p>Dwarkesh 的核心困惑是：既然你们在纳秒级交易，怎么还能做 GPU 的事？</p>
 <p>Yaron 的回答是整场对话的基石：<strong>交易不存在单一的时间跨度，而是一条完整的谱系。</strong></p>
-<ul><li>最快的一端：为保持竞争力，某些系统必须在 <strong>100 纳秒内</strong> 处理并返回数据包。到了这个速度，「用 OCaml 还是 Rust 还是 C++ 根本不重要，因为你连 CPU 都用不了——必须用 FPGA 直接焊在网线上」，数据包在输入端还没收完，输出端就已经发出去了。</li></ul>
-<ul><li>越慢的一端：可能是几微秒、几百微秒、毫秒，乃至「半小时内或当天返回决策都完全没问题」。</li></ul>
-<ul><li>在「决策的聪明程度」和「返回的延迟」之间存在一条完整的权衡曲线。最佳策略是<strong>集成（ensemble）</strong>：不同时间尺度用不同复杂度的决策。</li></ul>
+<ul><li>最快的一端：为保持竞争力，某些系统必须在 <strong>100 纳秒内</strong> 处理并返回数据包。到了这个速度，「用 OCaml 还是 Rust 还是 C++ 根本不重要，因为你连 CPU 都用不了——必须用 FPGA 直接焊在网线上」，数据包在输入端还没收完，输出端就已经发出去了。</li><li>越慢的一端：可能是几微秒、几百微秒、毫秒，乃至「半小时内或当天返回决策都完全没问题」。</li><li>在「决策的聪明程度」和「返回的延迟」之间存在一条完整的权衡曲线。最佳策略是<strong>集成（ensemble）</strong>：不同时间尺度用不同复杂度的决策。</li></ul>
 <blockquote>金句：「构建最佳交易策略的正确方法，实际上是采用一种集成方法。对于某些决策你极快极简，对于另一些你可以用更大的模型。」</blockquote>
 <hr>
 <h2 id="s3">三、模型在预测什么：公允价值与组合性</h2>
@@ -378,8 +378,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <hr>
 <h2 id="s5">五、60 亿美元 CoreWeave 与 Jane Street 的「规模定律」</h2>
 <p>Jane Street 与 CoreWeave 签下 <strong>60 亿美元</strong> 算力协议。Yaron 借此区分了 Jane Street 与基础模型实验室的根本差异：</p>
-<ul><li>基础模型实验室的价值在于「训练一个通用大模型做所有事」。</li></ul>
-<ul><li>Jane Street 的价值在于<strong>模型架构的多样性 + 实验的数量</strong>。大量价值来自「让研究员用更快的迭代试很多很不一样的新设计」。</li></ul>
+<ul><li>基础模型实验室的价值在于「训练一个通用大模型做所有事」。</li><li>Jane Street 的价值在于<strong>模型架构的多样性 + 实验的数量</strong>。大量价值来自「让研究员用更快的迭代试很多很不一样的新设计」。</li></ul>
 <p>他还点出一个常被忽视的专业化动因——<strong>字节/浮点比（bytes-to-flop ratio）</strong>：金融数据噪声大、体量巨大，但单位字节的信息量低，因此模型往往更小、数据更脏更多。不同应用之间的存储、加载、塑形、吞吐与延迟权衡完全不同。</p>
 <hr>
 <h2 id="s6">六、推理工作负载：延迟、批处理与极高数据速率</h2>
@@ -399,8 +398,7 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s9">九、人类在环：相变、非电子化交易与人类的元判断</h2>
 <p>哪天最赚钱？往往是世界发疯、没人知道发生了什么、流动性极难提供的时候——而这时恰恰最需要<strong>人类的判断</strong>去回答「今天和往常有什么不同」。</p>
 <p>Yaron 区分了两种自动化：</p>
-<ul><li>模型尽量学会应对<strong>相变（phase transitions）</strong>；</li></ul>
-<ul><li>但<strong>人类在相变时比模型表现更好</strong>，需要一种「该怎么做」的<strong>元判断（meta judgment）</strong>。</li></ul>
+<ul><li>模型尽量学会应对<strong>相变（phase transitions）</strong>；</li><li>但<strong>人类在相变时比模型表现更好</strong>，需要一种「该怎么做」的<strong>元判断（meta judgment）</strong>。</li></ul>
 <p>他还澄清了「非电子化」的含义：仍有大量通过聊天工具、人际沟通完成的交易；有人要评估电话那头的人代表了多少<strong>逆向选择（adverse selection）</strong>。债券的自动化程度远低于股票——「25 到 30 年过去了，并不是所有事都走向了电子化」。</p>
 <hr>
 <h2 id="s10">十、物理工程：20 年变迁、瓶颈与模块化</h2>
@@ -420,30 +418,21 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <hr>
 <h2 id="s14">十四、GPU 规模几万→几十万；真正的瓶颈是人才</h2>
 <p>这段直接点题「招聘」：</p>
-<ul><li>当前 GPU 约<strong>几万张</strong>，不久的将来将达<strong>几十万张</strong>，且完全可由业务效益证明合理（「我们绝不会去想：能不能用交易 P&amp;L 证明它？显然是好投资」）。</li></ul>
-<ul><li>算力扩张<strong>不会放慢招聘</strong>，反而增加招聘动力——「研究本身极有价值，研究员极有价值，这反而是买更多算力的理由」。</li></ul>
-<ul><li>真正的最大瓶颈不是硬件，而是<strong>找到优秀人才</strong>与<strong>导师辅导能力（mentorship capacity）</strong>——培训新人、融入文化需要时间。</li></ul>
+<ul><li>当前 GPU 约<strong>几万张</strong>，不久的将来将达<strong>几十万张</strong>，且完全可由业务效益证明合理（「我们绝不会去想：能不能用交易 P&amp;L 证明它？显然是好投资」）。</li><li>算力扩张<strong>不会放慢招聘</strong>，反而增加招聘动力——「研究本身极有价值，研究员极有价值，这反而是买更多算力的理由」。</li><li>真正的最大瓶颈不是硬件，而是<strong>找到优秀人才</strong>与<strong>导师辅导能力（mentorship capacity）</strong>——培训新人、融入文化需要时间。</li></ul>
 <blockquote>金句：「我绝对不认为硬件是限制因素；真正的限制是找到优秀的人，以及我们的导师辅导能力。」</blockquote>
 <hr>
 <h2 id="s15">十五、招聘哪些岗位</h2>
 <p>Yaron 把招聘版图铺得很开：</p>
-<ul><li><strong>物理工程</strong>：机械/电气/结构工程师、项目经理、建筑师（覆盖空间全生命周期）；</li></ul>
-<ul><li><strong>ML / 交易</strong>：架构设计、各类定制模型、LLM 训练全周期经验；数学/CS/物理/工程背景的交易员；</li></ul>
-<ul><li><strong>软件 / 硬件</strong>：通用 SWE；<strong>fleet-wide optimization</strong>（全域/全集群优化，随着算力投入达数十亿美元而价值飙升）；自研 <strong>ASIC</strong>；</li></ul>
-<ul><li><strong>新兴</strong>：<strong>形式化方法（formal methods）</strong> 团队——用数学证明提升软件工程效率（AI 革命让这个冷门领域回春）；以及被长期忽视的<strong>前端工程</strong>（过去 Jane Street 假装 Web 技术不存在，现在为更好的 AI 工具大量投入）；</li></ul>
-<ul><li><strong>以人为本的元观点</strong>：在 AI 工具的喧嚣中，别忽视「人的因素」——工具应提升人的理解力、能动性与效率。</li></ul>
+<ul><li><strong>物理工程</strong>：机械/电气/结构工程师、项目经理、建筑师（覆盖空间全生命周期）；</li><li><strong>ML / 交易</strong>：架构设计、各类定制模型、LLM 训练全周期经验；数学/CS/物理/工程背景的交易员；</li><li><strong>软件 / 硬件</strong>：通用 SWE；<strong>fleet-wide optimization</strong>（全域/全集群优化，随着算力投入达数十亿美元而价值飙升）；自研 <strong>ASIC</strong>；</li><li><strong>新兴</strong>：<strong>形式化方法（formal methods）</strong> 团队——用数学证明提升软件工程效率（AI 革命让这个冷门领域回春）；以及被长期忽视的<strong>前端工程</strong>（过去 Jane Street 假装 Web 技术不存在，现在为更好的 AI 工具大量投入）；</li><li><strong>以人为本的元观点</strong>：在 AI 工具的喧嚣中，别忽视「人的因素」——工具应提升人的理解力、能动性与效率。</li></ul>
 <hr>
 <h2 id="s16">十六、谜题文化与后门</h2>
 <p>Dwarkesh 提到 Jane Street 为听众专门出的谜题，其中一个<strong>连 Jane Street 自己都没解出来</strong>——关于在多个 LLM 中埋入<strong>触发词（trigger phrase）的后门</strong>。Yaron 说谜题本就是文化的一部分，「用它作为和大家建立联系的方式真的很棒」。</p>
 <hr>
 <h2 id="s17">十七、关键结论与趋势</h2>
-<p>1. <strong>两个时间尺度的统一体</strong>：Jane Street 同时运营 100 纳秒的 FPGA 与几十万张 GPU 的训练集群，二者靠「时间跨度谱系 + 集成策略」统一，而非互相取代。 2. <strong>多样性 &gt; 通用性</strong>：与基础模型实验室押注单一通用模型不同，Jane Street 的护城河来自<strong>架构多样性与实验吞吐</strong>。 3. <strong>交易 = AGI 完全问题</strong>：自动化会不断把「易事」吃掉，留下「难事」成为竞争优势；人类判断（尤其相变时）短期内不可替代。 4. <strong>算力受限下的扩张逻辑</strong>：即便有几十万张 GPU，瓶颈仍是人才与导师辅导；电力/容量可与芯片解耦、提前锁定。 5. <strong>物理工程成为核心竞争力</strong>：从液冷、交期管理到封装级思维，数据中心本身正在变成 Jane Street 的护城河。</p>
+<ol><li><strong>两个时间尺度的统一体</strong>：Jane Street 同时运营 100 纳秒的 FPGA 与几十万张 GPU 的训练集群，二者靠「时间跨度谱系 + 集成策略」统一，而非互相取代。</li><li><strong>多样性 &gt; 通用性</strong>：与基础模型实验室押注单一通用模型不同，Jane Street 的护城河来自<strong>架构多样性与实验吞吐</strong>。</li><li><strong>交易 = AGI 完全问题</strong>：自动化会不断把「易事」吃掉，留下「难事」成为竞争优势；人类判断（尤其相变时）短期内不可替代。</li><li><strong>算力受限下的扩张逻辑</strong>：即便有几十万张 GPU，瓶颈仍是人才与导师辅导；电力/容量可与芯片解耦、提前锁定。</li><li><strong>物理工程成为核心竞争力</strong>：从液冷、交期管理到封装级思维，数据中心本身正在变成 Jane Street 的护城河。</li></ol>
 <hr>
 <h2 id="s18">十八、来源与说明</h2>
-<ul><li><strong>本页逐字稿来源</strong>：YouTube 官方英文自动字幕（auto-generated captions），完整导出 <strong>453 条字幕块 / 约 6,378 词 / 全长 29:36</strong>，逐条保留时间戳（<code>mm:ss</code>），见「📝 逐字稿」页。中文为机器翻译并做术语校对。</li></ul>
-<ul><li><strong>本文分析</strong>：基于上述完整逐字稿整理；文中所有论断均可在逐字稿中定位到对应时间点。</li></ul>
-<ul><li><strong>术语校正</strong>：已修正自动字幕的听写误差，包括 <code>Ron Minsky → Yaron Minsky</code>、<code>Dan Ponttovo / Pavatova → Dan Pontecorvo</code>、<code>Okamel → OCaml</code>、<code>nanconds → nanoseconds</code>、<code>James Street → Jane Street</code>、<code>core reef → CoreWeave</code>、<code>NBL72 GP300 → NVL72 GB300</code>、<code>Insta → Instagram</code>、<code>fleetwide → fleet-wide</code> 等；<code>NVL72/GB300</code>、<code>bytes-to-flop</code>、<code>phase transition</code>、<code>fleet-wide optimization</code> 等术语已标注中英对照。</li></ul>
-<ul><li><strong>范围提示</strong>：第「一、背景」中的 4,032 张 GPU / 56 个机柜 / 8,000 公里光纤等硬件参数来自 Jane Street 官方文章与同系列的<strong>数据中心参观视频</strong>，<strong>不属于本集对谈内容</strong>。</li></ul>
+<ul><li><strong>本页逐字稿来源</strong>：YouTube 官方英文自动字幕（auto-generated captions），完整导出 <strong>453 条字幕块 / 约 6,378 词 / 全长 29:36</strong>，逐条保留时间戳（<code>mm:ss</code>），见「📝 逐字稿」页。中文为机器翻译并做术语校对。</li><li><strong>本文分析</strong>：基于上述完整逐字稿整理；文中所有论断均可在逐字稿中定位到对应时间点。</li><li><strong>术语校正</strong>：已修正自动字幕的听写误差，包括 <code>Ron Minsky → Yaron Minsky</code>、<code>Dan Ponttovo / Pavatova → Dan Pontecorvo</code>、<code>Okamel → OCaml</code>、<code>nanconds → nanoseconds</code>、<code>James Street → Jane Street</code>、<code>core reef → CoreWeave</code>、<code>NBL72 GP300 → NVL72 GB300</code>、<code>Insta → Instagram</code>、<code>fleetwide → fleet-wide</code> 等；<code>NVL72/GB300</code>、<code>bytes-to-flop</code>、<code>phase transition</code>、<code>fleet-wide optimization</code> 等术语已标注中英对照。</li><li><strong>范围提示</strong>：第「一、背景」中的 4,032 张 GPU / 56 个机柜 / 8,000 公里光纤等硬件参数来自 Jane Street 官方文章与同系列的<strong>数据中心参观视频</strong>，<strong>不属于本集对谈内容</strong>。</li></ul>
 <p>*页脚：YouTube 自动字幕 + 机器翻译 + 术语校对，仅供学习与参考。*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../janestreet-signal-in-noise-ml/index.html"><div class="rw"><img loading="lazy" src="../janestreet-signal-in-noise-ml/cover.jpg" alt=""></div><div class="rb"><div class="rs">Signals and Threads · Jane Street · YouTube</div><div class="rt">Jane Street：在噪声里寻找信号</div></div></a><a class="relcard" href="../hrt-token-burn-odd-lots/index.html"><div class="rw"><img loading="lazy" src="../hrt-token-burn-odd-lots/cover.jpg" alt=""></div><div class="rb"><div class="rs">Bloomberg Odd Lots · YouTube</div><div class="rt">走进 Hudson River Trading 疯狂烧 Token 的内部</div></div></a><a class="relcard" href="../hrt-ai-odd-lots/index.html"><div class="rw"><img loading="lazy" src="../hrt-ai-odd-lots/cover.jpg" alt=""></div><div class="rb"><div class="rs">Bloomberg Odd Lots · YouTube</div><div class="rt">Hudson River Trading 究竟如何用 AI</div></div></a><a class="relcard" href="../3b1b-janestreet-machine-learning/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/zPLc3jjHbnU/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">3Blue1Brown · YouTube</div><div class="rt">3Blue1Brown 对话 Jane Street：机器学习、做市商与极客文化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}

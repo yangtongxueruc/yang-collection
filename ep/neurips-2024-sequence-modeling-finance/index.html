@@ -139,6 +139,8 @@ nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);backgroun
   background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
 .content blockquote p{margin:0;color:var(--muted)}
 .content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
 .content li{margin:6px 0}
 .content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
 .content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
@@ -358,16 +360,9 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <blockquote></blockquote>
 <blockquote>本稿基于 Whisper 语音识别 + 专有名词校对后的英文逐字稿撰写；引用的英文片段尽量保留原话。技术名词（fraud / point process / downstream / Transformer / FT-Transformer / MSE 等）已校正，但仍可能有少量识别误差，请以原视频为准。</blockquote>
 <h2 id="s0">📌 核心速览</h2>
-<ul><li><strong>一句话定位</strong>：Capital One 提出的研究问题是——<strong>&quot;我们能不能像 NLP/语音/视频那样，把一个客户的整张事件流水当作一段序列来建模？&quot;</strong> 即用 sequential modeling of tabular data 做&quot;通用客户理解&quot;。</li></ul>
-<ul><li><strong>核心洞察</strong>：消费银行客户的数据本质是&quot;多个事件流的交织&quot;（transaction / payment / digital activity / return），<strong>temporal ordering 不是装饰，是业务</strong>——但行业现实仍以树模型（XGBoost/LightGBM）为主，聚合恰恰把时间结构磨掉了。</li></ul>
-<ul><li><strong>最反直觉的发现</strong>：金融客户事件流属于 &quot;temporal point process&quot;，但每个&quot;点&quot;本身是一张多列表——<strong>空间维度（across the row）和时间维度必须同时建模</strong>，而现有 point process 研究几乎不看事件本身的跨属性结构。</li></ul>
-<ul><li><strong>最有新意的观察</strong>：<strong>不同客户的连续值分布差异很大</strong>——分布感知编码（Distribution-aware Functional Encoding）在多数任务上超过所有通用编码器。</li></ul>
+<ul><li><strong>一句话定位</strong>：Capital One 提出的研究问题是——<strong>&quot;我们能不能像 NLP/语音/视频那样，把一个客户的整张事件流水当作一段序列来建模？&quot;</strong> 即用 sequential modeling of tabular data 做&quot;通用客户理解&quot;。</li><li><strong>核心洞察</strong>：消费银行客户的数据本质是&quot;多个事件流的交织&quot;（transaction / payment / digital activity / return），<strong>temporal ordering 不是装饰，是业务</strong>——但行业现实仍以树模型（XGBoost/LightGBM）为主，聚合恰恰把时间结构磨掉了。</li><li><strong>最反直觉的发现</strong>：金融客户事件流属于 &quot;temporal point process&quot;，但每个&quot;点&quot;本身是一张多列表——<strong>空间维度（across the row）和时间维度必须同时建模</strong>，而现有 point process 研究几乎不看事件本身的跨属性结构。</li><li><strong>最有新意的观察</strong>：<strong>不同客户的连续值分布差异很大</strong>——分布感知编码（Distribution-aware Functional Encoding）在多数任务上超过所有通用编码器。</li></ul>
 <h2 id="s1">🔢 关键数据 / 事实速记</h2>
-<ul><li><strong>数据形态</strong>：数亿客户，每位客户拥有几十张 unique table，table 之间高度相关但 schema 不同；不同客户交易密度差异极大（上千 vs 几十）。</li></ul>
-<ul><li><strong>三类序列数据区分</strong>：NLP（time-agnostic）/ 通用时间序列（temporal，均匀或不均匀采样）/ <strong>Temporal point process</strong>（非平稳、采样时间任意、关注&quot;事件何时发生&quot;）。金融客户事件流属于第三类但带多列属性。</li></ul>
-<ul><li><strong>四个开放问题</strong>：非重叠信息（稀疏 NA）怎么处理？连续值和类别值怎么统一表示？不规则时间戳怎么编码？数据规模与个体差异（亿级客户、分布差异）。</li></ul>
-<ul><li><strong>2024 表格研究爆发点</strong>：几乎都落在&quot;如何把列名带进 embedding&quot;上（列名是区分&quot;血压 120&quot;与&quot;体温 120&quot;的关键）。</li></ul>
-<ul><li><strong>Capital One 四条原则</strong>：从更简单模型开始（监管偏好简单；more complexity, more things can go wrong）；信息塞对位置再让 Transformer 学。</li></ul>
+<ul><li><strong>数据形态</strong>：数亿客户，每位客户拥有几十张 unique table，table 之间高度相关但 schema 不同；不同客户交易密度差异极大（上千 vs 几十）。</li><li><strong>三类序列数据区分</strong>：NLP（time-agnostic）/ 通用时间序列（temporal，均匀或不均匀采样）/ <strong>Temporal point process</strong>（非平稳、采样时间任意、关注&quot;事件何时发生&quot;）。金融客户事件流属于第三类但带多列属性。</li><li><strong>四个开放问题</strong>：非重叠信息（稀疏 NA）怎么处理？连续值和类别值怎么统一表示？不规则时间戳怎么编码？数据规模与个体差异（亿级客户、分布差异）。</li><li><strong>2024 表格研究爆发点</strong>：几乎都落在&quot;如何把列名带进 embedding&quot;上（列名是区分&quot;血压 120&quot;与&quot;体温 120&quot;的关键）。</li><li><strong>Capital One 四条原则</strong>：从更简单模型开始（监管偏好简单；more complexity, more things can go wrong）；信息塞对位置再让 Transformer 学。</li></ul>
 <h2 id="s2">🗝️ 关键金句（原文摘录）</h2>
 <blockquote>*&quot;the ordering of the temporal events are very crucial in financial services application … a lot of information is missing, especially temporal information.&quot;*</blockquote>
 <blockquote>*&quot;most of the models are still tree-based … but those information [aggregation] is actually losing a lot of temporal subtlety in the data.&quot;*</blockquote>
@@ -384,13 +379,10 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s5">三、社区已有工具盘点：行编码、序列编码、跨表建模</h2>
 <p>讲者把 2020 年以来&quot;表格序列建模&quot;的相关文献做了一次串讲，按&quot;如何把一行表格变成 embedding&quot;归类：</p>
 <h3>3.1 行表示：连续 vs 类别，怎么塞进同一个向量空间</h3>
-<ul><li><strong>量化路线</strong>：连续值离散化后走 NLP 的 embedding lookup + row encoder（FT-Transformer / MLP）。优点是简单统一；缺点是连续值精度被牺牲。</li></ul>
-<ul><li><strong>保持数值路线</strong>：对连续值做缩放 / 分桶 / Fourier 编码，再送入 MLP 或 Fourier 层，让连续值与类别值的 embedding 落在同一空间。</li></ul>
+<ul><li><strong>量化路线</strong>：连续值离散化后走 NLP 的 embedding lookup + row encoder（FT-Transformer / MLP）。优点是简单统一；缺点是连续值精度被牺牲。</li><li><strong>保持数值路线</strong>：对连续值做缩放 / 分桶 / Fourier 编码，再送入 MLP 或 Fourier 层，让连续值与类别值的 embedding 落在同一空间。</li></ul>
 <p>代表工作（2024）：Column-aware Challenge、Sentence-style FeatEner、Bin-based (SCOR)、P2NOM / 生成式（列置换 → rotation invariance）。讲者的总结：<strong>2024 年表格研究的爆发点几乎都落在&quot;如何把列名带进 embedding&quot;上</strong>。</p>
 <h3>3.2 序列表示：从行 embedding 到序列 embedding</h3>
-<ul><li><strong>层级式 (TabuLa 类)</strong>：FT-Transformer 编码行 → tabular BERT 在行序列上做 masked LM。</li></ul>
-<ul><li><strong>静态/动态分离</strong>：static 特征与 dynamic 特征分开编码，再叠 time embedding，送序列 Transformer。</li></ul>
-<ul><li><strong>跨异构事件流</strong>：每种事件类型单独 FT-transformer + linear 投影到统一空间 → event-level Transformer → 再投影回各自空间。</li></ul>
+<ul><li><strong>层级式 (TabuLa 类)</strong>：FT-Transformer 编码行 → tabular BERT 在行序列上做 masked LM。</li><li><strong>静态/动态分离</strong>：static 特征与 dynamic 特征分开编码，再叠 time embedding，送序列 Transformer。</li><li><strong>跨异构事件流</strong>：每种事件类型单独 FT-transformer + linear 投影到统一空间 → event-level Transformer → 再投影回各自空间。</li></ul>
 <h3>3.3 Foundation Model for Tabular（2024 趋势）</h3>
 <p>UNITAB、CM2、TabuLa-BIRDS 等，目标都是在所有表格上预训练超大模型。这些工作的共同短板仍然是<strong>没有真正建模时间维度</strong>。</p>
 <h2 id="s6">四、Capital One 自己的初步探索（最有干货的部分）</h2>
@@ -406,21 +398,13 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 <h2 id="s7">🧭 核心框架：表格序列建模的三层</h2>
 <table><thead><tr><th>层</th><th>任务</th><th>关键挑战</th></tr></thead><tbody><tr><td>行表示</td><td>连续值 vs 类别值统一进 embedding</td><td>列名是关键信息</td></tr><tr><td>序列表示</td><td>行 → 事件序列 → 跨异构事件流</td><td>不规则时间戳、静态/动态分离</td></tr><tr><td>时间维度</td><td>point process + 多列表属性</td><td>现有基础模型基本没真正建模时间</td></tr></tbody></table>
 <h2 id="s8">🔗 关联阅读</h2>
-<ul><li>[在金融市场中扩展深度学习（HRT @ ICML 2026）](../../icml-2026-scaling-dl-financial-markets/)：同为&quot;金融序列建模&quot;，但聚焦市场事件流（LMM）的 scaling，与本集&quot;消费银行表格&quot;视角互补。</li></ul>
-<ul><li>[用 LLM 拆解金融文本数据（Citadel Securities @ NeurIPS 2024）](../../neurips-2024-financial-text-llm/)：同届 NeurIPS Expo，金融文本上的 LLM 落地，与本集&quot;表格/数值&quot;视角共同覆盖金融 AI。</li></ul>
-<ul><li>[Multi-Agent System Design and Evaluation for Quantitative Finance（Jump @ ICML 2026）](../../icml-2026-multiagent-quant-finance/)：金融场景里如何用 agent / eval 组织研究，方法论上可迁移到表格建模研究流程。</li></ul>
+<ul><li>[在金融市场中扩展深度学习（HRT @ ICML 2026）](../../icml-2026-scaling-dl-financial-markets/)：同为&quot;金融序列建模&quot;，但聚焦市场事件流（LMM）的 scaling，与本集&quot;消费银行表格&quot;视角互补。</li><li>[用 LLM 拆解金融文本数据（Citadel Securities @ NeurIPS 2024）](../../neurips-2024-financial-text-llm/)：同届 NeurIPS Expo，金融文本上的 LLM 落地，与本集&quot;表格/数值&quot;视角共同覆盖金融 AI。</li><li>[Multi-Agent System Design and Evaluation for Quantitative Finance（Jump @ ICML 2026）](../../icml-2026-multiagent-quant-finance/)：金融场景里如何用 agent / eval 组织研究，方法论上可迁移到表格建模研究流程。</li></ul>
 <h2 id="s9">👥 适合谁听</h2>
-<ul><li>做表格数据 / 序列化建模的研究员与 ML 工程师；</li></ul>
-<ul><li>消费金融、风控、反欺诈方向的从业者；</li></ul>
-<ul><li>关注&quot;foundation model for tabular&quot;趋势的研究者；</li></ul>
-<ul><li>想理解监管行业（可解释性、从简单起步）如何约束建模选择的负责人。</li></ul>
+<ul><li>做表格数据 / 序列化建模的研究员与 ML 工程师；</li><li>消费金融、风控、反欺诈方向的从业者；</li><li>关注&quot;foundation model for tabular&quot;趋势的研究者；</li><li>想理解监管行业（可解释性、从简单起步）如何约束建模选择的负责人。</li></ul>
 <h2 id="s10">五、关键结论与给研究社区的呼吁</h2>
 <p>讲者在最后留了几组开放问题：表示层面（量化会丢信息，能不能既量化又恢复大小数值差异？金额分布差异怎么编码？）；架构与应用层面（不同 downstream 任务是否需要不同模型？分布偏移、因果建模、可解释性如何兼顾？）；<strong>数据层面（最重要的呼吁）</strong>：时序表格数据在公开领域几乎不存在，必须要么开放、要么合成大规模时序表格数据。</p>
 <h2 id="s11">六、局限性说明</h2>
-<ul><li>本逐字稿来自 Whisper <code>small.en</code> 自动识别，<strong>技术术语识别误差较多</strong>（如 *fraud* 听成 *fault*、*point process* 听成 *pie process*、*downstream* 听成 *Laotian*、*Transformer* 听成 *chart formers* 等）。已通过 <code>corrections.json</code> 校正，但仍有少量漏网。</li></ul>
-<ul><li>讲者口音与部分段落现场音质一般，少数长句在分句边界上与原意略有出入。</li></ul>
-<ul><li>涉及论文具体名称时，讲者并未逐篇念全名，本稿按其口述给出，建议按关键词到 NeurIPS / ICLR / ICML 2024 检索。</li></ul>
-<ul><li>全文不构成任何投资建议，仅用于学术与技术交流。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="../neurips-2024-financial-text-llm/index.html"><div class="rw"><img loading="lazy" src="../neurips-2024-financial-text-llm/slides/6rPwg0QWRQjnjjM6.webp" alt=""></div><div class="rb"><div class="rs">SlidesLive · NeurIPS 2024 Expo Talk Panel</div><div class="rt">拆解金融文本数据：LLM 在交易决策中的应用</div></div></a><a class="relcard" href="../icml-2026-scaling-dl-financial-markets/index.html"><div class="rw"><img loading="lazy" src="../icml-2026-scaling-dl-financial-markets/slides/2ZlGAQV3BS5jIYBx.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">在金融市场中扩展深度学习</div></div></a><a class="relcard" href="../icml-2026-multiagent-quant-finance/index.html"><div class="rw"><img loading="lazy" src="../icml-2026-multiagent-quant-finance/slides/UxJB0hNgVik4Smt5.webp" alt=""></div><div class="rb"><div class="rs">ICML 2026 · Expo Talk Panel</div><div class="rt">多智能体系统在量化金融中的设计与评估</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+<ul><li>本逐字稿来自 Whisper <code>small.en</code> 自动识别，<strong>技术术语识别误差较多</strong>（如 *fraud* 听成 *fault*、*point process* 听成 *pie process*、*downstream* 听成 *Laotian*、*Transformer* 听成 *chart formers* 等）。已通过 <code>corrections.json</code> 校正，但仍有少量漏网。</li><li>讲者口音与部分段落现场音质一般，少数长句在分句边界上与原意略有出入。</li><li>涉及论文具体名称时，讲者并未逐篇念全名，本稿按其口述给出，建议按关键词到 NeurIPS / ICLR / ICML 2024 检索。</li><li>全文不构成任何投资建议，仅用于学术与技术交流。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../janestreet-signal-in-noise-ml/index.html"><div class="rw"><img loading="lazy" src="../janestreet-signal-in-noise-ml/cover.jpg" alt=""></div><div class="rb"><div class="rs">Signals and Threads · Jane Street · YouTube</div><div class="rt">Jane Street：在噪声里寻找信号</div></div></a><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="../poker-ai-to-trading-schmid/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/Sb8M01z1tk8/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">Martin Schmid（EquiLibre Technologies）· 捷克语数学研讨会录像</div><div class="rt">从扑克 AI 到交易：强化学习的应用简史</div></div></a><a class="relcard" href="../3b1b-janestreet-machine-learning/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/zPLc3jjHbnU/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">3Blue1Brown · YouTube</div><div class="rt">3Blue1Brown 对话 Jane Street：机器学习、做市商与极客文化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
