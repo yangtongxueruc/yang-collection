@@ -1,0 +1,546 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Jane Street：在噪声里寻找信号 · 总结分析</title><meta name='description' content='Jane Street 研究员 In Young Cho 拆解金融机器学习为什么这么难：100 份数据里只有 1 份是信号，市场会主动抹掉你学到的规律，而在纳秒到毫秒的延迟谱系上，「最好的模型」和「能跑得够快的模型」从来不是同一个问题。'><meta property='og:title' content='Jane Street：在噪声里寻找信号 · 总结分析'><meta property='og:description' content='Jane Street 研究员 In Young Cho 拆解金融机器学习为什么这么难：100 份数据里只有 1 份是信号，市场会主动抹掉你学到的规律，而在纳秒到毫秒的延迟谱系上，「最好的模型」和「能跑得够快的模型」从来不是同一个问题。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/janestreet-signal-in-noise-ml/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://www.youtube.com/watch?v=g7dUgMneyEI" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Signals and Threads · Jane Street · YouTube</div><h1>Jane Street：在噪声里寻找信号</h1><p class="sub">Finding Signal in the Noise: Machine Learning and the Markets</p><div class="tags"><span class="tag">⏱ 59:46</span><span class="tag">👤 In Young Cho（Jane Street 研究员 / 交易员）；主持人 Ron Minsky</span><span class="tag">🗓 2025-03</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.youtube.com/watch?v=g7dUgMneyEI" target="_blank" rel="noopener">▶ 在 YouTube 观看</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">导语</a><a href="#s1">TL;DR：这期访谈真正回答了什么问题</a><a href="#s2">一、交易、研究与工程：一条被故意留模糊的边界</a><a href="#s3">二、为什么现代市场还留着电话：订单来源本身就是信息</a><a href="#s4">三、把研究拆成四步：探索 → 数据 → 建模 → 生产化</a><a href="#s5">四、数据比想象中脏：拆股、改代码号与幸存者偏差</a><a href="#s6">五、两种研究风格，和「短迭代周期」这条底层约束</a><a href="#s7">六、十年演变：从一幅粗线条的画到一幅完整的画</a><a href="#s8">七、工具把「一周」变成「十分钟」，代价是什么</a><a href="#s9">八、Notebook 的隐式状态：可复现性为什么这么难</a><a href="#s10">九、从线性回归到深度网络：两种纪律，放在不同的地方</a><a href="#s11">十、干预式可解释性：模型必须能被「改」</a><a href="#s12">十一、100 份数据里只有 1 份是信号</a><a href="#s13">十二、市场的反归纳性：规律一旦被发现就会被抹平</a><a href="#s14">十三、数十 TB 数据，和横跨多个数量级的延迟预算</a><a href="#s15">十四、硬件与模型必须共同设计</a><a href="#s16">十五、The Bitter Lesson 在金融里的边界</a><a href="#s17">十六、路线图：数千张 GPU、真实 P&amp;L，与研究助手</a><a href="#s18">十七、关键结论</a><a href="#s19">十八、给从业者的可操作启示</a><a href="#s20">十九、来源、术语校正与说明</a></nav><main class="content"><h1>Jane Street：在噪声里寻找信号 —— 金融机器学习为什么这么难</h1>
+<blockquote>对谈：Ron Minsky（Signals and Threads 主持人）× In Young Cho（Jane Street 研究员 / 交易员，近十年，现转任研究团队并牵头机器学习方向）</blockquote>
+<blockquote>来源：Signals and Threads（Jane Street 官方播客）· YouTube</blockquote>
+<blockquote>全长 <strong>59:46</strong> ｜ 逐字稿：YouTube 英文自动字幕（auto-generated），<strong>1,753 段 / 约 12,513 词</strong>，逐条保留 <code>mm:ss</code> 时间戳</blockquote>
+<hr>
+<h2 id="s0">导语</h2>
+<p>这期的提问方式很朴素：<strong>一家用纳秒级硬件做市的公司，为什么要花这么大力气做机器学习研究？</strong> In Young Cho 的答案不是&quot;因为 AI 很火&quot;，而是把整件事的难点一层层剥开——它难在数据脏、难在信噪比低、难在迭代速度、难在硬件约束、更难在<strong>市场本身会把规律抹掉</strong>。她说得很坦白：</p>
+<blockquote>「金融场景下的机器学习就是<strong>非常非常难</strong>。你在学校或论文里学到的很多东西，在这儿就是不起作用。」（[43:53]）</blockquote>
+<p>而更值得记的是她给出的那句类比——它一次性把&quot;为什么难&quot;讲清楚了：</p>
+<blockquote>「你可以把金融 ML 想成在做语言模型：只不过别人有 1 单位数据，你有 100 单位，听起来很阔气——然而<strong>其中只有 1 单位是有用的，另外 99 单位是垃圾，而你并不知道哪个是哪个</strong>。」（[44:25]）</blockquote>
+<p>本文基于完整逐字稿整理，所有论断都能在逐字稿页对应到时间点。</p>
+<hr>
+<h2 id="s1">TL;DR：这期访谈真正回答了什么问题</h2>
+<p>1. <strong>交易、研究、工程在 Jane Street 不是三个岗位，而是一条被故意留模糊的边界。</strong> 头衔叫 quantitative trader，但日常工作同时包含实时交易、软件工程与研究；公司有意保留这种模糊，是为了把人对到最能发挥的位置，而不是先用职位名把范围钉死。（[03:39] [11:05]） 2. <strong>现代市场至今还留着电话交易，是因为&quot;订单来自谁&quot;本身就是信息。</strong> 养老金做季度再平衡这种例行大单，匿名做市商只会看到卖盘不断打来、以为自己在被知情者收割，于是收缩报价，反而让客户拿到更差的执行；一旦知道对手方不是知情交易者，做市商就能更自信地承接，并<strong>收更少的钱</strong>。（[06:00] [09:06]） 3. <strong>交易研究是四步：初始探索 → 数据收集 → 预测建模 → 生产化。</strong> 拿到&quot;样本外成立的预测&quot;只算走完一半；还得决定怎样在市场中表达这个信念，并确保系统能可靠执行你真正想下的那笔交易。（[11:57] [18:05] [18:19]） 4. <strong>数据质量是底层成本，且最有效的入门方式是手工小样本。</strong> 拆股、ticker 变更、公司行为、退市都会制造假信号；直接从几百万行数据起步，反而建立不起&quot;哪些检查重要&quot;的直觉。先用最简单的样本手工逐条核对，才能长出对数据的直觉。（[15:12] [15:31]） 5. <strong>&quot;幸存者偏差&quot;是经典陷阱。</strong> 只拿今天还存在的股票、把过去 15 年新上市的剔掉、当成历史股票池——这很糟；而&quot;2005 年某天美国交易所上到底有哪些股票&quot;本身就是个不小的工程问题。（[29:18]） 6. <strong>低数据和高数据需要的是两种纪律，而纪律的位置不同。</strong> 低数据时纪律在<strong>模型空间</strong>（奥卡姆剃刀，严格控制试多少个假设）；高数据、高容量模型时纪律转移到<strong>数据与评估流程</strong>（严格隔离训练/验证/样本外，防止组织内多个人重复试同一批假设）。（[41:36]） 7. <strong>&quot;纪律&quot;的失效常常发生在组织层面，而不只是个人层面。</strong> 即便你自己只看样本外结果，如果周围很多人围绕同一问题反复试，整个团队会在无意中把测试集用成训练集。（[40:24]） 8. <strong>交易还需要一种&quot;干预式可解释性&quot;。</strong> 普通的 interpretability 是&quot;我懂模型为什么这么做&quot;；交易要的是&quot;我理解到足以在疫情这种世界级事件发生时，判断该怎样<strong>修改</strong>这个模型&quot;。（[42:36] [42:54]） 9. <strong>市场具有&quot;反归纳&quot;性质。</strong> 你从过去学到的东西会被系统性地从未来移除：规律一旦被发现就会被交易掉，被抹平成噪声。所以图像识别那种&quot;数据几十年不变&quot;的假设在这里不成立，而金融危机&quot;差不多每年都来一次&quot;。（[46:03] [46:32]） 10. <strong>在最短周期上，硬件直接决定模型能长什么样。</strong> 有些系统里 10 纳秒的差异就是时间预算里的一大块；问题不再是&quot;哪个模型最好&quot;，而是&quot;在 CPU / FPGA / GPU 的约束下，哪个模型还能跑得够快&quot;。（[47:49] [48:34]） 11. <strong>The Bitter Lesson 不能直接套到交易上。</strong> 在很多交易问题里数据依然贫乏，先验、模型设定与跨市场经验仍然重要；而且&quot;数据贫乏&quot;往往没有你想的那么贫乏——你其实是在从别的交易情境里抽取直觉，这是一种 transfer learning。（[50:55] [51:21]） 12. <strong>LLM 的价值至少有三条路，且&quot;自建 vs 外采&quot;有清晰分野。</strong> 用于交易与价格预测的模型更倾向于自研；面向研究人员的 LLM 助手与 agent 更可能建立在外部基础模型之上——而后者创造的价值，可能不亚于直接预测模型。（[55:54] [58:27]）</p>
+<hr>
+<h2 id="s2">一、交易、研究与工程：一条被故意留模糊的边界</h2>
+<p>In Young 的路径并不典型：本科一度要做医生（跟着母亲的路），同时修了生物、有机化学和高等数学，后来意识到医学院不适合自己，经历了一段身份危机；在韩国做过几段短期实习后确认自己不想进产业界，最后被朋友推荐去试 Jane Street——「面试当天我的大脑过热了，就像电脑一样」（[01:57]）。真正让她留下的是实习的密度与同事的质地：每天被交办一种新谜题，身边有人一起学，而同事们「聪明、善意，且在智识上谦逊」（[02:49]）。</p>
+<p>全职第一年，她才发现头衔有多不够用：</p>
+<blockquote>「我的职位叫 quantitative trader，但这<strong>完全没有</strong>描述出这份工作。」（[03:39]）</blockquote>
+<p>第一年她学 OCaml、VBA、Bash、SQL 和金融术语，还要接经纪商的电话——「那太可怕了」（[04:14]）。最出名的一段是<strong>电话上的「park」</strong>：入职一个月，第一次接外部客户来电，她紧张到只说出「这里是 Jane Street」，同事让她把电话&quot;park&quot;起来，她以为 park 是个咒语，于是放下听筒朝办公室喊了一声「park」——原来那是电话上的一个按钮（[04:50]）。</p>
+<p>同时她还给自己写工具：可视化开收盘与盘中交易、复盘历史成交、从历史模式里找还能提什么交易。<strong>这三件事——实时交易、研究、软件工程——在她这儿是混在一起的</strong>，而 Ron 认为正是这种混合让 Jane Street 擅长交易：</p>
+<blockquote>「这三者的交融，我认为是 Jane Street 能把交易做好的关键，也是&quot;在现代市场里做交易&quot;的含义。」（[10:45]）</blockquote>
+<p>她也承认这种模糊对外部人很折磨：行业里「trader」这个词在不同地方意味着完全不同的工作，但公司<strong>有意</strong>保留它，因为「模糊让我们能把人放到他最该发光的位置上」（[11:05]）。</p>
+<hr>
+<h2 id="s3">二、为什么现代市场还留着电话：订单来源本身就是信息</h2>
+<p>这一段是本集最反常识、也最有价值的部分。</p>
+<p>外界对 Jane Street 的想象是「一屋子人写程序、程序去做交易」，那为什么还要接经纪商电话？In Young 说这项业务大约从 <strong>2013 年</strong>开始成体系地做：在此之前主要以匿名方式在电子交易所互动，此后开始直接接客户、直接对终端做市（[05:35] [07:56]）。而理由，恰恰是&quot;匿名&quot;解决不了的问题：</p>
+<blockquote>假设某个州的养老金做<strong>季度再平衡</strong>。即使它只是买入一个普通指数基金，<strong>金额也可能巨大</strong>。（[06:31]）</blockquote>
+<p>对台另一侧的做市商来说，这就很难受了：程序化地去卖，卖完还在继续卖，于是开始自我怀疑——「我是不是漏掉了什么？最终的量会有多大？」在不确定性下，理性反应是<strong>先保守一点</strong>：</p>
+<blockquote>「这最终会让那个本来很平常、很无害的养老金交易，拿到更差的执行。」（[07:30]）</blockquote>
+<p>反过来，如果一开始就知道对手方是谁：</p>
+<blockquote>「如果从一开始就知道我们在和谁打交道，我们就更容易有把握，也更有能力就&quot;该怎么执行这笔指数基金交易&quot;给出建议。」（[07:39]）</blockquote>
+<p>于是形成一个漂亮的闭环：<strong>知道订单来源 → 降低逆向选择恐惧 → 敢承接头寸 → 报价更紧 → 客户拿到更好的价格</strong>。她把这个机制总结为一句很轻的话：</p>
+<blockquote>「你甚至可以<strong>收他们更少的钱</strong>，因为你知道是谁来了、知道这笔交易有多大。」（[09:06]）</blockquote>
+<p>Ron 补了更抽象的一层：匿名电子市场在多数情况下确实带来了公平与效率，但并不是全部情形；「这笔大单是正常业务流量、而不是私有信息交易」这个事实<strong>对双方都有价值</strong>（[08:58]）。</p>
+<hr>
+<h2 id="s4">三、把研究拆成四步：探索 → 数据 → 建模 → 生产化</h2>
+<p>这是全集的骨架。她刻意把&quot;研究&quot;这个含糊的词拆开（[11:57] [12:04]）：</p>
+<h3>第一步：初始探索（[12:07]）</h3>
+<p>需要<strong>高度交互、性能好、易理解</strong>的工具，才能快速试掉一批假设。以养老金客户为例：先弄清对手方是谁、组合长什么样、多久换一次仓。具体做法是用 Bloomberg 查 <strong>13F / 13G / 13D</strong> 申报，看持仓的季度变化，据此推断可能出现的订单流（[13:22]）。</p>
+<p>这里的关键推论是：</p>
+<blockquote>「持仓与流量规模决定了这笔交易大概会造成多大的市场冲击；冲击越大，你就越得把价格移得更多——也就是为&quot;这笔交易会大幅推动市场&quot;这件事收费。」（[13:57]）</blockquote>
+<h3>第二步：数据收集（[14:03]）</h3>
+<p>把直觉形式化。比如假设：客户大部分交易都很温和，但组合里有<strong>某一个特殊持仓</strong>，每次交易都会造成巨大冲击。要验证它，就得收集可能交易的<strong>日期、规模、时点</strong>以及大额交易时段的<strong>回报</strong>，而且要用足够稳健的方式采集，才能在其上做研究、建模型（[14:40]）。</p>
+<h3>第三步：预测建模（[15:59]）</h3>
+<p>拿到数据后要决定预测什么（回应变量）、哪些特征可能相关、如何变换数据。术语上有个有趣的内部/外部分野：</p>
+<blockquote>「在 Jane Street 我们管这些叫 <strong>responders</strong>，外部世界大概会叫<strong>因变量（dependent variable）</strong>。」（[16:20]）</blockquote>
+<p>她认为 <strong>predictors / responders</strong> 是更老的统计行话，公司内甚至有过为此争论的邮件列表（[16:42]）。</p>
+<p>方法选择上有一条清晰的梯度：手工小样本阶段<strong>越简单越好</strong>，优先线性回归；当特征数量和交互效应越来越复杂，线性回归不够用了，才转向树模型与深度学习（[17:30]）。</p>
+<h3>第四步：生产化（[18:05]）</h3>
+<blockquote>「即使你拿到了相信能在样本外成立的预测，在某种意义上<strong>这场仗只打了一半</strong>。」（[18:19]）</blockquote>
+<p>还剩两件事：决定<strong>怎样在市场中表达</strong>这个信念，以及确保技术系统能<strong>可靠执行</strong>你真正想下的那笔交易。交易越复杂，生产化要处理的坑就越多。</p>
+<hr>
+<h2 id="s5">四、数据比想象中脏：拆股、改代码号与幸存者偏差</h2>
+<p>Ron 直接点破：&quot;底下的数据集其实挺糟的&quot;（[15:08]）——有拆股、有 ticker 名称变更，还有各种错误，都必须调整，否则：</p>
+<blockquote>「如果数据里全是这些错误，那就是<strong>垃圾进、垃圾出</strong>，你的研究什么都得不到。」（[15:26]）</blockquote>
+<p>In Young 给出的方法论建议很具体，也很反直觉：</p>
+<blockquote>「你可以从<strong>最简单的可能情形</strong>开始，在数据生成阶段全部手工来做、非常仔细地逐条检查。这其实是建立&quot;可能出哪些错&quot;的直觉的好办法——而不是一上来就从几百万、几十亿行的数据集开始，那样你很难对&#x27;哪些检查重要&#x27;形成直觉。」（[15:31]）</blockquote>
+<p>十年后 Jane Street 已经把这套东西平台化了：现在能直接问出「<strong>2005 年某天在美国交易所上实际交易的股票集合</strong>」，并已处理拆股、ticker 变更、退市和公司行为，还附带准确性说明——Ron 强调这其实是个<strong>很不容易的任务</strong>（[29:33]）。而如果不这么做：</p>
+<blockquote>「只拿今天还存在的股票，把过去十五年新上市的公司剔掉，然后把剩下的当成历史股票池——这就是<strong>幸存者偏差</strong>，是个相当糟糕的做法。」（[29:18]）</blockquote>
+<p>平台还能按正确时点把市值、波动率、内部估值等元数据关联进来（[29:58]）。但 Ron 提醒了一个很容易被忽略的风险：工具太顺手，人会过度信任——</p>
+<blockquote>「人们太相信&#x27;这些工具都已经被审过了、这些是<strong>被祝福过的值</strong>&#x27;。大家总说的一句话是 <strong>trust but verify</strong>：你应当假设别人在尽力给你最高质量的数据，但你自己也要做检查；发现哪儿可疑，反过来把工具改得更好。」（[30:37]）</blockquote>
+<hr>
+<h2 id="s6">五、两种研究风格，和「短迭代周期」这条底层约束</h2>
+<p>Ron 把研究风格分成两条路线（[19:16]）：</p>
+<ul><li><strong>风格 A（模拟式）</strong>：先有一个接近生产的自动化交易系统，研究就变成&quot;搭一个模拟框架，跑一遍看起来像最终形态的回放&quot;。</li></ul>
+<ul><li><strong>风格 B（抽象简化式）</strong>：先把数据和问题抽象、简化，在轻量环境里验证假设，之后再想办法移植到生产——这也是 In Young 主要在做的方式。</li></ul>
+<p>怎么选？她的判断依据是<strong>成熟度与新颖度</strong>：</p>
+<blockquote>「如果你进入的是一个<strong>全新的交易领域</strong>，你很难对最终生产系统该长什么样有把握……在这种高探索、各种想法置信度都不高、大概率会失败的情况下，<strong>优先保灵活性和迭代速度</strong>，而不是一上来就把生产系统建齐。」（[20:04]）</blockquote>
+<p>代价她也说得很直白：为快市场做的临时工具一旦被推到生产，稳健性往往不足（[20:40]）。反过来，成熟系统也有它的痛——研究可能只是给一个几百个参数的复杂交易系统加两个参数，但你得先学会<strong>整套生产库生态</strong>，哪怕只做很小的改动（[21:16]）：「我不会说哪种风格本质上更好，它取决于你所在的市场的成熟度、新颖度，以及你在做哪一类研究」（[21:32]）。</p>
+<p>而凌驾于两种风格之上的，是一条最朴素的约束：</p>
+<blockquote>「一个也许显而易见、但我觉得对研究成败极其关键的要素，是<strong>短迭代周期</strong>——你有想法就能马上试，运行时间得够快，这样你才能试新东西、看结果、然后把坏想法丢掉，因为<strong>研究就是这样：大部分想法都是坏的</strong>。」（[22:54]）</blockquote>
+<hr>
+<h2 id="s7">六、十年演变：从一幅粗线条的画到一幅完整的画</h2>
+<p>被问到十年间研究工作的性质如何演变，她给了一个很好的隐喻——<strong>画马</strong>：</p>
+<blockquote>「最初是一幅很糟的马的轮廓，你能认出来，但没填色；然后你一点点加上颜色和纹理，最后成了一幅很美的马的画。你得走完所有阶段。」（[23:35]）</blockquote>
+<p>她庆幸自己走过了很多阶段（[23:51]）：加入时工具简陋、研究粗糙，但好处是<strong>完全理解每一个环节</strong>——知道数据集里每一列是什么意思、知道回归里到底发生了什么、逼急了可以自己从零实现模型、也亲自参与写代码把交易推向市场。「这在教育意义上极好」，她也很坦白：「显然我哪一步都没做得特别好，回头看会有点尴尬，但<strong>在很深的层次上理解每一步需要什么</strong>，这套框架让我在后来越来越复杂的时候还能理解事情」（[25:03]）。</p>
+<p>Ron 顺势问：那你怎么让新人在更丰富的工具环境下也长出这种&quot;触感&quot;？她的回答是<strong>刻意从基础搭起</strong>（[25:57]）：</p>
+<ul><li>不会一上来就&quot;给你一些模拟资金，去市场里做个好策略&quot;；而是把交易动态<strong>拆成组件</strong>，先理解&quot;为什么会这样&quot;，再逐层加复杂度。</li></ul>
+<ul><li>她认为理解概念最好的方式<strong>不是</strong>读教材或论文——「论文里的记号往往是压缩到极致的抽象，是一个可能花了很多例子才被 motivate 出来的概念的抽象形式」，从公式入手不是正确的入门方式（[26:15]）。</li></ul>
+<ul><li>教可视化工具时，会先要求「花 30 分钟盯着这张图，建立读懂这些曲线的直觉」；一开始很慢很懵，「但以后你要快速连读几百张图时，这些基本动作必须已经变成第二天性」（[27:29]）。</li></ul>
+<hr>
+<h2 id="s8">七、工具把「一周」变成「十分钟」，代价是什么</h2>
+<blockquote>「十年前我一周才能做完的研究，现在大概十分钟——真的很疯狂。」（[28:35]）</blockquote>
+<p><strong>数据侧</strong>：除了上文的历史股票池，工具还能把外部世界的海量数据与元数据按正确时点、正确符号关联进来，且大部分交易员和研究员<strong>完全不需要操心这些细节</strong>（[30:20]）。Ron 认为这既是能力，也是风险——细节被藏进平台，人更容易忘记验证输入。</p>
+<p><strong>可视化侧</strong>：从&quot;Excel 插图表 + 口头流传的各种作图配方&quot;（要求数据不超过一百万行）变成现在<strong>高交互、可动态改参数、图形即时响应</strong>的工具，还能对任意历史或实时序列作图（[31:48]）。有一个具体能力很能说明问题：Bloomberg 虽然已经很细，但你<strong>没法在亚秒级粒度上去满意地审视市场事件</strong>，而内部工具可以（[31:12]）。</p>
+<p><strong>编程/建模侧</strong>：Jane Street 建起了一个庞大的函数与类库，可以在标准化格式的数据上直接调树模型、深度学习模型，或同事针对交易问题改过损失函数的&quot;手作回归&quot;（[33:16]）。工具从&quot;主要是 Excel&quot;变成了「和其他所有人一样：Python 和 Notebook」（[33:55]）。</p>
+<hr>
+<h2 id="s9">八、Notebook 的隐式状态：可复现性为什么这么难</h2>
+<p>Ron 罕见地开了一段火力：</p>
+<blockquote>「我理解人们为什么喜欢它，但有一件事让我抓狂——Notebook 的求值模型是<strong>你点什么按钮就按什么顺序算</strong>，这对可复现性非常糟。」（[34:43]）</blockquote>
+<p>后果是：一个&quot;看起来从上到下做完了一件事&quot;的 notebook，按列出顺序重跑可能根本跑不通。原因往往是——「有人按合理顺序写了一遍，第一次也按对的顺序跑了；后来改了其中一部分，不想全部重跑，就跳回去点那个按钮」，于是 notebook 进入<strong>不一致状态</strong>，而且<strong>几乎没有工具能告诉你它是不是已经不一致了</strong>（[35:04]）。</p>
+<p>但她指出这不是&quot;做工具的人笨&quot;，而是两边的根本约束不同（[35:44]）：软件工程里测试通常很快，反复跑 CI 没问题；而交易研究规模一大，<strong>根本没法轻量地反复重跑所有部件</strong>——这跟&quot;轻量、易用&quot;的诉求直接冲突。</p>
+<p>更关键的是，<strong>可复现性不只是上线才需要</strong>（[37:16]）：</p>
+<blockquote>「你训了模型、看到了预测力，现在只想改一个参数，看它有没有差别。如果可复现性做得不好，你往往<strong>分不清自己是改了一个地方还是六个地方</strong>——因为代码库里别处也变了、有人加了列、上游数据源在你脚下发生了变化。」（[37:16]）</blockquote>
+<p>Ron 补上组织层面的解法：让<strong>一些人横跨研究与工程两个角色</strong>。他形容了那种经典的相互误解——研究者觉得&quot;我给 dataframe 加一列这么简单，生产系统为什么做不到&quot;；工程师面对的则是难以组织、无法重现的研究原型。「Jane Street 的一个优势就是我们不硬性区分这些角色，确实有一批人横跨其间，把沟通的缝隙填掉，避免变成部落式的对立」（[38:00]）。</p>
+<hr>
+<h2 id="s10">九、从线性回归到深度网络：两种纪律，放在不同的地方</h2>
+<p>十年间方法论的迁移很清楚：早期是&quot;粗暴简单&quot;的技术，大量线性回归；现在大量使用神经网络与树模型（[38:20] [38:36]）。</p>
+<p>那么金融场景和其他 ML 场景到底差在哪？她的回答非常克制，也正因为克制才可信：</p>
+<blockquote>「我不知道该怎么跟你说清楚，但金融场景下的机器学习就是<strong>非常非常难</strong>。」（[43:53]，全场笑声）</blockquote>
+<p>展开来看，难点在于两套<strong>不同的纪律</strong>：</p>
+<p><strong>低数据时的纪律在&quot;模型空间&quot;</strong>（[39:13]）：数据少，你不愿把太多样本留作测试，因此唯一可靠的办法是<strong>严格控制你愿意尝试的假设数量</strong>，并尽量真正理解&quot;这个效应为什么存在&quot;（必要时才敢人工调系数）。她甚至为&quot;不严谨&quot;辩护了一句：「在某些方面你可以把这叫 sloppy data science，但在高噪声、低数据的情形下，它常常是必要的」（[39:43]）。Ron 点出这背后的东西就是<strong>奥卡姆剃刀</strong>——用限制假设空间，换取在低数据下依然可靠地工作（[41:26]）。</p>
+<p><strong>高数据时的纪律在&quot;数据与评估流程&quot;</strong>（[41:36]）：面对高容量复杂模型，你无法完整理解输入数据，更无法理解它建模的所有交互效应，所以——</p>
+<blockquote>「你必须<strong>极其严格</strong>地隔离训练集、验证集和样本外测试集，并且确保你不会在不同小组之间<strong>重复测试同一批假设</strong>。」（[40:03]）</blockquote>
+<p>Ron 把这两句话合成一个漂亮的框架：</p>
+<blockquote>「两种方法谈不上谁更有纪律，只是<strong>纪律在的位置不同</strong>：一种是把纪律放在模型空间（限制愿意考虑的假设集合），另一种是模型缺乏自省能力时，把纪律放在数据与评估流程上。」（[41:26]）</blockquote>
+<p>他也提醒这套切换对研究者其实很难（[42:13]）：做交易的人<strong>本能地希望模型&quot;讲得通&quot;</strong>，希望在外部事件发生后知道模型会怎么变——但模型越复杂，这个愿望越难被满足。</p>
+<hr>
+<h2 id="s11">十、干预式可解释性：模型必须能被「改」</h2>
+<p>Ron 在这里造了一个很值得记住的词。普通的 interpretability 是&quot;我懂模型为什么做出这个判断&quot;，但他要的是另一种能力：</p>
+<blockquote>「理解得足够深，以至于你可以看着世界上的某种情形、再看着模型，然后判断出<strong>我该怎样修改模型</strong>来更新到这件事上。我觉得这应该叫——<strong>干预式可解释性（interventional interpretability）</strong>。」（[42:36] [42:54]）</blockquote>
+<p>为什么这件事在交易里躲不掉？因为<strong>交易本身就是实时决策</strong>，而模型必须配合。疫情是绝佳例子：它统计上接近 <strong>N=1</strong>，没有大量同类样本给你学（[43:14]）。但 Ron 提供了一个更积极的视角：</p>
+<blockquote>「某种意义上它其实不是 N=1，因为存在一个<strong>&quot;极端异常事件&quot;的家族</strong>。你可以变得擅长&quot;应对这种极度异常事件&quot;的流程本身。」（[43:20]）</blockquote>
+<hr>
+<h2 id="s12">十一、100 份数据里只有 1 份是信号</h2>
+<p>这是全集最著名的那句类比，来自她的一位同事：</p>
+<blockquote>「把金融 ML 想成做语言模型：只不过别人有 1 单位数据，你有 100 单位——听起来很阔气，但其中<strong>只有 1 单位有用，另外 99 单位是垃圾</strong>，而且你既不知道哪一份有用，也不知道哪一份是垃圾。你必须用那些<strong>为高信噪比领域设计的技术</strong>，从极端高噪声的环境里把信号抽出来。」（[44:25] [44:31]）</blockquote>
+<p>为什么噪声这么大？因为市场是个极复杂的系统——「大约<strong>数百万人同时互动</strong>，共同决定数千乃至数万种产品的价格」（[44:56]）。所以任何固定的模型或特征集合「只能解释你想解释的方差中很小的一部分，这在很多情况下<strong>不该让你意外</strong>」（[45:14]）。</p>
+<hr>
+<h2 id="s13">十二、市场的反归纳性：规律一旦被发现就会被抹平</h2>
+<p>Ron 提出了一个结构性观察（[45:28]），In Young 把它命名为——</p>
+<blockquote>「你称它为市场的<strong>反归纳（anti-inductive）性质</strong>：你拿走你对过去的了解，然后它<strong>主动地</strong>把这些从未来里移除。」（[46:03]）</blockquote>
+<p>机制是自我削弱的：<strong>当你看到价格行为里有规律，你就被激励去交易它，而这会把规律挤出市场</strong>，让价格越来越像鞅、越来越像纯噪声。「某种意义上，<strong>整个系统的压力就在挤压掉这些数据</strong>」（[45:44]）。</p>
+<p>这与图像识别、数字识别形成鲜明对比：那些任务的数据几十年都不太变（[46:16]）。而在金融里：</p>
+<blockquote>「我一直很震惊：<strong>金融危机差不多每年都会来一次</strong>。不只是某天数据量变成十倍——虽然也有那样的日子——而是<strong>市场运行的方式不同了，因为世界不同了</strong>。」（[46:32]）</blockquote>
+<p>她的总结切中要害：<strong>既要从容应对这种体制变迁，又要能稳健地训练一个很大的模型，这看起来是金融领域相当独特的困难</strong>（[47:08]）。</p>
+<hr>
+<h2 id="s14">十三、数十 TB 数据，和横跨多个数量级的延迟预算</h2>
+<p><strong>规模</strong>：「我们每天摄入几十 TB 的市场数据」（[47:22]）——「某种意义上大部分就是噪声垃圾，但你还是得把它全看一遍」，实时和历史都要能处理（[47:30]）。</p>
+<p><strong>时间尺度</strong>：预测横跨多个数量级。Ron 举例：有些系统里「<strong>10 纳秒</strong>的差异都是我们整体时间预算里的一大块」；而有些决策则是人类在环、时间粒度粗得多（[47:42]）。「你有非常多个数量级的时间尺度，都要做预测」（[48:02]）。</p>
+<hr>
+<h2 id="s15">十四、硬件与模型必须共同设计</h2>
+<p>这是她说自己这两年最大的认知更新（[48:12]）：</p>
+<blockquote>「我以前的范式是：难的部分是建模，系统的事总能以后解决。对一些我们现在训的模型来说，<strong>这完全不成立</strong>。」（[48:34]）</blockquote>
+<p>在最短的时间尺度上，「推理系统的<strong>物理限制</strong>和<strong>光速</strong>开始变得非常重要」（[48:23]）。于是问题形式变了：</p>
+<blockquote>「越来越多的情况是，我们建模的方式不是问&#x27;<strong>哪个模型对这件事最好</strong>&#x27;，而是先理解我们手上的硬件和硬件服务方式有哪些限制，再在这些约束下问：<strong>哪个模型最好地建模了我们的数据</strong>。」（[48:58]）</blockquote>
+<p>她自嘲是「有一点电脑文盲、硬件文盲」，被迫去理解这些交互效应反而是件很有意思的事（[49:21]）。Ron 补充了硬件维度的宽度：CPU、FPGA、多种 GPU；GPU 内部还有不同计算单元、多种内存、与主机内存的互联、GPU 之间的互联，以及存储系统——</p>
+<blockquote>「约束是<strong>到处冒出来的</strong>。」（[49:53]）</blockquote>
+<p>他还给了一个关于 Transformer 的成功叙事：一个版本是「真正重要的，是它在<strong>当时的 TPU 和 GPU 上执行得极其高效</strong>」——因为缩放定律说的是，把数据、模型规模、训练时间一起放大就能提升预测力，所以在那个语境里「重要的不是你怎么精心设置先验，而是<strong>你能不能扩起来</strong>」（[50:15]）。</p>
+<hr>
+<h2 id="s16">十五、The Bitter Lesson 在金融里的边界</h2>
+<p>Ron 提到了那篇著名论文：所有精心设计的先验设置，长期看都会被规模打败。但 In Young 明确划了界：</p>
+<blockquote>「我不认为我在交易研究上被 The Bitter Lesson <strong>完全说服</strong>。我仍然认为有很多地方你是<strong>相对数据贫乏</strong>的，这时候先验、模型设定方式仍然很重要。」（[50:55] [51:01]）</blockquote>
+<p>紧接着是我认为全集最被低估的一句洞察：</p>
+<blockquote>「而且，在那些数据非常贫乏的地方，你其实<strong>没有你以为的那么贫乏</strong>——因为你是在从你这些年见过的<strong>其他交易情境</strong>里抽取直觉和想法。这种把&quot;在别处学到的市场如何运作&quot;迁移到新领域的能力（一种 transfer learning）极其重要。」（[51:06] [51:21]）</blockquote>
+<p>而当确实有地方能吃到规模红利时，优化问题就整个换掉了：</p>
+<blockquote>「你突然要面对一个完全不同的优化问题：<strong>我该怎么把模型塑形去适配硬件，甚至——我该怎么把硬件塑形去适配我想做的建模</strong>。」（[51:45]）</blockquote>
+<p>Ron 由此回到贯穿全集的角色边界主题：<strong>高水平的交易 ML 不只是模型研究者的工作</strong>，它需要交易员、研究员、软件工程师与硬件专家保持紧密连接，甚至由同一个人横跨多个领域（[52:02]）。</p>
+<hr>
+<h2 id="s17">十六、路线图：数千张 GPU、真实 P&amp;L，与研究助手</h2>
+<p><strong>过去几年</strong>：公司对金融建模、硬件与机器学习的理解都变了；如今拥有「<strong>中位数以上的数千张非常高端 GPU</strong>」（[53:04]），每天持续记录数十 TB 市场数据与元数据（[54:03]）。而五年前——</p>
+<blockquote>「五年前我们还是一个<strong>不知道 GPU 是什么</strong>的组织。」（[53:33]）</blockquote>
+<p><strong>落地的证据</strong>：一些模型已经进入真实交易系统，「<strong>并且贡献了相当可观的 P&amp;L</strong>」（[53:45]）。同时学习率极高：「每周你都会学到一堆上周不知道的东西……非常有意思，也非常让人谦卑」（[53:50]）。</p>
+<blockquote>⚠️ <strong>关于 P&amp;L 的说明</strong>：这段关于 P&amp;L 的描述来自 Jane Street 内部人员在访谈中的口述判断，访谈<strong>没有给出任何可外部验证的具体数字</strong>。</blockquote>
+<p><strong>接下来的研究问题</strong>（[54:40]）：怎样把在数据丰富资产上学到的能力<strong>迁移</strong>到数据稀缺的新市场；怎样<strong>联合利用文本、图像与市场数据</strong>，把信息转成更高质量的价格预测。</p>
+<p><strong>LLM 的三条路</strong>（[55:54]）：</p>
+<p>1. <strong>抽数据</strong>：从文本、地理数据、图像里抽取影响交易的数据——这类正是外部世界大量建模并发布数据的领域，可以用 LLM、BERT 或视觉模型（[55:55] [56:06]）。 2. <strong>直接建模市场</strong>：处理市场自身产生的、独特的<strong>时间序列结构化数据</strong>。「这一块公开论文不多，因为<strong>真正会做的人基本不发表论文</strong>」（[56:22]）。 3. <strong>接入完整交易流程</strong>：把多模态模型、高算力 RL 与推理模型拼进来，更全面地覆盖交易流程——「因为资产价格最终取决于<strong>世界如何运作</strong>，而不只是时间序列本身」（[56:45] [57:04]）。</p>
+<p><strong>另一条线：研究助手与 agents</strong>（[57:22]）——用 ML 让内部的人更高效。Jane Street 有大量古怪的编程语言、独特的内部工具和数据集，为它们做 assistants 和 agents「从我们所有人的角度看都极其令人兴奋」：</p>
+<blockquote>「因为这里<strong>最稀缺的资源，就是那些能提出新想法的人</strong>；任何能扩大他们能触及范围的工具，都价值非凡。」（[57:50]）</blockquote>
+<p>In Young 甚至认为，这类研究助手最终创造的价值<strong>可能与直接用于交易预测的模型相当</strong>（[58:09]）。但路径仍不清晰：在哪些基础模型上定制或微调、哪些能力必须自研、优先建哪些工具、需要准备哪些内部数据与上下文（[58:25]）。</p>
+<p>而这里有一个清晰的分野（[58:40]）：</p>
+<blockquote>「在交易领域，<strong>我们就是生产自己所用模型的人</strong>；而在助手这个空间，故事更复杂——我们能直接看到外部厂商在做很酷的事，我们大量的工作其实就是<strong>想办法最好地利用、整合、并从那些东西里榨出价值</strong>。」</blockquote>
+<hr>
+<h2 id="s18">十七、关键结论</h2>
+<p>1. <strong>本集的核心命题不是&quot;AI 能不能做交易&quot;，而是&quot;金融数据为什么让 ML 这么难&quot;。</strong> 三条根因：数据脏（拆股/改名/幸存者偏差）、信噪比极低（100 份里 1 份有用）、以及<strong>市场会主动抹掉你学到的规律</strong>（反归纳性）。 2. <strong>&quot;知道对手方是谁&quot;是一种被低估的市场基础设施。</strong> 匿名不是万能最优解：在例行大单场景下，披露订单来源能降低逆向选择恐惧，让流动性的提供与获取同时变好。 3. <strong>研究的瓶颈往往在&quot;非建模&quot;环节。</strong> 数据收集、可复现性、生产化、短迭代周期——这些比换一个更花哨的模型更能决定研究成果能否变成 P&amp;L。 4. <strong>纪律有两种，位置不同。</strong> 低数据限制假设空间（模型空间纪律），高数据严格隔离数据与评估流程（数据纪律）；最危险的失效发生在组织层面——一群人重复试同一批假设，等于把测试集当训练集用。 5. <strong>硬件已经进入建模的决策环。</strong> 在纳秒到毫秒的谱系上，&quot;最好的模型&quot;和&quot;能跑得够快的模型&quot;是两个不同的问题，必须联合优化——甚至反过来为模型设计硬件。 6. <strong>规模红利在金融里是有边界的，但&quot;数据贫乏&quot;也有水分。</strong> 先验与经验仍不可替代，而跨资产、跨市场状态的迁移学习（transfer learning）让&quot;贫乏&quot;没那么贫乏。 7. <strong>LLM 在交易里的最高价值可能不在预测价格。</strong> 为那些能提出新想法的人做工具、扩大他们的问题空间，被她认为价值可能与预测模型相当——而这类工作更可能建立在外部基础模型之上，与自研的交易模型形成清晰分工。</p>
+<hr>
+<h2 id="s19">十八、给从业者的可操作启示</h2>
+<table><thead><tr><th>访谈中的观点</th><th>可以立刻做的事</th></tr></thead><tbody><tr><td>手工小样本建直觉（[15:31]）</td><td>新数据源先手工核对 50–200 条记录，再上规模化管线；先写下&quot;可能出哪些错&quot;的清单</td></tr><tr><td>幸存者偏差（[29:18]）</td><td>检查你的标的池是否&quot;用今天的成分回溯历史&quot;；确认退市、改名、拆股是否已处理</td></tr><tr><td>短迭代周期（[22:54]）</td><td>把&quot;从想法到看到结果&quot;的耗时当作一等指标来优化，而不是优化单次回测的精度</td></tr><tr><td>组织级假设泄漏（[40:03]）</td><td>在团队层面记录&quot;谁试过哪些假设&quot;，而不只是个人留样本外</td></tr><tr><td>干预式可解释性（[42:54]）</td><td>对关键模型做一次&quot;极端事件推演&quot;：如果世界发生 X，我该改哪个参数？改不动就说明理解不够</td></tr><tr><td>两种纪律（[41:26]）</td><td>低数据项目先写死&quot;我允许试几个假设&quot;；高数据项目先写死数据隔离与评估协议</td></tr><tr><td>硬件约束（[48:58]）</td><td>训练前先量清推理的延迟/吞吐预算，把&quot;能在预算内跑起来&quot;作为硬约束再选模型</td></tr><tr><td>迁移学习（[51:21]）</td><td>明确列出&quot;我在 A 资产上学到、可以搬到 B 资产&quot;的具体直觉，并检验它是否成立</td></tr></tbody></table>
+<hr>
+<h2 id="s20">十九、来源、术语校正与说明</h2>
+<ul><li><strong>逐字稿来源</strong>：YouTube 官方英文<strong>自动字幕</strong>（auto-generated captions），完整导出 <strong>1,753 段 / 约 12,513 词 / 全长 59:46</strong>，逐条保留时间戳（<code>mm:ss</code>），见「📝 逐字稿」页。中文为机器翻译并做术语校对，非官方译文，可能有个别偏差。</li></ul>
+<ul><li><strong>本文分析</strong>：基于上述完整逐字稿整理；文中所有引用与论断均可定位到时间点。</li></ul>
+<ul><li><strong>术语校正</strong>：已修正自动字幕的听写误差，包括 <code>iny young → In Young</code>、<code>Chain Street / Jam Street / Jan Street / Jan streat → Jane Street</code>、<code>o camel → OCaml</code>、<code>Jupiter notebooks → Jupyter notebooks</code>、<code>Accel grate → Excel great</code>、<code>aum&#x27;s Raz → Occam&#x27;s Razor</code>、<code>veraciously → voraciously</code>、<code>versus a vow set → versus a val set</code>、<code>subsec level → sub-second level</code>、<code>10 Nanos → 10 nanoseconds</code>，以及 <code>llm/gpus/tpus/fpga/13f/p&amp;l</code> 的大小写规范。</li></ul>
+<ul><li><strong>主持人姓名说明</strong>：节目主持人以 <strong>Ron Minsky</strong> 自称（Jane Street 播客 Signals and Threads 的主持人）。</li></ul>
+<ul><li><strong>数字口径说明</strong>：文中「数千张高端 GPU」「数十 TB/天」「相当可观的 P&amp;L」均来自访谈中的口述，<strong>访谈未提供任何经外部验证的具体数字</strong>；请勿当作公开财务数据引用。</li></ul>
+<ul><li><strong>范围提示</strong>：本集是<strong>概念与方法论</strong>讨论，不包含具体策略、标的或可复现的性能数据。</li></ul>
+<p>*页脚：YouTube 自动字幕 + 机器翻译 + 术语校对，仅供学习与参考。*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../hrt-ai-odd-lots/index.html"><div class="rw"><img loading="lazy" src="../hrt-ai-odd-lots/cover.jpg" alt=""></div><div class="rb"><div class="rs">Bloomberg Odd Lots · YouTube</div><div class="rt">Hudson River Trading 究竟如何用 AI</div></div></a><a class="relcard" href="../janestreet-gpus-trading-hiring/index.html"><div class="rw"><img loading="lazy" src="../janestreet-gpus-trading-hiring/cover.jpg" alt=""></div><div class="rb"><div class="rs">Dwarkesh Podcast · YouTube</div><div class="rt">Jane Street：GPU、交易与招聘</div></div></a><a class="relcard" href="../hrt-token-burn-odd-lots/index.html"><div class="rw"><img loading="lazy" src="../hrt-token-burn-odd-lots/cover.jpg" alt=""></div><div class="rb"><div class="rs">Bloomberg Odd Lots · YouTube</div><div class="rt">走进 Hudson River Trading 疯狂烧 Token 的内部</div></div></a><a class="relcard" href="../3b1b-janestreet-machine-learning/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/zPLc3jjHbnU/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">3Blue1Brown · YouTube</div><div class="rt">3Blue1Brown 对话 Jane Street：机器学习、做市商与极客文化</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
