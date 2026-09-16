@@ -1,0 +1,446 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>beti：WeRide 首个欧洲 robobus 背后的法国运营方 · 总结分析</title><meta name='description' content='beti 是一家从 75 年法国乡村客运公司 Bertolami 分拆出来的「自动驾驶运营方」：盘点出司机每天要做 421 项与驾驶无关的任务，于是只做人不做车——用现场团队 + 自研 OperaVision（地勤）与 HyperVision（远程监控，定位为「不能驾驶、只能响应并停车」以划清责任）切入服务层；公开了车队运营层不常披露的数字：一名 supervisor 带 4 辆车、每 2 小时轮班、地勤占约 20% 运营投入、在车上无安全员且每天 8 小时以上、每周 7 天的条件下运营成本比有人驾驶低约 30%；并复述了 2024 年 10 月飞广州谈下 WeRide、2025 年 2 月 Valence 上线欧洲首个完全无人驾驶商业化 robobus、约 3 个月拿到法国许可、花一年把中国产 robobus 改造成欧洲版、以及 2030 年 2,000 个 HyperVision 许可的目标。'><meta property='og:title' content='beti：WeRide 首个欧洲 robobus 背后的法国运营方 · 总结分析'><meta property='og:description' content='beti 是一家从 75 年法国乡村客运公司 Bertolami 分拆出来的「自动驾驶运营方」：盘点出司机每天要做 421 项与驾驶无关的任务，于是只做人不做车——用现场团队 + 自研 OperaVision（地勤）与 HyperVision（远程监控，定位为「不能驾驶、只能响应并停车」以划清责任）切入服务层；公开了车队运营层不常披露的数字：一名 supervisor 带 4 辆车、每 2 小时轮班、地勤占约 20% 运营投入、在车上无安全员且每天 8 小时以上、每周 7 天的条件下运营成本比有人驾驶低约 30%；并复述了 2024 年 10 月飞广州谈下 WeRide、2025 年 2 月 Valence 上线欧洲首个完全无人驾驶商业化 robobus、约 3 个月拿到法国许可、花一年把中国产 robobus 改造成欧洲版、以及 2030 年 2,000 个 HyperVision 许可的目标。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/beti-french-av-operator-weride/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/beti-the-french-av-operator-behind" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Substack</div><h1>beti：WeRide 首个欧洲 robobus 背后的法国运营方</h1><p class="sub">beti: The French AV Operator Behind WeRide&#x27;s First European Robobus</p><div class="tags"><span class="tag">⏱ 32:24</span><span class="tag">👤 Benjamin Beaudet（beti 联合创始人兼 CEO）、Daniel Abreu Marques（The AV Market Strategist / Autonomy Insiders，采访者）</span><span class="tag">🗓 2026-09</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.youtube.com/watch?v=AKuxtOj21cs" target="_blank" rel="noopener">▶ 在 YouTube 观看</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">TL;DR</a><a href="#s1">一、背景：一个「没人拍照」的层级</a><a href="#s2">二、起点：421 项与驾驶无关的任务</a><a href="#s3">三、产品形态：人 + 两套自研软件</a><a href="#s4">四、责任边界：HyperVision 不是远程接管</a><a href="#s5">五、单位经济：4:1、2 小时轮班、20% 地勤</a><a href="#s6">六、四层价值链与 beti 的取舍</a><a href="#s7">七、中欧协作：一年磨一台「欧洲版」robobus</a><a href="#s8">八、供应商风险与技术无关策略</a><a href="#s9">九、谁付钱：补贴退场，商业需求上台</a><a href="#s10">十、30% 的成本优势，以及它的前提</a><a href="#s11">十一、与欧洲大型运营商的关系</a><a href="#s12">十二、2030 目标：2,000 个 HyperVision 许可</a><a href="#s13">关键结论与趋势判断</a><a href="#s14">局限性与说明</a></nav><main class="content"><h1>beti：WeRide 首个欧洲 robobus 背后的法国运营方</h1>
+<blockquote>本期是 Autonomy Insiders（The AV Market Strategist，主持人 Daniel Abreu Marques）对 beti 联合创始人兼 CEO <strong>Benjamin Beaudet</strong> 的访谈，2026 年 9 月发布，全长 32:24。以下分析基于该期的完整英文自动字幕逐字稿整理，所有论断均可回溯到带时间戳的原文。</blockquote>
+<h2 id="s0">TL;DR</h2>
+<ol><li>beti 不是技术公司，而是一家<strong>自动驾驶「运营方」</strong>：不开发驾驶技术、不造车，只做「基础设施层」——用人和软件把别人的自动驾驶系统变成可日常运行的运输服务。</li><li>公司的起点是一次内部盘点：司机每天要做 <strong>421 项与驾驶无关的任务</strong>。由此得出核心判断——「自动驾驶技术可以替代<strong>驾驶任务</strong>，但替代不了<strong>运营方</strong>」。</li><li>产品只有两样东西：<strong>人 + 两套 100% 自研软件</strong>（OperaVision 面向现场团队，HyperVision 用于远程监控）。beti 刻意把 HyperVision 定义为「不能驾驶、只能响应告警并停车」，目的就是<strong>把驾驶责任明确留给技术方</strong>。</li><li>公开了车队运营层很少披露的数字：一名 supervisor 带 <strong>4 辆车</strong>、每 <strong>2 小时</strong>轮班（按人的注意力来设定上限）、地勤与清洁充电等占约 <strong>20%</strong> 运营投入。</li><li>单位经济的前提很硬：<strong>车上无安全员 + 每天超过 8 小时 + 每周 7 天</strong>，运营成本才比有人驾驶低约 <strong>30%</strong>。</li><li>中欧协作的真实成本：2024 年 10 月飞广州谈下 WeRide，2025 年 2 月 Valence 上线欧洲首个完全无人驾驶商业化 robobus，<strong>约 3 个月</strong>拿到法国许可，但把「中国产」robobus 改造成欧洲版<strong>花了大约一年</strong>。</li><li>经历过 Navya 重组与多家 shuttle 厂商消失之后，beti 的策略是<strong>技术无关（technology agnostic）</strong>：不为单一技术供应商下注。</li><li>2030 年目标：<strong>2,000 个 HyperVision 许可</strong>。</li></ol>
+<hr>
+<h2 id="s1">一、背景：一个「没人拍照」的层级</h2>
+<p>主持人在开场就把这一期的定位说得很清楚：关于自动驾驶的讨论几乎都在谈车辆、软件、传感器，但</p>
+<blockquote>Somebody also has to answer the phone when a passenger is stuck or somebody has to talk to the fire brigade. Somebody has to hit the KPI is written into a contract with a transport authority and that is a service layer. It&#x27;s unglamorous. It&#x27;s deeply local and it may turn out to be where a lot of the value in this industry actually sits. <code>[01:08 – 01:26]</code></blockquote>
+<p>beti 正是押在这一层上的公司：<strong>French operator of automated mobility networks</strong>，从家族客运公司 <strong>Bertolami</strong> 分拆而来，母公司自上世纪 50 年代起就在法国乡村跑巴士。Ben 与他的兄弟一起打理家族业务，beti 与之并行运营。</p>
+<h2 id="s2">二、起点：421 项与驾驶无关的任务</h2>
+<p>Ben 强调，beti 的成立<strong>不是</strong>因为某次事故或某个「灵光一闪」的瞬间，而是一次系统性的内部盘点：</p>
+<blockquote>We raised a very simple question: if the driver is no longer on board, [who performs the] hundreds of tasks that are not related to driving? … We make some study and identify <strong>421 tasks</strong> which are made with our conductors every day but are not driving tasks. <code>[04:01 – 04:24]</code></blockquote>
+<p>关键在于接下来的观察：当他们拿这个问题去和自动驾驶技术供应商讨论时，<strong>对方的专注点（合理地）只在驾驶技术上，没有人负责「运营这件事」</strong>。战略由此成型：</p>
+<blockquote>Autonomous driving technology can replace the <strong>driving task</strong>, but it does not replace the <strong>operator</strong>. <code>[04:46 – 04:55]</code></blockquote>
+<p>这也是理解 beti 全部产品取舍的前提——它的存在理由不是「技术不够好」，而是「技术之外的活儿没人干」。</p>
+<h2 id="s3">三、产品形态：人 + 两套自研软件</h2>
+<p>beti 的交付物被 Ben 概括为「people and software」：</p>
+<table><thead><tr><th>组成部分</th><th>内容</th><th>说明</th></tr></thead><tbody><tr><td>人（服务）</td><td>具备部署与运营自动驾驶技术专长的现场团队</td><td>把技术变成真正的公共交通 / 私人运输服务，提供运营 know-how</td></tr><tr><td>软件 I</td><td><strong>OperaVision</strong></td><td>面向现场运营团队的应用套件</td></tr><tr><td>软件 II</td><td><strong>HyperVision</strong></td><td>让自动驾驶运输系统可运营、可远程监控</td></tr></tbody></table>
+<p>两套软件<strong>全部自研</strong>。这是一个带有个人史的选择：Ben 在 2018 年加入家族企业之前，已经做了 20 多年数字开发公司，因此从一开始就认定「软件层」必须是自有资产。</p>
+<p>值得注意的经营设计：beti 明确<strong>主动把客户训练到不再依赖自己</strong>——</p>
+<blockquote>Our goal is to train the teams that will operate the service on a daily basis and make them autonomous as quickly as possible. … What remains over time is the software layer — OperaVision and HyperVision — and they are the common thread that connects us to the operator, to the life of the service. <code>[09:37 – 10:02]</code></blockquote>
+<p>即：<strong>服务会「毕业」，软件不会。</strong></p>
+<h2 id="s4">四、责任边界：HyperVision 不是远程接管</h2>
+<p>这是全期最值得逐字读的一段。beti 刻意使用 <strong>HyperVision</strong> 而不是 supervision 或 teleoperation：</p>
+<blockquote>HyperVision cannot drive the vehicle but can react to an alert, stop it, [and] also monitor the service. <code>[07:40 – 07:51]</code></blockquote>
+<p>理由不是技术炫技，而是<strong>责任划分</strong>：</p>
+<blockquote>We are not responsible for the driving itself. That responsibility remains to the autonomous driving technology. Our responsibility is to operate the transport service that the technology is supposed to deliver. That distinction is fundamental for us because driving the technology and operating a mobility service are two different jobs requiring different technologies and different expertise. <code>[08:06 – 08:26]</code></blockquote>
+<p>并且 beti 判断，<strong>美国与中国的自动驾驶技术领先者其实也认可这个分工</strong>，因为欧洲在「运营复杂公共交通服务」上有独特能力。</p>
+<p>另一条硬约束是地理：受监管要求，<strong>控制中心必须与车辆在同一个国家</strong>。beti 在法国、比利时、瑞士的协作即按此布局——车在比利时，HyperVision 就在比利时。</p>
+<h2 id="s5">五、单位经济：4:1、2 小时轮班、20% 地勤</h2>
+<p>这一节是本期对「想学的人」最有价值的部分，因为正如主持人所说：</p>
+<blockquote>One number everyone in this fleet operation layer wants to know and nobody publishes is how many vehicles can one supervisor handle. <code>[12:13 – 12:24]</code></blockquote>
+<p>Ben 的回答分两层。先给一个「反转」开场：<strong>一个 hypervisor 同一时刻只管一辆车</strong>（因为驾驶责任不在 beti）。但运营层面的比例有两种流派：</p>
+<ol><li><strong>静态配比（beti 当前模式）</strong>：<strong>4 辆车 : 1 名 supervisor</strong>，并配有「溢流流程」，以应对同一时刻多辆车同时出状况。</li><li><strong>动态分配</strong>：按车辆的实时状态、以及是否需要人工介入，动态把车指派给 supervisor。</li></ol>
+<p>他明确表示，现阶段<strong>没有人能断言哪种模型在规模化后最优</strong>：车辆是个位数时 4:1 很容易，到数百辆就是另一个问题，答案可能在 2028 年前后才出现。</p>
+<p>比例的真实约束被 Ben 归因于<strong>人的注意力</strong>，而非车辆、工具或法规。beti 与法国高校合作做了大量研究，并据此把班次设计为<strong>每值班 2 小时轮换</strong>，之后休息再回到 HyperVision 中心。</p>
+<p>地勤（清洁、充电、车场作业、道路救援）则占了约整体运营投入的 <strong>20%</strong>，与传统运输业已知水平相当。Ben 的结论很直接：<strong>没有这一层，自动驾驶出行服务根本不成立</strong>。</p>
+<h2 id="s6">六、四层价值链与 beti 的取舍</h2>
+<p>面对「自动驾驶出行的价值链怎么分层」，Ben 把它简化为四层：</p>
+<ol><li>自动驾驶技术</li><li>物理车辆</li><li>运营服务所需的<strong>物理基础设施</strong></li><li>运营所需的<strong>数字基础设施</strong></li></ol>
+<p>beti 的取舍是排他性的：<strong>不做驾驶技术、不造车</strong>，只在第 3、4 层用人和软件做文章。</p>
+<h2 id="s7">七、中欧协作：一年磨一台「欧洲版」robobus</h2>
+<p>时间线（全部可在逐字稿中定位）：</p>
+<table><thead><tr><th>时间</th><th>事件</th></tr></thead><tbody><tr><td>2024-10</td><td>beti 团队飞往广州，与 WeRide 管理层会面，说服对方 beti 是进入欧洲市场「不太大、也不太小」的合适伙伴</td></tr><tr><td>2025-02</td><td><strong>Valence</strong> 上线 WeRide 在欧洲的首个完全无人驾驶商业化 robobus 服务；线路连接 TGV 车站、长时停车场与一座有 150 家公司的商业园区</td></tr><tr><td>约 3 个月</td><td>拿到法国无人驾驶许可（据称创下法国记录）</td></tr><tr><td>约 1 年</td><td>完成从「中国产」robobus 到「欧洲版」的适配</td></tr><tr><td>之后</td><td>在欧洲又落地四场新运营，速度明显加快</td></tr></tbody></table>
+<p>选点逻辑也值得一记：Valence 这条线<strong>并不是</strong>「大城市火车站」的示范工程，而是离 beti 总部只有约 20 分钟的真实场景，且该区域原本没有公共交通服务——这让居民更容易理解新服务的价值。一个意外收获是<strong>乘客很快变成服务的「代言人」</strong>，主动向他人解释线路与用法。Ben 认为对公共交通而言这至关重要：能快速获得扩散者，就等于赢下这门生意。</p>
+<p>关于适配，Ben 的表述相当坦诚：</p>
+<blockquote>It takes one year to be sure at the end that we have closed all gaps and adapt the system and making it very robust for the European market. <code>[21:03 – 21:13]</code></blockquote>
+<p>需要处理的是语言、界面与<strong>受监管的数据协议</strong>等实际问题，他直言<strong>运营初期并不完美</strong>。</p>
+<p>关于许可，他特别澄清<strong>这不是走了捷径</strong>：beti 此前已经拿到过其他自动驾驶车辆的运营授权，真正起作用的是「知道监管方会问什么」的申请质量。</p>
+<h2 id="s8">八、供应商风险与技术无关策略</h2>
+<p>beti 运营过 <strong>Navya、EasyMile</strong>，后来又运营 <strong>WeRide</strong> 的车辆。Ben 认为直接比较并不公平——这些技术属于不同世代，WeRide 是最新一代，因此对 beti 来说最好运营。这也催生了 beti 自建的<strong>操作方评估框架</strong>：包含 <strong>20 多项指标</strong>，配合大量问卷与测试，而且问题的重心已经转移：</p>
+<blockquote>We are moving away from the simple question [of] which technology drives best[;] the real question for us is which technology is the easiest, safest and most efficient to <strong>operate</strong>. <code>[23:05 – 23:18]</code></blockquote>
+<p>Navya 重组、若干 shuttle 厂商失败或被并入，beti 作为运营方亲眼看着供应商消失。Ben 的态度是：<strong>相比「后悔当初的选择」，他更同情那些在项目上极其努力的团队</strong>。由此形成的原则是：</p>
+<blockquote>Our strategy is not to bet everything on one technology provider. … [it] is also part of what makes beti technology agnostic. <code>[28:08 – 28:30]</code></blockquote>
+<p>即建立能适配<strong>中国技术、美国技术或其他来源</strong>的稳健运营流程，同时把业务从公共交通扩展到 robotaxi 的载人与载货场景。</p>
+<h2 id="s9">九、谁付钱：补贴退场，商业需求上台</h2>
+<blockquote>Today our operations are no longer dependent on subsidy programs. The customer pays us to operate the service. We do however still benefit from France 2030 funding for some software development — but not for operations. <code>[25:30 – 25:44]</code></blockquote>
+<p>客户是「向终端用户提供出行服务的组织」——可能是交通主管机构、公共交通运营商或私营机构。公共创新资金的角色已经退到「加速某些技术开发」，例如网络安全与主权相关议题。</p>
+<h2 id="s10">十、30% 的成本优势，以及它的前提</h2>
+<p>以 Valence 为例，与同线路的柴油/电动小巴有人驾驶方案对比单车公里成本或单乘客成本：</p>
+<blockquote>Once you go beyond 8 hours of operation per day and especially when you move from 5 days a week to 7 days a week, the economics can improve very quickly when there is no safety operator on board. … the operating cost can be around <strong>30% lower</strong> than a conventional service with a driver. <code>[26:41 – 27:07]</code></blockquote>
+<p>所以价值不是「省掉一个司机」，而是<strong>用不同的成本结构换取更长的服务时间</strong>。这个 30% 是有条件绑定的：<strong>无安全员 + &gt;8 小时/天 + 7 天/周</strong>，三者缺一不可。</p>
+<h2 id="s11">十一、与欧洲大型运营商的关系</h2>
+<p>被问到 Transdev、Keolis、RATP 这类大型集团是竞争对手还是合作方时，Ben 的定位是：</p>
+<blockquote>They have become our customers and I believe we have both the capabilities and the shared interest to build long-term relationships with them. <code>[29:21 – 29:30]</code></blockquote>
+<p>当前重点是证明 beti 的模式能支撑这些大玩家规模化时的自动驾驶战略。至于未来谁和谁竞争，他认为要等<strong>第一次大规模部署</strong>落地后，各自的市场位置才会清晰。</p>
+<h2 id="s12">十二、2030 目标：2,000 个 HyperVision 许可</h2>
+<blockquote>Today our business plan is primarily based on the number of HyperVision licences deployed per vehicle. So the number I will give you for 2030 is <strong>2,000</strong>. <code>[30:30 – 30:47]</code></blockquote>
+<p>选这个指标的逻辑是：最大的不确定因素不在自己掌控之内——尤其是公共运输侧的推进节奏。他也明确<strong>希望有竞争</strong>：</p>
+<blockquote>One player rarely makes a market, so they need to have some competitors. <code>[31:10 – 31:15]</code></blockquote>
+<p>并点名希望未来几年在德国等地出现像 <strong>Holon</strong> 这样的玩家。多个可信的整车与技术供应商竞争并规模部署，会加速整个市场，也加快 beti 触及 2,000 个许可。</p>
+<hr>
+<h2 id="s13">关键结论与趋势判断</h2>
+<ul><li><strong>「运营方」正在成为一个独立、可被量化的产业层级。</strong> beti 的价值主张不依赖任何单点技术突破，而依赖「421 项非驾驶任务」这类脏活累活的规模化组织能力。这与「自动驾驶 = 技术问题」的流行叙事形成互补。</li><li><strong>责任边界先于技术指标。</strong> HyperVision 之所以不叫 teleoperation，本质是先解决「谁为驾驶负责」的法律与合同问题，再解决工程问题。对任何想进入欧洲市场的技术方，这是必须先谈清的前置条件。</li><li><strong>「人的注意力」是当前运营比率的真实天花板</strong>，而不是算力、传感器或法规。beti 用「2 小时轮班 + 4:1」把它工程化了；但 Ben 承认这个比例在大规模下是否成立仍未定论（约 2028 年见分晓）。</li><li><strong>跨生态（中/欧）整合有一个约一年的隐性成本</strong>：语言、界面、受监管数据协议。任何「技术出海即刻可用」的预期都需要按这个量级打折。</li><li><strong>技术无关（technology agnostic）是被行业事故教育出来的策略。</strong> Navya 的消亡不是反面教材，而是 beti 建立 20+ 项供应商评估框架、并把「财务稳健性」纳入但<strong>不置于首位</strong>的直接原因。</li><li><strong>30% 的成本优势高度条件化</strong>，绑定在无安全员、长时段、全周运营上。对运营商而言，真正的决策变量是「能否把车辆利用率拉满」，而不是「自动驾驶技术是否成熟」。</li></ul>
+<h2 id="s14">局限性与说明</h2>
+<ul><li>本文所有引文与数字均来自该期节目的<strong>英文自动字幕（YouTube auto-captions）</strong>，经专名与 ASR 误识别归一后整理，并保留原始 <code>mm:ss</code> 时间戳；未使用任何二次报道或推测补写。</li><li>自动字幕存在少量无法完全消歧的听写噪声（例如个别专名与数字），已在不改变语义的前提下做最小化修正；文中引用的<strong>数字类结论</strong>（421 项任务、4:1、2 小时轮班、20%、30%、2,000 个许可、约 3 个月、约 1 年）均已逐条核对上下文。</li><li>本期为<strong>单一受访者视角</strong>（beti CEO），涉及竞争对手、供应商失败原因、成本对比等表述属其个人判断，本站未做独立核实。</li><li>逐字稿中英对照中，中文为机器翻译 + 专名归一，仅供理解参考；<strong>以英文原文为准</strong>。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="../eu-type-approval-autonomous/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
