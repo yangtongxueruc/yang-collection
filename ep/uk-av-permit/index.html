@@ -1,0 +1,493 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>英国的自动驾驶许可流程拆解：谁在决定 robotaxi 能不能上路 · 总结分析</title><meta name='description' content='伦敦已经跑起了 Wayve + Uber 的「有人监督」robotaxi，但把安全员请下车是另一套完全不同的法律流程：DfT 签发、DVSA 审运营、VCA 审车辆软件、TfL 行使地方同意权 —— 四个机构、三道闸门，而至今没有任何一家公司拿到完全无人驾驶许可。'><meta property='og:title' content='英国的自动驾驶许可流程拆解：谁在决定 robotaxi 能不能上路 · 总结分析'><meta property='og:description' content='伦敦已经跑起了 Wayve + Uber 的「有人监督」robotaxi，但把安全员请下车是另一套完全不同的法律流程：DfT 签发、DVSA 审运营、VCA 审车辆软件、TfL 行使地方同意权 —— 四个机构、三道闸门，而至今没有任何一家公司拿到完全无人驾驶许可。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/uk-av-permit/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/the-uks-autonomous-vehicle-permit" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders · Ep.28（Substack / YouTube）</div><h1>英国的自动驾驶许可流程拆解：谁在决定 robotaxi 能不能上路</h1><p class="sub">The UK&#x27;s Autonomous Vehicle Permit Process Explained</p><div class="tags"><span class="tag">⏱ 49:24</span><span class="tag">👤 Tym Syrytczyk（Institute for Driverless Transport 联合创始人）</span><span class="tag">🗓 2026-09</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.youtube.com/watch?v=AXkw6gfTHA8" target="_blank" rel="noopener">▶ 在 YouTube 观看</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">TL;DR（结论先行）</a><a href="#s1">一、背景：伦敦的「第一批 robotaxi」其实是有人开的</a><a href="#s2">二、两个基础概念：有人监督 vs 无人驾驶</a><a href="#s3">三、两部法律：2018 与 2024 的分工</a><a href="#s4">四、四个角色：DfT、DVSA、VCA、TfL 各管什么</a><a href="#s5">五、APS 许可：唯一的合法通道，以及它为什么被「提速」</a><a href="#s6">六、安全案例与 VSO：证据链的两半</a><a href="#s7">七、Wayve + Uber 的 PHV 路线：一条「曲线」而非捷径</a><a href="#s8">八、ODD 与许可区域：两个容易混淆的边界</a><a href="#s9">九、时间表：从申请到拿证要多久</a><a href="#s10">十、为什么至今没有人申请？TfL 的沉默与张力</a><a href="#s11">十一、预测：第一张伦敦 APS 许可长什么样</a><a href="#s12">十二、关键结论与趋势判断</a><a href="#s13">局限性与说明</a></nav><main class="content"><h1>英国的自动驾驶许可流程拆解：谁在决定 robotaxi 能不能上路</h1>
+<blockquote><strong>来源</strong>：Autonomy Insiders · Ep.28（AV Market Strategist / Substack + YouTube）</blockquote>
+<blockquote><strong>嘉宾</strong>：Tym Syrytczyk —— Institute for Driverless Transport（IFDT）联合创始人，写作 Self-Driving Insights newsletter</blockquote>
+<blockquote><strong>主持</strong>：Daniel Abreu Marques｜<strong>时长</strong>：49:24｜<strong>发布</strong>：2026-09-23</blockquote>
+<hr>
+<h2 id="s0">TL;DR（结论先行）</h2>
+<ul><li><strong>伦敦已经有 robotaxi 在载客，但方向盘后面坐着人。</strong> 2026 年 9 月 3 日，Uber + Wayve 用福特 Mustang Mach-E 上线了伦敦第一批「自动驾驶」网约车，但车上有 TfL 颁发执照的安全员，走的还是<strong>私人租赁车辆（PHV）</strong>许可，不是无人驾驶许可。</li><li><strong>把安全员请下车，是一套完全不同的法律流程。</strong> 关键机制是 <strong>APS 许可</strong>（Automated Passenger Service permit），依据《Automated Vehicles Act 2024》第 5 部分，2026 年 5 月 15 日生效。</li><li><strong>四个机构、三道闸门：</strong> 交通大臣（SoS）形式上签发 → <strong>DVSA</strong> 审运营并主导流程 → <strong>VCA</strong> 审车辆与软件、发 VSO → <strong>TfL</strong> 作为伦敦的「同意机关」行使地方同意权。</li><li><strong>TfL 不签发许可，但在伦敦没有它的同意什么都做不成。</strong> 它只有六周回应窗口，<strong>不回应＝默认同意</strong>；但一旦给出「附理由的拒绝」，申请基本作废、需要重来。</li><li><strong>至今没有任何一家公司拿到完全无人驾驶许可。</strong> 2026 年 5 月开放申请，截至录制时 TfL 表示<strong>未收到任何伦敦的 APS 申请或同意请求</strong>。</li><li><strong>嘉宾的预测：Waymo 最可能先拿到许可</strong>，规模 80–250 辆，区域落在<strong>北伦敦 / 北中伦敦</strong>（King&#x27;s Cross、Westminster 一带），而不是南伦敦或 Canary Wharf。</li></ul>
+<hr>
+<h2 id="s1">一、背景：伦敦的「第一批 robotaxi」其实是有人开的</h2>
+<p>2026 年 9 月 3 日，Wayve 与 Uber 在伦敦上线了第一批可付费乘坐的「自动驾驶」网约车 —— 改装过的福特 Mustang Mach-E，约 15 辆，通过 Uber App 叫车。但<strong>每辆车上都坐着一位持 TfL 私人租赁执照的安全员，法律上仍由这位司机对车辆行为负责</strong>。</p>
+<p>这背后是一个容易被忽略的事实：<strong>英国目前没有任何一辆车在法律上作为「无人驾驶车辆」运营。</strong> 所有在伦敦跑的车 —— Waymo、Wayve、Baidu Apollo Go —— 都是以「有人监督」的身份在做测试或运营。</p>
+<blockquote>&quot;Currently, there are no driverless vehicles legally in the UK operating as driverless vehicles. They have to be placed as supervised vehicles because they don&#x27;t have a permit to operate as driverless vehicles.&quot; —— 07:55</blockquote>
+<p>换句话说：<strong>伦敦已经解决了「能不能跑」，还没有解决「能不能没有司机」。</strong> 而这后一件事，才是这期节目的主题。</p>
+<hr>
+<h2 id="s2">二、两个基础概念：有人监督 vs 无人驾驶</h2>
+<p>英国法下这两者是完全不同的法律状态，也是理解整套许可制度的起点。</p>
+<table><thead><tr><th></th><th>有人监督的自动驾驶（supervised）</th><th>无人驾驶（driverless）</th></tr></thead><tbody><tr><td>责任主体</td><td>车上的<strong>司机/安全员</strong>对车辆行为负责</td><td>运营方及其<strong>授权实体（ASDE）</strong></td></tr><tr><td>是否需法定许可</td><td><strong>不需要</strong>，只需遵守 Code of Practice</td><td><strong>需要 APS 许可</strong></td></tr><tr><td>车能不能自己开</td><td>可以全程自己开，但法律上仍算「监督」</td><td>必须证明<strong>永不需要人工接管</strong>才能完成行程</td></tr><tr><td>当前英国状态</td><td>全部在跑的车都属于这一类</td><td><strong>零</strong></td></tr></tbody></table>
+<blockquote>&quot;A supervised autonomous ride is a ride where the user is still in control. That means that there is still a driver being responsible for the behavior of the vehicle… even if the vehicle is driving by itself all of the time, because it is legally defined as a supervised ride, the person, the safety driver will be responsible.&quot; —— 07:20</blockquote>
+<p>这里最反直觉的一点是：<strong>技术上「车在开」和法律上「有人监督」可以同时成立。</strong> 法律定义的锚点不是「谁在操作方向盘」，而是「谁承担责任」。</p>
+<hr>
+<h2 id="s3">三、两部法律：2018 与 2024 的分工</h2>
+<p>英国的自动驾驶立法是<strong>两层结构</strong>，这也是很多人困惑的来源。</p>
+<p><strong>《Automated and Electric Vehicles Act 2018》</strong></p>
+<ul><li>解决的是<strong>保险与责任</strong>：定义什么算自动驾驶车辆、出事之后钱怎么赔。</li><li>它是当年做<strong>测试</strong>的法律底座 —— 哪怕完全没有商用，只要出事能按既定规则赔付，测试就可以进行。</li><li>在实践中，2018 年法案下的测试<strong>绝大多数都运行在「用户仍在控制」的模式</strong>里。</li></ul>
+<blockquote>&quot;This is actually really important even for any trials or tests so that even if there are no public uses of autonomous vehicles, we can conduct trials and if something goes wrong, all the money gets passed around legally as clearly defined.&quot; —— 08:44</blockquote>
+<p><strong>《Automated Vehicles Act 2024》</strong></p>
+<ul><li>目标是为<strong>所有用例永久性地</strong>定义自动驾驶车辆：谁负责许可、谁负责运营、事故如何调查。</li><li>但它采取的是典型的英国/欧盟立法节奏：<strong>法案通过只是开始</strong>，大量定义、次级立法与细则仍待发布。</li><li>官方时间表：整套监管环境预计 <strong>2027 年</strong>完成。</li></ul>
+<blockquote>&quot;The law has passed in 2024, but the way British law has worked for a while… is that even when the act gets passed, there&#x27;s a lot of definitions and a lot of secondary legislation or clarifications that has to be published.&quot; —— 10:02</blockquote>
+<blockquote><strong>一句话总结</strong>：2018 年法案管「赔不赔、谁赔」，2024 年法案管「准不准、谁准」。前者让测试合法，后者让商业化合法 —— 而后者至今只落地了一部分（APS 试点）。</blockquote>
+<hr>
+<h2 id="s4">四、四个角色：DfT、DVSA、VCA、TfL 各管什么</h2>
+<p>节目的核心贡献之一，是把这套「谁是批准人」的迷局讲清楚 —— <strong>四个机构，三个国家级，一个地方级。</strong></p>
+<table><thead><tr><th>机构</th><th>全称</th><th>角色</th><th>关心什么</th></tr></thead><tbody><tr><td><strong>DfT / 交通大臣</strong></td><td>Department for Transport / Secretary of State</td><td><strong>形式上签发许可</strong>（现任交通大臣 Heidi Alexander）</td><td>政治意愿与整体节奏</td></tr><tr><td><strong>DVSA</strong></td><td>Driver and Vehicle Standards Authority</td><td><strong>主导许可流程</strong>：受理申请、索要安全案例、代表大臣批准</td><td>运营侧：安全、可靠性、服务设计</td></tr><tr><td><strong>VCA</strong></td><td>Vehicle Certification Agency</td><td>评估<strong>车辆与软件</strong>本身；发放 <strong>VSO</strong></td><td>车辆设计、软件能力、网络安全</td></tr><tr><td><strong>TfL</strong>（伦敦）</td><td>Transport for London</td><td><strong>地方同意机关</strong>，不签发许可，但可否决</td><td>对伦敦交通网络的适配性、无障碍、路权</td></tr></tbody></table>
+<p>DVSA 与 VCA 同属 DfT，<strong>两者并行作业</strong>：</p>
+<blockquote>&quot;There&#x27;s the driver, vehicle, and standards authority, which does the vast majority of the permitting process. They will accept the application from an operator… they will request a safety case and they will be the ones to give approval on behalf of the secretary of state.&quot; —— 11:38</blockquote>
+<p>伦敦以外，地方同意机关可能是<strong>交通机关或地方政府</strong> —— 例如利兹（Leeds）市议会。这意味着<strong>同一个申请在不同城市会面对不同的把关标准</strong>，规则碎片化是必然结果。</p>
+<blockquote>&quot;The transport authority in the city of Leeds will be the city of Leeds council… there might be different local authorities or local voices or local consenting authorities that will be in play.&quot; —— 12:52</blockquote>
+<hr>
+<h2 id="s5">五、APS 许可：唯一的合法通道，以及它为什么被「提速」</h2>
+<p><strong>APS（Automated Passenger Service）许可是目前在英国运营无司机载客服务的唯一合法路径。</strong> 它覆盖两类服务：</p>
+<ul><li><strong>出租车 / 私人租赁式</strong>（taxi-like / PHV-like）—— 英格兰</li><li><strong>巴士式</strong>（bus-like）—— 英格兰、威尔士、苏格兰</li></ul>
+<p>政府把原本排在 2027 年底的试点计划<strong>提前到 2026 年春季</strong>，从而开放了 APS 申请通道。</p>
+<blockquote>&quot;The government also has fasttracked the pilot scheme… The automated passenger service permitting scheme is the legal pathway through which any company that wants to operate an autonomous vehicle in a bus like service or a taxi like service can get the legal permission to do so including fully driverless services.&quot; —— 13:20</blockquote>
+<p><strong>提速的代价是覆盖面变窄。</strong> 因为「全国性许可」等更完整的监管考量还没做完，目前只覆盖非常特定的本地服务用例：</p>
+<blockquote>&quot;There isn&#x27;t a legal pathway for semi-public or private local or government-owned private autonomous vehicles… it is less clear as to for instance if you don&#x27;t want to do a bus-like service and you want to use this for commercial operations with some humans involved, then there might be other pathways to consider.&quot; —— 14:24</blockquote>
+<p><strong>试点许可本质上是临时的</strong>，需要续期。当完整监管框架在 2027 年落地后，结构不会推倒重来 —— <strong>同一批机构、同一套材料、同样的流程</strong>，只是可能对「多久能拿到」有更明确的说明。</p>
+<hr>
+<h2 id="s6">六、安全案例与 VSO：证据链的两半</h2>
+<h3>6.1 安全案例（safety case）</h3>
+<p>安全案例是一份<strong>论证性文件</strong>，回答「为什么这辆车可以安全地在公共道路上运营」。</p>
+<blockquote>&quot;The safety case is a form of evidence which explains why a particular autonomous vehicle is allowed to operate on the roads or should be allowed to operate on the roads and that it&#x27;s safe to do so.&quot; —— 18:13</blockquote>
+<p>内容包括：</p>
+<ul><li>软件的能力边界与适用环境；</li><li><strong>运营侧</strong>的安全安排（不只是「软件能做什么」）；</li><li>网络安全考量；</li><li>安全员的背景审查与筛选；</li><li>与道路管理方的交互机制。</li></ul>
+<p><strong>它可以随时更新</strong> —— 运营方需提供最新证据，而测试本身就是升级安全案例的手段。<strong>两位读者</strong>：VCA 更关心软件与车辆设计，DVSA 更关心运营侧。</p>
+<p>关于「远程协助」是否必须披露，嘉宾的判断是：<strong>gov.uk 上没有明文要求，但从安全案例的角度几乎必然会被期待</strong> —— 因为「远程介入频次随时间下降」本身就是一条极有说服力的趋势线。</p>
+<blockquote>&quot;If there is a reduction over time in the amount of remote assistance… then the company will have a more credible case that they can get it to a very low number or to even to zero. There is a flat number or an increasing number when it rains in the UK or that it hails, the ice gets slippery — well then that will be the sort of evidence that the VCA and the DVSA will consider.&quot; —— 33:03</blockquote>
+<h3>6.2 车辆特殊许可（VSO）</h3>
+<p>VSO 由 VCA 发放，解决的是「这辆车的物理形态是否安全」：</p>
+<blockquote>&quot;The vehicle special order is a licence that makes sure that the vehicle is safe. Obviously in the case of autonomous vehicles, it will consider things like do we actually need rear view mirrors for safety here in this case.&quot; —— 20:20</blockquote>
+<ul><li><strong>任何新车型</strong>都需要 VSO —— 例如 Zoox 那种没有方向盘的车型，<strong>在获准测试之前</strong>就要有 VSO；</li><li>福特 Mustang 这类成熟量产车大概率不需要；</li><li><strong>耗时</strong>：成熟蓝图以「周」计，复杂设计以「月」计，小改动可能不到一个月；</li><li>与非法定的 Code of Practice 不同，<strong>VSO 是始终存在的法定要求</strong>。</li></ul>
+<h3>6.3 一个关键的判断标准</h3>
+<p>对「车能不能安全地自己开」和「这门生意能不能安全地运客」这两个问题，嘉宾认为<strong>前者更难证明</strong>：</p>
+<blockquote>&quot;I believe it will be the vehicle driving safely is the harder to prove often. … Uber is going to apply. Most likely Bolt or Lyft may apply in the future… These are companies with a very long historical track record of legally operating in the UK. Meaning that for them that should be the easy part.&quot; —— 30:31</blockquote>
+<hr>
+<h2 id="s7">七、Wayve + Uber 的 PHV 路线：一条「曲线」而非捷径</h2>
+<p>Wayve 与 Uber 没有走 APS，而是<strong>集体申请了标准的私人租赁车辆（PHV）许可</strong>。在伦敦，这意味着三张牌：</p>
+<ol><li><strong>司机许可</strong> —— 含犯罪背景审查（「你可以是罪犯，但你大概不该载着陌生人上路」）；</li><li><strong>运营者许可</strong> —— 确保业务流程、预订系统、客户沟通合规；</li><li><strong>车辆许可</strong> —— TfL 对车辆是否适合载客的评估；<strong>15 辆车每辆单独一张</strong>。</li></ol>
+<p>结果是：<strong>这套服务与普通 Uber 在法律上没有任何区别。</strong></p>
+<blockquote>&quot;There&#x27;s no legal difference between the current service available on the Uber app to take on a supervised autonomous vehicle ride and a standard Uber vehicle ride.&quot; —— 00:26 / 23:15</blockquote>
+<p>嘉宾明确否定了「捷径」这个说法，更准确的定性是<strong>「一条可选的开口」</strong>：</p>
+<blockquote>&quot;It&#x27;s an opening. It&#x27;s a path that is available but doesn&#x27;t have to be taken… it doesn&#x27;t have to be a shortcut.&quot; —— 25:24</blockquote>
+<p><strong>双刃剑效应</strong>：</p>
+<ul><li>正面：在伦敦积累的运营证据（「2026 年 7–12 月，15 辆车跑了多少次、出了多少起事件」）是未来 APS 申请<strong>极好的安全案例素材</strong>；</li><li>负面：如果运营不成熟、犯下某些错误，同样会生成<strong>负面证据</strong>。</li></ul>
+<blockquote><strong>一个容易被忽略的结构问题</strong>：APS 许可只能有<strong>一个申请主体</strong>，它要对所有第三方关系（车队、软件、场地）负全责。Uber 握有更强的运营证据，Wayve 握有更强的软件证据 —— 但<strong>谁去申请完全可以自由选择</strong>，因为 PHV 许可与 APS 许可是两套独立的法律程序，前者的证据不自动成为后者的证据。</blockquote>
+<hr>
+<h2 id="s8">八、ODD 与许可区域：两个容易混淆的边界</h2>
+<table><thead><tr><th></th><th>ODD（operational design domain）</th><th>许可区域（permit / service area）</th></tr></thead><tbody><tr><td>性质</td><td><strong>行业术语</strong>，全球通用</td><td><strong>英国特有概念</strong></td></tr><tr><td>定义</td><td>自动驾驶系统能可靠工作的边界（路段、时段、光照、天气）</td><td>许可允许提供服务的范围（地点 + 时段）</td></tr><tr><td>关系</td><td>更大的集合</td><td><strong>必须是 ODD 的子集</strong></td></tr><tr><td>由谁界定</td><td>技术提供方 / 运营方举证</td><td>DVSA 审定，伦敦还需 TfL 同意</td></tr></tbody></table>
+<blockquote>&quot;It will have to be a subset. It will have to be smaller than the ODD. And therefore the DVSA will be very interested to hear about the ODD from the operators and from the autonomous vehicle technology providers.&quot; —— 34:38</blockquote>
+<p><strong>扩容要重新走一遍。</strong> 扩大许可区域需要：向 DVSA 重新提交申请（含新的 ODD 证据与安全案例），<strong>并在伦敦重新获得 TfL 的同意</strong>。两道闸门分开把关，标准可能并不相同。</p>
+<hr>
+<h2 id="s9">九、时间表：从申请到拿证要多久</h2>
+<p><strong>大致顺序</strong>：VCA（最快，评估车辆 → 发 VSO）→ DVSA（评估运营侧）→ 地方同意机关（伦敦即 TfL）。</p>
+<p><strong>TfL 的六周规则</strong>（最能体现制度设计的一环）：</p>
+<blockquote>&quot;TFL has six weeks to respond. If they don&#x27;t… Consent is granted if there&#x27;s no response. However, if TfL gives a reason, they say no. And here&#x27;s our reason… From what I understand, a rejection with a reason will almost always lead to that application just collapsing and then a new application would have to be set up.&quot; —— 37:32</blockquote>
+<p><strong>关于周期的坦率回答：没有人知道。</strong></p>
+<blockquote>&quot;We don&#x27;t know is the blunt way to put it. There&#x27;s no sort of base rate. Once we get one application through they will say hey we applied 8 months ago and now we got the permit, then we&#x27;ll know oh it probably takes roughly 8 months.&quot; —— 38:40</blockquote>
+<p>嘉宾给企业的实务建议是：<strong>任何环节都应预留 2–6 个月的额外延迟。</strong></p>
+<blockquote>&quot;The expectation that a lot of companies set out should be probably delayed by at least two to 6 months at any stage right now.&quot; —— 39:27</blockquote>
+<hr>
+<h2 id="s10">十、为什么至今没有人申请？TfL 的沉默与张力</h2>
+<p>这是全期最有信息量、也最有争议的部分。</p>
+<p><strong>事实层面</strong>：申请于 2026 年 5 月开放，但 TfL 表示<strong>未收到任何伦敦的 APS 申请或同意请求</strong>。</p>
+<p><strong>流程不透明</strong>：申请人交给 DVSA 的材料<strong>不是公开信息</strong>，外界无法判断走到了哪一步；TfL 甚至没有义务披露自己是否收到过申请。</p>
+<blockquote>&quot;At this stage the process is a little bit opaque. The evidence gets passed from the applicant to DVSA and that is not public information as to how much information has been passed and at what stage… TfL did not even have to admit whether they received any applications or not.&quot; —— 39:54</blockquote>
+<p><strong>嘉宾给出的两种解释</strong>：</p>
+<ol><li>运营方想确保<strong>一次通过</strong>，因此在正式提交前先与 TfL 做非正式沟通（法律上允许的咨询环节）；</li><li>运营方自己<strong>还没准备好</strong>。</li></ol>
+<p>甚至可能 TfL 在非正式阶段已经说过「不」，这正是没人正式提交的原因 —— 因为<strong>一次被拒至少延迟一个月，甚至更久</strong>。</p>
+<p><strong>TfL 尚未发布「同意指引」</strong>：这不是法定要求，却是业界期待。争议的具体落点是：</p>
+<blockquote>&quot;It&#x27;s currently unclear whether current taxi lanes or current bus lanes would be allowed for autonomous private hire vehicle services… That should be publicly written because currently it is publicly written for Uber and Bolt and these other service operators.&quot; —— 41:56</blockquote>
+<p><strong>「不着急」与制度性拖延</strong>：TfL 战略总监在 7 月对伦敦议会交通委员会表示「不着急」发布指引。嘉宾引述业界的观察：</p>
+<blockquote>&quot;TfL doesn&#x27;t want these services to be happening right now and they&#x27;re using all these different mechanisms that are legally formed or that are process formed but not statutory to make this a little bit slower of a process. They ultimately maybe believe that politically they can&#x27;t stop this forever, but actually legally they can actually delay this for a very long time and ultimately for London forever because they are the consenting authority.&quot; —— 43:00</blockquote>
+<p><strong>但嘉宾同时保持了克制</strong>：他强调<strong>目前没有 TfL 实际拖延的确凿证据</strong>，这些都是「未必成立」的假设。而另一端，伦敦议会交通委员会主席称中央政府<strong>「踩了伦敦的自治权」</strong>。嘉宾的判断是<strong>两者都成立</strong>：TfL 确实在通过它掌握的各种机制表达「这个流程可能太快了」，但它的具体诉求从未公开，所以外界无法判断这究竟是真实的府际张力，还是制度按设计运转。</p>
+<hr>
+<h2 id="s11">十一、预测：第一张伦敦 APS 许可长什么样</h2>
+<p>嘉宾开场先声明 <strong>IFDT 对任何公司的商业成败保持中立</strong>，随后给出个人判断（他强调这是「如果我是一个下注的人」）：</p>
+<table><thead><tr><th>维度</th><th>预测</th></tr></thead><tbody><tr><td><strong>谁先拿到</strong></td><td><strong>Waymo</strong> —— 「没有理由不用上几乎所有现成的车」</td></tr><tr><td><strong>规模</strong></td><td><strong>80–250 辆</strong>（当前伦敦约 100 辆在测）；若 Wayve 紧追其后，Waymo 可能一次性上更多车以争夺市场份额与品牌</td></tr><tr><td><strong>区域</strong></td><td><strong>北伦敦 / 北中伦敦</strong> —— King&#x27;s Cross、Westminster 一带</td></tr><tr><td><strong>排除区域</strong></td><td>南伦敦（出行可达性较低、地铁站少）、<strong>Canary Wharf</strong>（路网密度不高、离 Park Royal 一带的车辆基地太远，空驶回库要 1.5–2 小时）</td></tr></tbody></table>
+<blockquote>&quot;I believe Waymo has a pretty good chance of being the first to have a license… They have 100 cars testing in London. So, I would expect 80, 90 cars or even as many as 200.&quot; —— 46:12</blockquote>
+<blockquote>&quot;It&#x27;s going to be north London unfortunately over south London… there&#x27;s more money to be made in North London. There&#x27;s more offices. There&#x27;s more high-paying jobs. And there&#x27;s also more demand for existing private hire and vehicle services.&quot; —— 47:11</blockquote>
+<blockquote>&quot;My prediction: 80 to 250 cars, north central London, Waymo.&quot; —— 48:41</blockquote>
+<p><strong>为什么是「北」而不是「南」？</strong> 嘉宾自己点出了这个预测的公共政策含义：<strong>南伦敦本来交通可达性就差</strong>（地铁站少、公交单次运力也低于地铁），按商业逻辑落地的话，最需要改善出行的区域反而被排在后面。他用了「unfortunately（很遗憾）」这个词 —— 这恰恰呼应了 IFDT 关注的核心议题：<strong>技术落地顺序由商业回报决定，而不是由公共利益决定。</strong></p>
+<hr>
+<h2 id="s12">十二、关键结论与趋势判断</h2>
+<ol><li><strong>英国选择了一条「安全优先 + 中央集权」的路径。</strong> 由 DVSA 统一受理（而不是让 263 个地方当局各自为政），理由是中央有更多法律与交通专家、也想掌握审批节奏 —— 代价是 TfL 感到自己的最终控制权被削弱。</li></ol>
+<ol><li><strong>「同意权」是这套制度里最关键、也最容易被低估的权力。</strong> 它不在许可链条上，却能一票否决；它只需要「沉默六周」就默认放行，但只要给出理由就能让整个申请推倒重来。</li></ol>
+<ol><li><strong>许可正在成为自动驾驶竞争的核心资产。</strong> APS 许可一次签发最长覆盖五年（试点期常见 12–18 个月），是<strong>全国性的商业授权</strong>。谁拿到它，谁就从「受制于网约车平台」变成「自主运营」。</li></ol>
+<ol><li><strong>「有人监督」是当前的常态，而且可能会持续相当长时间。</strong> 制度上不存在从监督到无人驾驶的自动过渡，每一辆车、每一个区域都要单独论证安全案例。</li></ol>
+<ol><li><strong>真正的瓶颈不是技术，而是证据与信任。</strong> 英国要求「自动驾驶至少和一位谨慎称职的人类司机一样安全」，而在伦敦这种右舵、窄路、复杂交互的城市里，证明这一点需要<strong>英国道路上的本地证据</strong> —— 这也是为什么「先在伦敦跑一段时间」具有战略价值。</li></ol>
+<ol><li><strong>碎片化是早期部署的必然特征。</strong> 许可按服务、按区域、按时段签发，不同城市的地方同意机关标准不同 —— 结果是早期运营地图会是<strong>一块块拼图</strong>，而不是一张全国网络。</li></ol>
+<hr>
+<h2 id="s13">局限性与说明</h2>
+<ul><li><strong>本文基于该期播客的完整英文自动字幕（YouTube auto-captions，603 段，49:24）整理</strong>，并由机器翻译生成中英对照稿；中文为机翻 + 专名归一，<strong>以英文原文为准</strong>。</li><li><strong>自动字幕存在 ASR 误拼</strong>，已按上下文修正（如 Waymo / Wayve / TfL / DVSA / St Pancras / Holborn 等）。<strong>其中地名「Holborn」「St Pancras」为据上下文推断的归一</strong>（原 ASR 分别识别为 &quot;Pullburn&quot;、&quot;St. Francis&quot;），存疑；嘉宾本人 9 月的那篇 London 许可解析文提到许可区域「可能只覆盖 Camden 与 Westminster 的部分地区」，与北伦敦判断一致。</li><li>嘉宾部分表述为<strong>个人解读与假设</strong>（他本人多处强调「这部分是我的解读」「我们目前没有确凿证据」），<strong>不代表官方口径</strong>；涉及 TfL 动机的部分尤其如此。</li><li>事件时点截止于<strong>录制当天（2026-09-23 前后）</strong>。英国 AV 监管处在快速变动期（完整框架目标为 2027 年下半年），<strong>具体申请状态与时间表可能已变化</strong>。</li><li>文中涉及的机构名与法律名以英文原名为准，中文译名为便于阅读的意译。</li></ul>
+<hr>
+<blockquote><strong>关于 IFDT</strong>：Institute for Driverless Transport 是英国一家独立研究与召集机构，关注自动驾驶车辆带来的后果。据嘉宾自述，其经费来自 Mercatus Center 的 Emergent Ventures 一次性资助，<strong>对任何技术路线与运营商保持中立，无商业利益</strong>。</blockquote></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../applied-intuition-physical-ai-ludwig/index.html"><div class="rw"><img loading="lazy" src="../applied-intuition-physical-ai-ludwig/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">把物理 AI 送上十亿台机器：Applied Intuition 联合创始人 Peter Ludwig 访谈</div></div></a><a class="relcard" href="../france-driverless-transport-rules/index.html"><div class="rw"><img loading="lazy" src="../france-driverless-transport-rules/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">法国的无人驾驶公共交通审批规则，由评估方亲解</div></div></a><a class="relcard" href="../uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="../uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">拆解 Uber 的自动驾驶战略</div></div></a><a class="relcard" href="../nuro-road-to-driverless-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../nuro-road-to-driverless-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / YouTube</div><div class="rt">Nuro 联席 CEO Dave Ferguson：通向无人驾驶机器人出租车的路</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
