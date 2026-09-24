@@ -1,4 +1,4 @@
-<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Robotaxi 的「路缘困境」：停靠、巡游，还是回库？ · 逐字稿</title><meta name='description' content='UC Irvine 副教授 Michael Hyland 的新研究：用 1,700 辆 robotaxi 服务旧金山 68,000 次日行程，若禁止空车在路缘「歇脚」（staging），它们只能绕城巡游，日均总里程从 56.5 万公里暴涨近 60%；但 robotaxi 的路缘生产率仍是私家车的 8–10 倍——他主张别禁、别额外加税，让 robotaxi 与私家车同规则短时停靠，城市真正该做的是划 PUDO 专区并对所有乘用车收拥堵费。'><meta property='og:title' content='Robotaxi 的「路缘困境」：停靠、巡游，还是回库？ · 逐字稿'><meta property='og:description' content='UC Irvine 副教授 Michael Hyland 的新研究：用 1,700 辆 robotaxi 服务旧金山 68,000 次日行程，若禁止空车在路缘「歇脚」（staging），它们只能绕城巡游，日均总里程从 56.5 万公里暴涨近 60%；但 robotaxi 的路缘生产率仍是私家车的 8–10 倍——他主张别禁、别额外加税，让 robotaxi 与私家车同规则短时停靠，城市真正该做的是划 PUDO 专区并对所有乘用车收拥堵费。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/robotaxi-curb-dilemma/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Robotaxi 的「路缘困境」：停靠、巡游，还是回库？ · 逐字稿</title><meta name='description' content='UC Irvine 副教授 Michael Hyland（论文一作 Jung &amp; Bach）联合 UC Berkeley，用 Autofleet 仿真旧金山 1,700 辆 robotaxi、68,000 次日行程：禁止空车在路缘「歇脚」（staging）会让日均里程飙升约 60%；但 robotaxi 的路缘生产率仍是私家车的 6–8 倍（私家车平均占位 1.5–2 小时，robotaxi 约 15 分钟）。他主张别禁、别额外加税，划 PUDO 接送专区、对所有乘用车一视同仁收拥堵费。'><meta property='og:title' content='Robotaxi 的「路缘困境」：停靠、巡游，还是回库？ · 逐字稿'><meta property='og:description' content='UC Irvine 副教授 Michael Hyland（论文一作 Jung &amp; Bach）联合 UC Berkeley，用 Autofleet 仿真旧金山 1,700 辆 robotaxi、68,000 次日行程：禁止空车在路缘「歇脚」（staging）会让日均里程飙升约 60%；但 robotaxi 的路缘生产率仍是私家车的 6–8 倍（私家车平均占位 1.5–2 小时，robotaxi 约 15 分钟）。他主张别禁、别额外加税，划 PUDO 接送专区、对所有乘用车一视同仁收拥堵费。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/robotaxi-curb-dilemma/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
 :root{
   --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
   --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
@@ -352,132 +352,372 @@ footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-
 @media (max-width:560px){
   .grid{grid-template-columns:1fr}
 }
-</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/the-robotaxi-curb-dilemma-park-cruise" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Ben Hubbard</div><h1>Robotaxi 的「路缘困境」：停靠、巡游，还是回库？</h1><p class="sub">中英对照逐字稿 · The Robotaxi Curb Dilemma: Park, Cruise or Return to the Depot?</p><div class="tags"><span class="tag">Michael Hyland（UC Irvine 土木与环境工程副教授）；访谈者 Ben Hubbard（The Driverless Digest 主编）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">robotaxi</span><span class="chip" onclick="wbJumpKw(this)">curb</span><span class="chip" onclick="wbJumpKw(this)">路缘</span><span class="chip" onclick="wbJumpKw(this)">staging</span><span class="chip" onclick="wbJumpKw(this)">歇脚</span><span class="chip" onclick="wbJumpKw(this)">空驶里程</span><span class="chip" onclick="wbJumpKw(this)">VMT</span><span class="chip" onclick="wbJumpKw(this)">curb productivity</span><span class="chip" onclick="wbJumpKw(this)">路缘生产率</span><span class="chip" onclick="wbJumpKw(this)">Michael Hyland</span><span class="chip" onclick="wbJumpKw(this)">UC Irvine</span><span class="chip" onclick="wbJumpKw(this)">UC Berkeley</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">PUDO</span><span class="chip" onclick="wbJumpKw(this)">拥堵定价</span><span class="chip" onclick="wbJumpKw(this)">congestion pricing</span><span class="chip" onclick="wbJumpKw(this)">私人无人车</span><span class="chip" onclick="wbJumpKw(this)">personally owned AV</span><span class="chip" onclick="wbJumpKw(this)">旧金山</span><span class="chip" onclick="wbJumpKw(this)">INRIX</span><span class="chip" onclick="wbJumpKw(this)">Replica</span><span class="chip" onclick="wbJumpKw(this)">Airbnb 模式</span><span class="chip" onclick="wbJumpKw(this)">路缘管理</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">编者按与导语</a><a href="#s1">一、你的研究领域</a><a href="#s2">二、路缘禁停实验与主要结果</a><a href="#s3">三、研究的由来：Waymo 找上门</a><a href="#s4">四、研究独立性之辩</a><a href="#s5">五、多出来的里程从哪来</a><a href="#s6">六、回库方案：没建模，但可估算</a><a href="#s7">七、要降 VMT 就得全城布点吗</a><a href="#s8">八、第二个重大发现：路缘生产率</a><a href="#s9">九、城市该如何管路缘</a><a href="#s10">十、私人无人车对 VMT 的影响</a><a href="#s11">十一、无人出租车的「Airbnb 模式」</a><a href="#s12">十二、结语：拥堵定价，对所有车一视同仁</a></nav><main class="content"><h1>Robotaxi 的「路缘困境」：停靠、巡游，还是回库？（中英对照全文）</h1>
-<blockquote>The Driverless Digest 主编 <strong>Ben Hubbard</strong> 对 <strong>Michael Hyland</strong>（UC Irvine 土木与环境工程副教授）的访谈，2026-09-23 发布。</blockquote>
-<blockquote>说明：本文为<strong>图文访谈</strong>（原文为 Q&amp;A 形式），下方按原文问答顺序排列；英文为原文，中文为对照翻译。</blockquote>
-<h2 id="s0">编者按与导语</h2>
-<p>*Editor&#x27;s Note &amp; Introduction*</p>
-<p class="en">Thanks to Jonah Bliss for originally covering this on The Curbivore — *Let Them Linger? The Surprising Case for Robotaxis at the Curb*.</p>
-<p class="zh">感谢 Jonah Bliss 最早在 The Curbivore 上报道过这个话题——《让它们多留一会儿？为路边的 Robotaxi 辩护的惊人论据》。</p></div></p>
-<p class="en">In a new study, Associate Professor Michael Hyland at UC Irvine explains why giving robotaxis somewhere to wait between rides could be crucial to avoiding unnecessary miles on city streets.</p>
-<p class="zh">在一项新研究中，UC Irvine 副教授 Michael Hyland 解释了：为什么给 robotaxi 一个「在两单之间等待的地方」，对于避免城市街道上产生不必要的里程至关重要。</p></div></p>
-<p class="en">Where should a robotaxi go after dropping off a passenger? It could wait at the curb, head back to a depot or it could simply keep moving.</p>
-<p class="zh">一辆 robotaxi 在放下乘客之后该去哪里？它可以在路边等待，可以回库，也可以就是继续往前开。</p></div></p>
-<p class="en">A new study from researchers at UC Irvine and UC Berkeley examines what happens when shared autonomous vehicles are prevented from resting (otherwise known as staging) at the curb in San Francisco. The researchers simulated a fleet of 1,700 robotaxis serving 68,000 daily trips. In the no-staging scenario, the fleet traveled 564,650 kilometers per day. Allowing the vehicles to stage at the curb reduced daily vehicle miles traveled (VMT) by nearly 60%.</p>
-<p class="zh">UC Irvine 与 UC Berkeley 的研究者做了一项新研究，考察在旧金山「禁止共享自动驾驶车辆在路边歇脚（即所谓 staging）」时会发生什么。研究者模拟了一支由 1,700 辆 robotaxi 组成的车队，服务每天 68,000 次行程。在「不允许歇脚」的场景下，车队每天行驶 564,650 公里；而允许车辆在路边歇脚，可将每日车辆行驶里程（VMT）降低近 60%。</p></div></p>
-<p class="en">Michael Hyland, Associate Professor of Civil and Environmental Engineering at UC Irvine and one of the researchers behind the study, spoke to The Driverless Digest Editor Ben Hubbard about why curb access matters for robotaxis, how cities should manage valuable curb space, and what the rise of personally owned driverless vehicles could mean for congestion.</p>
-<p class="zh">Michael Hyland 是 UC Irvine 土木与环境工程副教授，也是这项研究的研究者之一。他接受了 The Driverless Digest 主编 Ben Hubbard 的访谈，谈到了为什么路缘使用权对 robotaxi 很重要、城市该如何管理宝贵的路缘空间，以及「私人拥有的无人车」的兴起对拥堵可能意味着什么。</p></div></p>
-<h2 id="s1">一、你的研究领域</h2>
-<p>*Tell us about your role?*</p>
-<p><strong>Q (EN):</strong> Tell us about your role?</p>
-<p><strong>Q (中文):</strong> 请介绍一下你的角色？</p>
-<p><strong>A (EN):</strong> My research is broadly on modeling and analyzing transportation systems. I tend to focus on innovations in the transportation space, such as driverless vehicles, both in terms of shared fleets and personally owned, but also technologies like e-scooters, e-bikes, ride-hailing and micro-transit. My work involves how to operate these systems efficiently, how to design them effectively, and then I also try to understand their impact on people living in cities.</p>
-<p><strong>A (中文):</strong> 我的研究广义上是围绕交通系统的建模与分析。我倾向于聚焦交通领域的各种创新，比如无人驾驶车辆——既包括共享车队，也包括私人拥有——此外还有电动滑板车、电动自行车、网约车和微公交等技术。我的工作涉及：如何高效地运营这些系统、如何有效地设计它们，同时我也试图理解它们对城市居民的影响。</p>
-<h2 id="s2">二、路缘禁停实验与主要结果</h2>
-<p>*The experiment: banning shared AVs from the curb*</p>
-<p><strong>Q (EN):</strong> You&#x27;ve recently conducted a pretty comprehensive study on managing curb usage. Can you explain the experiment and what you set out to understand?</p>
-<p><strong>Q (中文):</strong> 你最近做了一项相当全面的、关于路缘使用管理的研究。能解释一下这个实验，以及你们想搞清楚什么吗？</p>
-<p><strong>A (EN):</strong> The idea was to test the impact of banning shared automated vehicles from using the curb. So this is not when they pick up and drop off passengers, but for what we call staging or parking between one drop-off and the next pickup. Essentially, the time when the vehicle doesn&#x27;t have anything to do.</p>
-<p><strong>A (中文):</strong> 我们的想法是测试「禁止共享自动驾驶车辆使用路缘」会带来什么影响。注意，这不是指它们上下客的时候，而是指我们所说的 staging——也就是在一次下客到下一次接客之间的停放，本质上是车辆无事可做的那段时间。</p>
-<p><strong>A (EN):</strong> The main result, of course, is that it has pretty big implications on what these vehicles do with their time. When they can&#x27;t stage, they just circle around the transportation network. In this case, they dramatically increased vehicle miles traveled on the roadway network in San Francisco. We don&#x27;t model congestion in our study, but the implications for congestion, I think, are somewhat obvious directionally. It would make congestion worse, most likely in some of the most congested parts in San Francisco.</p>
-<p><strong>A (中文):</strong> 主要结果当然是：这对车辆如何打发时间有相当大的影响。当它们不能歇脚时，就只能在交通网络里绕圈。在本例中，旧金山路网上的车辆行驶里程因而大幅增加。我们的研究并没有对拥堵建模，但我认为对拥堵的影响在方向上是相当明显的：它会让拥堵更糟，而且最可能发生在旧金山最拥堵的区域。</p>
-<p><strong>A (EN):</strong> We ran some other scenarios related to weekends versus weekdays, preventing vehicles from staging at night versus only during the day. Most of the results were pretty similar. If you&#x27;re strategic with where you ban the robotaxis from using the curb, the size of the VMT impact is much smaller, but there still is an adverse impact.</p>
-<p><strong>A (中文):</strong> 我们还跑了一些其他场景，比如周末对比工作日、禁止夜间歇脚对比仅禁止白天歇脚。大多数结果都相当接近。如果你在「禁止 robotaxi 使用路缘」的地点上更有策略性，VMT 影响的幅度会小得多，但仍然存在不利影响。</p>
-<blockquote>原文此处插有一张表格图：*A table showing the results of a study evaluating the impacts of shared automated vehicle fleet operations under curb usage restrictions.*（展示「路缘使用限制下共享自动驾驶车队运营影响」的研究结果表格）</blockquote>
-<h2 id="s3">三、研究的由来：Waymo 找上门</h2>
-<p>*How the study came about*</p>
-<p><strong>Q (EN):</strong> Plenty of people have probably wondered where an AV goes after it has dropped off a passenger. Do they just drive around in circles? Do they wait? Could you explain how this study came about because I can imagine this is going to become a really important topic when AVs take off.</p>
-<p><strong>Q (中文):</strong> 很多人可能都想过：一辆自动驾驶车在放下乘客之后会去哪？它们就只是绕圈吗？还是等待？你能讲讲这项研究是怎么来的吗？因为我可以想象，当自动驾驶真正普及后，这会变成一个非常重要的话题。</p>
-<p><strong>A (EN):</strong> Yeah, that&#x27;s right. As there are more fleets, the impact will be much larger. The study actually came from Waymo reaching out to us here at UC Irvine via Susan Shaheen&#x27;s group at UC Berkeley. They knew we did modeling and they asked us to interview stakeholders in cities to understand how they&#x27;re thinking about regulating the curb and using the curb for not just robotaxis but also Uber and Lyft-type vehicles, and micromobility too.</p>
-<p><strong>A (中文):</strong> 是的，没错。车队越多，影响就越大。这项研究实际上源于 Waymo 主动联系我们 UC Irvine——他们是通过 UC Berkeley 的 Susan Shaheen 团队找来的。他们知道我们在做建模，并请我们去访谈各城市的利益相关方，了解他们如何看待路缘的监管与使用——不只是针对 robotaxi，还包括 Uber、Lyft 这类车辆，以及微出行。</p>
-<p><strong>A (EN):</strong> They came to us and said, &quot;Hey, we think it&#x27;s mutually beneficial for us at Waymo and for cities for our vehicles to be able to use the curb when we&#x27;re not serving passengers,&quot; as opposed to just driving around or even going a long distance back to an off-street parking lot. We co-designed the experiments. We made the final choices, of course. That&#x27;s the backstory of how the study came to be.</p>
-<p><strong>A (中文):</strong> 他们来找我们说：「嘿，我们认为，让我们在不载客的时候能够使用路缘，对 Waymo 和对城市都是双赢的」——总好过让车一直绕圈，或者甚至跑很远回到一个离街停车场。实验是我们共同设计的，当然，最终方案由我们拍板。这就是这项研究诞生的背景故事。</p>
-<h2 id="s4">四、研究独立性之辩</h2>
-<p>*Is the study independent?*</p>
-<p><strong>Q (EN):</strong> So is it entirely independent? When a company like Waymo approaches a university to produce a study, there&#x27;s always a feeling that the results might be tailored in their favor.</p>
-<p><strong>Q (中文):</strong> 那这项研究是完全独立的吗？当 Waymo 这样的公司找上大学来做研究时，人们总会有一种感觉：结果可能是被量身定做成对他们有利的。</p>
-<p><strong>A (EN):</strong> I can see that&#x27;s the impression. The main thing Waymo was pushing back on when we were writing up the report was that they said: &quot;Well, we didn&#x27;t give you any data, so don&#x27;t make it seem like we did give you any data.&quot; All this data is synthetic. We got the parking data from INRIX. We got the ride-hailing trip data from a company called Replica. Waymo really didn&#x27;t give us any data, which was fine with us. They gave us order-of-magnitude information about their fleet size, which is publicly available.</p>
-<p><strong>A (中文):</strong> 我能理解大家会有这种印象。在我们撰写报告时，Waymo 主要在澄清的一件事是：他们说「我们并没有给你们任何数据，所以别让人觉得我们给了数据」。这些数据全都是合成的：停车数据来自 INRIX，网约车行程数据来自一家叫 Replica 的公司。Waymo 其实没有给我们任何数据，这对我们来说没问题。他们只给了我们关于其车队规模的数量级信息，而那是公开可得的。</p>
-<p><strong>A (EN):</strong> As far as the results, I mean I hate to undercut our study, but the directional impact was kind of obvious going into the study. We knew that by banning these vehicles from using the curb, it was going to increase VMT. It was really the magnitude that was the interesting part. Was it going to be a 10% increase? 30%? We found a pretty large number, which was a 60% increase in total vehicle miles traveled with this policy. And that came directly from the results. We didn&#x27;t rerun any scenarios or rerun the experiments with Waymo&#x27;s input.</p>
-<p><strong>A (中文):</strong> 至于结果——说实话，我不太想贬低我们自己的研究，但在开题时，方向性影响其实是比较明显的。我们知道，禁止这些车使用路缘会推高 VMT。真正有意思的是<strong>量级</strong>：会是增加 10%？还是 30%？我们发现数字相当大——在这项政策下，总车辆行驶里程增加了 60%。这直接来自结果本身。我们没有为了配合 Waymo 的意见重跑任何场景或实验。</p>
-<h2 id="s5">五、多出来的里程从哪来</h2>
-<p>*Where the extra miles come from*</p>
-<p><strong>Q (EN):</strong> Where do all those extra miles come from?</p>
-<p><strong>Q (中文):</strong> 那这些多出来的里程都是从哪来的？</p>
-<p><strong>A (EN):</strong> There are all these peaks and valleys throughout the day in terms of the demand for robotaxis. Everyone knows when the big peaks are for regular travel, right? So the morning peak, and then you have the afternoon peak. But for a service like Uber, Lyft or Waymo, there&#x27;s even little peaks and valleys that occur throughout the day, and spatially these occur throughout different parts of the region.</p>
-<p><strong>A (中文):</strong> 一天之中，robotaxi 的需求有各种波峰与波谷。大家都知道日常出行的两大高峰——早高峰和晚高峰。但对 Uber、Lyft 或 Waymo 这样的服务来说，一天里还有更多小波峰、小波谷，而且这些波动在空间上分布于区域内不同地方。</p>
-<p><strong>A (EN):</strong> But when you have these vehicles out on the road and you get a little bit of a dip in demand, there&#x27;s nowhere for them to go. They&#x27;re not serving passengers, so they need to find somewhere to go. And if you don&#x27;t allow them to use the curb, what the software we use does is just gives them short &quot;fake&quot; trips to take throughout the network, circling around where they expect the future demand to be. And that, as the results suggest, leads to a lot of cumulative extra miles traveled in the network.</p>
-<p><strong>A (中文):</strong> 但当这些车已经在路上、而需求又出现小幅回落时，它们无处可去。它们不在载客，所以必须找个地方去。而如果你不允许它们使用路缘，我们所用的软件就会给它们派一些短的「假行程」，让它们在整个路网里跑，在预测未来有需求的区域附近绕圈。正如结果所显示的，这会累积出大量额外里程。</p>
-<h2 id="s6">六、回库方案：没建模，但可估算</h2>
-<p>*What about returning to the depot?*</p>
-<p><strong>Q (EN):</strong> Some observers might believe these vehicles would just go back to a depot. Did you measure that?</p>
-<p><strong>Q (中文):</strong> 有些观察者可能会想，这些车干脆就回库好了。你们测量过这种情况吗？</p>
-<p><strong>A (EN):</strong> Unfortunately, we didn&#x27;t create scenarios around the vehicles going back to the depot. I wish we could have but we ran out of budget.</p>
-<p><strong>A (中文):</strong> 很遗憾，我们没有建立「车辆回库」的场景。我很希望能做，但预算用完了。</p>
-<p><strong>A (EN):</strong> Given that there are relatively few Waymo depots across the entire 49-square-mile San Francisco area, I suspect this would reduce VMT somewhat, but probably not by much. I&#x27;m not sure exactly how many depots Waymo has, but let&#x27;s say somewhere between two and five. Whenever a vehicle became empty, it would likely have to travel a fairly long distance to reach a depot, perhaps a mile and a half on average. It would then have to travel another mile and a half or so to pick up customers once a new request came in. So I think there&#x27;d be a pretty negative impact if the vehicles were always returning to the depot as well. Maybe you could bring that 60% number down to like 40-45%.</p>
-<p><strong>A (中文):</strong> 考虑到在整个 49 平方英里的旧金山区域里，Waymo 的 depot 相对很少，我猜这会在一定程度上降低 VMT，但大概降不了太多。我不确定 Waymo 到底有多少个 depot，姑且说在两到五个之间吧。每当一辆车变空，它很可能得跑相当长一段距离才能到 depot——平均也许 1.5 英里；然后一旦有新订单进来，它还得再跑约 1.5 英里出来接客。所以我认为，如果车辆总是回库，同样会有相当负面的影响。也许能把那个 60% 压到 40~45% 左右。</p>
-<h2 id="s7">七、要降 VMT 就得全城布点吗</h2>
-<p>*Would you need depots everywhere?*</p>
-<p><strong>Q (EN):</strong> To reduce the VMT, you&#x27;d need to have depots all over the city then?</p>
-<p><strong>Q (中文):</strong> 那么，要想降低 VMT，就得在全城到处都设 depot 了？</p>
-<p><strong>A (EN):</strong> Yeah, I don&#x27;t think they [Waymo] are really into real estate development. They could partner with other companies, though. One thing we learned throughout the study is that the price of off-street parking is clearly time-dependent. In some parts of the city, such as commercial districts, parking might be very cheap to access at night but very expensive during the day. In residential areas, it&#x27;s usually expensive no matter what, and there are rarely large enough areas for a depot to be set up.</p>
-<p><strong>A (中文):</strong> 是啊。我不觉得他们（Waymo）真的热衷房地产。不过他们可以和其他公司合作。我们在整项研究中了解到的一点是：<strong>离街停车的价格明显依时间而变</strong>。在城市某些区域，比如商业区，夜间停车可能非常便宜，白天却非常昂贵。而在住宅区，无论何时通常都贵，而且很少有足够大的地块能建 depot。</p>
-<p><strong>A (EN):</strong> Acquiring land is also expensive. I imagine they&#x27;re trying to minimize the amount of land they need to acquire and be strategic about where they park their vehicles. They&#x27;d have to consider both the location and whether they&#x27;d have to pay for parking there.</p>
-<p><strong>A (中文):</strong> 拿地本身也很贵。我猜想他们会尽量把需要获取的土地量降到最低，并在「把车停在哪」上更有策略。他们必须同时考虑位置，以及在那里停车是否需要付费。</p>
-<h2 id="s8">八、第二个重大发现：路缘生产率</h2>
-<p>*Curb productivity*</p>
-<p><strong>Q (EN):</strong> Were there any other major findings?</p>
-<p><strong>Q (中文):</strong> 还有其他重大发现吗？</p>
-<p><strong>A (EN):</strong> The other major finding, which Waymo liked a lot, was related to a metric we used called curb productivity.</p>
-<p><strong>A (中文):</strong> 另一个重大发现——Waymo 非常喜欢这个——与我们使用的一个指标有关，叫做<strong>路缘生产率（curb productivity）</strong>。</p>
-<p><strong>A (EN):</strong> We measure curb productivity as the number of passengers who move between the transportation system and their destination per unit of time a robotaxi occupies the curb, including time spent staging and picking up or dropping off travelers.</p>
-<p><strong>A (中文):</strong> 我们对「路缘生产率」的定义是：robotaxi 每占用一单位时间的路缘（包括歇脚时间与上下客时间），能在交通系统与目的地之间运送多少名乘客。</p>
-<p><strong>A (EN):</strong> We found that robotaxis were about eight to ten times more productive than personal vehicles in terms of how they use the curb. A personal vehicle spends about one-and-a-half hours at the curb on average, whereas a robotaxi spends eight to ten times less time there, around eight minutes per ride served on average.</p>
-<p><strong>A (中文):</strong> 我们发现，就路缘使用效率而言，robotaxi 比私家车高出大约 8~10 倍。私家车平均在路缘停约一个半小时，而 robotaxi 在那里的时间要少 8~10 倍——平均每服务一单约 <strong>8 分钟</strong>。</p>
-<p><strong>A (EN):</strong> If you&#x27;re concerned about one of a city&#x27;s most valuable assets, the curb, it seems that robotaxis use that asset much more productively than personal vehicles do. Personal vehicles can simply park at the curb and stay there for a very long time. Obviously, people can get out and walk around and do many things while their vehicle is parked, but you still have a very valuable piece of land being occupied by a vehicle that isn&#x27;t actively serving passengers.</p>
-<p><strong>A (中文):</strong> 如果你关心城市最宝贵的资产之一——路缘，那么看起来 robotaxi 比私家车<strong>更高效地</strong>使用了这项资产。私家车可以就那样停在路缘、停很久。显然，人们可以下车四处走动、办很多事，但一块非常宝贵的土地，仍被一辆并非在积极服务乘客的车占据着。</p>
-<p><strong>A (EN):</strong> And I should say that buses are much more productive than robotaxis, which in turn are much more productive than personal vehicles. A bus is only at the curb for a very short period of time, but it can have many people getting on and off during that time.</p>
-<p><strong>A (中文):</strong> 我应该说明：公交车的生产率远高于 robotaxi，而 robotaxi 又远高于私家车。公交车只在路缘停留很短一段时间，但那段时间里可以有很多人上下车。</p>
-<h2 id="s9">九、城市该如何管路缘</h2>
-<p>*How cities should regulate the curb*</p>
-<p><strong>Q (EN):</strong> What can cities do in terms of regulating the curb?</p>
-<p><strong>Q (中文):</strong> 在路缘监管方面，城市可以做什么？</p>
-<p><strong>A (EN):</strong> I&#x27;m not sure how many cities were considering banning robotaxis from using the curb, but if they were, I would say don&#x27;t do that. They might be increasing congestion a bit, but I think they&#x27;re providing valuable mobility to a large number of people in urban environments.</p>
-<p><strong>A (中文):</strong> 我不确定有多少城市在考虑禁止 robotaxi 使用路缘，但如果真有，我会说：别这么做。它们或许会稍微加剧拥堵，但我认为它们正在为城市环境中的大量人群提供有价值的出行服务。</p>
-<p><strong>A (EN):</strong> Moving beyond our study, I am generally in favor of having designated pick-up and drop-off zones where it is easy for robotaxi, ridehailing and taxi vehicles to get to the curb quickly, pick up a passenger quickly, and exit very quickly. So individual vehicles are not having to fight for curb space, and the vehicles are not spending much time at the curb at all. They&#x27;re just getting the passenger in the vehicle and moving away quickly.</p>
-<p><strong>A (中文):</strong> 抛开我们的研究不谈，我总体上支持设立<strong>专门的接送区（pick-up and drop-off zones）</strong>——让 robotaxi、网约车和出租车能够快速靠边、快速接客、快速驶离。这样单辆车不必为路缘空间争抢，车辆也完全不必在路缘花太多时间，只是把乘客接上车，然后迅速离开。</p>
-<p><strong>A (EN):</strong> I don&#x27;t think I&#x27;d be in favor of having designated staging locations for robotaxis or ride-hailing or taxi vehicles in general. But I think just allow these vehicles to use the curb for short-term parking, in the same way that private vehicles can.</p>
-<p><strong>A (中文):</strong> 我不认为自己会支持为 robotaxi 或网约车、出租车专门设立<strong>歇脚区（staging locations）</strong>。我认为，只需<strong>允许这些车辆像私家车一样，使用路缘做短时停放</strong>即可。</p>
-<h2 id="s10">十、私人无人车对 VMT 的影响</h2>
-<p>*Personally owned driverless vehicles*</p>
-<p><strong>Q (EN):</strong> What about personally owned driverless vehicles? What impact could they have on VMT?</p>
-<p><strong>Q (中文):</strong> 那私人拥有的无人车呢？它们会对 VMT 产生什么影响？</p>
-<p><strong>A (EN):</strong> That&#x27;s another area of research for my group. I&#x27;m not going to make a forecast as to when Waymo or Toyota or another company is going to be selling these vehicles to individual households. But let&#x27;s say in 10 to 15 years they do sell them to households. I think in that scenario, we have a lot of benefits to households in terms of mobility, but we have some very big potential implications for congestion and vehicle miles traveled.</p>
-<p><strong>A (中文):</strong> 那是我团队的另一个研究领域。我不打算预测 Waymo、丰田或其他公司何时会开始向个人家庭销售这类车。但假设 10~15 年后他们真的卖给了家庭。我认为在那种情形下，对家庭而言在出行方面有很多好处，但对拥堵和车辆行驶里程可能存在非常重大的影响。</p>
-<p><strong>A (EN):</strong> What we&#x27;re seeing in our modeling results is that households absolutely will have the vehicle drop off one household member at work, drive home, pick up another household member, take them to an activity, whether that&#x27;s school or some after-school activity, and then drive back home empty again. In this case, a household might actually be able to own fewer vehicles because these vehicles can travel empty and deadhead back to the household. But that&#x27;s going to significantly increase VMT and congestion, unless of course there are some policies to make it more expensive to drive and make it more expensive to congest the roadways. So I think that&#x27;s a particularly important policy question for cities and states going forward.</p>
-<p><strong>A (中文):</strong> 我们的建模结果显示：家庭绝对会让车先把一位成员送到公司，然后空车开回家，接上另一位成员送去某个活动（上学或课后活动），然后再空车开回家。在这种情况下，家庭其实可能<strong>拥有更少的车</strong>，因为这些车可以空载、空驶回家。但这会<strong>显著增加 VMT 和拥堵</strong>——除非当然出台了一些政策，让<strong>开车更贵、让拥堵更贵</strong>。所以我认为，这对未来的城市与州而言是一个特别重要的政策问题。</p>
-<h2 id="s11">十一、无人出租车的「Airbnb 模式」</h2>
-<p>*The Airbnb model for driverless taxis*</p>
-<p><strong>Q (EN):</strong> This is like the Airbnb model for driverless taxis. We&#x27;re already sharing our homes, our parking spaces and if I buy an autonomous vehicle why would I let it sit in the car parking space when it could be out making me money, right?</p>
-<p><strong>Q (中文):</strong> 这就像是无人出租车的「Airbnb 模式」。我们已经在共享我们的房子、我们的车位——如果我买了一辆自动驾驶车，为什么还要让它闲在车位上？它完全可以出去替我赚钱，对吧？</p>
-<p><strong>A (EN):</strong> We&#x27;re a little bit skeptical that people will be willing to give their $80,000 to $120,000 assets to strangers. But we do think there&#x27;s maybe an opportunity to get more use out of these valuable assets.</p>
-<p><strong>A (中文):</strong> 我们对于「人们愿意把自己 8 万到 12 万美元的资产交给陌生人」这件事，持有一点怀疑态度。但我们确实认为，或许有机会让这些宝贵资产得到更多利用。</p>
-<p><strong>A (EN):</strong> I&#x27;d be willing to lend my vehicle out occasionally or semi-occasionally to friends and family that live nearby, which maybe prevents them from buying a third vehicle or a second vehicle here in California. So I think there&#x27;s a nice opportunity there for some sharing of these personally owned driverless vehicles. But we&#x27;re a little bit skeptical of the model Tesla has discussed, where a Tesla owner lends their vehicle to a ridehailing fleet operator where anyone could be throwing up or using your vehicle for any type of purpose.</p>
-<p><strong>A (中文):</strong> 我本人愿意偶尔或半偶尔地把车借给住在附近的亲友——在加州，这或许能让他们少买第二辆、第三辆车。所以我认为，「私人无人车之间的某种共享」在这里有一个不错的机会。但对于 <strong>Tesla 讨论过的那种模式</strong>——车主把车借给网约车车队运营商、任何人都可能在你的车里呕吐或出于任何目的使用你的车——我们持有一点怀疑态度。</p>
-<h2 id="s12">十二、结语：拥堵定价，对所有车一视同仁</h2>
-<p>*Final thoughts: congestion pricing for all vehicles*</p>
-<p><strong>Q (EN):</strong> Yeah, you also have issues about cleanliness too. Any final thoughts?</p>
-<p><strong>Q (中文):</strong> 是的，还涉及清洁度的问题。最后还有什么想法吗？</p>
-<p><strong>A (EN):</strong> I&#x27;ve been asked a number of times about whether cities should be charging robotaxis to use the curb and to drive around in urban areas and my answer is yes, but not just robotaxis. In my opinion, robotaxis should be subject to the same rules as all passenger vehicles in urban areas. If a passenger vehicle has to pay to park, a robotaxi should have to pay to park.</p>
-<p><strong>A (中文):</strong> 我被问过很多次：城市是否应该向 robotaxi 收取「使用路缘」和「在城区行驶」的费用。我的回答是「应该」——但<strong>不只是 robotaxi</strong>。在我看来，robotaxi 应当和城市里所有乘用车适用<strong>同一套规则</strong>。如果一辆乘用车停车要付费，那么 robotaxi 停车也应当付费。</p>
-<p><strong>A (EN):</strong> So, as a transportation analyst, I am in favor of congestion pricing. I think it&#x27;s worked very well in London. It worked very well in New York City. I think it can work in other large, dense areas, including Los Angeles and San Francisco. But I wouldn&#x27;t subject robotaxis to additional fees and additional taxes that you&#x27;re not subjecting personal vehicle owners to. If you actually want to reduce congestion, you need to charge all of the personal passenger vehicles for using very valuable space in urban areas.</p>
-<p><strong>A (中文):</strong> 所以，作为一名交通分析师，我支持<strong>拥堵定价（congestion pricing）</strong>。我认为它在伦敦运行得很好，在纽约市也运行得很好。我认为它在其他大型高密度地区同样可行，包括洛杉矶和旧金山。但我<strong>不会</strong>对 robotaxi 施加那些你并不向私家车主征收的额外费用与额外税负。如果你真想减少拥堵，你就必须<strong>向所有个人乘用车</strong>收取「使用城市中宝贵空间」的费用。</p>
-<p class="en">Michael, it&#x27;s been a fascinating conversation. Thanks so much for coming on.</p>
-<p class="zh">Michael，这是一次非常精彩的对话。非常感谢你的到来。</p></div></p>
-<p class="en">*This interview has been edited for clarity and length.*</p>
-<p class="zh">*本次访谈出于清晰与篇幅的考虑做过编辑整理。*</p></div></p>
-<hr>
-<blockquote>本页为原文完整问答的中英对照，英文为原文；分析要点与结构化总结见「📖 分析」页。</blockquote></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-data-who-rides-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../waymo-data-who-rides-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast (The AV Market Strategist)</div><div class="rt">Waymo 的数据揭示了：到底谁在坐 Robotaxi</div></div></a><a class="relcard" href="../robotaxi-curb/index.html"><div class="rw"><img loading="lazy" src="../robotaxi-curb/video_poster.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist</div><div class="rt">Robotaxi 行业的真正瓶颈：不是 AI，是路缘</div></div></a><a class="relcard" href="../aseon-labs-av-ops/index.html"><div class="rw"><img loading="lazy" src="../aseon-labs-av-ops/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonocast Podcast</div><div class="rt">Aseon Labs：用机器人维修舱解决 Robotaxi 的运维与空驶难题</div></div></a><a class="relcard" href="../robot-pit-stops-for-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../robot-pit-stops-for-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 的「机器人维修站」：Aseon Labs 用分布式服务 pod 砍掉空驶里程</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/the-robotaxi-curb-dilemma-park-cruise" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Substack</div><h1>Robotaxi 的「路缘困境」：停靠、巡游，还是回库？</h1><p class="sub">中英对照逐字稿 · The Robotaxi Curb Dilemma: Park, Cruise or Return to the Depot?</p><div class="tags"><span class="tag">⏱ 31:05</span><span class="tag">Michael Hyland（UC Irvine 土木与环境工程副教授）；主持人 Ben Hubbard（The Driverless Digest 主编）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">robotaxi</span><span class="chip" onclick="wbJumpKw(this)">curb</span><span class="chip" onclick="wbJumpKw(this)">路缘</span><span class="chip" onclick="wbJumpKw(this)">staging</span><span class="chip" onclick="wbJumpKw(this)">歇脚</span><span class="chip" onclick="wbJumpKw(this)">deadheading</span><span class="chip" onclick="wbJumpKw(this)">空驶</span><span class="chip" onclick="wbJumpKw(this)">VMT</span><span class="chip" onclick="wbJumpKw(this)">vehicle miles traveled</span><span class="chip" onclick="wbJumpKw(this)">curb productivity</span><span class="chip" onclick="wbJumpKw(this)">路缘生产率</span><span class="chip" onclick="wbJumpKw(this)">Michael Hyland</span><span class="chip" onclick="wbJumpKw(this)">UC Irvine</span><span class="chip" onclick="wbJumpKw(this)">UC Berkeley</span><span class="chip" onclick="wbJumpKw(this)">Susan Shaheen</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">Autofleet</span><span class="chip" onclick="wbJumpKw(this)">INRIX</span><span class="chip" onclick="wbJumpKw(this)">Replica</span><span class="chip" onclick="wbJumpKw(this)">supply shaping</span><span class="chip" onclick="wbJumpKw(this)">defleeting</span><span class="chip" onclick="wbJumpKw(this)">PUDO</span><span class="chip" onclick="wbJumpKw(this)">接送专区</span><span class="chip" onclick="wbJumpKw(this)">拥堵定价</span><span class="chip" onclick="wbJumpKw(this)">congestion pricing</span><span class="chip" onclick="wbJumpKw(this)">私人无人车</span><span class="chip" onclick="wbJumpKw(this)">personally owned AV</span><span class="chip" onclick="wbJumpKw(this)">旧金山</span><span class="chip" onclick="wbJumpKw(this)">Airbnb 模式</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">开场 · 嘉宾与研究方向</a><a href="#s1">实验：禁止 robotaxi 在路缘「歇脚」</a><a href="#s2">研究的由来：Waymo 主动找上门</a><a href="#s3">独立性之辩：数据全部是合成的</a><a href="#s4">多出来的里程从哪来</a><a href="#s5">回库与地产：为什么不是答案</a><a href="#s6">deadheading（空驶）到底指什么</a><a href="#s7">方法论与数据源</a><a href="#s8">第二个发现：路缘生产率（curb productivity）</a><a href="#s9">质疑：robotaxi 真的更高效吗？</a><a href="#s10">城市该如何管路缘</a><a href="#s11">停车定价为何会失灵</a><a href="#s12">私人无人车会给 VMT 带来什么</a><a href="#s13">「无人出租车的 Airbnb 模式」可信吗</a><a href="#s14">结语：拥堵定价，对所有车一视同仁</a></nav><main class="content"><h2 id="s0">开场 · 嘉宾与研究方向</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>嘉宾 Michael Hyland，UC Irvine 土木与环境工程副教授，隶属该校交通研究所（ITS）</li><li>研究领域：交通系统建模与分析 —— 无人驾驶（共享车队与私人拥有）、微出行、电动滑板车与自行车、网约车、微公交</li><li>三条主线：如何高效运营这些系统、如何有效设计它们、以及它们对城市居民的影响</li></ul></div>
+<p class="seg" id="seg-1"><span class="ts">[00:02 – 00:13]</span><div class="seg-body">
+<p class="en">Michael, how are you doing? I&#x27;m very good. Thanks for asking. Happy to be on. No worries. Yeah, first of all, it would be great if you could introduce yourself.</p>
+<p class="zh">迈克尔，你好吗？我很好。谢谢你的询问。很高兴能上场。不用担心。是的，首先，如果您能介绍一下自己，那就太好了。</p></div></p>
+<p class="seg" id="seg-2"><span class="ts">[00:14 – 00:31]</span><div class="seg-body">
+<p class="en">Happy to do so, yes. I&#x27;m an assistant, excuse me, associate professor at UC Irvine in civil and environmental engineering. I&#x27;m affiliated with the Institute of Transportation Studies here. My research is broadly on modeling and analyzing transportation systems. I tend to focus on innovations in the transportation space.</p>
+<p class="zh">很高兴这样做，是的。对不起，我是加州大学欧文分校土木与环境工程系的助理教授。我隶属于这里的交通研究所。我的研究广泛涉及交通系统建模和分析。我倾向于关注交通领域的创新。</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[00:31 – 00:47]</span><div class="seg-body">
+<p class="en">Things like driverless vehicles, whether they&#x27;re in shared fleets or owned by individuals, but also technologies like micro-mobility, e-scooters, e-bikes, ride-hailing, micro-transit. My work involves how to operate these systems efficiently, how to design them effectively,</p>
+<p class="zh">比如无人驾驶汽车，无论是共享车队还是个人所有，还有微型移动、电动滑板车、电动自行车、网约车、微型交通等技术。我的工作涉及如何有效地操作这些系统，如何有效地设计它们，</p></div></p>
+<p class="seg" id="seg-4"><span class="ts">[00:47 – 00:56]</span><div class="seg-body">
+<p class="en">and then also try to understand their impacts on cities and the people that live in cities and urban environments. Great. Okay, you sound like you&#x27;re the man for the job.</p>
+<p class="zh">然后还尝试了解它们对城市以及居住在城市和城市环境中的人们的影响。太好了。好吧，听起来你就是这份工作的最佳人选。</p></div></p>
+<h2 id="s1">实验：禁止 robotaxi 在路缘「歇脚」</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>「staging」= 一次下客到下一次接客之间在路缘的停放，即车辆「无事可做」的那段时间；<strong>不是</strong>上下客</li><li>场景：旧金山，1,700 辆 robotaxi、68,000 次日行程；禁止 staging 后日均 VMT 增加约 <strong>60%</strong></li><li>研究未对拥堵建模，但方向明确：会加剧旧金山最拥堵区域的拥堵</li><li>周末 vs 工作日、仅白天禁 vs 也禁夜间等子场景结果相近；若<strong>策略性选择</strong>禁用区域，影响会小得多，但仍为负</li></ul></div>
+<p class="seg" id="seg-5"><span class="ts">[00:58 – 01:05]</span><div class="seg-body">
+<p class="en">So, you&#x27;ve recently conducted a pretty comprehensive study, I&#x27;d say, on managing curb usage.</p>
+<p class="zh">所以，我想说，您最近进行了一项关于管理路缘使用的相当全面的研究。</p></div></p>
+<p class="seg" id="seg-6"><span class="ts">[01:08 – 01:19]</span><div class="seg-body">
+<p class="en">Can you explain the experiment and what you set out to understand? Sure, yeah. It could always be more comprehensive, you know, in retrospect when looking back at the study, but I agree this one was pretty involved.</p>
+<p class="zh">您能解释一下这个实验以及您想要了解的内容吗？当然，是的。你知道，当回顾这项研究时，它总是可以更全面，但我同意这项研究非常复杂。</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[01:20 – 01:42]</span><div class="seg-body">
+<p class="en">Okay, so the idea was to test the impacts of banning robotaxis, shared automated vehicles, I&#x27;ll use robotaxis throughout this call, banning them from using the curb, not for picking up and dropping off passengers, but for what we call staging or parking between one drop off and the next pickup.</p>
+<p class="zh">好的，所以我们的想法是测试禁止robotaxi、共享自动驾驶车辆的影响，我将在整个通话过程中使用robotaxi，禁止它们使用路缘，不是为了接送乘客，而是为了我们所说的在一次下车和下一次上车之间的停靠或停车。</p></div></p>
+<p class="seg" id="seg-8"><span class="ts">[01:42 – 02:01]</span><div class="seg-body">
+<p class="en">So basically the time when the vehicle doesn&#x27;t have anything to do, it&#x27;s not serving a passenger and it&#x27;s not going to pick one up yet. The experiment was, what happens if we ban this type of activity on the curb? And the main result, of course, is that it has pretty big implications on what these vehicles do with their time.</p>
+<p class="zh">所以基本上，当车辆没有任何事情可做时，它不会为乘客提供服务，也不会接载乘客。实验是，如果我们在路缘禁止此类活动，会发生什么？当然，主要结果是，它对这些车辆如何利用时间有很大的影响。</p></div></p>
+<p class="seg" id="seg-9"><span class="ts">[02:02 – 02:19]</span><div class="seg-body">
+<p class="en">And when they can&#x27;t stage, they just circle around the transportation network. In this case, it was San Francisco. And by circling around, they Pretty drastically increased the number of vehicle miles traveled, the kilometers traveled on the roadway network in San Francisco. We don&#x27;t model congestion in our study,</p>
+<p class="zh">当他们无法登台时，他们就绕着交通网络转。在这种情况下，它是旧金山。通过绕圈，他们极大地增加了车辆行驶里程数，即旧金山道路网络上行驶的公里数。我们的研究中没有对拥堵进行建模，</p></div></p>
+<p class="seg" id="seg-10"><span class="ts">[02:19 – 02:38]</span><div class="seg-body">
+<p class="en">but the implications for congestion, I think, are somewhat obvious directionally. It would make congestion worse, most likely in some of the most congested parts of San Francisco. We did some other sub-scenarios related to weekends versus weekdays, preventing vehicles from staging at night versus in the day. Most of the results were pretty similar.</p>
+<p class="zh">但我认为，对拥堵的影响在方向上是比较明显的。这将使拥堵更加严重，最有可能发生在旧金山一些最拥堵的地区。我们还做了一些与周末和工作日相关的其他子场景，防止车辆在夜间和白天停靠。大多数结果非常相似。</p></div></p>
+<p class="seg" id="seg-11"><span class="ts">[02:38 – 02:55]</span><div class="seg-body">
+<p class="en">If you&#x27;re strategic with where you ban the SAVs, the robotaxis, from using the curb, the size of the impact is much smaller, but there still is an impact. You increase VMT, but of course you prevent these vehicles from using the curb where maybe people want</p>
+<p class="zh">如果你有策略地禁止 SAV（自动驾驶出租车）使用路缘，那么影响的大小就会小得多，但影响仍然存在。你增加了 VMT，但当然你会阻止这些车辆在人们可能想要的地方使用路缘</p></div></p>
+<p class="seg" id="seg-12"><span class="ts">[02:55 – 03:16]</span><div class="seg-body">
+<p class="en">to park near their residential homes and work. So just to be clear, staging means resting at the curve between trips. That&#x27;s correct, yes. Because I think people have always probably wondered this, like, where does an AV go after they&#x27;ve dropped a passenger off? Do they just sort of drive around in circles?</p>
+<p class="zh">将车停在住宅和工作地点附近。需要明确的是，分期意味着在行程之间的曲线上休息。这是正确的，是的。因为我认为人们可能一直想知道这个问题，比如，自动驾驶汽车在送乘客下车后会去哪里？他们只是在兜圈子吗？</p></div></p>
+<h2 id="s2">研究的由来：Waymo 主动找上门</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>车队越大、影响越大，这个问题的分量随之上升</li><li>Waymo 经 UC Berkeley 的 <strong>Susan Shaheen</strong> 团队联系 UC Irvine（他们知道 UCI 在做建模）</li><li>Waymo 的诉求：在不载客时能使用路缘，而不是绕圈或跑长距离回离街停车场</li><li>实验由双方<strong>共同设计</strong>，但最终选择权在研究者手上</li></ul></div>
+<p class="seg" id="seg-13"><span class="ts">[03:16 – 03:33]</span><div class="seg-body">
+<p class="en">Do they wait? So yeah, I guess, how did this come about, this study? Because I can imagine that this is going to become a really, really important topic once AVs take off. Yeah, that&#x27;s right. So as these fleets get bigger, I think the question becomes more important.</p>
+<p class="zh">他们等待吗？所以，是的，我想，这项研究是怎么发生的？因为我可以想象，一旦自动驾驶汽车兴起，这将成为一个非常非常重要的话题。是的，没错。因此，随着这些机队变得越来越大，我认为这个问题变得更加重要。</p></div></p>
+<p class="seg" id="seg-14"><span class="ts">[03:33 – 03:55]</span><div class="seg-body">
+<p class="en">As there&#x27;s more fleets, each individual fleet gets bigger. I think the impacts will be larger. So the study actually came from Waymo reaching out to us here at UC Irvine by way of colleagues at UC Berkeley, Susan Shaheen in particular. They knew we did modeling here at UC Irvine, and probably they wanted to understand from the Berkeley side.</p>
+<p class="zh">随着舰队的增加，每个舰队都会变得更大。我认为影响会更大。因此，这项研究实际上是 Waymo 通过加州大学伯克利分校的同事，特别是苏珊·沙欣 (Susan Shaheen) 联系加州大学欧文分校的我们进行的。他们知道我们在加州大学欧文分校做建模，可能他们想从伯克利方面了解。</p></div></p>
+<p class="seg" id="seg-15"><span class="ts">[03:55 – 04:08]</span><div class="seg-body">
+<p class="en">They asked those folks to interview. Stakeholders and cities to understand how they&#x27;re thinking about regulating the curb and using the curb for not just robotaxis, but also Uber and Lyft type vehicles. And again, like micromobility and the like.</p>
+<p class="zh">他们要求那些人进行采访。利益相关者和城市了解他们如何考虑监管路缘，以及如何将路缘不仅用于robotaxi，还用于 Uber 和 Lyft 类型的车辆。再说一次，比如微交通之类的。</p></div></p>
+<p class="seg" id="seg-16"><span class="ts">[04:10 – 04:28]</span><div class="seg-body">
+<p class="en">So yeah, they came to us and said, hey, like we think it&#x27;s mutually beneficial For us at Waymo and for cities, for our vehicles to be able to use the curb when we&#x27;re not serving passengers, again, as opposed to just driving around or even going a long distance back to</p>
+<p class="zh">所以，是的，他们来找我们说，嘿，就像我们认为这对我们 Waymo 和城市来说是互惠互利的，我们的车辆能够在我们不为乘客提供服务时使用路缘，而不是只是开车兜风，甚至长途跋涉返回</p></div></p>
+<p class="seg" id="seg-17"><span class="ts">[04:28 – 04:44]</span><div class="seg-body">
+<p class="en">an off-street parking lot. And we kind of co-designed the experiments, Waymo and us. Well, they gave input. We made the final choices, of course. And that&#x27;s kind of the backstory of how the study came to be. So is it entirely independent?</p>
+<p class="zh">一个街边停车场。 Waymo 和我们共同设计了这些实验。好吧，他们提供了意见。当然，我们做出了最终的选择。这就是这项研究的背景故事。那么它是完全独立的吗？</p></div></p>
+<h2 id="s3">独立性之辩：数据全部是合成的</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>Waymo 唯一坚持要澄清的是：<strong>别让人以为他们提供了数据</strong></li><li>停车数据来自 <strong>INRIX</strong>，网约车行程数据来自 <strong>Replica</strong>；Waymo 只给了公开可得的车队规模数量级</li><li>Hyland 坦言方向性影响「开题时就明显」——真正有意思的是<strong>量级</strong>（结果 60%）</li><li>没有为了配合 Waymo 重跑任何场景或实验</li></ul></div>
+<p class="seg" id="seg-18"><span class="ts">[04:44 – 05:07]</span><div class="seg-body">
+<p class="en">Because I always have this feeling that when a big company like Waymo, the largest AV company in the world, and clearly the leader in the US robo-taxi race, approaches a company to produce a study, that the results are always kind of tailored in their favor? I can see that&#x27;s the impression.</p>
+<p class="zh">因为我总有这样的感觉，当像 Waymo 这样的大公司，世界上最大的自动驾驶公司，并且明显是美国robotaxi竞赛的领导者，接近一家公司进行一项研究时，结果总是对他们有利的？我看得出就是这样的印象。</p></div></p>
+<p class="seg" id="seg-19"><span class="ts">[05:08 – 05:22]</span><div class="seg-body">
+<p class="en">Yeah. So, I mean, let&#x27;s see, um, really the only thing Waymo was pushing back on was like, um, we were not intending to imply this at all, but when we were writing up the report,</p>
+<p class="zh">是的。所以，我的意思是，让我们看看，嗯，Waymo 唯一反对的是，嗯，我们根本无意暗示这一点，但当我们撰写报告时，</p></div></p>
+<p class="seg" id="seg-20"><span class="ts">[05:22 – 05:38]</span><div class="seg-body">
+<p class="en">it was like ride hailing data, uh, parking data. They were like, well, we didn&#x27;t give you any data. So don&#x27;t make it seem like we did give you any data. All this data is synthetic. We got the parking data from INRIX. We got the ride-hailing trip data from a company called Replica.</p>
+<p class="zh">这就像打车数据，呃，停车数据。他们说，好吧，我们没有给你任何数据。因此，不要让人觉得我们确实向您提供了任何数据。所有这些数据都是合成的。我们从 INRIX 获得停车数据。我们从一家名为 Replica 的公司获得了网约车行程数据。</p></div></p>
+<p class="seg" id="seg-21"><span class="ts">[05:39 – 05:54]</span><div class="seg-body">
+<p class="en">Waymo really didn&#x27;t give us any data, which was fine with us. They gave us order of magnitude information about what their fleet size was, and it was also public information. Publicly available information on fleet size and the like. As far as the results, I mean, I hate to undercut our study,</p>
+<p class="zh">Waymo 确实没有给我们任何数据，这对我们来说没什么问题。他们向我们提供了有关其机队规模的数量级信息，这也是公开信息。有关机队规模等的公开信息。就结果而言，我的意思是，我不想削弱我们的研究，</p></div></p>
+<p class="seg" id="seg-22"><span class="ts">[05:55 – 06:14]</span><div class="seg-body">
+<p class="en">but the directional impact was kind of obvious going into the study. We knew that by banning these vehicles from using the curb, It was going to increase VMT. That was obvious. It was really the magnitude that was the interesting part of the question. Was it going to be a 10% increase? Is it going to be a 30% increase?</p>
+<p class="zh">但在研究中，方向性影响是显而易见的。我们知道，通过禁止这些车辆使用路缘，将会增加 VMT。这是显而易见的。这个问题最有趣的部分确实是其大小。会增加10%吗？会增加30%吗？</p></div></p>
+<p class="seg" id="seg-23"><span class="ts">[06:14 – 06:30]</span><div class="seg-body">
+<p class="en">Is it going to be a large number? And we found a pretty large number, which was a 60% increase in total vehicle miles traveled, vehicle kilometers traveled. And that came directly from the results. We didn&#x27;t rerun any studies or really rerun the experiments with Waymo&#x27;s input.</p>
+<p class="zh">会是一个很大的数字吗？我们发现了一个相当大的数字，即车辆行驶总里程增加了 60%。这直接来自结果。我们没有重新进行任何研究，也没有根据 Waymo 的输入重新进行实验。</p></div></p>
+<p class="seg" id="seg-24"><span class="ts">[06:31 – 06:51]</span><div class="seg-body">
+<p class="en">They were involved with, again, making sure we were choosing the right order of magnitude for our model inputs. But beyond that, there was not much feedback from them on those types of, they weren&#x27;t questioning the outputs, we&#x27;ll put it that way. So 60% increase in, to be clear, VMT is vehicle miles traveled, right?</p>
+<p class="zh">他们再次参与确保我们为模型输入选择正确的数量级。但除此之外，他们对这些类型没有太多反馈，他们没有质疑输出，我们会这样说。需要明确的是，VMT 是车辆行驶里程，增加了 60%，对吗？</p></div></p>
+<h2 id="s4">多出来的里程从哪来</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>需求全天有大量<strong>小波峰波谷</strong>，且在空间上分散于区域内不同地方</li><li>运营方必须提前把车部署在预期需求附近，还要留一点缓冲，以免错过需求</li><li>需求一回落，车就无处可去；不让用路缘，调度软件只能派<strong>短的「假行程」</strong>，在预期未来需求区绕圈</li><li>这种绕行在网络中<strong>累积</strong>，最终推高总里程</li></ul></div>
+<p class="seg" id="seg-25"><span class="ts">[06:51 – 07:07]</span><div class="seg-body">
+<p class="en">That&#x27;s correct, yes. So there was a 60% increase. Wow. Where do all those extra miles come from? Well, as I like to explain it this way, there are all these... There are peaks and valleys throughout the day in terms of the demand for robo-taxis.</p>
+<p class="zh">这是正确的，是的。所以增加了 60%。哇。这些额外的里程从何而来？好吧，正如我喜欢这样解释的那样，所有这些......就robotaxi的需求而言，一天中都有高峰和低谷。</p></div></p>
+<p class="seg" id="seg-26"><span class="ts">[07:07 – 07:28]</span><div class="seg-body">
+<p class="en">So everyone knows for regular travel when the big peaks are, right? So the morning peak and then you have the afternoon peak. But for a service like whether it&#x27;s Uber or Lyft or Waymo, there&#x27;s even little peaks and valleys that occur throughout the day. And spatially, these peaks and valleys occur throughout different parts of the region. So the fleet operator in this case,</p>
+<p class="zh">那么大家都知道什么时候是高峰期，对吗？所以早上高峰然后就是下午高峰。但对于像 Uber、Lyft 或 Waymo 这样的服务，全天甚至很少出现高峰和低谷。在空间上，这些高峰和低谷出现在该地区的不同部分。所以在这种情况下，车队运营商</p></div></p>
+<p class="seg" id="seg-27"><span class="ts">[07:29 – 07:48]</span><div class="seg-body">
+<p class="en">our fictitious Waymo fleet, Once you make sure there are enough vehicles out there in the network to serve the demand that they expect to occur, and there&#x27;s going to be a little bit of buffer as well, you don&#x27;t want to be, if you can avoid it, missing out on demand opportunities. But when you have these vehicles out on the road and you get a little bit of a dip</p>
+<p class="zh">我们虚构的 Waymo 车队，一旦您确保网络中有足够的车辆来满足他们预期发生的需求，并且还会有一点缓冲，如果可以避免的话，您就不想错过按需机会。但是当你让这些车辆上路时，你会感到有点沮丧</p></div></p>
+<p class="seg" id="seg-28"><span class="ts">[07:48 – 08:08]</span><div class="seg-body">
+<p class="en">in demand, there&#x27;s nowhere for them to go. They&#x27;re not serving passengers. They need to find somewhere to go. And if you don&#x27;t allow them to use the curb, what the software we use does Is just give them short trips to take throughout the network, circling around where they expect the future demand to be.</p>
+<p class="zh">需求旺盛，他们却无处可去。他们不为乘客服务。他们需要找个地方去。如果您不允许他们使用路缘，我们使用的软件所做的只是让他们在整个网络中进行短途旅行，在他们预期未来需求的地方盘旋。</p></div></p>
+<p class="seg" id="seg-29"><span class="ts">[08:08 – 08:18]</span><div class="seg-body">
+<p class="en">And by future, I mean near future in five, 10 minutes to make sure those vehicles are pretty close to where the new requests are going to arrive. And that&#x27;s, as the results suggest,</p>
+<p class="zh">我所说的未来，是指不久的将来，在五到十分钟内确保这些车辆非常接近新请求将到达的地方。结果表明，</p></div></p>
+<h2 id="s5">回库与地产：为什么不是答案</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>研究<strong>没有</strong>建立「车辆回库」场景——计算预算用尽（Hyland 直言遗憾）</li><li>旧金山 49 平方英里内 Waymo 的 depot 仅约 <strong>2–5 个</strong>；车辆变空后单程约 1.5 英里，接客还要再跑回来</li><li>估算：即便总是回库，也只能把 60% 压到 <strong>40–45%</strong>，因为往返空驶本身就是负外部性</li><li>要真正降 VMT 就得全城布点，但「Waymo 并不热衷地产开发」；离街停车价格<strong>随时间剧烈波动</strong>（商业区夜间便宜、白天贵；住宅区几乎总是贵且缺大地块）</li></ul></div>
+<p class="seg" id="seg-30"><span class="ts">[08:18 – 08:34]</span><div class="seg-body">
+<p class="en">result in a lot of cumulative extra miles travel in the network. I think a lot of people would make the assumption that these Vehicles would just go back to like a depot or depot, whatever you like to pronounce it.</p>
+<p class="zh">导致在网络中累积大量额外里程。我想很多人都会假设这些车辆会像仓库或仓库一样返回，无论你喜欢怎么发音。</p></div></p>
+<p class="seg" id="seg-31"><span class="ts">[08:36 – 08:58]</span><div class="seg-body">
+<p class="en">But did you measure that or is that not really the case? Unfortunately, we didn&#x27;t create scenarios around the vehicles Whenever they&#x27;re what we call idle or empty and don&#x27;t have anything to serve, going back to the depot. I wish we did, I wish we would have. We just ran out of literally a computational budget.</p>
+<p class="zh">但你测量过这一点吗？或者事实并非如此？不幸的是，我们没有围绕车辆创建场景，每当它们处于我们所说的闲置或空置并且没有任何服务可提供时，就返回车库。我希望我们能做到，我希望我们能做到。我们刚刚耗尽了计算预算。</p></div></p>
+<p class="seg" id="seg-32"><span class="ts">[08:58 – 09:22]</span><div class="seg-body">
+<p class="en">We use the software and I can go into some interesting stories about that. But I suspect because there are so few depots in the entire 7x7 or 49 square mile San Francisco area for Waymo, I&#x27;m not sure the exact number, but let&#x27;s say somewhere between two and five of these depot locations, that might reduce the extra VMT a little bit,</p>
+<p class="zh">我们使用该软件，我可以讲一些关于它的有趣故事。但我怀疑，因为在整个 7x7 或 49 平方英里的旧金山地区，Waymo 的仓库太少了，我不确定确切的数量，但假设有两到五个这样的仓库位置，这可能会稍微减少额外的 VMT，</p></div></p>
+<p class="seg" id="seg-33"><span class="ts">[09:22 – 09:42]</span><div class="seg-body">
+<p class="en">but I don&#x27;t think by much because whenever a vehicle would become empty, it would travel a pretty long distance, maybe let&#x27;s say A mile and a half on average, and maybe a mile and a half back to pick up customers once the request, once a person makes a request. So I think there&#x27;d be a pretty negative impact on the vehicle is always returning to</p>
+<p class="zh">但我认为不会太多，因为每当车辆空了时，它就会行驶相当长的距离，也许平均一英里半，一旦有人提出请求，也许会返回一英里半来接客户。所以我认为这会对车辆产生相当负面的影响</p></div></p>
+<p class="seg" id="seg-34"><span class="ts">[09:42 – 10:01]</span><div class="seg-body">
+<p class="en">the depot as well. So maybe you could bring that 60% number down to like 40, 45%. Yeah, so to reduce the number of, to reduce the amounts of VMT, you need to have depots all over the city. And, you know, this isn&#x27;t even probably their beat, is it? You know,</p>
+<p class="zh">仓库也是如此。所以也许你可以将 60% 的数字降低到 40%、45% 左右。是的，所以为了减少 VMT 的数量和数量，你需要在整个城市都有仓库。而且，你知道，这甚至可能不是他们的节奏，不是吗？你知道，</p></div></p>
+<p class="seg" id="seg-35"><span class="ts">[10:01 – 10:17]</span><div class="seg-body">
+<p class="en">companies like Waymo would have to partner because it wouldn&#x27;t be there, it would be private land. You know, so it&#x27;s a big operation. Yeah, I mean, I don&#x27;t think they&#x27;re into real estate development. That would be my guess. They could partner with lots.</p>
+<p class="zh">像 Waymo 这样的公司必须合作，因为那里不存在，而是私人土地。你知道，这是一个大手术。是的，我的意思是，我不认为他们从事房地产开发。这是我的猜测。他们可以与很多人合作。</p></div></p>
+<p class="seg" id="seg-36"><span class="ts">[10:18 – 10:35]</span><div class="seg-body">
+<p class="en">And I think one thing that we did learn throughout the study is, maybe it&#x27;s obvious to those who know about cities, but like parking off street, the price of that is clearly time dependent. In some parts of the city, maybe a commercial district, it&#x27;s very cheap to access parking at night,</p>
+<p class="zh">我认为我们在整个研究过程中确实学到的一件事是，也许这对于那些了解城市的人来说是显而易见的，但就像在街边停车一样，其价格显然取决于时间。在城市的某些地方，也许是商业区，晚上停车非常便宜，</p></div></p>
+<p class="seg" id="seg-37"><span class="ts">[10:35 – 10:48]</span><div class="seg-body">
+<p class="en">very expensive during the day, and vice versa in residential areas. So actually in residential areas, it&#x27;s actually usually expensive no matter what. I mean, there rarely are these large size lots for a large depot to be set up.</p>
+<p class="zh">白天非常贵，住宅区反之亦然。所以实际上在住宅区，无论如何通常都很贵。我的意思是，很少有这么大面积的地块可以建立大型仓库。</p></div></p>
+<p class="seg" id="seg-38"><span class="ts">[10:50 – 11:08]</span><div class="seg-body">
+<p class="en">Yeah. So companies like Waymo, they don&#x27;t want to be parking and paying parking fees, do they? They just want the cheapest alternative, the cheapest option before they can pick up the next ride. No doubt they&#x27;re trying to minimize their costs in all the ways that are possible to minimize their costs.</p>
+<p class="zh">是的。所以像 Waymo 这样的公司，他们不想停车并支付停车费，不是吗？他们只是想要最便宜的选择，在他们可以搭乘下一趟车之前最便宜的选择。毫无疑问，他们正试图以一切可能的方式最大限度地降低成本。</p></div></p>
+<p class="seg" id="seg-39"><span class="ts">[11:08 – 11:24]</span><div class="seg-body">
+<p class="en">So I think acquiring land is expensive, so I presume they&#x27;re trying to minimize the amount of land they need to acquire, and also they&#x27;re going to be strategic about where they park and whether they&#x27;re going to have to pay for that parking or not pay for that parking. Can you just give me your definition of deadheading?</p>
+<p class="zh">所以我认为收购土地是昂贵的，所以我认为他们正在努力最大限度地减少他们需要收购的土地数量，而且他们也会对停车地点以及是否需要支付停车费或不支付停车费采取战略性策略。你能告诉我你对无用的定义吗？</p></div></p>
+<h2 id="s6">deadheading（空驶）到底指什么</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>定义：任何<strong>车内没有乘客</strong>的行驶里程；即不为服务特定乘客移动的位移</li><li>业界常拆成两桶：① 已接到新订单、直奔接客点的空驶；② 其余空驶（去路缘 staging、回库充电、夜间回库待命或清洁）</li><li>Hyland 提醒：两类空驶性质不同，很多分析会把它们分开处理 —— 本集特意澄清这个高频术语</li></ul></div>
+<p class="seg" id="seg-40"><span class="ts">[11:27 – 11:31]</span><div class="seg-body">
+<p class="en">Sure, yeah. So I consider deadheading</p>
+<p class="zh">当然，是的。所以我考虑死胡同</p></div></p>
+<p class="seg" id="seg-41"><span class="ts">[11:33 – 11:52]</span><div class="seg-body">
+<p class="en">Any mile or any movement of a vehicle where it doesn&#x27;t have a passenger inside of the vehicle. It&#x27;s not serving a particular passenger movement. Some entities like to break up this empty miles into two different pots of miles.</p>
+<p class="zh">车内没有乘客的车辆的任何英里或任何移动。它不服务于特定的乘客流动。一些实体喜欢将这些空里程分成两个不同的里程。</p></div></p>
+<p class="seg" id="seg-42"><span class="ts">[11:53 – 12:14]</span><div class="seg-body">
+<p class="en">One is where the vehicle does have a new request to serve and it&#x27;s going directly to pick up that request. So, you know, We don&#x27;t want to say it&#x27;s good or bad, but that&#x27;s one part of deadheading. And there&#x27;s all the other deadheading that occurs when the vehicle is going to a staging location at the curb. It&#x27;s going back to the depot to charge.</p>
+<p class="zh">一种是车辆确实有新的服务请求，并且它将直接接收该请求。所以，你知道，我们不想说它是好是坏，但这是无谓的一部分。当车辆驶向路缘的停靠位置时，还会发生所有其他的空头事故。它要返回车站充电。</p></div></p>
+<p class="seg" id="seg-43"><span class="ts">[12:14 – 12:28]</span><div class="seg-body">
+<p class="en">It&#x27;s going back to the depot at night because it no longer needs to be in the fleet or it needs to be cleaned. So a lot of analyses will separate out these two types of deadheading. Great. Thank you. I think this is important because I hear that term flying around all over the place</p>
+<p class="zh">它会在晚上返回仓库，因为它不再需要在车队中或者需要清理。因此，很多分析都会将这两种类型的空头分开。太好了。谢谢。我认为这很重要，因为我听到这个词到处流传</p></div></p>
+<h2 id="s7">方法论与数据源</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>范围：旧金山市区 <strong>7×7 英里</strong></li><li>仿真软件用 <strong>Autofleet</strong>：自建同类模型需 1.5–2 年，而它的 depot 活动与路缘停车建模能力可直接复用</li><li><strong>静态数据</strong>（INRIX）：城市停车规则（可停时段/车型/时长/是否收费）；<strong>动态数据</strong>：每条 curb front 未来 15 分钟有车位的概率（未独立验证，采信厂商）</li><li>关键参数 <strong>supply shaping / defleeting</strong>：低需求时段（如 23:35）把 20–40% 车队撤回 depot 充电清洁，而不是全场在线空转</li><li>目标生产率设为 <strong>2.2 乘客/车/小时</strong>（含缓冲的设定值，非最优化结果）</li></ul></div>
+<p class="seg" id="seg-44"><span class="ts">[12:28 – 12:52]</span><div class="seg-body">
+<p class="en">and useful for our listeners. Could you give us a bit more of an understanding of the methodology and the data sources? So how they all kind of fed into each other and exactly what was the scope? It was all in San Francisco, right? Yes, we did the seven mile by seven mile area in San Francisco, which is the city itself. Simulation software we used was called Autofleet.</p>
+<p class="zh">对我们的听众有用。您能否让我们对方法论和数据源有更多的了解？那么它们是如何相互融合的以及范围到底是什么？一切都在旧金山，对吗？是的，我们在旧金山进行了七英里乘七英里的区域，也就是这座城市本身。我们使用的模拟软件叫做 Autofleet。</p></div></p>
+<p class="seg" id="seg-45"><span class="ts">[12:53 – 13:06]</span><div class="seg-body">
+<p class="en">So interestingly, I build a lot of simulation models myself, but Autofleet had a lot of capabilities that would have taken me a year and a half or two years. By me, I should say my graduate students to build into our model. So we just used Autofleet.</p>
+<p class="zh">有趣的是，我自己构建了很多仿真模型，但 Autofleet 的很多功能可能需要我一年半或两年的时间。对我而言，我应该说我的研究生构建了我们的模型。所以我们只使用 Autofleet。</p></div></p>
+<p class="seg" id="seg-46"><span class="ts">[13:06 – 13:25]</span><div class="seg-body">
+<p class="en">In particular, they were really good at modeling These depot activities and parking at the curb, we kind of had to make adjustments to the model for the model parking at the curb, but it was easy to do that. The main data sources, I hinted at these earlier, one was the INRIX parking data. So they have two types of data,</p>
+<p class="zh">特别是，他们非常擅长对这些停车场活动和路缘停车进行建模，我们不得不对模型进行调整以用于路缘停车模型，但这很容易做到。主要的数据来源，我之前已经暗示过，其中一个是INRIX停车数据。所以他们有两种类型的数据，</p></div></p>
+<p class="seg" id="seg-47"><span class="ts">[13:25 – 13:41]</span><div class="seg-body">
+<p class="en">one they call static data, which basically encodes all of the rules for a city like San Francisco, what hours you can park, what types of vehicles, how long you can park there, whether it&#x27;s paid or free parking. That&#x27;s the static data, and then there&#x27;s the dynamic data, which we didn&#x27;t validate.</p>
+<p class="zh">他们称之为静态数据，它基本上编码了像旧金山这样的城市的所有规则，可以停车的时间、车辆类型、可以在那里停车多长时间，无论是付费停车还是免费停车。这是静态数据，然后是动态数据，我们没有验证这些数据。</p></div></p>
+<p class="seg" id="seg-48"><span class="ts">[13:41 – 13:58]</span><div class="seg-body">
+<p class="en">We kind of just took them at their word. They make forecasts for every curb front. So a curb front essentially could be three or four parking spaces or 10 or 15 parking spaces. But for every curb front, what is the likelihood that there will be a parking space available in the next 15 minutes?</p>
+<p class="zh">我们只是相信了他们的话。他们对每个路缘进行预测。因此，路缘基本上可以有 3 个或 4 个停车位，或者 10 个或 15 个停车位。但对于每个路缘，未来 15 分钟内有可用停车位的可能性是多少？</p></div></p>
+<p class="seg" id="seg-49"><span class="ts">[13:59 – 14:16]</span><div class="seg-body">
+<p class="en">And then we use that in our simulation to say, okay, if it&#x27;s super likely that there&#x27;s going to be a parking space available in general, then that means our robotaxi can park at this curb. What else to say? So there&#x27;s a lot of inputs. I think one of the other key ones With this parameter called supply shaping</p>
+<p class="zh">然后我们在模拟中用它来表示，好吧，如果总体上很有可能有可用的停车位，那么这意味着我们的robotaxi可以停在这个路缘。还有什么可说的呢？所以有很多输入。我认为其他关键参数之一就是这个称为供给整形的参数</p></div></p>
+<p class="seg" id="seg-50"><span class="ts">[14:17 – 14:39]</span><div class="seg-body">
+<p class="en">or defleeting is another word for it. So some of the prior simulation work on robotaxis and curb usage just assumed that throughout the entire 24, 18 hour simulation period, all the vehicles were available and driving around in the roadway network. Whereas our parameter supply shaping and defleeting said, well,</p>
+<p class="zh">或转移是它的另一种说法。因此，之前关于robotaxi和路缘使用的一些模拟工作只是假设在整个 24 小时、18 小时的模拟期间，所有车辆都可用并在道路网络中行驶。而我们的参数提供整形和偏转说，嗯，</p></div></p>
+<p class="seg" id="seg-51"><span class="ts">[14:39 – 14:57]</span><div class="seg-body">
+<p class="en">if you know there&#x27;s not going to be that much demand at 11.35 PM at night, you actually don&#x27;t need your entire fleet of vehicles to be active. You can move 20, 30, 40% of those vehicles back to your depot, have them charge, have them get clean, get them ready for the next day. And that was a key parameter in the simulation as well.</p>
+<p class="zh">如果您知道晚上 11.35 不会有那么多需求，那么您实际上不需要整个车队都处于活动状态。您可以将 20%、30%、40% 的车辆移回您的车库，让它们充​​电，让它们清洁，为第二天做好准备。这也是模拟中的一个关键参数。</p></div></p>
+<p class="seg" id="seg-52"><span class="ts">[14:59 – 15:06]</span><div class="seg-body">
+<p class="en">Okay, so trying to figure out what is the optimum amount of vehicles you need at any one time.</p>
+<p class="zh">好的，所以尝试找出您在任何时候需要的最佳车辆数量是多少。</p></div></p>
+<p class="seg" id="seg-53"><span class="ts">[15:08 – 15:32]</span><div class="seg-body">
+<p class="en">Yeah, we didn&#x27;t optimize for this parameter. As I said, I&#x27;ve done a lot of studies in the past on microtransit and robotaxis. We set the value to 2.2. So this is what we said, how many passengers on average a vehicle will serve for an hour. And I think if you look at the Results in San Francisco, you might get values like slightly lower than 2.2,</p>
+<p class="zh">是的，我们没有针对这个参数进行优化。正如我所说，我过去对微型交通和robotaxi进行了大量研究。我们将该值设置为 2.2。所以这就是我们说的，一辆车一小时平均服务多少乘客。我认为如果您查看旧金山的结果，您可能会得到略低于 2.2 的值，</p></div></p>
+<p class="seg" id="seg-54"><span class="ts">[15:32 – 15:44]</span><div class="seg-body">
+<p class="en">but as I said, we wanted to build in this buffer value to make sure there were enough vehicles in the network, but not too many. Great. Okay. So you said that one of your main findings was preventing robotaxis access</p>
+<p class="zh">但正如我所说，我们希望建立这个缓冲值，以确保网络中有足够的车辆，但又不能太多。太好了。好的。所以你说你的主要发现之一是阻止robotaxi访问</p></div></p>
+<h2 id="s8">第二个发现：路缘生产率（curb productivity）</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>定义：每小时从交通系统<strong>跨越到</strong>土地/活动系统的乘客数（即单位路缘占用时间服务的乘客量）</li><li>robotaxi 的路缘生产率约为私家车的 <strong>6–8 倍</strong>（视频口述为 6–8 倍；图文版文章写 8–10 倍）</li><li>私家车平均在路缘停 <strong>1.5–2 小时</strong>；robotaxi 少 6–8 倍，约 <strong>15 分钟</strong></li><li>层级：<strong>公交车 ≫ robotaxi ≫ 私家车</strong>；robotaxi 单车载客量低（约 1.6–1.8 人/单），共乘与否影响很大</li></ul></div>
+<p class="seg" id="seg-55"><span class="ts">[15:44 – 16:02]</span><div class="seg-body">
+<p class="en">from staging could increase daily travel by roughly 60%. Give us, are there any other major findings that we&#x27;re missing here that you&#x27;ve found? Yeah, sure. The other one, which Waymo liked a lot, we wouldn&#x27;t,</p>
+<p class="zh">分期可能会使每日出行量增加约 60%。请告诉我们，您发现了我们在这里遗漏的其他重大发现吗？是的，当然。另一种是 Waymo 非常喜欢的，但我们不会，</p></div></p>
+<p class="seg" id="seg-56"><span class="ts">[16:02 – 16:27]</span><div class="seg-body">
+<p class="en">I wouldn&#x27;t say we created a new metric, but there&#x27;s a metric that we used that was quite useful for the study, which is something called curb productivity. And I&#x27;ve seen this in the context of bus usage in the past and private vehicles. So we measure curb productivity, essentially the number of Passengers that cross over from the transportation system</p>
+<p class="zh">我不会说我们创建了一个新的指标，但我们使用了一个对研究非常有用的指标，这就是所谓的遏制生产力。我在过去的公交车和私家车的使用中看到了这一点。因此，我们衡量路缘生产力，本质上是从交通系统穿越的乘客数量</p></div></p>
+<p class="seg" id="seg-57"><span class="ts">[16:27 – 16:47]</span><div class="seg-body">
+<p class="en">to the land use or activity system every hour. So, okay, let me break it down a little bit more. So we found that robotaxis were about six to eight times more productive than passenger vehicles in terms of how they&#x27;re using the curb. So passenger vehicle, and we got this data from the city of San Francisco,</p>
+<p class="zh">每小时更新一次土地利用或活动系统。那么，好吧，让我再详细解释一下。因此，我们发现，就如何使用路缘而言，robotaxi的效率大约是乘用车的六到八倍。所以乘用车，我们从旧金山市获得了这些数据，</p></div></p>
+<p class="seg" id="seg-58"><span class="ts">[16:47 – 17:03]</span><div class="seg-body">
+<p class="en">spends about an hour and a half, two hours on average at the curb. Whereas a robo-taxi spends, well, someone else can do the math, but I don&#x27;t have the result according right now, about six to eight times less than that. So probably about 15 minutes on average.</p>
+<p class="zh">平均在路缘花费大约一个半小时到两个小时。而自动驾驶出租车的花费，其他人可以算一下，但我现在没有结果，大约比这个少六到八倍。所以平均大概 15 分钟左右。</p></div></p>
+<p class="seg" id="seg-59"><span class="ts">[17:03 – 17:22]</span><div class="seg-body">
+<p class="en">So if you&#x27;re concerned about one of your valuable assets as a city, which is the curb, it seems that robo-taxis are using that asset much more productively than personal vehicles are. Because personal vehicles just park, stay there for a very long time. People can obviously walk around and do many things while their vehicle is parked</p>
+<p class="zh">因此，如果您担心作为城市的一项宝贵资产，即路缘，那么robotaxi似乎比私家车更有效地利用该资产。由于私家车只是停放，所以会在那里停留很长时间。人们显然可以在车辆停放时四处走动并做很多事情</p></div></p>
+<p class="seg" id="seg-60"><span class="ts">[17:22 – 17:35]</span><div class="seg-body">
+<p class="en">the curb, but you still have a very valuable piece of land being used unproductively by a personal vehicle. And you&#x27;re still telling me Waymo had no influence on those findings. That&#x27;s right. No, in fact,</p>
+<p class="zh">路缘，但你仍然有一块非常宝贵的土地被私人车辆闲置。而且你仍然告诉我 Waymo 对这些发现没有影响。这是正确的。不，事实上，</p></div></p>
+<p class="seg" id="seg-61"><span class="ts">[17:35 – 17:55]</span><div class="seg-body">
+<p class="en">so we had some initial because we wanted to show like what&#x27;s the trade off right between. VMT and curb usage. And we set some initial results, which were like, this is on average how long a robotaxi spends at the curb. But it was like, that was only the average for the vehicles that actually do park.</p>
+<p class="zh">所以我们有一些初步的想法，因为我们想展示之间的权衡。 VMT 和限制使用。我们设定了一些初步结果，比如，这是robotaxi在路缘平均花费的时间。但这只是实际停车车辆的平均值。</p></div></p>
+<p class="seg" id="seg-62"><span class="ts">[17:55 – 18:08]</span><div class="seg-body">
+<p class="en">A lot of them don&#x27;t park between trips. And then we realized like, okay, what we really want to measure is like, how bad is it that these vehicles just sit there and wait for a long time?</p>
+<p class="zh">他们中的很多人在两次旅行之间都不停车。然后我们意识到，好吧，我们真正想要测量的是，这些车辆只是坐在那里等待很长时间有多糟糕？</p></div></p>
+<p class="seg" id="seg-63"><span class="ts">[18:11 – 18:21]</span><div class="seg-body">
+<p class="en">And, you know, curb productivity was the best way to do that. And I mean, the results, we have our results from the simulation, compare those to the results of the real world for personal vehicles. And this is where we got that.</p>
+<p class="zh">而且，你知道，抑制生产力是做到这一点的最佳方法。我的意思是，结果，我们从模拟中得到了结果，将这些结果与现实世界中个人车辆的结果进行比较。这就是我们得到的。</p></div></p>
+<p class="seg" id="seg-64"><span class="ts">[18:21 – 18:38]</span><div class="seg-body">
+<p class="en">It&#x27;s, you know, six to eight times more productive use of the curb for SAVs compared to personal vehicles. And I should say buses are like way more productive than robotaxis, which are way more productive than personal vehicles, right? Because a bus is only at a curb for a very short period of time,</p>
+<p class="zh">您知道，与私家车相比，SAV 的路缘使用效率高出六到八倍。我应该说公共汽车比robotaxi更有效率，而robotaxi又比私家车更有效率，对吗？因为公交车只在路缘停留很短的时间，</p></div></p>
+<p class="seg" id="seg-65"><span class="ts">[18:38 – 18:56]</span><div class="seg-body">
+<p class="en">has a lot of people getting on, a lot of people getting off. So, I mean, that&#x27;s still much better than a robotaxi is. Yeah, because often with a robotaxi, they might only pick up one person, right? Right, yeah. So in terms of occupancy of the vehicle is really important. Indeed, yeah.</p>
+<p class="zh">上车的人很多，下车的人也很多。所以，我的意思是，这仍然比robotaxi好得多。是的，因为robotaxi通常只能接一个人，对吗？对，是的。所以对于车辆的乘坐来说真的很重要。确实，是的。</p></div></p>
+<p class="seg" id="seg-66"><span class="ts">[18:56 – 19:14]</span><div class="seg-body">
+<p class="en">And there&#x27;s some... Maybe on average, it&#x27;s like 1.6 occupants. This is a number I&#x27;m making up, I&#x27;m guessing here, 1.6, 1.8 passengers per Waymo ride. And that&#x27;s maybe slightly better, slightly worse than a personal vehicle, which also has a relatively low occupancy. And again, comparing to the bus, which can be much higher, of course.</p>
+<p class="zh">还有一些...也许平均有 1.6 名乘客。这是我编造的数字，我猜每次 Waymo 行程有 1.6、1.8 名乘客。这可能比私家车稍微好一点，也稍微差一点，因为私家车的乘坐率也相对较低。再说一次，与公共汽车相比，当然可以高得多。</p></div></p>
+<h2 id="s9">质疑：robotaxi 真的更高效吗？</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>访谈者质疑：新鲜感褪去后，自动驾驶与网约车/出租车差别有多大？同样尺寸的车若只是绕圈，只是「堵住街道」</li><li>Hyland 认可：车辆尺寸与占地与私家车相当，仍占用宝贵城市空间（无论路缘还是车道）</li><li>行为研究显示相当一部分人<strong>偏好车内无司机</strong>；同时也有相当比例的人（他课堂上的女性学生尤为明显）对与陌生人共乘感到不安</li><li>这可能解释 Waymo 目前为何不开放拼车</li></ul></div>
+<p class="seg" id="seg-67"><span class="ts">[19:14 – 19:14]</span><div class="seg-body">
+<p class="en">I</p>
+<p class="zh">我</p></div></p>
+<p class="seg" id="seg-68"><span class="ts">[19:17 – 19:37]</span><div class="seg-body">
+<p class="en">have often thought about whether robo-taxis are really a more efficient solution. You know, from a passenger perspective, once the novelty wears off that the ride is autonomous, are people really going to care that it&#x27;s autonomous? Or are they just going to care that they get from A to B?</p>
+<p class="zh">我们经常思考robotaxi是否真的是一个更有效的解决方案。你知道，从乘客的角度来看，一旦自动驾驶的新鲜感消失，人们真的会关心它是自动驾驶吗？或者他们只是关心从 A 点到 B 点的交通情况？</p></div></p>
+<p class="seg" id="seg-69"><span class="ts">[19:37 – 19:57]</span><div class="seg-body">
+<p class="en">And are robotaxis actually doing anything to reduce congestion if the vehicle is still the same size as a normal car? You know, it&#x27;s not a micro car. It&#x27;s not micro mobility. And so... And then it&#x27;s just kind of driving around endlessly in a loop,</p>
+<p class="zh">如果robotaxi的尺寸仍然与普通汽车相同，那么robotaxi实际上会采取任何措施来减少拥堵吗？你知道，这不是一辆微型汽车。这不是微移动。所以...然后它就只是无限循环地行驶，</p></div></p>
+<p class="seg" id="seg-70"><span class="ts">[19:57 – 20:15]</span><div class="seg-body">
+<p class="en">not really doing anything and not picking up maybe one passenger, but just clogging up our streets. That&#x27;s how somebody could look at it, right? Oh yeah, I think there&#x27;s nothing wrong with looking at it that way. Obviously, staging suggests that you can reduce the amount of empty miles,</p>
+<p class="zh">并没有真正做任何事情，也没有搭载一名乘客，只是堵塞了我们的街道。有人可以这么看，对吗？哦，是的，我认为这样看并没有什么问题。显然，分期表明您可以减少空驶里程，</p></div></p>
+<p class="seg" id="seg-71"><span class="ts">[20:15 – 20:20]</span><div class="seg-body">
+<p class="en">deadheading, being driven, but to your other points, I think everything&#x27;s correct.</p>
+<p class="zh">毫无意义，被驱使，但对于你的其他观点，我认为一切都是正确的。</p></div></p>
+<p class="seg" id="seg-72"><span class="ts">[20:21 – 20:27]</span><div class="seg-body">
+<p class="en">These vehicles are similar size, take up the same amount of space as a personal vehicle.</p>
+<p class="zh">这些车辆尺寸相似，占用的空间与私家车相同。</p></div></p>
+<p class="seg" id="seg-73"><span class="ts">[20:29 – 20:50]</span><div class="seg-body">
+<p class="en">They&#x27;re going to be using valuable urban space, whether that&#x27;s at the curb or the roadways themselves. I also agree that once the novelty wears off of the automation, that we&#x27;re talking about something very similar to ride, hailing, or taxi. I think there&#x27;s some behavioral research that suggests that people do prefer, well not every person,</p>
+<p class="zh">他们将利用宝贵的城市空间，无论是路缘还是道路本身。我也同意，一旦自动化的新鲜感消失，我们就会谈论与乘车、叫车或出租车非常相似的东西。我认为有一些行为研究表明人们确实更喜欢，但不是每个人，</p></div></p>
+<p class="seg" id="seg-74"><span class="ts">[20:50 – 21:19]</span><div class="seg-body">
+<p class="en">but a large chunk of people do prefer Not having a driver in the vehicle for these individual trips. There&#x27;s a lot of concern about sharing a robotaxi with a stranger in a way that they&#x27;re not as scared or afraid to be in a robotaxi or be in a vehicle with an Uber driver who might serve as a neutral party in the interaction. And I actually surveyed my students one time and maybe this will not be surprising</p>
+<p class="zh">但很大一部分人确实更喜欢在这些个人旅行中车内不配备司机。人们对与陌生人共享一辆robotaxi存在很多担忧，因为他们不会那么害怕或害怕乘坐robotaxi，或者与可能在互动中充当中立方的 Uber 司机同车。我实际上对我的学生进行了一次调查，也许这并不奇怪</p></div></p>
+<p class="seg" id="seg-75"><span class="ts">[21:19 – 21:37]</span><div class="seg-body">
+<p class="en">to your listeners, but All of the male students in the class, they were not very concerned about being in a robotaxi with a stranger, but a large chunk of the female women students in the class were concerned and scared about sharing a robotaxi with a stranger. So that might give you some intuition as</p>
+<p class="zh">对你的听众来说，但是班上的所有男学生都不太担心与陌生人一起乘坐robotaxi，但班上的大部分女学生对与陌生人共享robotaxi感到担心和害怕。所以这可能会给你一些直觉</p></div></p>
+<p class="seg" id="seg-76"><span class="ts">[21:38 – 21:47]</span><div class="seg-body">
+<p class="en">to why right now Waymo doesn&#x27;t allow shared rides in their system. You can only book for maybe you and a friend or you and a family member to make a trip.</p>
+<p class="zh">为什么现在 Waymo 不允许在其系统中共享乘车。您只能为您和朋友或您和家人预订旅行。</p></div></p>
+<h2 id="s10">城市该如何管路缘</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>明确建议：<strong>不要</strong>禁止 robotaxi 使用路缘</li><li>城市抱怨缺乏监管抓手（加州权力几乎尽在州一级），但「用路缘禁令变相封杀」是糟糕的膝跳反应</li><li>主张：在与需求匹配的时段与区域设<strong>专门接送区（pickup/drop-off zones）</strong>，让车快进快出、不必争抢路缘</li><li><strong>不支持</strong>给 robotaxi / 网约车 / 出租车设专门的 staging 区；但应允许它们像私家车一样<strong>短时停靠</strong></li></ul></div>
+<p class="seg" id="seg-77"><span class="ts">[21:49 – 22:07]</span><div class="seg-body">
+<p class="en">Yeah, I mean, it&#x27;s all a fascinating topic, isn&#x27;t it? And it&#x27;s all going to have such a profound impact on all of our lives and the way we travel. But let&#x27;s go back to, circle back to the study then. So what can cities do in terms of regulating the curb? So what are you going to be advising to policymakers off the back of this research?</p>
+<p class="zh">是的，我的意思是，这都是一个令人着迷的话题，不是吗？这一切都将对我们所有人的生活和旅行方式产生深远的影响。但让我们回到研究上来。那么，城市在监管路缘停车方面可以做些什么呢？那么，通过这项研究，您将向政策制定者提出什么建议呢？</p></div></p>
+<p class="seg" id="seg-78"><span class="ts">[22:10 – 22:19]</span><div class="seg-body">
+<p class="en">I&#x27;m not sure how many cities were considering banning robotaxis from using the curb. But if they were considering doing that, I would say Do not do that.</p>
+<p class="zh">我不确定有多少城市正在考虑禁止robotaxi使用路缘。但如果他们考虑这样做，我会说不要这样做。</p></div></p>
+<p class="seg" id="seg-79"><span class="ts">[22:20 – 22:42]</span><div class="seg-body">
+<p class="en">I know one thing that cities are complaining about, and rightly so, is that they don&#x27;t have many regulatory levers over robotaxis right now. In the state of California, really, the state has almost all the regulatory power. Cities have very limited regulatory power. And I think kind of a knee-jerk reaction to try to effectively ban these vehicles</p>
+<p class="zh">我知道城市正在抱怨的一件事是，他们目前对robotaxi没有太多监管手段，这也是正确的。事实上，在加利福尼亚州，该州拥有几乎所有的监管权力。城市的监管权力非常有限。我认为试图有效禁止这些车辆是一种下意识的反应</p></div></p>
+<p class="seg" id="seg-80"><span class="ts">[22:42 – 22:45]</span><div class="seg-body">
+<p class="en">by not letting them use the curbs would be a bad idea.</p>
+<p class="zh">不让他们使用路缘将是一个坏主意。</p></div></p>
+<p class="seg" id="seg-81"><span class="ts">[22:47 – 22:57]</span><div class="seg-body">
+<p class="en">They might be increasing congestion a little bit, but I think they&#x27;re providing valuable mobility to a large number of people in urban environments. Okay, so beyond that kind of like main conclusion,</p>
+<p class="zh">它们可能会稍微加剧拥堵，但我认为它们正在为城市环境中的大量人员提供宝贵的出行方式。好吧，除了主要结论之外，</p></div></p>
+<p class="seg" id="seg-82"><span class="ts">[23:00 – 23:02]</span><div class="seg-body">
+<p class="en">maybe moving beyond our study a little bit,</p>
+<p class="zh">也许稍微超出了我们的研究范围，</p></div></p>
+<p class="seg" id="seg-83"><span class="ts">[23:05 – 23:23]</span><div class="seg-body">
+<p class="en">because we didn&#x27;t really look into the pickups and drop-offs very much, but I am generally in favor of, at certain times of day, In areas where there is a lot of demand for passengers getting into not just robo-taxis, but taxis and ride-hailing vehicles in particular,</p>
+<p class="zh">因为我们并没有真正深入研究上车和下车的情况，但我总体上赞成在一天中的某些时间，在乘客需求量很大的地区，不仅需要乘坐robotaxi，而且特别需要乘坐出租车和网约车，</p></div></p>
+<p class="seg" id="seg-84"><span class="ts">[23:24 – 23:43]</span><div class="seg-body">
+<p class="en">to have designated pickup and drop-off zones where it is easy for these vehicles to Get to the curb quickly, pick up a passenger quickly and exit very quickly. So individual vehicles are not having to fight for curb space and the vehicles are not spending much time at the curb at all. They&#x27;re just getting the passenger in the vehicle and moving away quickly.</p>
+<p class="zh">有指定的上车和下车区域，使这些车辆能够轻松快速到达路缘、快速搭载乘客并快速离开。因此，个别车辆不必争夺路缘空间，并且车辆根本不会在路缘花费太多时间。他们只是把乘客送上车，然后迅速离开。</p></div></p>
+<p class="seg" id="seg-85"><span class="ts">[23:45 – 23:52]</span><div class="seg-body">
+<p class="en">I don&#x27;t think I&#x27;d be in favor of having like designated staging locations for robotaxis.</p>
+<p class="zh">我不认为我会赞成为robotaxi指定类似的停靠地点。</p></div></p>
+<p class="seg" id="seg-86"><span class="ts">[23:54 – 24:11]</span><div class="seg-body">
+<p class="en">Or ride hailing or taxi vehicles in general. But I think just allow these vehicles to use the curb for short-term parking in the same way that private vehicles can use the curb for short-term parking. Again, not related to our study, but</p>
+<p class="zh">或者乘坐一般的叫车或出租车。但我认为只是允许这些车辆使用路缘进行短期停车，就像私家车可以使用路缘进行短期停车一样。再说一遍，与我们的研究无关，但是</p></div></p>
+<h2 id="s11">停车定价为何会失灵</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>robotaxi 与网约车可以「再开远一点」，去用更便宜甚至免费的路缘车位</li><li>网约车司机人在车内、车辆仍运行时，目前并<strong>不付费</strong>；Waymo 同样如此</li><li>结论：停车定价作为城市管理车辆需求的杠杆，在 robotaxi 时代<strong>会比以往任何时候都更弱</strong></li></ul></div>
+<p class="seg" id="seg-87"><span class="ts">[24:14 – 24:34]</span><div class="seg-body">
+<p class="en">Parking pricing is going to be very challenging in a robo-taxi world, in a world with more Uber and Lyft, because they can always drive a little bit farther away and access the cheaper or free curbside parking. And then in the case of robo-taxis and Uber and Lyft drivers, Uber and Lyft drivers are still in the vehicle,</p>
+<p class="zh">在robotaxi的世界里，在一个拥有更多 Uber 和 Lyft 的世界里，停车定价将非常具有挑战性，因为它们总是可以开得远一点，并获得更便宜或免费的路缘停车位。然后，就robotaxi以及 Uber 和 Lyft 司机而言，Uber 和 Lyft 司机仍在车内，</p></div></p>
+<p class="seg" id="seg-88"><span class="ts">[24:34 – 24:51]</span><div class="seg-body">
+<p class="en">so I don&#x27;t think they&#x27;re actually paying when they&#x27;re sitting at the curb. As I understand it right now, Waymo is not paying when they&#x27;re sitting at the curb and the vehicle&#x27;s still on. So that&#x27;s going to be a real challenge, I think, for cities going forward is how to manage vehicular demand when</p>
+<p class="zh">所以我认为他们坐在路缘时实际上并没有付钱。据我目前的了解，当他们坐在路缘且车辆仍在行驶时，Waymo 不会付款。因此，我认为，对于未来的城市来说，这将是一个真正的挑战，即在以下情况下如何管理车辆需求：</p></div></p>
+<h2 id="s12">私人无人车会给 VMT 带来什么</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>团队另一条研究线；本篇论文一作 <strong>Jung &amp; Bach</strong> 的博士论文正是聚焦「私人拥有的无人车」</li><li>Hyland 不预测时间表，但假设 <strong>10–15 年</strong>后进入家庭</li><li>建模结论：家庭会「送人上班 → 空车回 → 再接另一人去活动 → 再空车回」，<strong>可能因此少买车</strong>，但会<strong>显著推高 VMT 与拥堵</strong></li><li>除非有政策让「开车更贵、拥堵更贵」——这是他眼中城市与州层面最重要的政策问题</li></ul></div>
+<p class="seg" id="seg-89"><span class="ts">[24:51 – 25:06]</span><div class="seg-body">
+<p class="en">the parking pricing lever is going to be less effective than it ever has been. Yeah, I think that&#x27;s a really good point about parking pricing. You also mentioned individual vehicles, but what about when those individual vehicles are personally owned driveless vehicles? Yeah.</p>
+<p class="zh">停车定价杠杆将不如以往那么有效。是的，我认为停车定价的这一点非常好。您还提到了个人车辆，但是当这些个人车辆是个人拥有的无人驾驶车辆时呢？是的。</p></div></p>
+<p class="seg" id="seg-90"><span class="ts">[25:06 – 25:07]</span><div class="seg-body">
+<p class="en">That&#x27;s going to have on VMT.</p>
+<p class="zh">这将在 VMT 上进行。</p></div></p>
+<p class="seg" id="seg-91"><span class="ts">[25:11 – 25:22]</span><div class="seg-body">
+<p class="en">That&#x27;s another area of research for my group. So, Jung and Bach, who I should have mentioned already, is the first author on this paper with Waymo, or the Waymo partially funded study, I&#x27;ll put it that way. He&#x27;s also,</p>
+<p class="zh">这是我的团队的另一个研究领域。因此，Jung 和 Bach（我应该已经提到过）是 Waymo 这篇论文的第一作者，或者是 Waymo 部分资助的研究，我会这么说。他也是，</p></div></p>
+<p class="seg" id="seg-92"><span class="ts">[25:22 – 25:45]</span><div class="seg-body">
+<p class="en">his dissertation was focused on personally owned driverless vehicles, which I&#x27;m not going to make a forecast as to when Waymo or Toyota or another company is going to be selling these vehicles to individual households, but Let&#x27;s say in 10 to 15 years they do sell them to households. I think in that scenario we have a lot of benefits to households in terms</p>
+<p class="zh">他的论文重点是个人拥有的无人驾驶汽车，我不会预测 Waymo 或丰田或其他公司何时会将这些车辆出售给个人家庭，但假设在 10 到 15 年内他们确实会将它们出售给家庭。我认为在这种情况下，我们对家庭有很多好处</p></div></p>
+<p class="seg" id="seg-93"><span class="ts">[25:45 – 26:04]</span><div class="seg-body">
+<p class="en">of mobility, but we have some very big potential implications for congestion in vehicle miles traveled. What we&#x27;re seeing in our modeling results there is that households absolutely will Have the vehicle drop off one household member at work,</p>
+<p class="zh">流动性，但我们对车辆行驶里程的拥堵有一些非常大的潜在影响。我们在模型结果中看到的是，家庭绝对会让车辆接送一名正在工作的家庭成员，</p></div></p>
+<p class="seg" id="seg-94"><span class="ts">[26:04 – 26:13]</span><div class="seg-body">
+<p class="en">drive home, pick up another household member, take them to an activity, whether that&#x27;s school or some after school activity, and then drive back home empty again. So in this case,</p>
+<p class="zh">开车回家，接另一位家庭成员，带他们去参加活动，无论是学校还是放学后的活动，然后再次空车回家。所以在这种情况下，</p></div></p>
+<p class="seg" id="seg-95"><span class="ts">[26:14 – 26:38]</span><div class="seg-body">
+<p class="en">a household might actually be able to own fewer vehicles because these vehicles can travel empty and deadhead back to the household, but that&#x27;s going to significantly increase VMT and congestion, unless of course there are some policies to Make it more expensive to drive and make it more expensive to congest the roadways. So I think that&#x27;s a particularly important policy question for cities and states going forward.</p>
+<p class="zh">一个家庭实际上可以拥有更少的车辆，因为这些车辆可以空载无偿返回家庭，但这将显着增加VMT和拥堵，当然，除非有一些政策使驾驶成本更高，道路拥堵成本更高。所以我认为这对于城市和州的未来来说是一个特别重要的政策问题。</p></div></p>
+<h2 id="s13">「无人出租车的 Airbnb 模式」可信吗</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>访谈者类比：房子与车位都在共享，车闲着也是闲着，为什么不让它出去赚钱？</li><li>团队对「把 8 万–12 万美元资产交给陌生人」持<strong>怀疑</strong>态度</li><li>更看好<strong>偶尔借给附近亲友</strong>的模式——这可能让对方少买第二、第三辆车（加州语境）</li><li>对 <strong>Tesla 设想</strong>的「车主把车借给网约车车队运营商」模式存疑：清洁、损坏，以及「任何人、任何用途」</li></ul></div>
+<p class="seg" id="seg-96"><span class="ts">[26:38 – 26:59]</span><div class="seg-body">
+<p class="en">Yeah, and I think it&#x27;s so important that they start discussing that now rather than waiting for the companies to introduce the technology and then regulation catching up, which seems to happen every single time. It&#x27;s like the Airbnb model for driver&#x27;s taxis. Everything&#x27;s going to become shared. We&#x27;re sharing our car parking spaces already in the UK.</p>
+<p class="zh">是的，我认为他们现在就开始讨论这一点非常重要，而不是等待公司引入技术然后监管赶上，这似乎每次都会发生。这就像 Airbnb 的司机出租车模式。一切都将变得共享。我们已经在英国共享停车位。</p></div></p>
+<p class="seg" id="seg-97"><span class="ts">[27:01 – 27:21]</span><div class="seg-body">
+<p class="en">It makes sense if I buy a driverless vehicle and it&#x27;s just sat in the car parking space when it could be out making me money, right? That makes total sense as a business model. But the impact on VMT, as you say, is just going to be huge. Yeah. So Tesla talked a lot about this.</p>
+<p class="zh">如果我购买一辆无人驾驶汽车，并且它只是停在停车位上，而它可以为我赚钱，这是有道理的，对吗？作为一种商业模式，这是完全有意义的。但正如你所说，对 VMT 的影响将会是巨大的。是的。所以特斯拉对此谈了很多。</p></div></p>
+<p class="seg" id="seg-98"><span class="ts">[27:22 – 27:39]</span><div class="seg-body">
+<p class="en">Buy one of our vehicles, use it when you want, and then give it to the fleet and we&#x27;ll make money for you while you&#x27;re doing other activities. We&#x27;re a little bit skeptical that people will be willing to give their $80,000 to $120,000 asset to strangers,</p>
+<p class="zh">购买我们的一辆车辆，在需要时使用它，然后将其交给车队，我们将在您进行其他活动时为您赚钱。我们有点怀疑人们是否愿意将自己的 80,000 至 120,000 美元资产交给陌生人，</p></div></p>
+<p class="seg" id="seg-99"><span class="ts">[27:40 – 27:45]</span><div class="seg-body">
+<p class="en">but we do think there&#x27;s maybe a market, or not really a market, but an opportunity</p>
+<p class="zh">但我们确实认为可能存在市场，或者不是真正的市场，而是机会</p></div></p>
+<p class="seg" id="seg-100"><span class="ts">[27:47 – 28:04]</span><div class="seg-body">
+<p class="en">To get more use out of, again, these valuable assets where, okay, let&#x27;s say I own a Tesla. I don&#x27;t. I own a 2016 Volvo. I own a Tesla. I have family nearby. I have friends that also have kids that maybe need to make a trip</p>
+<p class="zh">为了更好地利用这些宝贵的资产，好吧，假设我拥有一辆特斯拉。我不知道。我拥有一辆 2016 款沃尔沃。我拥有一辆特斯拉。我有家人在附近。我的朋友也有孩子，他们可能需要去旅行</p></div></p>
+<p class="seg" id="seg-101"><span class="ts">[28:04 – 28:21]</span><div class="seg-body">
+<p class="en">and they don&#x27;t have an extra vehicle to make this trip. I&#x27;d be willing to lend my vehicle out occasionally or semi-occasionally to friends and family that live nearby, which may be Prevent them from buying a third vehicle or a second vehicle here in California. So I think there&#x27;s like a nice opportunity there for some sharing</p>
+<p class="zh">他们没有额外的车辆来完成这次旅行。我愿意偶尔或半偶尔地将我的车辆借给住在附近的朋友和家人，这可能会阻止他们在加利福尼亚州购买第三辆车或第二辆车。所以我认为这是一个很好的分享机会</p></div></p>
+<p class="seg" id="seg-102"><span class="ts">[28:22 – 28:38]</span><div class="seg-body">
+<p class="en">of these personally-owned driveless vehicles, but we&#x27;re a little bit skeptical of the Tesla model where it essentially reverts back to a full ride-held type service where anyone could be throwing up or using your vehicle for any type of purpose. Yeah. And I, you&#x27;ve also got issues of cleanliness as well.</p>
+<p class="zh">这些个人拥有的无人驾驶车辆，但我们对特斯拉模型有点怀疑，它本质上恢复到完整的乘车类型服务，任何人都可以扔掉或使用你的车辆用于任何类型的目的。是的。我，你也有清洁问题。</p></div></p>
+<p class="seg" id="seg-103"><span class="ts">[28:38 – 28:53]</span><div class="seg-body">
+<p class="en">Um, you know, there&#x27;s a reason why these, these robo taxis are going back to the, the, the depot to get charged and cleaned. Right. So, uh, maybe my lending out to friends and family. Um, but yeah, it&#x27;s, Michael, it&#x27;s been a fascinating conversation.</p>
+<p class="zh">嗯，你知道，这些robotaxi要返回停车场充电和清洁是有原因的。正确的。所以，呃，也许我借给朋友和家人。嗯，但是，是的，迈克尔，这是一次有趣的谈话。</p></div></p>
+<p class="seg" id="seg-104"><span class="ts">[28:53 – 29:03]</span><div class="seg-body">
+<p class="en">Um, I&#x27;ve really, really enjoyed it. Is there anything else that you feel like we missed or you, you, you know, you&#x27;ve got got to get off your chest. Let&#x27;s see here. Um,</p>
+<p class="zh">嗯，我真的非常喜欢它。还有什么是你觉得我们错过的吗？或者你，你，你知道，你必须吐露心声。让我们看看这里。嗯，</p></div></p>
+<h2 id="s14">结语：拥堵定价，对所有车一视同仁</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>城市该不该向 robotaxi 收路缘费/市区行驶费？答案：<strong>应该，但不止 robotaxi</strong></li><li>robotaxi 应与所有乘用车适用<strong>同一套规则</strong>：要付费停车就都付费，要付高峰通行费就都付</li><li>他作为交通分析师<strong>支持拥堵定价</strong>（伦敦、纽约经验），认为洛杉矶、旧金山等高密度城市同样可行</li><li><strong>反对</strong>只对 robotaxi 加税：那会让需求转移回私家车与 Uber，拥堵依旧；真想减拥堵，就得对所有乘用车收费</li></ul></div>
+<p class="seg" id="seg-105"><span class="ts">[29:06 – 29:10]</span><div class="seg-body">
+<p class="en">So I&#x27;ve been asked the study a number of times about</p>
+<p class="zh">所以我多次被问及这项研究</p></div></p>
+<p class="seg" id="seg-106"><span class="ts">[29:12 – 29:34]</span><div class="seg-body">
+<p class="en">should cities be charging robo-taxis to use the curb and to drive around in urban areas? And my answer is yes, but not just robo-taxis. In my opinion, robo-taxis should be subject to the rules of all the private vehicles or all the passenger vehicles in urban areas.</p>
+<p class="zh">城市是否应该对robotaxi在城市地区使用路缘行驶和行驶时收费？我的答案是肯定的，但不仅仅是robotaxi。我认为，自动驾驶出租车应该遵守所有私家车或所有城市客运车辆的规则。</p></div></p>
+<p class="seg" id="seg-107"><span class="ts">[29:35 – 29:51]</span><div class="seg-body">
+<p class="en">If a passenger vehicle has to pay to park, a robotaxi should have to pay to park. If a robotaxi has to pay to drive in the city of San Francisco at 9 a.m. in the morning, then a personal vehicle, a ride-hailing vehicle, a regular taxi should also have to pay during those time periods.</p>
+<p class="zh">如果客运车辆需要付费停车，robotaxi也应该付费停车。如果robotaxi早上 9 点在旧金山市内行驶需要付费，那么在这些时间段内，私家车、网约车、普通出租车也应该付费。</p></div></p>
+<p class="seg" id="seg-108"><span class="ts">[29:51 – 30:14]</span><div class="seg-body">
+<p class="en">So as a transportation analyst, I am in favor of congestion pricing. I think it&#x27;s worked very well in London. It&#x27;s worked Very well in New York City. I think it can work in other large, dense areas, including Los Angeles at San Francisco. But I wouldn&#x27;t subject robo-taxis to additional fees and additional taxes that you&#x27;re not subjecting personal vehicle owners to.</p>
+<p class="zh">因此，作为一名交通分析师，我赞成拥堵收费。我认为这在伦敦效果很好。它在纽约市效果很好。我认为它可以在其他大而密集的地区发挥作用，包括洛杉矶和旧金山。但我不会向自动驾驶出租车收取额外的费用和额外的税款，而私人车主则不会缴纳这些费用和税款。</p></div></p>
+<p class="seg" id="seg-109"><span class="ts">[30:15 – 30:29]</span><div class="seg-body">
+<p class="en">That&#x27;s not because I&#x27;m a shill for Waymo. That&#x27;s because if you just charge Waymo to drive in urban areas, people are just going to They&#x27;re going to shift out of Waymo, they&#x27;re going to shift into their personal vehicles, they&#x27;re going to shift into Ubers, and the city is just going to be as congested as it&#x27;s always been.</p>
+<p class="zh">这并不是因为我是 Waymo 的托儿。这是因为，如果你只是给 Waymo 充电，让他们在城市地区开车，人们就会离开 Waymo，转而使用自己的私家车，转而使用 Uber，而城市就会像以前一样拥堵。</p></div></p>
+<p class="seg" id="seg-110"><span class="ts">[30:29 – 30:45]</span><div class="seg-body">
+<p class="en">So if you actually want to reduce congestion, you need to charge all of the personal passenger vehicles for using very valuable space in urban areas. Makes sense. Yeah, the ultra low emission zone has been a phenomenal success in London. I can say that.</p>
+<p class="zh">因此，如果你真的想减少拥堵，你需要对所有使用城市地区非常宝贵的空间的私人客运车辆进行收费。有道理。是的，超低排放区在伦敦取得了巨大的成功。我可以这么说。</p></div></p>
+<p class="seg" id="seg-111"><span class="ts">[30:45 – 30:55]</span><div class="seg-body">
+<p class="en">But no, that all makes sense. So Michael, we&#x27;re going to have to leave it there. But thanks so much for coming on. And yeah, it&#x27;s been a pleasure to have you. Thanks, Ben. I really appreciate it.</p>
+<p class="zh">但不，这一切都是有道理的。所以迈克尔，我们不得不把它留在那里。但非常感谢您的到来。是的，很高兴有你。谢谢，本。我真的很感激。</p></div></p>
+<p class="seg" id="seg-112"><span class="ts">[30:55 – 30:58]</span><div class="seg-body">
+<p class="en">Great talking to you. See you later.</p>
+<p class="zh">很高兴跟你说话。稍后见。</p></div></p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../waymo-data-who-rides-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../waymo-data-who-rides-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast (The AV Market Strategist)</div><div class="rt">Waymo 的数据揭示了：到底谁在坐 Robotaxi</div></div></a><a class="relcard" href="../robotaxi-curb/index.html"><div class="rw"><img loading="lazy" src="../robotaxi-curb/video_poster.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist</div><div class="rt">Robotaxi 行业的真正瓶颈：不是 AI，是路缘</div></div></a><a class="relcard" href="../aseon-labs-av-ops/index.html"><div class="rw"><img loading="lazy" src="../aseon-labs-av-ops/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonocast Podcast</div><div class="rt">Aseon Labs：用机器人维修舱解决 Robotaxi 的运维与空驶难题</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
 function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
 function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
 function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
@@ -491,7 +731,7 @@ if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,
 var wbTop=document.getElementById('wbTop');
 if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
 </script><script>
-var WB_KW=["robotaxi", "curb", "路缘", "staging", "歇脚", "空驶里程", "VMT", "curb productivity", "路缘生产率", "Michael Hyland", "UC Irvine", "UC Berkeley", "Waymo", "depot", "PUDO", "拥堵定价", "congestion pricing", "私人无人车", "personally owned AV", "旧金山", "INRIX", "Replica", "Airbnb 模式", "路缘管理"];
+var WB_KW=["robotaxi", "curb", "路缘", "staging", "歇脚", "deadheading", "空驶", "VMT", "vehicle miles traveled", "curb productivity", "路缘生产率", "Michael Hyland", "UC Irvine", "UC Berkeley", "Susan Shaheen", "Waymo", "depot", "Autofleet", "INRIX", "Replica", "supply shaping", "defleeting", "PUDO", "接送专区", "拥堵定价", "congestion pricing", "私人无人车", "personally owned AV", "旧金山", "Airbnb 模式"];
 function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
 function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
   WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
