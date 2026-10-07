@@ -1,0 +1,490 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可 · 总结分析</title><meta name='description' content='Autonomy Insiders 请柏林律师 Till Stegemann 把德国 L4 审批流程逐级拆开：2021 年 StVG 修法是框架法、2022 年 AFGBV 是实施细则，而标题里那个词「in festgelegten Betriebsbereichen（在 predefined 运营区域内）」决定了全局——由此拆成「KBA 车辆许可」与「运营区域许可」两条互不隶属的审批线。真正的卡点不是缺法规，而是**至今没有任何一家制造商提交过让技术检验机构点头的功能安全概念（functional safety concept）**。反直觉细节：技术监督员不能远程驾驶、不能与乘客通话，一人多车可管到 50–100 辆，且必须本人到场；运营区域审批权不在 KBA 而在各州，全国铺开可能要谈 16 个机关；AFGBV 年度上限 250 辆 vs EU 1426 法规放宽小批量限制；技术监督员可以委托、但维修人员不能委托，律师认为这将直接造成技工短缺。'><meta property='og:title' content='德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可 · 总结分析'><meta property='og:description' content='Autonomy Insiders 请柏林律师 Till Stegemann 把德国 L4 审批流程逐级拆开：2021 年 StVG 修法是框架法、2022 年 AFGBV 是实施细则，而标题里那个词「in festgelegten Betriebsbereichen（在 predefined 运营区域内）」决定了全局——由此拆成「KBA 车辆许可」与「运营区域许可」两条互不隶属的审批线。真正的卡点不是缺法规，而是**至今没有任何一家制造商提交过让技术检验机构点头的功能安全概念（functional safety concept）**。反直觉细节：技术监督员不能远程驾驶、不能与乘客通话，一人多车可管到 50–100 辆，且必须本人到场；运营区域审批权不在 KBA 而在各州，全国铺开可能要谈 16 个机关；AFGBV 年度上限 250 辆 vs EU 1426 法规放宽小批量限制；技术监督员可以委托、但维修人员不能委托，律师认为这将直接造成技工短缺。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/germany-autonomous-driving-law/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/inside-germanys-autonomous-driving" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders（The AV Market Strategist）· Substack</div><h1>德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可</h1><p class="sub">Inside Germany&#x27;s Autonomous Driving Law: The Hurdle Nobody Has Cleared</p><div class="tags"><span class="tag">⏱ 43:16</span><span class="tag">👤 Till Stegemann（德国柏林 Rödl 律师事务所律师，为城市、交通运营商与企业提供自动驾驶法律咨询；德国交通部《公共交通中的自动驾驶》手册共同作者，德国运输运营商协会无人驾驶客运创新论文共同作者）；主持人 Daniel Abreu Marques</span><span class="tag">🗓 2026-10</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://avmarketstrategist.substack.com/p/inside-germanys-autonomous-driving" target="_blank" rel="noopener">▶ 在来源站观看视频</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一句话结论</a><a href="#s1">一句话拆解的法律架构：框架法 + 实施细则</a><a href="#s2">标题里那个词，撑起了整个制度</a><a href="#s3">反直觉点：德国法不用 SAE 分级</a><a href="#s4">关键卡点：功能安全概念</a><a href="#s5">谁来测？KBA 有相当大的裁量权</a><a href="#s6">「所有情况」：一个法律上的文字游戏</a><a href="#s7">第二道许可：运营区域审批（最棘手的 decentralized 问题）</a><a href="#s8">柏林真实道路测试（2026 年 6 月）：测的不是车，是方法</a><a href="#s9">最小惊喜：技术监督员不是远程司机</a><a href="#s10">车辆保有人（Halter）的义务</a><a href="#s11">第三道许可：客运（PBFG）与责任</a><a href="#s12">三层框架如何衔接：德国 / EU / UN</a><a href="#s13">最终诊断：问题出在哪</a><a href="#s14">三个值得单独记住的数字</a><a href="#s15">与收藏库内相关条目的衔接</a><a href="#s16">引用与免责</a></nav><main class="content"><h1>德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可</h1>
+<blockquote>来源：*Autonomy Insiders*（The AV Market Strategist，Daniel Abreu Marques）对 <strong>Till Stegemann</strong>（柏林 Rödl 律师事务所律师）的访谈。</blockquote>
+<blockquote>原视频：Inside Germany&#x27;s Autonomous Driving Law: The Hurdle Nobody Has Cleared（2026-10-07，43:16）。</blockquote>
+<blockquote>本文基于 Substack 官方逐字稿（566 段）整理，逐字稿见「📝 逐字稿」页。</blockquote>
+<h2 id="s0">一句话结论</h2>
+<p>德国在 2021 年就写出了<strong>全球最完整的 L4 常规运营法律框架</strong>，五年过去，<strong>没有任何一家运营商拿到过正式的 L4 许可</strong>。原因不是法律缺位，也不是执行不力——而在于<strong>至今没有一家制造商提交过一份能让技术检验机构点头的功能安全概念</strong>。整个体系卡在第一道门前。</p>
+<p>主持人 Daniel 的开场把这个反差摆得很清楚：Waymo 在美国已经跑着几千台无人车，中国多个城市进入商业运营，而德国的 MOYA（在汉堡）开始载客时<strong>驾驶座上仍坐着安全员</strong>。</p>
+<h2 id="s1">一句话拆解的法律架构：框架法 + 实施细则</h2>
+<p>德国刻意把这件事拆成两部法律，而不是写成一坨：</p>
+<table><thead><tr><th>层级</th><th>法规</th><th>作用</th></tr></thead><tbody><tr><td><strong>框架法</strong></td><td>2021 年《道路交通法》（StVG）修法</td><td>确立基础概念：运营许可、技术监督、责任划分</td></tr><tr><td><strong>实施细则</strong></td><td>2022 年 AFGBV</td><td>规定操作细节：材料清单、程序、技术要求</td></tr></tbody></table>
+<p>Stegemann 解释这样分的理由：让<strong>战略架构留在 StVG</strong>保持稳定，同时<strong>操作层面可以在 AFGBV 里灵活调整技术要求与流程</strong>。法律技术上这也更稳健。</p>
+<h2 id="s2">标题里那个词，撑起了整个制度</h2>
+<p>AFGBV 德文全称里嵌了一个短语，承担了绝大部分设计重量：</p>
+<blockquote><strong>&quot;in festgelegten Betriebsbereichen&quot;</strong> —— 在<strong>预先指定的运营区域</strong>内</blockquote>
+<p>这一句话确立了：<strong>自动驾驶车辆不是到处都能跑，只能在预先批准的具体区域内运行</strong>。这个概念贯穿整个监管框架，并直接导致一个后果——<strong>审批被拆成两条互不隶属的线</strong>：</p>
+<ol><li>车辆本身的许可（向 KBA 申请）</li><li>那个具体地点的运营区域许可（向另一批机关申请）</li></ol>
+<p>同时也解释了为什么 <strong>ODD（运行设计域）</strong> 如此关键：只有引用 ODD，才能验证车辆能力与实际运行地点是否真正匹配。<strong>运营区域的具体要求永远不得超过车辆能力（即 ODD）</strong>。</p>
+<h2 id="s3">反直觉点：德国法不用 SAE 分级</h2>
+<p>Stegemann 明确指出，这正是 SAE 心智模型误导人的地方：</p>
+<ul><li><strong>SAE 分级描述的是系统的技术自动化程度</strong></li><li><strong>StVG 规定的是法律角色、责任与使用条件</strong></li></ul>
+<p>改革后法律做了一个简化二分：</p>
+<ul><li><strong>§1a StVG「自动化驾驶功能」</strong> ≈ SAE L3 —— <strong>仍然要求驾驶员作为后备</strong></li><li><strong>§1d StVG「自动驾驶功能」</strong> ≈ SAE L4 —— <strong>假定系统必须在运行范围内无人类后备地工作</strong></li></ul>
+<p>关键差异：§1a 要后备驾驶员，§1d 不要。而「运营区域」这个核心角色，<strong>从 SAE 分类里根本推不出来</strong>。</p>
+<p>另一个法律概念：<strong>Risikominimale Zustand（最小风险状态）</strong>。听起来像纯技术词，但有实质法律后果——车辆无法安全继续驾驶任务时必须能自主进入该状态，而<strong>能否可靠地自主进入最小风险状态，是车辆获批的关键要求之一</strong>，制造商必须证明这一点。</p>
+<p><strong>审批的真正难点由此浮现</strong>：监管机构评估的<strong>不只是车辆能否继续开，还包括它能否安全地停下</strong>。</p>
+<h2 id="s4">关键卡点：功能安全概念</h2>
+<p>主持人直接问：材料清单里哪一项最耗时、最容易让申请卡住？</p>
+<p>Stegemann 的回答（并坦承他没有亲历制造商侧流程，只基于业内听到的）：</p>
+<blockquote><strong>功能安全概念（functional safety concept）是最大挑战。</strong></blockquote>
+<p>难在哪：制造商必须develop出一套论证，既能<strong>证明安全与能力</strong>，又能同时让技术检验机构<strong>测试这套论证是否真的兑现了厂商的宣称</strong>，以及它<strong>是否适合用来提供所要求的证明</strong>。</p>
+<blockquote>迄今为止，<strong>没有人成功申请过常规许可</strong>——没有人提交过一份技术检验机构认为足够好、可以进入批准的概念。</blockquote>
+<p>一句话总结他的判断：</p>
+<blockquote><strong>这是最大的坎，而至今没有人跨过去。</strong></blockquote>
+<p>补充说明：AFGBV 第 3 条列出了全部必需材料——功能安全概念、IT 安全概念、ODD 描述、车辆技术文档、系统测试证据。AFGBV 形式上面向三方（制造商、运营商、机关），但<strong>实际重心在申请方</strong>：机关只是接收方，按条例评估申请。</p>
+<h2 id="s5">谁来测？KBA 有相当大的裁量权</h2>
+<ul><li>评估<strong>IT 安全概念</strong>时，<strong>联邦信息安全局（BfS）必须参与</strong></li><li>其余情况，KBA 可委托<strong>官方认可的专家</strong></li><li>「谁算专家」目前<strong>存在争议</strong>——部分高校认为自己也算，与 TÜV、DEKRA 等技术检验机构并列</li><li><strong>BASt（联邦公路研究所）</strong>正在制定一套测试目录，目标是让技术检验机构能对自动驾驶车辆做某种<strong>「驾照考试」</strong></li></ul>
+<p>Stegemann 点出真正的问题所在：<strong>测试多少场景、多少仿真才够？</strong> 这正是当下监管的真正分界线。</p>
+<h2 id="s6">「所有情况」：一个法律上的文字游戏</h2>
+<p>主持人引述 §1e StVG：车辆必须在批准区域内<strong>所有情况下</strong>安全完成驾驶任务——<strong>这在法律上可达成吗？</strong></p>
+<p>Stegemann 的回答很精彩：法条<strong>并没有字面写「所有情况」</strong>，而是要求车辆能在批准的运行范围内自主完成驾驶任务。</p>
+<p>区别很关键：</p>
+<blockquote>如果把「所有情况」按字面理解，<strong>这个标准实际上不可能达成</strong>——无论是人还是自动驾驶系统，都无法预测或测试每一种 conceivable 的交通 situation。</blockquote>
+<p>德国法的做法是：不停留在「完美处理每个理论情形」，而是要求车辆<strong>在自己的批准范围内能安全运行，并且对自己无法解决的情形也能做出安全反应</strong>。§1e 恰恰为此塞进了一整套附加要求：车辆必须识别自身系统边界，并在存疑时<strong>自主进入最小风险状态</strong>。</p>
+<h2 id="s7">第二道许可：运营区域审批（最棘手的 decentralized 问题）</h2>
+<p>拿到合法车辆 ≠ 能载一名乘客。第二道许可来自<strong>完全不同的机关</strong>。</p>
+<p><strong>关键差异：</strong></p>
+<table><thead><tr><th></th><th>车辆许可</th><th>运营区域许可</th></tr></thead><tbody><tr><td>申请主体</td><td><strong>制造商</strong></td><td><strong>运营商（保有人）</strong></td></tr><tr><td>主管机关</td><td><strong>KBA</strong>（联邦中央，全德统一管辖）</td><td><strong>各州机关</strong>；联邦高速公路路段则由 Autobahn GmbH 集中负责</td></tr><tr><td>依据</td><td>§1e StVG + AFGBV</td><td>AFGBV 第 7–9 条</td></tr></tbody></table>
+<p><strong>这就是 decentralized 的棘手之处。</strong></p>
+<blockquote>运营商若想全国扩张，<strong>可能至少要谈判 16 个不同机关</strong>。</blockquote>
+<p>更细的坑：如果运营区域<strong>同时跨过州道、乡村道路和市政道路</strong>，那么<strong>三个机关各自对落在其辖区内的路段</strong>都是主管许可机关——<strong>哪怕只是一个运营区域</strong>。</p>
+<p><strong>申请材料</strong>（AFGBV 第 8 条，繁到无法尽列）：保有人须证明打算在哪里用车、该用途在车辆能力下可行且安全；须<strong>提交该车的运营许可</strong>（所以不能凭空申请运营区域，只能为特定车辆申请）；还须提供拟 employed 的人员信息（技术监督与维修人员的职责、无犯罪记录审查等）。</p>
+<h2 id="s8">柏林真实道路测试（2026 年 6 月）：测的不是车，是方法</h2>
+<p>Stegemann 强调：柏林那次真实测试<strong>重点不在车辆本身，而在测试方法论</strong>。</p>
+<p>测试团队在真实城市交通中观察车辆，评估的是：</p>
+<blockquote>其驾驶行为能否基于<strong>客观标准</strong>，以<strong>透明且可复现</strong>的方式被评估。</blockquote>
+<p>之所以重要：德国法规不只问「车辆原则上会不会开」，还问「它能否在<strong>特定运营区域</strong>内被安全使用」。这需要<strong>超越纯理论或文件审查的程序</strong>。</p>
+<p>一句话总结：</p>
+<blockquote>我们正开始为<strong>区域专属审批</strong>develop标准化测试程序——而这恰恰是自动驾驶若要规模化获批所必需的东西。</blockquote>
+<p><strong>批准之后区域变了怎么办</strong>（长期施工、新电车线、路口改造）：</p>
+<ul><li><strong>没有</strong>像 KBA 对车辆所做的那样的<strong>集中式市场监督</strong></li><li>但批准机关<strong>可随时核查</strong>批准条件是否仍然满足，运营商有<strong>报告变更的义务</strong></li><li>通则：<strong>已批准的运营区域不保证永久可用</strong>；新批准或变更的范围<strong>取决于变更的重要性</strong></li></ul>
+<p>对照联邦战略「2028 年建成全球最大相连运营区域」的目标——Stegemann 说这<strong>才刚刚开始</strong>：运营区域审批真正上议程也就是今年的事，而<strong>州一级职责界定不清、公路建设机关之间权力碎片化</strong>，将是最大障碍之一。</p>
+<h2 id="s9">最小惊喜：技术监督员不是远程司机</h2>
+<p>这一段是全期最反直觉的。主持人说这是德国以外的人<strong>完全低估</strong>的部分。</p>
+<p><strong>德国法把 technische Aufsicht 定义为一个「有特定权限的自然人」——不是控制室，不是远程驾驶员。</strong></p>
+<p><strong>可以做的：</strong></p>
+<ul><li>与自动驾驶车辆交互</li><li><strong>授权或指定行驶机动（maneuvers）</strong></li></ul>
+<p><strong>不可以做的：</strong></p>
+<ul><li><strong>只能在车辆静止时操作</strong></li><li><strong>不能直接控制（direct control 不可能）</strong></li><li>技术监督员<strong>甚至可能授权理论上违反交通法规的机动</strong></li></ul>
+<p>⚠️ 关键提醒：技术监督员<strong>不应被 confused 成在呼叫中心与乘客通话的人</strong>。</p>
+<p><strong>人车比：法律没有设上限。</strong> 原则上一个人可以<strong>同时监督 50 乃至 100 台车</strong>。运营系统本质上只需确保：每辆车一旦触及运行极限，<strong>都能联系上技术监督员</strong>。</p>
+<p><strong>资质要求很高</strong>：需工程学位，且<strong>限特定工程专业</strong>（如汽车工程）。</p>
+<p><strong>但 AFGBV 里有个有意思的机制：</strong></p>
+<ul><li><strong>主技术监督员可以委托任务</strong></li><li>受委托者门槛<strong>显著更低</strong>：<strong>3 年汽车行业从业经验 + 制造商提供的培训</strong>即可</li></ul>
+<p>⚠️ 对比：<strong>维修人员面临类似的高资质要求，但目前完全不允许委托给低资质员工。</strong></p>
+<h2 id="s10">车辆保有人（Halter）的义务</h2>
+<p>§1f StVG 把义务放在<strong>车辆保有人</strong>身上。常规车队运营者已经很熟悉的部分：保持车辆适航（不论是否自动驾驶）。</p>
+<p><strong>新增的部分：</strong></p>
+<ul><li>确保车辆<strong>按许可运行</strong>（在许可运行范围内、在指定运营区域内）</li><li>确保系统<strong>依法维护</strong>，包括：</li><li><strong>每日延长出车前检查</strong>（检查传感器与安全关键系统）</li><li><strong>每 90 天一次综合检查</strong>（按制造商规范）</li><li><strong>每半年一次常规检查</strong>（据其所知，常规车队车辆也适用）</li><li>确保技术检验被执行</li><li>确保遵守<strong>原先针对车内驾驶员</strong>的规定（如三角警示牌义务可获豁免）</li><li><strong>存储规定数据</strong>：位置数据、机动授权的次数与时间等——运营区域批准机关要求时须提交</li></ul>
+<h2 id="s11">第三道许可：客运（PBFG）与责任</h2>
+<p><strong>AFGBV 与 PBFG 是两套独立体系：</strong></p>
+<ul><li>AFGBV 管<strong>车辆技术</strong>与自动驾驶系统的运营许可</li><li><strong>PBFG（客运法）</strong>管<strong>商业载客的资质</strong></li></ul>
+<p>因为 PBFG 授权<strong>不绑定具体车辆</strong>，而是绑定「提供运输服务」，所以原则上<strong>可以预先取得</strong>。</p>
+<p><strong>责任归属——法律上其实比很多人想的更「已定论」：</strong></p>
+<blockquote>即使在自动驾驶下，<strong>传统的保有人责任（Halterhaftung）仍然有效</strong>。任何在公共道路运营车辆的人，原则上仍对损害负责。变化只是——<strong>驾驶员不再被视为一个独立当事方</strong>。</blockquote>
+<p>此外<strong>制造商也可能被追责</strong>，例如软件或系统错误导致事故时。<strong>强制保险确保受害者实际获得赔偿。</strong></p>
+<blockquote>真正新的地方是：责任<strong>正向制造商、运营商与技术系统转移，不再落在人类驾驶员身上。</strong></blockquote>
+<p><strong>国家责任？原则上可以考虑，但仍是例外。</strong> KBA 发出运营许可、或主管机关批准运营区域，<strong>都不构成「事故绝不会发生」的担保</strong>。要追究国家责任，需证明机关<strong>违反了检查义务</strong>且该错误是损害原因——实践中在许多情况下都很难。</p>
+<h2 id="s12">三层框架如何衔接：德国 / EU / UN</h2>
+<h3>德国 vs EU：1426 法规</h3>
+<ul><li>欧盟实施法规 <strong>2022/1426</strong> 给制造商一条<strong>全欧范围</strong>的自动驾驶系统型式认证路径，<strong>可以替代</strong>德国国家运营许可</li><li>两条路径<strong>高度相似——因为 1426 基本是 AFGBV 的复制品</strong></li><li>但有一处关键差异：</li><li><strong>AFGBV：每制造商每年仅允许 250 台</strong></li><li><strong>1426 原有小批量限制</strong></li><li><strong>2026 年 3 月</strong>，委员会通过实施法规 <strong>2026/481 修订了 1426</strong>，<strong>加入了自动代客泊车（AVP）</strong>，并<strong>从小批量限制上退开</strong></li><li>Stegemann 判断：这<strong>初步为量产 AVP 车辆铺路</strong></li></ul>
+<h3>UNECE：真正的转折点</h3>
+<ul><li>6 月通过的 <strong>UNECE 自动驾驶法规</strong>将被纳入 <strong>2018/858</strong> 框架，<strong>届时也将适用于量产</strong></li><li>UN 法规发布后给成员国<strong>6 个月提出异议</strong>的窗口，之后才并入各自法律框架</li></ul>
+<p><strong>AFGBV 会失去部分分量：</strong></p>
+<ul><li>在<strong>车辆专属审批</strong>上，AFGBV 可能不再起作用——因为届时有 2018/858 提供的<strong>全欧统一路径</strong>，<strong>量产车可无限批量获批</strong></li><li>但 <strong>AFGBV 在运营区域审批上仍然重要</strong>，因为运营区域审批<strong>仍属各成员国管辖</strong></li></ul>
+<h3>一条容易忽略的架构事实</h3>
+<blockquote>即便拿到 EU 型式认证，<strong>运营规则仍然是国家层面的</strong>。一台全欧获批的车，<strong>仍不能凭单一许可就开到维也纳或慕尼黑</strong>。</blockquote>
+<p>Stegemann 认为这是<strong>权限分配问题</strong>：迄今 EU <strong>未被授予在成员国规范道路交通的权限</strong>，成员国自己负责，因此运营许可仍是国别事项。他<strong>难以想象 EU 会获得更多权限</strong>，但<strong>可以想象成员国自愿</strong>就某种标准与程序达成一致，从而<strong>互认许可或跨境开展技术监督</strong>。</p>
+<p>他还给了个视角判断：新 UNECE 法规本质上是 <strong>AFGBV 的进一步发展</strong>，因此对<strong>欧洲制造商</strong>而言不应算陌生，对<strong>来自美国和中国的制造商</strong>才是新问题。</p>
+<h2 id="s13">最终诊断：问题出在哪</h2>
+<p>主持人问：德国写出了世界第一个 L4 常规运营框架，却没成为第一个市场——<strong>问题在法律、在执行，还是在别的地方</strong>？</p>
+<p>Stegemann 的回答（先幽默复述了一遍）：</p>
+<blockquote>它<strong>如此复杂</strong>，以至于<strong>没有制造商能把它做到足够高的标准</strong>，让技术检验机构对申请人开绿灯。换句话说，<strong>至今没有任何技术检验机构认为这套论证有说服力</strong>。</blockquote>
+<p>他同时提到背景：<strong>Bitkom 在 2 月发布了立场文件，提出具体的 AFGBV 修正提案</strong>；而 <strong>5 月生效的第五次道路交通法修正案并未带来实质性改革</strong>。</p>
+<h3>如果能改，他会改什么（他只说了两条）</h3>
+<p><strong>第一条：维修人员的资质要求</strong></p>
+<ul><li>维修人员目前必须满足<strong>与技术监督员同样高</strong>的资质（认证汽车技师或工程师）</li><li>但与技术监督员不同，<strong>维修人员不能委托</strong></li><li>他的判断：<strong>这很可能造成新的技工短缺</strong>，而他<strong>目前不知道有任何合理的论证说「出车前检查必须由工程师来做」</strong></li></ul>
+<p><strong>第二条：禁止将测试许可商业化</strong></p>
+<ul><li>他指出这其实<strong>不是 AFGBV 的问题，而是 StVG 的问题</strong></li><li><strong>正反两面都有充分理由</strong></li><li>本质上这是一个<strong>政治决策</strong>：是否允许商业化、从而<strong>打开欧洲堡垒</strong>，还是保持关闭</li><li>因为一旦允许商业化，<strong>特别是新公司就会进入市场</strong>——这些公司<strong>技术上已经就绪</strong>，正在做监管就绪工作，而且<strong>有足够的资金与毅力</strong>去提供大规模商业试点运营，从而成为<strong>交通格局中的重要玩家</strong></li></ul>
+<h3>给城市与运营商的行动建议</h3>
+<p><strong>核心建议：不要一上来就招标（tender）。</strong></p>
+<blockquote>因为<strong>目前没有任何制造商持有真正的 L4 认证</strong>，因此<strong>无法在招标中 readily 兑现其承诺</strong>。</blockquote>
+<p>具体建议顺序：</p>
+<ol><li><strong>先想清楚你对车辆的要求</strong>——它在交通中具体执行什么任务；但<strong>不要过度陷入细节</strong>，聚焦于<strong>绝对必备的功能</strong></li><li><strong>先思考运营与运营区域</strong>（因为我们还在等第一份车辆许可）——这里问题很多：</li></ol>
+<ul><li>技术监督与维修人员的<strong>人员来源</strong></li><li>技术监督员如何<strong>整合进来</strong>：自己搞定，还是<strong>作为服务向制造商采购</strong></li><li>车辆究竟<strong>应该在哪里运行</strong>，那是否是<strong>现实可行的区域</strong>，还是包含<strong>过多高度复杂或挑战性的条件</strong>（例如<strong>网络信号差、交通管理困难</strong>）</li></ul>
+<h2 id="s14">三个值得单独记住的数字</h2>
+<table><thead><tr><th>数字</th><th>含义</th></tr></thead><tbody><tr><td><strong>250</strong></td><td>AFGBV 下每制造商每年的许可车辆上限（EU 1426 原为 1500 的小批量限制，已被 2026/481 放宽）</td></tr><tr><td><strong>16</strong></td><td>运营商全国扩张时可能需要谈判的机关数量下限（各州）</td></tr><tr><td><strong>50–100</strong></td><td>一名技术监督员法律上可同时监督的车辆数（无上限规定）</td></tr></tbody></table>
+<h2 id="s15">与收藏库内相关条目的衔接</h2>
+<ul><li><strong>[[eu-type-approval-autonomous]]</strong> — 欧盟 L4 型式认证（2022/1426）框架与技术服务机构，本期讲的是德国<strong>国家许可</strong>这条并行的路</li><li><strong>[[france-driverless-transport-rules]]</strong> — 法国把无人驾驶客运审批写进<strong>交通法</strong>而非车辆法；德国则落在<strong>车辆法 + 运营区域审批</strong>的双轨上，两种路径形成对照</li><li><strong>[[uk-av-permit]]</strong> — 英国的许可流程，与德国的 KBA 路径构成欧洲三种监管思路的对比</li></ul>
+<h2 id="s16">引用与免责</h2>
+<ul><li>本文基于 Substack 官方转录（transcription CDN）整理，<strong>非逐字翻译</strong>，为要点提炼与中文转述。</li><li>原始逐字稿见本站「📝 逐字稿」页；如需引用法律条文细节，请以德国官方文本（gesetze-im-internet.de）为准。</li><li>本期为播客观点，不代表法律意见；德国法规仍在演进（第五次 StVG 修正案 2026 年 5 月生效，UNECE 法规尚未并入）。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="../eu-type-approval-autonomous/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a><a class="relcard" href="../france-driverless-transport-rules/index.html"><div class="rw"><img loading="lazy" src="../france-driverless-transport-rules/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">法国的无人驾驶公共交通审批规则，由评估方亲解</div></div></a><a class="relcard" href="../nuro-road-to-driverless-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../nuro-road-to-driverless-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / YouTube</div><div class="rt">Nuro 联席 CEO Dave Ferguson：通向无人驾驶机器人出租车的路</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>

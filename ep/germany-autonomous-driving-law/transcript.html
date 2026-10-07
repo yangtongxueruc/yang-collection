@@ -1,0 +1,701 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可 · 逐字稿</title><meta name='description' content='Autonomy Insiders 请柏林律师 Till Stegemann 把德国 L4 审批流程逐级拆开：2021 年 StVG 修法是框架法、2022 年 AFGBV 是实施细则，而标题里那个词「in festgelegten Betriebsbereichen（在 predefined 运营区域内）」决定了全局——由此拆成「KBA 车辆许可」与「运营区域许可」两条互不隶属的审批线。真正的卡点不是缺法规，而是**至今没有任何一家制造商提交过让技术检验机构点头的功能安全概念（functional safety concept）**。反直觉细节：技术监督员不能远程驾驶、不能与乘客通话，一人多车可管到 50–100 辆，且必须本人到场；运营区域审批权不在 KBA 而在各州，全国铺开可能要谈 16 个机关；AFGBV 年度上限 250 辆 vs EU 1426 法规放宽小批量限制；技术监督员可以委托、但维修人员不能委托，律师认为这将直接造成技工短缺。'><meta property='og:title' content='德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可 · 逐字稿'><meta property='og:description' content='Autonomy Insiders 请柏林律师 Till Stegemann 把德国 L4 审批流程逐级拆开：2021 年 StVG 修法是框架法、2022 年 AFGBV 是实施细则，而标题里那个词「in festgelegten Betriebsbereichen（在 predefined 运营区域内）」决定了全局——由此拆成「KBA 车辆许可」与「运营区域许可」两条互不隶属的审批线。真正的卡点不是缺法规，而是**至今没有任何一家制造商提交过让技术检验机构点头的功能安全概念（functional safety concept）**。反直觉细节：技术监督员不能远程驾驶、不能与乘客通话，一人多车可管到 50–100 辆，且必须本人到场；运营区域审批权不在 KBA 而在各州，全国铺开可能要谈 16 个机关；AFGBV 年度上限 250 辆 vs EU 1426 法规放宽小批量限制；技术监督员可以委托、但维修人员不能委托，律师认为这将直接造成技工短缺。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/germany-autonomous-driving-law/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/inside-germanys-autonomous-driving" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders（The AV Market Strategist）· Substack</div><h1>德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可</h1><p class="sub">中英对照逐字稿 · Inside Germany&#x27;s Autonomous Driving Law: The Hurdle Nobody Has Cleared</p><div class="tags"><span class="tag">⏱ 43:16</span><span class="tag">Till Stegemann（德国柏林 Rödl 律师事务所律师，为城市、交通运营商与企业提供自动驾驶法律咨询；德国交通部《公共交通中的自动驾驶》手册共同作者，德国运输运营商协会无人驾驶客运创新论文共同作者）；主持人 Daniel Abreu Marques</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">德国</span><span class="chip" onclick="wbJumpKw(this)">Germany</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶法</span><span class="chip" onclick="wbJumpKw(this)">StVG</span><span class="chip" onclick="wbJumpKw(this)">AFGBV</span><span class="chip" onclick="wbJumpKw(this)">KBA</span><span class="chip" onclick="wbJumpKw(this)">联邦机动车运输管理局</span><span class="chip" onclick="wbJumpKw(this)">运营区域</span><span class="chip" onclick="wbJumpKw(this)">Betriebsbereich</span><span class="chip" onclick="wbJumpKw(this)">in festgelegten Betriebsbereichen</span><span class="chip" onclick="wbJumpKw(this)">功能安全概念</span><span class="chip" onclick="wbJumpKw(this)">functional safety concept</span><span class="chip" onclick="wbJumpKw(this)">技术监督员</span><span class="chip" onclick="wbJumpKw(this)">technische Aufsicht</span><span class="chip" onclick="wbJumpKw(this)">最小风险状态</span><span class="chip" onclick="wbJumpKw(this)">Risikominimale Zustand</span><span class="chip" onclick="wbJumpKw(this)">L4</span><span class="chip" onclick="wbJumpKw(this)">SAE</span><span class="chip" onclick="wbJumpKw(this)">型式认证</span><span class="chip" onclick="wbJumpKw(this)">type approval</span><span class="chip" onclick="wbJumpKw(this)">2022/1426</span><span class="chip" onclick="wbJumpKw(this)">AVP</span><span class="chip" onclick="wbJumpKw(this)">自动泊车</span><span class="chip" onclick="wbJumpKw(this)">小批量</span><span class="chip" onclick="wbJumpKw(this)">250辆</span><span class="chip" onclick="wbJumpKw(this)">UNECE</span><span class="chip" onclick="wbJumpKw(this)">2018/858</span><span class="chip" onclick="wbJumpKw(this)">PBFG</span><span class="chip" onclick="wbJumpKw(this)">客运许可</span><span class="chip" onclick="wbJumpKw(this)">车辆保有人</span><span class="chip" onclick="wbJumpKw(this)">Halter</span><span class="chip" onclick="wbJumpKw(this)">强制保险</span><span class="chip" onclick="wbJumpKw(this)">柏林真实道路测试</span><span class="chip" onclick="wbJumpKw(this)">BASt</span><span class="chip" onclick="wbJumpKw(this)">联邦公路研究所</span><span class="chip" onclick="wbJumpKw(this)">远程驾驶</span><span class="chip" onclick="wbJumpKw(this)">StVFernLV</span><span class="chip" onclick="wbJumpKw(this)">第5次道路交通法修正案</span><span class="chip" onclick="wbJumpKw(this)">Bitkom</span><span class="chip" onclick="wbJumpKw(this)">欧洲堡垒</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">Germany&#x27;s legal head start · 德国的法律先手</a><a href="#s1">The architecture: StVG, AFGBV and the SAE levels · 架构：StVG、AFGBV 与 SAE 分级</a><a href="#s2">Permit 1: Vehicle approval from the KBA · 第一道许可：KBA 车辆许可</a><a href="#s3">Permit 2: Operating area approval and the Berlin real-world test · 第二道许可：运营区域审批与柏林真实道路测试</a><a href="#s4">The technical supervisor and the vehicle holder · 技术监督员与车辆保有人</a><a href="#s5">Passenger transport permit and liability · 客运许可与责任</a><a href="#s6">EU type approval and the new UN regulation · 欧盟型式认证与新的 UN 法规</a><a href="#s7">Why Germany is not the first market · 德国为何没有成为第一个市场</a><a href="#s8">Advice for cities and operators · 给城市与运营商的建议</a></nav><main class="content"><h1>德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可</h1>
+<p><strong>Inside Germany&#x27;s Autonomous Driving Law: The Hurdle Nobody Has Cleared</strong></p>
+<blockquote>播客：Autonomy Insiders（The AV Market Strategist）| 2026-10-07 | 43:16</blockquote>
+<blockquote>嘉宾：<strong>Till Stegemann</strong>（柏林 Rödl 律师事务所律师，为城市、交通运营商与企业提供自动驾驶法律咨询；德国交通部《公共交通中的自动驾驶》手册共同作者）</blockquote>
+<blockquote>主持人：Daniel Abreu Marques</blockquote>
+<blockquote>说明：本文为 Substack 官方逐字稿的<strong>中英对照整理版</strong>。英文为官方转录原文（含自动转录的轻微口误，已在中文中按上下文校正）；中文为人工翻译，忠实原意，非逐字对译。</blockquote>
+<hr>
+<h2 id="s0">Germany&#x27;s legal head start · 德国的法律先手</h2>
+<p class="seg" id="seg-1"><span class="ts">[00:00:05 – 00:00:14]</span><div class="seg-body">
+<p class="en">Welcome to Autonomy Insiders, the show where global industry leaders in autonomous driving unpack their real-world insights.</p>
+<p class="zh">欢迎来到《Autonomy Insiders》，这是一档邀请全球自动驾驶行业领袖分享他们真实世界洞察的节目。</p></div></p>
+<p class="seg" id="seg-2"><span class="ts">[00:00:20 – 00:00:34]</span><div class="seg-body">
+<p class="en">Welcome to Autonomy Insiders. I&#x27;m your host, Daniel. And Germany did something unusual in 2021. Before a single robotaxi was operating anywhere in Europe, the country wrote a full legal framework for driverless vehicles and regular commercial servers.</p>
+<p class="zh">欢迎来到《Autonomy Insiders》。我是你的主持人 Daniel。德国在 2021 年做了一件不寻常的事：在欧洲任何一台 robotaxi 都还没运营之前，这个国家就已经为无人驾驶车辆和常规商业运营写出了一整套法律框架。</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[00:00:34 – 00:00:49]</span><div class="seg-body">
+<p class="en">So the Autonomous Driving Act, then the AFGBV regulation in 2022. It was at a time the most complete level for law in the world. And now, four years later, the picture is more complicated. So Waymo runs thousands of driverless vehicles in the US.</p>
+<p class="zh">就是《自动驾驶法》，然后是 2022 年的 AFGBV 条例。那是全球最完整的 L4 法律框架。而现在四年过去，情况变得复杂了：Waymo 在美国已经运营着数千台无人驾驶车辆。</p></div></p>
+<p class="seg" id="seg-4"><span class="ts">[00:00:49 – 00:01:04]</span><div class="seg-body">
+<p class="en">China has multiple cities in commercial operation. In Germany, Moya started carrying passengers in Hamburg, but still with a safety driver behind the wheel. So what does the German law actually require is a question that I get often.</p>
+<p class="zh">中国已有多座城市进入商业运营。在德国，MOYA 开始在汉堡载客，但驾驶座上仍坐着安全员。所以「德国法律到底要求什么」是我经常被问到的问题。</p></div></p>
+<p class="seg" id="seg-5"><span class="ts">[00:01:04 – 00:01:19]</span><div class="seg-body">
+<p class="en">And today we want to dig into this and not the headline version, so the real version. So which permits from which authority in which order And what has to be in the Fireland. My guest today is Til Stegemann. He is a lawyer at Rödel in Berlin.</p>
+<p class="zh">今天我们想深挖这个问题的<strong>真实版本</strong>，而不是标题版本：需要哪些许可、来自哪个机关、按什么顺序、材料里必须有什么。我今天的嘉宾是 Till Stegemann，他是柏林 Rödl 律师事务所的律师。</p></div></p>
+<p class="seg" id="seg-6"><span class="ts">[00:01:19 – 00:01:35]</span><div class="seg-body">
+<p class="en">And he advises cities, transport operators and companies on autonomous mobility. And he also co-authored the innovation paper on driverless passenger transport for the German Association of Transport Operators. And he writes regularly on where this framework works and where it does not.</p>
+<p class="zh">他为城市、交通运营商和企业提供自动驾驶方面的法律咨询，还与他人共同撰写了为德国运输运营商协会准备的无人驾驶客运创新论文。他也持续撰文分析这套框架在哪里行得通、在哪里行不通。</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[00:01:35 – 00:01:53]</span><div class="seg-body">
+<p class="en">So he has a really good LinkedIn page and I would recommend to follow him there as well. Till, welcome to Autonomy Insiders and so happy to have you on the show today. Yeah, thanks Daniel for the invitation. I&#x27;m always happy when people show interest in autonomous driving since</p>
+<p class="zh">他的 LinkedIn 主页很值得一读，推荐大家关注。Till，欢迎来到《Autonomy Insiders》，很高兴今天请到你。</p></div></p>
+<p class="zh">谢谢 Daniel 的邀请。只要人们愿意关注自动驾驶，我总是很高兴——因为</p></div></p>
+<p class="seg" id="seg-8"><span class="ts">[00:01:53 – 00:02:16]</span><div class="seg-body">
+<p class="en">the topic has fascinated me since I was a kid. So let&#x27;s start at the top and work down. I want us to build a whole picture before we judge any of it. Germany has two separate instruments here. The STVG, so the Road Traffic Act, amendments from 2021 and the AFGBB from 2022.</p>
+<p class="zh">这个主题从我小时候就吸引着我。那我们从顶层往下走，先建立完整图景，再做评判。德国在这里有两套独立的法律工具：StVG（《道路交通法》）2021 年的修正案，以及 2022 年的 AFGBV。</p></div></p>
+<hr>
+<h2 id="s1">The architecture: StVG, AFGBV and the SAE levels · 架构：StVG、AFGBV 与 SAE 分级</h2>
+<p class="seg" id="seg-9"><span class="ts">[00:02:16 – 00:02:35]</span><div class="seg-body">
+<p class="en">So what does each one do and why did the legislators split it that way instead of writing one law? This is a deliberate division based on a regulatory logic. 2021 amendments to the STVG. They constitute the overarching framework law.</p>
+<p class="zh">各自管什么？为什么立法者要这样拆分，而不是写成一部法？这是基于监管逻辑的刻意分工。2021 年的 StVG 修正案构成了<strong>上位框架法</strong>。</p></div></p>
+<p class="seg" id="seg-10"><span class="ts">[00:02:35 – 00:02:57]</span><div class="seg-body">
+<p class="en">They define fundamental concepts such as operating permits, technical supervision and liability provisions. They are, so to speak, the foundation and the AFGBV of 2022. It&#x27;s then the specialized implementing regulation that governs the details.</p>
+<p class="zh">它定义了运营许可、技术监督、责任规定等基础概念，可以说就是<strong>地基</strong>。而 2022 年的 AFGBV 则是<strong>实施细则</strong>，管具体细节。</p></div></p>
+<p class="seg" id="seg-11"><span class="ts">[00:02:57 – 00:03:19]</span><div class="seg-body">
+<p class="en">This division makes it possible to keep the foundation stable while allowing for more flexible adjustment to the technical requirements or procedures within the regulation. So this is also legally a sounder. The strategic architecture remains in the STVG</p>
+<p class="zh">这样的拆分让<strong>地基保持稳定</strong>，同时允许在条例内部<strong>更灵活地调整技术要求或流程</strong>。从法律上说这也更稳妥。战略架构留在 StVG，</p></div></p>
+<p class="seg" id="seg-12"><span class="ts">[00:03:19 – 00:03:45]</span><div class="seg-body">
+<p class="en">while operational issues are addressed in the AFGBV. And the AFGBV title contains also a phrase that does a lot of work. So this is called in German, in festgelegten Betriebsbereichen, which means in indefined operating areas. How much of this entire regulatory design follows from that single choice?</p>
+<p class="zh">而操作层面的问题交给 AFGBV。AFGBV 的名称里还包含一个<strong>承担了大量工作</strong>的短语，德文叫 <strong>&quot;in festgelegten Betriebsbereichen&quot;</strong>，意思是「在<strong>预先指定的运营区域</strong>内」。整个监管设计有多少是从这个单一选择推导出来的？</p></div></p>
+<p class="seg" id="seg-13"><span class="ts">[00:03:45 – 00:04:09]</span><div class="seg-body">
+<p class="en">This single sentence established autonomous vehicles are not permitted to operate everywhere, but only within predefined approved operating areas. This term runs like a common thread throughout the entire regulatory framework. And as a result, there are two separate approval processes.</p>
+<p class="zh">这一句话确立了一个原则：<strong>自动驾驶车辆不是到处都能跑，只能在预先批准的特定运营区域内运行</strong>。这个概念像一条主线贯穿整个监管框架。其结果就是——<strong>审批被拆成了两条独立的流程</strong>。</p></div></p>
+<p class="seg" id="seg-14"><span class="ts">[00:04:09 – 00:04:31]</span><div class="seg-body">
+<p class="en">One for the vehicle itself and one for its actual operating area at a defined location. And it also explains why the ODD, the operational design domain, Description is so crucial because only by referring to the ODD can one verify</p>
+<p class="zh">一条针对<strong>车辆本身</strong>，另一条针对<strong>它在特定地点的实际运营区域</strong>。这也解释了为什么 <strong>ODD（运行设计域）</strong> 描述如此关键——因为只有引用 ODD，才能验证</p></div></p>
+<p class="seg" id="seg-15"><span class="ts">[00:04:31 – 00:04:56]</span><div class="seg-body">
+<p class="en">whether the vehicle&#x27;s capabilities and the operating locations truly align. After all the operating Area or specific requirements must never exceed the vehicle&#x27;s capabilities and thus the ODD. However, this restriction is not unusual.</p>
+<p class="zh">车辆能力与运行地点是否真正匹配。毕竟，<strong>运营区域的具体要求永远不能超出车辆的能力，也就是 ODD</strong>。不过这个限制并不奇怪。</p></div></p>
+<p class="seg" id="seg-16"><span class="ts">[00:04:56 – 00:05:16]</span><div class="seg-body">
+<p class="en">Rather, it is a central component of the level 4 logic in which, unlike at level 5, the vehicle cannot drive autonomously everywhere but only within a defined area and thus without a human fallback. Yeah, so you touched already on the SAE levels and the German law does not use</p>
+<p class="zh">它恰恰是 <strong>L4 逻辑的核心组成部分</strong>——与 L5 不同，L4 车辆不是哪里都能自动驾驶，而只能在定义区域内运行，也就是<strong>没有人类后备</strong>。</p></div></p>
+<p class="zh">你已经提到 SAE 分级了，但德国法并不使用</p></div></p>
+<p class="seg" id="seg-17"><span class="ts">[00:05:16 – 00:05:35]</span><div class="seg-body">
+<p class="en">the SAE levels as its legal category. So it has its own definition and paragraph 1A, paragraph 1D and paragraph 1H of the Road Traffic Act. So can you walk me through the legal categories that actually exist and where the SAE mental model maybe also misleads people?</p>
+<p class="zh">SAE 分级作为法律分类。它有自己的定义体系，在《道路交通法》的第 1a 条、第 1d 条和第 1h 条。你能带我们梳理一下实际存在的法律分类吗？以及 SAE 心智模型在哪些地方可能误导人？</p></div></p>
+<p class="seg" id="seg-18"><span class="ts">[00:05:35 – 00:06:04]</span><div class="seg-body">
+<p class="en">German law does not use the SAE levels as legal categories. The SAE levels describe the technical degree of automation of a system. So the StVG regulates legal roles, responsibilities and conditions of use. And since the reform, a simplified distinction has been made between automated driving functions</p>
+<p class="zh">德国法不把 SAE 分级当作法律分类。<strong>SAE 描述的是系统的技术自动化程度</strong>，而 <strong>StVG 规定的是法律角色、责任和使用条件</strong>。改革之后，法律做了一个简化区分：一是「自动化驾驶功能」，</p></div></p>
+<p class="seg" id="seg-19"><span class="ts">[00:06:04 – 00:06:35]</span><div class="seg-body">
+<p class="en">under paragraph 1a STVG which essentially corresponded to SAE level 3 and autonomous driving functions under paragraph 1d or section 1d STVG which essentially corresponded to SAE level 4. The key difference is that 1A continues to require a driver as a fallback.</p>
+<p class="zh">即 StVG 第 1a 条下的自动化驾驶功能，大致对应 SAE L3；二是「自动驾驶功能」，即第 1d 条，基本对应 SAE L4。<strong>关键差别在于：第 1a 条仍然要求有驾驶员作为后备。</strong></p></div></p>
+<p class="seg" id="seg-20"><span class="ts">[00:06:35 – 00:07:01]</span><div class="seg-body">
+<p class="en">Whereas 1D assumes a system that must function within a defined operating range without a human fallback. This is precisely where the SAE conceptual model is often misleading. It describes the technical level of automation but does not explain</p>
+<p class="zh">而<strong>第 1d 条假定的是一套必须在定义的运行范围内、无需人类后备即可运作的系统</strong>。这正是 SAE 模型经常误导人的地方：它描述了技术自动化程度，却没有解释</p></div></p>
+<p class="seg" id="seg-21"><span class="ts">[00:07:01 – 00:07:31]</span><div class="seg-body">
+<p class="en">the legal requirements, responsibilities and operational limits of a system. In particular, the central role of the defined operating domain cannot be deduced by the SAE classification. It describes the technical level of automation but does not explain the legal requirements, responsibilities and operational limits of a system. In particular, the central role of the defined operating domain cannot be deduced from the SAE classification alone.</p>
+<p class="zh">一个系统的法律要求、责任和运行边界。尤其是，<strong>「定义的运行区域」这个核心角色，无法从 SAE 分类中推导出来</strong>。仅凭 SAE 分类，你无法理解一套系统的法律要求、责任与运行边界，也无法理解运行区域为何居于核心地位。</p></div></p>
+<p class="zh">有道理。</p></div></p>
+<p class="seg" id="seg-22"><span class="ts">[00:07:31 – 00:08:02]</span><div class="seg-body">
+<p class="en">And the paragraph 1D of the Road Traffic Act defines also the Risikominimale Zustand in German, which is like the minimal risk condition. And that sounds like a real technical term, but it has also legal consequences. So what are the legal consequences? The minimal risk state describes the state into which an autonomous vehicle must transition</p>
+<p class="zh">此外，《道路交通法》第 1d 条还定义了德文的 <strong>Risikominimale Zustand</strong>，即「最小风险状态」。这听起来像个纯技术术语，但它也有法律后果。<strong>有什么法律后果？</strong> 最小风险状态描述的是自动驾驶车辆<strong>必须切换进入的那种状态</strong>——</p></div></p>
+<p class="seg" id="seg-23"><span class="ts">[00:08:02 – 00:08:31]</span><div class="seg-body">
+<p class="en">when it can no longer safely continue its driving task. For example, due to technical malfunctions, system limitations or other safety-related events. Although the term sounds technical, it has significant legal implications. The ability to autonomously enter a low-risk state is one of the key requirements</p>
+<p class="zh">当它无法再安全地继续执行驾驶任务时，例如因技术故障、系统局限或其他安全相关事件。<strong>能否自主进入低风险状态，是自动驾驶车辆获批的关键要求之一</strong>，</p></div></p>
+<p class="seg" id="seg-24"><span class="ts">[00:08:31 – 00:09:06]</span><div class="seg-body">
+<p class="en">for the approval of autonomous vehicles. Manufacturers must demonstrate that the vehicle can reliably implement this safety concept. And before we now get to the process, so who is the accuracy of this regulation? So is the AFGBV primarily written for manufacturers?</p>
+<p class="zh">制造商必须证明车辆能可靠地实现这一安全概念。在进入流程之前先问一句：<strong>这套条例究竟是写给谁的？</strong> AFGBV 主要是为制造商写的吗？</p></div></p>
+<p class="seg" id="seg-25"><span class="ts">[00:09:06 – 00:09:31]</span><div class="seg-body">
+<p class="en">Is it for operators or for whom is it? Formally, it is addressed to all three parties. But in practice, it focuses on the one group, the applicants, that is manufacturers and operators. They need to know what they must submit and in what format and with what content.</p>
+<p class="zh">还是为运营商写的？<strong>形式上它面向三方</strong>，但实际上它聚焦于<strong>申请方</strong>这一群体，也就是制造商和运营商。因为他们需要知道必须提交什么、以什么格式、包含什么内容。</p></div></p>
+<p class="seg" id="seg-26"><span class="ts">[00:09:31 – 00:09:55]</span><div class="seg-body">
+<p class="en">The authorities play a secondary role. They are the recipients and the applications must evaluate them in accordance with this regulation. Alright, so now let&#x27;s do this as a practical sequence. Say I am an operator and I want driverless vehicles and carrying passengers in a German city. So the first thing I need is a legal vehicle. So take me through that step. So the Betriebserlaubnis or the operating permit under the paragraph 1E STBG and the paragraphs 224 AFGBV. So... Who applies for that? To whom? The manufacturer applies for type approval from the KBA,</p>
+<p class="zh">机关扮演的是次要角色——它们是接收方，并且必须依照条例评估这些申请。好，现在我们按实际操作顺序来走一遍。假设我是一名运营商，想在德国某座城市用无人驾驶车辆载客。<strong>我首先需要一辆合法的车。</strong> 这一步是 <strong>Betriebserlaubnis（运营许可）</strong>，依据 StVG 第 1e 条和 AFGBV 第 22 条以下。<strong>谁来申请？向谁申请？</strong> 由<strong>制造商</strong>向 <strong>KBA</strong> 申请型式认证，</p></div></p>
+<hr>
+<h2 id="s2">Permit 1: Vehicle approval from the KBA · 第一道许可：KBA 车辆许可</h2>
+<p class="seg" id="seg-27"><span class="ts">[00:09:55 – 00:10:16]</span><div class="seg-body">
+<p class="en">which is the Federal Motor Transport Authority, which has central jurisdiction throughout Germany. Applicant must include a wide range of documents, the functional safety concept, the IT security concept, the operational design domain description,</p>
+<p class="zh">KBA 即<strong>联邦机动车运输管理局</strong>，在全德国拥有<strong>集中管辖权</strong>。申请方必须提交大量文件：<strong>功能安全概念、IT 安全概念、ODD 描述</strong>，</p></div></p>
+<p class="seg" id="seg-28"><span class="ts">[00:10:16 – 00:10:35]</span><div class="seg-body">
+<p class="en">technical documentation for the vehicle and the evidence of system testing. In principle, it is a complete dossier demonstrating that the vehicle meets the requirements. The KBA then verifies whether the vehicle can operate safely within its defined ODD.</p>
+<p class="zh">车辆的技术文档以及系统测试证据。原则上，这是一份<strong>证明车辆满足要求的完整卷宗</strong>。随后 KBA 验证该车辆能否在其定义的 ODD 内安全运行。</p></div></p>
+<p class="seg" id="seg-29"><span class="ts">[00:10:35 – 00:11:00]</span><div class="seg-body">
+<p class="en">Paragraph 3 of the AFGBV lists all these required documents. So as you said, like the functional safety concept, IT security concept, the ODD description and much more. So which of those items is the one that actually takes the longest</p>
+<p class="zh">AFGBV 第 3 条列出了全部这些必需文件——正如你说的，功能安全概念、IT 安全概念、ODD 描述等等。<strong>那么这些材料中，哪一项最耗时</strong></p></div></p>
+<p class="seg" id="seg-30"><span class="ts">[00:11:00 – 00:11:22]</span><div class="seg-body">
+<p class="en">and also causes most applications to stall? Since I haven&#x27;t yet been involved in the approval process the manufacturer&#x27;s side, I can&#x27;t speak from personal experience, but only from what I&#x27;ve heard from others. In that regard, I&#x27;d say the functional safety concept is the biggest challenge.</p>
+<p class="zh"><strong>又最容易让申请卡住？</strong> 因为我还没有参与过制造商侧的审批流程，不能以亲历者身份发言，只能基于从他人那里听来的情况。在这方面，我会说<strong>功能安全概念是最大的挑战</strong>。</p></div></p>
+<p class="seg" id="seg-31"><span class="ts">[00:11:22 – 00:12:04]</span><div class="seg-body">
+<p class="en">Since manufacturers have to figure out, they will demonstrate that their vehicle meets the requirements. And so far, no one has managed to apply for the regular approval and thus submit a concept that the technical inspection agencies considered good enough to deem it ready for approval. The challenge is to develop a rationally that proves safety and capability while simultaneously enabling the technical inspection agencies to test whether the rationale actually delivers what the manufacturer claims, and secondly, whether it is even suitable for providing the required proof. So in my view, that is the biggest hurdle which no one has cleared yet.</p>
+<p class="zh">制造商必须解决一个问题：<strong>如何证明自己的车辆满足要求</strong>。而到目前为止，<strong>没有任何一家成功申请过常规许可</strong>——没有人提交过一份技术检验机构认为足够好、可以进入批准阶段的概念。难点在于要develop出一套论证，它既能<strong>证明安全与能力</strong>，又能同时让技术检验机构<strong>检验这套论证是否真的兑现了制造商的宣称</strong>，以及它<strong>是否适合用来提供所要求的证明</strong>。在我看来，<strong>这是至今无人跨过的最大障碍</strong>。</p></div></p>
+<p class="seg" id="seg-32"><span class="ts">[00:12:04 – 00:12:27]</span><div class="seg-body">
+<p class="en">And the manufacturer defines the conditions the vehicle is allowed to drive in. So the ODD, as we now have cited, when it applies to the KBA. But the operating area is applied for afterwards. And this is done by the operator and at a different authority. So who checks that the two actually match? In principle, the authority responsible for approving the specified operating domain.</p>
+<p class="zh">而<strong>车辆允许在什么条件下行驶，是制造商定义的</strong>——也就是我们刚才提到的 ODD，这一步是向 KBA 申请的。但<strong>运营区域是之后才申请的</strong>，由<strong>运营商</strong>向<strong>另一个机关</strong>申请。那么<strong>谁来核查这两者是否真的匹配？</strong> 原则上，是<strong>负责批准该指定运营区域的机关</strong>。</p></div></p>
+<p class="seg" id="seg-33"><span class="ts">[00:12:27 – 00:12:57]</span><div class="seg-body">
+<p class="en">The specified operating area is also the authority that must assess whether the requested operating area is compatible with the vehicle&#x27;s capabilities and ultimately with its ODD. It will regularly rely on the assessment of a technical testing service.</p>
+<p class="zh">也就是那个批准运营区域的机关，它必须评估<strong>所申请的运营区域是否与车辆能力、以及最终与 ODD 相容</strong>。它通常会依赖一家<strong>技术检验服务机构</strong>的评估。</p></div></p>
+<p class="seg" id="seg-34"><span class="ts">[00:12:57 – 00:13:16]</span><div class="seg-body">
+<p class="en">The testing service analyzes whether the capabilities approved for the vehicle and the conditions in the requested operating area are actually compatible. Based on this assessment, the competent authority then decides where to approve the operating area.</p>
+<p class="zh">该检验机构分析：<strong>已为该车辆获批的能力，与所申请运营区域内的条件是否真正相容</strong>。主管机关据此决定批准在何处设立运营区域。</p></div></p>
+<p class="seg" id="seg-35"><span class="ts">[00:13:16 – 00:13:35]</span><div class="seg-body">
+<p class="en">Therefore, I would not say that no one checks the alignment between the ODD and the operating domain here. The check does take place, but only during the operating domain approval process and not during the vehicle approval process. Makes sense.</p>
+<p class="zh">所以我不会说这里没人核查 ODD 与运营区域之间的对应关系。<strong>核查确实在进行，但只发生在运营区域审批环节，而不在车辆审批环节。</strong> 有道理。</p></div></p>
+<p class="seg" id="seg-36"><span class="ts">[00:13:35 – 00:14:05]</span><div class="seg-body">
+<p class="en">And paragraph 1E of the Road Traffic Act sets out what the technical equipment must be able to do. And one requirement sent out. So the vehicle must handle the driving task safely in all situations within the approved area. So how is that assessed in practice? And is all situation also a legally achievable standard? Wording of the law does not explicitly refer to all situations. Rather, Section 1E The Road Traffic Act requires that the vehicle be able to perform</p>
+<p class="zh">而《道路交通法》第 1e 条规定了技术设备必须能做到什么。其中有一项要求经常被单独拎出来：<strong>车辆必须在批准区域内的「所有情况」下安全完成驾驶任务</strong>。这在实践中怎么评估？而「所有情况」在法律上是可达成的标准吗？</p></div></p>
+<p class="zh"><strong>法条本身并没有明确写「所有情况」</strong>。第 1e 条实际要求的是：车辆必须能够</p></div></p>
+<p class="seg" id="seg-37"><span class="ts">[00:14:05 – 00:14:45]</span><div class="seg-body">
+<p class="en">the driving task autonomously within its approved operating range. At first glance, this sounds similar, but it makes an important distinction. If one were to interpret all situations literally, the standard would be practically impossible to meet. Neither a human or an autonomous system can predict or test every conceivable traffic situation. German law therefore takes a different approach. It does not require the vehicle to perfectly handle every theoretical situation,</p>
+<p class="zh">在其<strong>批准的运行范围内自主完成驾驶任务</strong>。乍看相似，但这是一个重要区别。<strong>如果把「所有情况」按字面理解，这个标准实际上不可能达成</strong>——无论是人还是自动驾驶系统，都无法预测或测试每一种 conceivable 的交通情形。因此德国法采取了不同的进路：<strong>它不要求车辆完美处理每一种理论上的、 conceivable 的情形</strong>，</p></div></p>
+<p class="seg" id="seg-38"><span class="ts">[00:14:45 – 00:15:24]</span><div class="seg-body">
+<p class="en">It requires that the vehicle can be operated safely within its approved scope of operation and that it also reacts safely to situations it cannot resolve on its own. This is precisely where Section 1E contains a whole series of additional requirements. The vehicle must recognize its system limitations and in case of doubt, it must autonomously put itself into a state that minimizes a risk or minimal risk state. This means that the legacy ledger evaluates not only the vehicle&#x27;s ability</p>
+<p class="zh">它要求的是：<strong>车辆能在其批准的运行范围内被安全运行，并且对自己无法独立解决的情形也能做出安全反应</strong>。而 §1e 恰恰为此塞进了一整套附加要求：<strong>车辆必须识别自身的系统局限，并在存疑时自主进入风险最小化状态，也就是最小风险状态</strong>。这意味着<strong>监管评估的不仅是车辆继续行驶的能力</strong>，</p></div></p>
+<p class="seg" id="seg-39"><span class="ts">[00:15:24 – 00:16:09]</span><div class="seg-body">
+<p class="en">to continue driving, but also its ability to safely stop driving. In practice, this is demonstrated through a combination of safety concepts, validation, evidence, simulations, etc. The manufacturer must convincingly demonstrate that the autonomous driving function operates safely. The real challenge therefore lies in providing this evidence. How does a manufacturer show that its safety case is sufficient? How many scenarios must be tested? How much simulation is enough?</p>
+<p class="zh"><strong>还包括它安全停下来行驶的能力</strong>。实践中，这通过安全概念、验证、证据、仿真等手段的组合来证明。制造商必须有说服力地证明自动驾驶功能运行安全。<strong>所以真正的挑战在于提供这些证据</strong>：制造商如何证明其安全案例（safety case）充分？必须测试多少场景？多少仿真才算够？</p></div></p>
+<p class="seg" id="seg-40"><span class="ts">[00:16:09 – 00:16:42]</span><div class="seg-body">
+<p class="en">That is precisely where the actual regulatory divide lies today. And how does the KBA actually test this? So is it then the document review, physical testing, simulation, as you mentioned, all three? And who is also qualified to do the assessment? The KBA has considerably... Discretion in the testing process.</p>
+<p class="zh"><strong>这正是当下真正的监管分界线所在。</strong> 那 KBA 究竟怎么测？是文件审查、实物测试、仿真——如你所说，三者都用吗？又由谁有资格做评估？</p></div></p>
+<p class="zh">KBA 在测试流程中拥有相当大的……<strong>裁量权</strong>。</p></div></p>
+<p class="seg" id="seg-41"><span class="ts">[00:16:42 – 00:17:07]</span><div class="seg-body">
+<p class="en">For example, the Federal Office for Information Security is required to participate only when assessing the information technology security concept. Otherwise, the KBA may engage an officially recognized expert.</p>
+<p class="zh">例如，<strong>只有在评估 IT 安全概念时，联邦信息安全局才必须参与</strong>。其他情况下，KBA 可以委托<strong>官方认可的专家</strong>。</p></div></p>
+<p class="seg" id="seg-42"><span class="ts">[00:17:07 – 00:17:37]</span><div class="seg-body">
+<p class="en">There&#x27;s some debate over who qualifies as an expert as certain universities now see themselves in this role alongside technical testing services as TÜV or DEKRA. The Federal Highway Research Institute, BAST, is currently developing a test catalog designed to enable technical testing services to a kind of driver&#x27;s license test for autonomous vehicles.</p>
+<p class="zh"><strong>「谁算专家」目前存在争议</strong>——现在某些高校认为自己也可以担任这个角色，与 TÜV、DEKRA 等技术检验机构并列。目前<strong>联邦公路研究所（BASt）正在制定一套测试目录</strong>，目标是让技术检验机构能对自动驾驶车辆做某种<strong>「驾照考试」</strong>。</p></div></p>
+<p class="seg" id="seg-43"><span class="ts">[00:17:37 – 00:18:12]</span><div class="seg-body">
+<p class="en">Okay. And another topic is software updates. So an autonomous driving system changes continuously. What does the AFGBV require when the software behind an approved vehicle changes and does the framework handle that well?</p>
+<p class="zh">好。另一个话题是<strong>软件更新</strong>。自动驾驶系统在持续变化，那么当已获批车辆背后的软件发生变化时，AFGBV 要求什么？这套框架处理得好吗？</p></div></p>
+<p class="seg" id="seg-44"><span class="ts">[00:18:12 – 00:19:05]</span><div class="seg-body">
+<p class="en">The AFGBV states that modifications or updates to the vehicles require approval from the KBA. And it&#x27;s not specified whether this refers to all modifications or updates or only certain modifications above a certain security level. However, I would assume that there&#x27;s a distinction between minor and major updates and that only major updates require approval. Therefore, the issue is likely not whether you repair the window regulator, but rather updates that affect the system safety.</p>
+<p class="zh">AFGBV 规定，对车辆的<strong>改动或更新需要 KBA 批准</strong>。但它没有明确这指的是<strong>所有</strong>改动与更新，还是仅指<strong>超过某安全等级的特定改动</strong>。不过我推测，<strong>重大更新与轻微更新之间应当有区分，且只有重大更新需要批准</strong>。所以问题的关键大概不是你要不要修车窗升降器，而是<strong>那些影响系统安全的更新</strong>。</p></div></p>
+<hr>
+<h2 id="s3">Permit 2: Operating area approval and the Berlin real-world test · 第二道许可：运营区域审批与柏林真实道路测试</h2>
+<p class="seg" id="seg-45"><span class="ts">[00:19:05 – 00:19:35]</span><div class="seg-body">
+<p class="en">So now I have an approved vehicle. But I still cannot carry a single passenger. So that is the second permit and it comes from a completely different authority. So the approval for the operating area under the paragraph 7 to 9 of the AFGBV. So who is there the competent authority and how does that differ from state to state?</p>
+<p class="zh">现在我有一辆获批的车了。但我<strong>还是不能载一名乘客</strong>。这就是第二道许可，它来自一个完全不同的机关——依据 <strong>AFGBV 第 7 至 9 条的运营区域审批</strong>。那么那里的主管机关是谁？各州之间有何不同？</p></div></p>
+<p class="seg" id="seg-46"><span class="ts">[00:19:35 – 00:20:03]</span><div class="seg-body">
+<p class="en">This is decentralized and that&#x27;s one of the trickiest issues. Approval for the operating area does not come from the KBA but from the state authorities or in the case of the federal highways centrally from the Autobahn GmbH. This means that an operator may potentially have to negotiate with at least 16 different authorities, if he wants to expand nationwide.</p>
+<p class="zh"><strong>这是去中心化的，也是最棘手的问题之一。</strong> 运营区域审批<strong>不来自 KBA</strong>，而来自<strong>各州机关</strong>；联邦高速公路路段则由 <strong>Autobahn GmbH</strong> 集中负责。这意味着运营商若想<strong>全国扩张，可能至少要谈判 16 个不同的机关</strong>。</p></div></p>
+<p class="seg" id="seg-47"><span class="ts">[00:20:03 – 00:20:23]</span><div class="seg-body">
+<p class="en">So for example, if the operating area there crosses a state road, a country road and a municipal road, then these three authorities, each for the respective section falling under their jurisdiction, are the competent permitting authorities, even if it involves only a single operating area. So what does an applicant have to submit to get an operating area approved?</p>
+<p class="zh">举例来说，如果运营区域<strong>同时跨越一条州道、一条乡村道路和一条市政道路</strong>，那么<strong>这三个机关——各自对落在其辖区内的路段——都是主管许可机关，哪怕这只是单一的运营区域</strong>。那么申请人要提交什么才能获得运营区域批准？</p></div></p>
+<p class="seg" id="seg-48"><span class="ts">[00:20:23 – 00:20:56]</span><div class="seg-body">
+<p class="en">The requirements are set forth in paragraph 8 of the AFGBV and are too extensive to list in their entirety. Essentially, the owner must demonstrate where they intend to use the vehicle and that such use is both feasible and safe given the vehicle&#x27;s capabilities. Another important aspect is the owner must submit the vehicle&#x27;s operating permit. Thus, they cannot obtain approval for an operating area on a whim, but can only do so for a specific vehicle. In addition, they must also provide information about the individuals they intend to employ the duties of the technical supervision and maintenance personnel, for example, criminal background checks, etc.</p>
+<p class="zh">要求列在 <strong>AFGBV 第 8 条</strong>，繁多得无法尽列。本质上，保有人须证明<strong>打算在哪里使用车辆</strong>，以及<strong>在车辆能力下该用途既可行又安全</strong>。另一个重要点是<strong>必须提交该车的运营许可</strong>——因此<strong>不能凭空申请一个运营区域，只能为特定车辆申请</strong>。此外还须提供拟聘用人员的信息，包括技术监督与维修人员的职责、无犯罪记录审查等。</p></div></p>
+<p class="seg" id="seg-49"><span class="ts">[00:20:56 – 00:21:21]</span><div class="seg-body">
+<p class="en">In June, a first practical assessment for an operating area was trialed in Berlin. So effectively a driving test for the vehicle and real traffic. So what was being tested there and does that point to how these approvals will work at scale?</p>
+<p class="zh"><strong>今年 6 月，柏林试点了首个运营区域的实务评估</strong>——相当于让车辆在真实交通中做一次路考。那里到底在测什么？它是否预示了这些审批规模化后将如何运作？</p></div></p>
+<p class="seg" id="seg-50"><span class="ts">[00:21:21 – 00:21:58]</span><div class="seg-body">
+<p class="en">The focus there was less on the vehicle itself and more on the testing methodology. The Berlin real world test was a practical trial to determine how an autonomous vehicle could be evaluated as a part of a future operational area approval. The testing teams observed the vehicle in real-world city traffic and assessed whether its driving behavior could be evaluated in a transparent</p>
+<p class="zh"><strong>那里的重点不在车辆本身，而在测试方法论。</strong> 柏林真实道路测试是一次实务试验，目的是确定<strong>如何在未来运营区域审批中评估一台自动驾驶车辆</strong>。测试团队在真实城市交通中观察车辆，并评估<strong>其驾驶行为能否基于客观标准以透明、</strong></p></div></p>
+<p class="seg" id="seg-51"><span class="ts">[00:21:58 – 00:22:32]</span><div class="seg-body">
+<p class="en">and reproducible manner based on objective criteria. This is important because German regulations do not merely ask whether a vehicle is fundamentally capable of driving. They also ask whether it can be used safely within a specific operating area. This requires procedures that go beyond mere theory or document reviews. So we are beginning to develop standardized testing procedures for area-specific approvals. And these are precisely the kind of procedures we will need if autonomous mobility is to be approved on a larger scale.</p>
+<p class="zh"><strong>且可复现的方式被评估</strong>。这一点很重要，因为德国法规不只问「车辆原则上会不会开」，还问「它能否在<strong>特定运营区域</strong>内被安全使用」。这需要<strong>超越纯理论或文件审查的程序</strong>。所以我们正开始为<strong>区域专属审批</strong>develop标准化测试程序——<strong>而这恰恰是自动驾驶若要规模化获批所必需的程序</strong>。</p></div></p>
+<p class="seg" id="seg-52"><span class="ts">[00:22:32 – 00:23:20]</span><div class="seg-body">
+<p class="en">Makes sense. So suppose the approval is granted and then something in the area changes. So a long-term roadworks, a new tramline, a redesigned junction. Does the operator need a new approval and also who monitors that?</p>
+<p class="zh">有道理。那假设批准已经拿到，随后<strong>区域内发生变化</strong>——比如长期施工、新建有轨电车线、路口改造。运营商需要重新审批吗？又由谁监督？</p></div></p>
+<p class="seg" id="seg-53"><span class="ts">[00:23:20 – 00:24:03]</span><div class="seg-body">
+<p class="en">There&#x27;s no centralized market surveillance such as that conducted by the KBA for the autonomous vehicles for operating areas in that sense. However, the regulatory authorities responsible for approving the operational area may verify at any time whether the requirements for the approval are still met and the operator is required to report any changes. As a general rule, there&#x27;s no guarantee that an operating area once approved will remain available indefinitely. The scope of this new or amended approval will then depend on the significance of the change.</p>
+<p class="zh"><strong>在这一层面上，没有像 KBA 对车辆所做的那样的集中式市场监督。</strong> 但负责批准运营区域的<strong>监管机关可以随时核查批准条件是否仍然满足</strong>，且运营商<strong>有报告任何变更的义务</strong>。一般规律是：<strong>已获批的运营区域不保证永久可用</strong>；至于新批准或变更的范围，则<strong>取决于该变更的重要性</strong>。</p></div></p>
+<p class="seg" id="seg-54"><span class="ts">[00:24:03 – 00:24:45]</span><div class="seg-body">
+<p class="en">Makes sense. The federal strategy sets also a target of the world&#x27;s largest connected operating area by 2028. And under the current legal mechanics, so what would that actually require procedurally? We are only at the beginning of this task since the issue of operating area approvals has only really been on the agenda since this year. The problem described above with the responsibilities that may not be even defined at the state level and the resulting fragmentation of authority among road construction authorities would certainly be one of the biggest obstacles.</p>
+<p class="zh">有道理。<strong>联邦战略还设定了一个目标：到 2028 年建成全球最大的相连运营区域。</strong> 在现行法律机制下，程序上究竟需要做什么？</p></div></p>
+<p class="zh"><strong>我们才刚起步</strong>——运营区域审批真正进入议程也就是今年的事。前面提到的那个问题——<strong>州一级的职责甚至可能都还没界定清楚</strong>，以及由此在公路建设机关之间造成的<strong>权力碎片化</strong>——肯定是最大的障碍之一。</p></div></p>
+<hr>
+<h2 id="s4">The technical supervisor and the vehicle holder · 技术监督员与车辆保有人</h2>
+<p class="seg" id="seg-55"><span class="ts">[00:24:45 – 00:25:15]</span><div class="seg-body">
+<p class="en">Alright, so now we&#x27;re two permits down, but the law also regulates the people and the organization behind the service. And this is the part I think most people outside Germany completely underestimate. In Germany, there&#x27;s the technische Aufsicht, so the technical supervision. And German law defines it as a natural person with a specific set of powers, not a control room, not a remote driver. So what exactly may that person do and what are they forbidden from doing?</p>
+<p class="zh">好，两道许可说完了，但<strong>法律还 regulates 服务背后的人和组织</strong>。而这正是我认为<strong>德国以外的人最 completely 低估</strong>的部分。德国有 <strong>technische Aufsicht（技术监督）</strong>，德国法把它定义为<strong>一个拥有特定权限的自然人——不是控制室，不是远程驾驶员</strong>。那么这个人究竟<strong>可以做什么、又被禁止做什么</strong>？</p></div></p>
+<p class="seg" id="seg-56"><span class="ts">[00:25:15 – 00:25:45]</span><div class="seg-body">
+<p class="en">The technical supervisor is the person who can interact with an autonomous vehicle. However, this is limited to authorizing or specifying driving maneuvers. This is only possible when the vehicle is at a standstill. Direct control, however, is not possible. The technical supervisor might even authorize maneuvers that in theory violate traffic regulations. The technical supervisor should therefore not be confused with someone who, for example, works in a call center and communicates with passengers.</p>
+<p class="zh">技术监督员<strong>是与自动驾驶车辆交互的那个人</strong>。但这<strong>仅限于授权或指定行驶机动</strong>，而且<strong>只有在车辆静止时才可能进行</strong>。<strong>直接控制是不可能的</strong>。技术监督员甚至可以授权<strong>理论上违反交通法规</strong>的机动。</p></div></p>
+<p>⚠️ 因此，<strong>技术监督员不应被 confused 成在呼叫中心与乘客通话的人</strong>。</p>
+<p class="seg" id="seg-57"><span class="ts">[00:25:45 – 00:26:15]</span><div class="seg-body">
+<p class="en">And paragraph 14 of the AFGBV sets requirements for that person. So what qualifications do they have and what is the ratio question? So how many vehicles can one supervise? There&#x27;s no set limit on how many vehicles a technical supervisor can oversee simultaneously. It is therefore possible in principle for a technical supervisor to oversee 50</p>
+<p class="zh"><strong>AFGBV 第 14 条</strong>对这个人的资质提出了要求。他的<strong>资质要求是什么？以及人车比问题</strong>——一个人能监督多少台车？</p></div></p>
+<p class="zh"><strong>法律对一名技术监督员可同时监督多少台车没有任何上限规定</strong>。因此原则上一个人可以同时监督 50 台</p></div></p>
+<p class="seg" id="seg-58"><span class="ts">[00:26:15 – 00:26:56]</span><div class="seg-body">
+<p class="en">or 100 vehicles at the same time. An operating system must essentially only ensure that every vehicle, should it ever reach its operational limits, can contact the technical supervisor. The qualification requirements are quite high. As engineering degrees are required and in this case only engineers from specific disciplines such as automotive engineering. However, the AFGBV has an interesting mechanism. The primary technical supervisor can delegate tasks. And the individuals</p>
+<p class="zh"><strong>乃至 100 台车</strong>。运营系统本质上只需确保：<strong>每辆车一旦触及运行极限，都能联系上技术监督员</strong>。</p></div></p>
+<p class="zh">而<strong>资质要求相当高</strong>：<strong>要求工程学位</strong>，且<strong>限特定工程专业</strong>（如汽车工程）。</p></div></p>
+<p class="zh">不过 <strong>AFGBV 里有一个有意思的机制</strong>：<strong>主技术监督员可以委托任务</strong>。而受委托者</p></div></p>
+<p class="seg" id="seg-59"><span class="ts">[00:26:56 – 00:27:30]</span><div class="seg-body">
+<p class="en">whom these tasks can be delegated must meet significantly lower requirements. In this case, three years of professional experience in the automotive sector as well as training provided by the manufacturer are sufficient. A quick side note, there is also maintenance personnel who face similarly high requirements. Here, at least for now, there&#x27;s no possibility of delegating tasks to less highly qualified staff.</p>
+<p class="zh"><strong>的资质门槛显著更低</strong>：在这个情况下，<strong>3 年汽车行业从业经验 + 制造商提供的培训</strong>即告充分。</p></div></p>
+<p class="zh">顺便提一句：<strong>维修人员也面临类似的高资质要求</strong>，但<strong>至少目前，完全不允许把任务委托给资质较低的员工</strong>。</p></div></p>
+<p class="seg" id="seg-60"><span class="ts">[00:27:30 – 00:28:00]</span><div class="seg-body">
+<p class="en">Super interesting. And paragraph 1F of the Road Traffic Act puts the obligations on the holder of the vehicle. So what are they and how do they differ from what a conventional fleet operator is used to?</p>
+<p class="zh">非常有意思。而<strong>《道路交通法》第 1f 条把义务放在车辆保有人身上</strong>。这些义务是什么？与传统车队运营者的习惯做法有何不同？</p></div></p>
+<p class="seg" id="seg-61"><span class="ts">[00:28:00 – 00:28:32]</span><div class="seg-body">
+<p class="en">The owner of an autonomous vehicle must keep the vehicle roadworthy. This applies regardless of whether the vehicle is autonomous or not. However, the owner must also ensure the vehicle is operated in accordance with its permit, for example, within its permitted operating range and within the designated operating area. In addition, they must ensure that the systems are maintained in accordance with legal requirements. This includes the daily extended pre-trip inspection,</p>
+<p class="zh">自动驾驶车辆的保有人<strong>必须保持车辆适航</strong>——这不论车辆是否自动驾驶都适用。但保有人还必须<strong>确保车辆按其许可运行</strong>，例如在许可的运行范围内、在指定的运营区域内。此外还须确保<strong>系统按法律要求维护</strong>，包括<strong>每日延长出车前检查</strong>，</p></div></p>
+<p class="seg" id="seg-62"><span class="ts">[00:28:32 – 00:29:18]</span><div class="seg-body">
+<p class="en">during which, for example, the sensors and safety critical vehicle systems must be checked. Followed by a so-called comprehensive inspection every 90 days in accordance with the manufacturer&#x27;s specifications. And finally, the semi-annual general inspection, which to my knowledge also applies to conventional fleet vehicles. It is also the owner&#x27;s responsibility to ensure that the technical inspection is carried out.</p>
+<p class="zh">在这项检查中，<strong>传感器与安全关键的车载系统必须被检查</strong>。之后是<strong>每 90 天一次</strong>、按制造商规范执行的所谓<strong>综合检查</strong>。最后是<strong>每半年一次的常规检查</strong>——据我所知，这对传统车队车辆也同样适用。确保技术检验被执行，同样是保有人的责任。</p></div></p>
+<p class="seg" id="seg-63"><span class="ts">[00:29:18 – 00:29:47]</span><div class="seg-body">
+<p class="en">In addition, the owner must ensure compliance with the regulations that were previously directed at a driver present in the vehicle. How the owner accomplished this is up to them. In some cases, exemptions from certain obligations may be granted, such as the requirement to set up a warning triangle. And finally, the owner must also store defined data such as location data or the number and times of maneuver authorizations, for example, which they may be required to submit to the operating area approval authority if the authority requests this data.</p>
+<p class="zh">此外，保有人还须<strong>遵守原先针对车内驾驶员的规定</strong>——具体如何做到由保有人自行决定。某些情况下可获得义务豁免，例如放置三角警示牌的要求。</p></div></p>
+<p class="zh">最后，<strong>保有人还须存储规定的数据</strong>，例如位置数据、机动授权的次数与时间等；运营区域批准机关要求时，须向其提交。</p></div></p>
+<hr>
+<h2 id="s5">Passenger transport permit and liability · 客运许可与责任</h2>
+<p class="seg" id="seg-64"><span class="ts">[00:29:47 – 00:30:14]</span><div class="seg-body">
+<p class="en">We now have covered the road traffic law, but to carry paying passengers, you also need a permit under the Passenger Transport Act. So how do the AFGBV and the Passenger Transport Act interact, and can they be run in parallel or must they be sequential? There are two separate regulatory systems. The AFGBV governs the vehicle technology and the operating permit for the autonomous system.</p>
+<p class="zh">我们已经讲完了道路交通法，但<strong>要载付费乘客，还需要《客运法》（PBFG）下的许可</strong>。那么 AFGBV 与《客运法》如何互动？二者可以<strong>并行推进</strong>，还是必须<strong> sequential 先后进行</strong>？</p></div></p>
+<p class="zh"><strong>这是两套彼此独立的监管体系。</strong> AFGBV 管<strong>车辆技术</strong>以及自动驾驶系统的运营许可；</p></div></p>
+<p class="seg" id="seg-65"><span class="ts">[00:30:14 – 00:30:39]</span><div class="seg-body">
+<p class="en">And the PBFG governs the authorization to transport passengers for commercial purposes. Since the PBFG authorization is not tied to a specific vehicle but applies to the provision of a transportation service, a PBFG authorization can in principle also be granted in advance.</p>
+<p class="zh">而 <strong>PBFG 管的是以商业目的运送乘客的资质</strong>。由于 <strong>PBFG 授权不绑定特定车辆，而是适用于「提供运输服务」这件事本身</strong>，因此原则上<strong>可以预先取得</strong> PBFG 授权。</p></div></p>
+<p class="seg" id="seg-66"><span class="ts">[00:30:39 – 00:31:03]</span><div class="seg-body">
+<p class="en">And liability insurance is also a topic, and the Autonomous Driving Act amended the compulsory insurance act alongside the road traffic act. Where does the liability actually sit when an approved autonomous vehicle causes damage? And has that question been tested yet?</p>
+<p class="zh">另一个话题是<strong>责任保险</strong>——《自动驾驶法》在修改道路交通法的同时也修改了强制保险法。那么<strong>当一台获批的自动驾驶车辆造成损害时，责任究竟落在哪里？</strong> 这个问题被司法检验过了吗？</p></div></p>
+<p class="seg" id="seg-67"><span class="ts">[00:31:03 – 00:31:34]</span><div class="seg-body">
+<p class="en">The interesting thing is, legally speaking, the issue of liability is actually less open-ended than many people think. Even with autonomous driving, traditional owner liability remains in effect for the time being. Anyone who operates a vehicle and uses it on public roads remains liable for the damages as a general rule. It&#x27;s just that the driver is no longer considered a separate party.</p>
+<p class="zh">有意思的是，<strong>从法律角度看，责任问题实际上比很多人想象的没那么悬而未决</strong>。<strong>即便在自动驾驶下，传统的保有人责任在当下依然有效。</strong> 任何运营车辆并将其用于公共道路的人，原则上仍对损害负责。<strong>变化的只是：驾驶员不再被视为一个独立的当事方。</strong></p></div></p>
+<p class="seg" id="seg-68"><span class="ts">[00:31:34 – 00:32:05]</span><div class="seg-body">
+<p class="en">In addition, manufacturers may be held liable. For example, if a software or system error is the cause for the accident, mandatory insurance ensures that victims actually receive compensation. What is truly new is that responsibility is shifting more towards manufacturers, operators and technical systems and no longer rests with the human driver. In principle, one could also consider state liability. However, this will remain the exception.</p>
+<p class="zh">此外，<strong>制造商也可能被追责</strong>——例如当软件或系统错误是事故原因时。<strong>强制保险确保受害者实际获得赔偿。</strong></p></div></p>
+<p class="zh"><strong>真正新的地方在于：责任正向制造商、运营商与技术系统转移，不再落在人类驾驶员身上。</strong> 原则上也可以考虑<strong>国家责任</strong>，但<strong>这仍将属于例外</strong>。</p></div></p>
+<p class="seg" id="seg-69"><span class="ts">[00:32:05 – 00:32:45]</span><div class="seg-body">
+<p class="en">Issuance of an operating permit by the Federal Motor Transport Authority or an operating area approval by the competent authority is no guarantee that an accident will never occur. For the state to be held liable, it would be necessary to prove on a regular basis that the authority violated its duty to inspect and that this specific error was the cause of the damage. In practice, this is likely to be difficult in many cases.</p>
+<p class="zh"><strong>联邦机动车运输管理局发出运营许可，或主管机关批准运营区域，都不构成「事故绝不会发生」的担保。</strong> 要让国家承担责任，需要证明该机关<strong>违反了检查义务</strong>，且这一具体错误是损害的原因。<strong>实践中，这在许多情况下都很难成立。</strong></p></div></p>
+<hr>
+<h2 id="s6">EU type approval and the new UN regulation · 欧盟型式认证与新的 UN 法规</h2>
+<p class="seg" id="seg-70"><span class="ts">[00:32:45 – 00:33:23]</span><div class="seg-body">
+<p class="en">Let&#x27;s widen out. Germany&#x27;s framework does not exist alone. There is a new road to vehicle approval, and as of some weeks ago, there is also now an UN framework too. And I want to understand how these three fit together and where they maybe also compete.</p>
+<p class="zh">我们把视野放宽。<strong>德国的框架并非孤立存在。</strong> 现在多了一条车辆审批的路，而且<strong>几周前起还多了一套 UN 框架</strong>。我想理解这三者如何组合起来，以及它们之间可能在哪里构成竞争。</p></div></p>
+<p class="seg" id="seg-71"><span class="ts">[00:33:23 – 00:33:53]</span><div class="seg-body">
+<p class="en">So the implementing regulation 2022-1426 gives a manufacturer an EU-wide route to the autonomous driving system type approval. So a manufacturer can choose that instead of the German national operating approval. So what are the real trade-offs between the two routes? Both the approval under the AFGBV and under Regulation 1426 are very similar since Regulation 1426 is a copy of the AFGBV.</p>
+<p class="zh"><strong>欧盟实施法规 2022/1426</strong> 给制造商提供了一条<strong>全欧盟范围的自动驾驶系统型式认证路径</strong>，制造商可以选择走这条而<strong>不走德国国家运营许可</strong>。两条路之间的真实取舍是什么？</p></div></p>
+<p class="zh"><strong>两条路高度相似——因为 1426 就是 AFGBV 的复制品。</strong></p></div></p>
+<p class="seg" id="seg-72"><span class="ts">[00:33:53 – 00:34:44]</span><div class="seg-body">
+<p class="en">Nevertheless, there are two different types of approval. While the AFGBV allows for the approval of only 250 vehicles per year per manufacturer, Regulation 1426 allows for... And in March of this year the commission amended the 1426 through implementing regulation 2026/481. So it added automated valet parking and moved away from this small series limitation that we talked about. So how significant is that in practice?</p>
+<p class="zh">尽管如此，两者仍是<strong>两种不同类型的批准</strong>：<strong>AFGBV 只允许每制造商每年批准 250 台</strong>，而 1426 的路径允许更多。而且<strong>今年 3 月，委员会通过实施法规 2026/481 修订了 1426</strong>——<strong>加入了自动代客泊车（AVP），并从小批量限制上退开</strong>。这在实践中有多重要？</p></div></p>
+<p class="seg" id="seg-73"><span class="ts">[00:34:44 – 00:35:20]</span><div class="seg-body">
+<p class="en">I think this will initially pave the way for mass-produced vehicles with AVP. Even more significant will be the implementation of the UNECE regulation on autonomous driving, which was adopted in June. And this UNECE regulation will also be incorporated into the framework of Regulation 2018-858, and will then apply to mass production as well.</p>
+<p class="zh">我认为这<strong>初步为量产搭载 AVP 的车辆铺了路</strong>。<strong>更重要的将是 UNECE 自动驾驶法规的落地</strong>——该法规已于 6 月通过，并将被纳入 <strong>2018/858 法规</strong>框架，<strong>届时也将适用于量产</strong>。</p></div></p>
+<p class="seg" id="seg-74"><span class="ts">[00:35:20 – 00:36:03]</span><div class="seg-body">
+<p class="en">And even with an EU-type approval, the operating rules stay national. So a vehicle approved EU-wide still cannot simply drive in Vienna or Munich under one permission. So is that a design choice that you intend to keep, or is it a transitional state, so to speak?</p>
+<p class="zh">而且<strong>即便拿到 EU 型式认证，运营规则仍然是国家层面的</strong>。一台全欧获批的车，<strong>仍不能凭单一许可就开到维也纳或慕尼黑</strong>。这是你们打算保留的设计选择，还是一种过渡状态？</p></div></p>
+<p class="seg" id="seg-75"><span class="ts">[00:36:03 – 00:36:24]</span><div class="seg-body">
+<p class="zh">最终，这取决于<strong>人们愿意授予欧盟多少权限</strong>。迄今<strong>欧盟并未被授权在成员国规范道路交通</strong>，因此这一领域仍由成员国自己负责。</p></div></p>
+<p class="zh">这意味着<strong>运营许可也仍然是国别事项</strong>。<strong>目前我很难想象欧盟会被授予更多权限。</strong> 不过我可以想象，<strong>成员国之间或许会自愿就某种标准与程序达成一致，从而允许彼此互认许可，或跨境开展技术监督</strong>。</p></div></p>
+<p class="seg" id="seg-76"><span class="ts">[00:36:24 – 00:36:57]</span><div class="seg-body">
+<p class="zh">那么那个 UN 工具<strong>如何进入德国法</strong>？现实时间表是什么？它最终会取代 AFGBV 的部分内容，还是与之并存？</p></div></p>
+<p class="zh"><strong>UN 法规发布后，成员国会有 6 个月的期限提出异议</strong>，之后才能并入各自的法律框架。在欧盟层面，这将是 <strong>2018/858 法规</strong>——可以说它是车辆法规的<strong>基石</strong>。</p></div></p>
+<p class="seg" id="seg-77"><span class="ts">[00:36:57 – 00:37:39]</span><div class="seg-body">
+<p class="zh"><strong>AFGBV 会失去部分分量</strong>：因为在<strong>车辆专属审批</strong>上 AFGBV 可能不再起作用——届时将有 2018/858 提供的<strong>全欧统一路径，量产车可无限批量获批</strong>。</p></div></p>
+<p class="zh"><strong>但 AFGBV 在运营区域审批上仍然重要</strong>，因为运营区域审批<strong>仍属各成员国监管范围</strong>。</p></div></p>
+<p class="seg" id="seg-78"><span class="ts">[00:37:39 – 00:38:20]</span><div class="seg-body">
+<p class="zh">在我看来，理解的关键在于：<strong>新的 UNECE 法规意在为安全论证设定全球标准</strong>。但在欧盟层面，这本质上是 <strong>AFGBV 的进一步发展</strong>，因此对<strong>正在应对这些安全论证问题的欧洲制造商</strong>而言，不应算陌生；对<strong>来自美国和中国的制造商</strong>才是新的。</p></div></p>
+<hr>
+<h2 id="s7">Why Germany is not the first market · 德国为何没有成为第一个市场</h2>
+<p class="seg" id="seg-79"><span class="ts">[00:38:20 – 00:39:03]</span><div class="seg-body">
+<p class="en">Now that we have the whole map, I want your assessment. You advise on this every week, so you see where it works and where it does not. So Germany wrote the first level four regular operation framework in the world, and then it did not become the first market. So is that a problem with the law, with how it is administered, or with something else entirely in your opinion?</p>
+<p class="zh">地图已经完整了，我想要你的评估。你每周都在就此提供咨询，所以你看得见它在哪里行得通、在哪里行不通。<strong>德国写出了世界第一个 L4 常规运营框架，却没能成为第一个市场。</strong> 在你看来，这是法律的问题、执行管理的问题，还是完全别的原因？</p></div></p>
+<p class="seg" id="seg-80"><span class="ts">[00:39:03 – 00:39:48]</span><div class="seg-body">
+<p class="en">It is so complex that no manufacturer has been able to provide it to such a high standard that a technical service has given them green light to the applicant. In other words, no technical inspection service has found the argument convincing so far. And Bitkom published a position paper in February with concrete AFGBV amendment proposals. So... The Fifth Road Traffic Act Amendment came in May and did not really deliver a substantive reform. So if you could change three specific provisions in the AFGBV, which three and what would you change them to?</p>
+<p class="zh"><strong>它如此复杂，以至于没有任何制造商能把它做到足够高的标准，让技术检验机构对申请人开绿灯。换句话说：至今没有任何技术检验机构认为这套论证有说服力。</strong> 另外，<strong>Bitkom 曾在 2 月发布立场文件，提出具体的 AFGBV 修正提案</strong>。</p></div></p>
+<p class="zh"><strong>而 5 月生效的第五次《道路交通法》修正案，并未带来实质性改革。</strong> 那么，如果可以修改 AFGBV 中的三条具体条款，<strong>是哪三条？你会怎么改？</strong></p></div></p>
+<p class="seg" id="seg-81"><span class="ts">[00:39:48 – 00:40:33]</span><div class="seg-body">
+<p class="en">I will mention two. The first is that maintenance personnel must meet the very high qualification requirements. Similar to the technical supervisors, they must be certified automotive technicians or engineers. But unlike technical supervisors, maintenance personnel cannot delegate this task. So this will likely create a new shortage of skilled workers, and I am not currently aware of any sound argument stating that an engineer must necessarily be the one to perform the pre-trip inspection. The second point is the ban on commercializing the test permit. Essentially, however, this is not a matter for the AFGBV but for the STVG.</p>
+<p class="zh"><strong>我只说两条。</strong></p></div></p>
+<p class="zh"><strong>第一，维修人员的资质要求过高。</strong> 与技术监督员类似，他们必须是<strong>认证汽车技师或工程师</strong>；但与技术监督员不同，<strong>维修人员不能委托这项任务</strong>。这<strong>很可能造成新的技工短缺</strong>，而<strong>我目前不知道有任何站得住脚的论证说「出车前检查必须由工程师来做」</strong>。</p></div></p>
+<p class="zh"><strong>第二，是禁止把测试许可商业化。</strong> 不过这本质上<strong>不是 AFGBV 的问题，而是 StVG 的问题</strong>。</p></div></p>
+<p class="seg" id="seg-82"><span class="ts">[00:40:33 – 00:41:23]</span><div class="seg-body">
+<p class="en">There are good reasons both for and against this. Ultimately, this is a political decision: whether to allow commercialization and thereby open the European fortress, or keep it closed. Because as soon as commercialization is permitted, companies—particularly new ones—will enter the market. These companies are already technically ready and are now working on regulatory readiness, but have enough money and perseverance to offer large-scale commercial pilot operations and thereby become a significant player in the transportation landscape.</p>
+<p class="zh"><strong>这件事正反两面都有充分的理由。</strong> 最终这是一个<strong>政治决策</strong>：<strong>是否允许商业化、从而打开「欧洲堡垒」，还是保持关闭。</strong></p></div></p>
+<p class="zh">因为<strong>一旦允许商业化——尤其是新公司——就会进入市场</strong>。这些公司<strong>技术上已经就绪</strong>，正在做监管就绪方面的工作，而且<strong>有足够的资金与毅力</strong>去提供大规模商业试点运营，从而成为<strong>交通格局中的重要玩家</strong>。</p></div></p>
+<hr>
+<h2 id="s8">Advice for cities and operators · 给城市与运营商的建议</h2>
+<p class="seg" id="seg-83"><span class="ts">[00:41:23 – 00:42:05]</span><div class="seg-body">
+<p class="en">Maybe one last question for an operator or a city listening to this today and planning maybe a launch. What should they be starting now? In what order, and how long should they realistically budget from first decision to first paying passenger? My recommendation is always: don&#x27;t start with a tender right away. That&#x27;s because no manufacturer currently holds a genuine level 4 certification, and can therefore readily deliver on what it promises in a tender.</p>
+<p class="zh">最后一个问题，给正在收听、可能正筹划落地的运营商或城市：<strong>现在应该从哪儿着手？</strong> 按什么顺序？<strong>从首次决策到第一位付费乘客，现实中该预留多长时间？</strong></p></div></p>
+<p class="zh"><strong>我的建议永远是：不要一上来就招标。</strong> 因为<strong>目前没有任何制造商持有真正的 L4 认证，因此无法在招标中轻易兑现其承诺</strong>。</p></div></p>
+<p class="seg" id="seg-84"><span class="ts">[00:42:05 – 00:42:42]</span><div class="seg-body">
+<p class="en">Generally speaking, it is good to know what requirements you want the vehicle to meet — in other words, what specific task it should perform in traffic. However, you shouldn&#x27;t get too bogged down in the details. Instead, focus on what the absolute must-have features. Since we are still waiting for the first vehicle approval, I always recommend first thinking about operations and operational area.</p>
+<p class="zh">一般而言，<strong>先弄清楚你希望车辆满足什么要求</strong>是有用的——也就是它在交通中具体执行什么任务。但<strong>不要过度陷入细节</strong>，而应<strong>聚焦于那些绝对必备的功能</strong>。</p></div></p>
+<p class="zh"><strong>既然我们还在等第一份车辆许可，我总是建议先思考运营与运营区域。</strong></p></div></p>
+<p class="seg" id="seg-85"><span class="ts">[00:42:42 – 00:43:06]</span><div class="seg-body">
+<p class="en">There are plenty of questions there, such as those regarding personnel for technical supervisors and maintenance. Then there&#x27;s the question of how technical supervisors are integrated — whether you want to handle this yourself or purchase it as a service from the manufacturer. And finally, of course, where the vehicle is supposed to operate, and whether this is a realistic feasible area or one that involves too many highly complex or challenging conditions, for example, poor cell service, difficult traffic management, etc.</p>
+<p class="zh">这里面有大量问题，比如<strong>技术监督与维修人员的配备</strong>。然后是<strong>技术监督员如何整合进来</strong>——你自己搞定，还是<strong>作为服务向制造商采购</strong>。最后当然还有：<strong>车辆究竟应该在哪里运行</strong>，以及那是一个<strong>现实可行的区域</strong>，还是包含<strong>过多高度复杂或挑战性的条件</strong>，例如<strong>网络信号差、交通管理困难</strong>等。</p></div></p>
+<p class="seg" id="seg-86"><span class="ts">[00:43:06 – 00:43:16]</span><div class="seg-body">
+<p class="en">Perfect. I think we covered a lot of ground today, Till. So thank you very much for taking the time today and that you walked us through the whole regulatory landscape in Germany. So it was a really insightful conversation. And yeah, thank you very much for taking the time. Thanks for having me.</p>
+<p class="zh">完美。Till，我想今天我们覆盖了很多内容。非常感谢你今天抽出时间，带我们走通了<strong>整个德国的监管图景</strong>。这是一场非常有洞察力的对话，再次感谢。</p></div></p>
+<p class="zh">谢谢邀请。</p></div></p>
+<hr>
+<p>*逐字稿来源：Substack 官方转录（transcription CDN，566 段自动转录）。英文原文保留官方转录形态，中文为人工翻译并对明显转录误差（如人名 Moya→MOYA、Rödl、AFGBB→AFGBV、DECRA→DEKRA、BAST→BASt 等）作了校正。*</p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../eu-type-approval-autonomous/index.html"><div class="rw"><img loading="lazy" src="../eu-type-approval-autonomous/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack / Podcast</div><div class="rt">欧盟型式认证详解：自动驾驶如何拿下欧洲上路许可</div></div></a><a class="relcard" href="../france-driverless-transport-rules/index.html"><div class="rw"><img loading="lazy" src="../france-driverless-transport-rules/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">法国的无人驾驶公共交通审批规则，由评估方亲解</div></div></a><a class="relcard" href="../nuro-road-to-driverless-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../nuro-road-to-driverless-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / YouTube</div><div class="rt">Nuro 联席 CEO Dave Ferguson：通向无人驾驶机器人出租车的路</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["德国", "Germany", "自动驾驶法", "StVG", "AFGBV", "KBA", "联邦机动车运输管理局", "运营区域", "Betriebsbereich", "in festgelegten Betriebsbereichen", "功能安全概念", "functional safety concept", "技术监督员", "technische Aufsicht", "最小风险状态", "Risikominimale Zustand", "L4", "SAE", "型式认证", "type approval", "2022/1426", "AVP", "自动泊车", "小批量", "250辆", "UNECE", "2018/858", "PBFG", "客运许可", "车辆保有人", "Halter", "强制保险", "柏林真实道路测试", "BASt", "联邦公路研究所", "远程驾驶", "StVFernLV", "第5次道路交通法修正案", "Bitkom", "欧洲堡垒"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
