@@ -1,0 +1,639 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链 · 逐字稿</title><meta name='description' content='欧洲不缺 robotaxi 试点（此前已做过 30–50 个项目），缺的是「平台思维」：需求层（Uber/Lyft/Bolt）、运营层（Moove、Hubber、Flexdrive）、车辆与自动驾驶栈三层里，欧洲本土玩家几乎缺席。Zagreb（Uber+Verne+Pony.ai）已从安全员过渡到无安全员测试，但只是机场↔总部的单线受控 ODD；真正的规模化瓶颈不是驾驶软件，而是充电、维护、地产与电网。Uber 是当前欧洲的节奏制定者，Waymo 2027 年落地慕尼黑/柏林才会重新定速。价值分布反直觉：车队运营收入高、毛利极薄；需求层最赚钱；车与自驾栈格局未定——MHP 模型假设 2030 年 L4 占新车约 2%、2035 年约 5%，对应 2035 年欧洲每年约 50 万辆上街。'><meta property='og:title' content='欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链 · 逐字稿'><meta property='og:description' content='欧洲不缺 robotaxi 试点（此前已做过 30–50 个项目），缺的是「平台思维」：需求层（Uber/Lyft/Bolt）、运营层（Moove、Hubber、Flexdrive）、车辆与自动驾驶栈三层里，欧洲本土玩家几乎缺席。Zagreb（Uber+Verne+Pony.ai）已从安全员过渡到无安全员测试，但只是机场↔总部的单线受控 ODD；真正的规模化瓶颈不是驾驶软件，而是充电、维护、地产与电网。Uber 是当前欧洲的节奏制定者，Waymo 2027 年落地慕尼黑/柏林才会重新定速。价值分布反直觉：车队运营收入高、毛利极薄；需求层最赚钱；车与自驾栈格局未定——MHP 模型假设 2030 年 L4 占新车约 2%、2035 年约 5%，对应 2035 年欧洲每年约 50 万辆上街。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/europe-robotaxi-reality-check-friedel/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/europes-robotaxi-reality-check-with" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest Podcast</div><h1>欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</h1><p class="sub">中英对照逐字稿 · Europe&#x27;s Robotaxi Reality Check with Augustin Friedel</p><div class="tags"><span class="tag">⏱ 37:31</span><span class="tag">Augustin Friedel（MHP——保时捷集团旗下管理与 IT 咨询公司——Associate Partner，专注软件定义汽车与 AI 驱动的自动驾驶出行；曾任职 Uber、大众等；LinkedIn 约 6.5 万关注者）；主持人 Ben Hubbard（The Driverless Digest 编辑）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">欧洲</span><span class="chip" onclick="wbJumpKw(this)">Europe</span><span class="chip" onclick="wbJumpKw(this)">robotaxi</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">Augustin Friedel</span><span class="chip" onclick="wbJumpKw(this)">MHP</span><span class="chip" onclick="wbJumpKw(this)">保时捷</span><span class="chip" onclick="wbJumpKw(this)">Uber</span><span class="chip" onclick="wbJumpKw(this)">Bolt</span><span class="chip" onclick="wbJumpKw(this)">Lyft</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">Pony.ai</span><span class="chip" onclick="wbJumpKw(this)">小马智行</span><span class="chip" onclick="wbJumpKw(this)">WeRide</span><span class="chip" onclick="wbJumpKw(this)">文远知行</span><span class="chip" onclick="wbJumpKw(this)">Verne</span><span class="chip" onclick="wbJumpKw(this)">Rimac</span><span class="chip" onclick="wbJumpKw(this)">Zagreb</span><span class="chip" onclick="wbJumpKw(this)">萨格勒布</span><span class="chip" onclick="wbJumpKw(this)">伦敦</span><span class="chip" onclick="wbJumpKw(this)">London</span><span class="chip" onclick="wbJumpKw(this)">慕尼黑</span><span class="chip" onclick="wbJumpKw(this)">Munich</span><span class="chip" onclick="wbJumpKw(this)">柏林</span><span class="chip" onclick="wbJumpKw(this)">Berlin</span><span class="chip" onclick="wbJumpKw(this)">马德里</span><span class="chip" onclick="wbJumpKw(this)">苏黎世</span><span class="chip" onclick="wbJumpKw(this)">PostAuto</span><span class="chip" onclick="wbJumpKw(this)">PostBus</span><span class="chip" onclick="wbJumpKw(this)">AmiGo</span><span class="chip" onclick="wbJumpKw(this)">百度</span><span class="chip" onclick="wbJumpKw(this)">Apollo Go</span><span class="chip" onclick="wbJumpKw(this)">CaoCao</span><span class="chip" onclick="wbJumpKw(this)">曹操出行</span><span class="chip" onclick="wbJumpKw(this)">吉利</span><span class="chip" onclick="wbJumpKw(this)">DiDi</span><span class="chip" onclick="wbJumpKw(this)">Lucid</span><span class="chip" onclick="wbJumpKw(this)">Stellantis</span><span class="chip" onclick="wbJumpKw(this)">NVIDIA</span><span class="chip" onclick="wbJumpKw(this)">Moove</span><span class="chip" onclick="wbJumpKw(this)">Hubber</span><span class="chip" onclick="wbJumpKw(this)">Flexdrive</span><span class="chip" onclick="wbJumpKw(this)">Terawatt</span><span class="chip" onclick="wbJumpKw(this)">Voltera</span><span class="chip" onclick="wbJumpKw(this)">L4</span><span class="chip" onclick="wbJumpKw(this)">ODD</span><span class="chip" onclick="wbJumpKw(this)">规模化</span><span class="chip" onclick="wbJumpKw(this)">试点</span><span class="chip" onclick="wbJumpKw(this)">基础设施</span><span class="chip" onclick="wbJumpKw(this)">充电枢纽</span><span class="chip" onclick="wbJumpKw(this)">车场</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">需求层</span><span class="chip" onclick="wbJumpKw(this)">车队运营</span><span class="chip" onclick="wbJumpKw(this)">fleet operations</span><span class="chip" onclick="wbJumpKw(this)">价值链</span><span class="chip" onclick="wbJumpKw(this)">单位经济</span><span class="chip" onclick="wbJumpKw(this)">本地化</span><span class="chip" onclick="wbJumpKw(this)">平台思维</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">冷开场：如果欧洲只能选一个城市 · Cold open: one city in Europe</a><a href="#s1">一、嘉宾介绍 · Introduction to Augustin Friedel</a><a href="#s2">二、他的背景与「圈层」 · Background</a><a href="#s3">三、欧洲的位置：项目思维 vs 平台思维 · Europe vs the US and China</a><a href="#s4">四、逐城拆解：萨格勒布与伦敦 · Zagreb and London</a><a href="#s5">五、规模化靠的不是驾驶软件 · What it takes to scale</a><a href="#s6">六、Uber 就是当前的节奏制定者 · Uber as the pace setter</a><a href="#s7">七、Bolt：唯一的欧洲本土玩家 · Bolt</a><a href="#s8">八、风险：欧洲会不会变成「外国技术的市场」· Risk of becoming a foreign-tech market</a><a href="#s9">九、与中国自动驾驶公司合作，有顾虑吗 · Partnering with Chinese AV companies</a><a href="#s10">十、被低估的基础设施层 · The underestimated infrastructure layer</a><a href="#s11">十一、伦敦的地产困境与「分级枢纽」 · Siting infrastructure in cities like London</a><a href="#s12">十二、价值分布：最赚钱的不是技术 · Where the real value lies</a><a href="#s13">十三、未来 12 个月：两个热点 · The next 12 months</a><a href="#s14">十四、收尾 · Conclusions and final thoughts</a></nav><main class="content"><h1>欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」</h1>
+<p><strong>Europe&#x27;s Robotaxi Reality Check with Augustin Friedel</strong></p>
+<blockquote>播客：The Driverless Digest | 2026-10-05 | 37:31</blockquote>
+<blockquote>嘉宾：<strong>Augustin Friedel</strong>（MHP——保时捷集团旗下管理与 IT 咨询公司——Associate Partner，专注软件定义汽车与 AI 驱动的自动驾驶出行）</blockquote>
+<blockquote>主持人：Ben Hubbard（The Driverless Digest 编辑）</blockquote>
+<blockquote>说明：本文为 Substack <strong>官方逐字稿</strong>的<strong>中英对照整理版</strong>。英文为官方转录原文（保留其口语形态，仅对自动转录的专名误拼与明显口误按上下文校正）；中文为<strong>人工翻译</strong>，忠实原意，非逐字对译。</blockquote>
+<hr>
+<h2 id="s0">冷开场：如果欧洲只能选一个城市 · Cold open: one city in Europe</h2>
+<p class="seg" id="seg-1"><span class="ts">[00:00 – 00:38]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I think if there&#x27;s one city within Europe, this is the place to be for all the different AV players. And I would expect, based on the dynamic and the activities of all the players that we have in London, that we will see their immense progress. We have roughly 15 or 16 million vehicles sold every year in Europe. So if you do the math, you&#x27;re talking about 500,000 vehicles coming to the streets by 2035 on a yearly basis.</p>
+<p class="zh"><strong>Augustin：</strong> 如果欧洲只能选一个城市，那这里就是所有自动驾驶玩家都必须去的地方。以伦敦现在所有玩家的活跃度和动能来看，我相信我们会看到巨大的进展。欧洲每年大概卖出 1,500 万到 1,600 万辆新车。算一下这个数，就意味着到 <strong>2035 年，每年会有约 50 万辆（L4 车辆）上路</strong>。</p></div></p>
+<h2 id="s1">一、嘉宾介绍 · Introduction to Augustin Friedel</h2>
+<p class="seg" id="seg-2"><span class="ts">[00:44 – 01:22]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Augustin Friedel is an associated partner at MHP, a Porsche company, focused on one of the biggest shifts in mobility — the move from software-defined vehicles to AI-powered and autonomous mobility. A mechanical engineer by training, he has worked across very different parts of the mobility ecosystem, from established OEMs such as Volkswagen to technology-driven companies and startups such as Uber. Today, he advises automotive leaders on strategy, technology and business models across SDV, ADAS and driverless mobility. Augustin, how are you doing today?</p>
+<p class="zh"><strong>Ben：</strong> Augustin Friedel 是 <strong>MHP（保时捷集团旗下公司）</strong> 的 Associate Partner，聚焦出行领域最大的一次转向之一——<strong>从软件定义汽车走向 AI 驱动的自动驾驶出行</strong>。他受过机械工程师训练，履历横跨出行生态的不同部分：既有大众这样的传统主机厂，也有 Uber 这类技术驱动公司与初创企业。今天，他为汽车行业的管理层提供 SDV、ADAS 与自动驾驶出行方向的战略、技术与商业模式咨询。Augustin，今天感觉怎么样？</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[01:23 – 01:31]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I&#x27;m doing great and great to be here on your podcast, Ben, and I hope you&#x27;re doing great as well.</p>
+<p class="zh"><strong>Augustin：</strong> 我很好，很高兴能来你的播客，Ben，也希望你一切都好。</p></div></p>
+<p class="seg" id="seg-4"><span class="ts">[01:32 – 01:57]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Thank you so much for coming on. Today we&#x27;re going to discuss the commercialization of autonomous vehicles in Europe. But as we do, I&#x27;d love to have a little bit of an understanding of your background. I&#x27;ve known that you&#x27;ve been in the industry for a very long time. I know that you do mentoring, you sit on the board for some companies, and it would be great to understand a little bit more about what you do day to day.</p>
+<p class="zh"><strong>Ben：</strong> 非常感谢你来做客。今天我们要聊的是<strong>自动驾驶在欧洲的商业化</strong>。不过开始之前，我很想先了解一下你的背景。我知道你在这个行业里很久了，也知道你在做导师、在一些公司担任董事。能不能讲讲你日常到底在做什么？</p></div></p>
+<h2 id="s2">二、他的背景与「圈层」 · Background</h2>
+<p class="seg" id="seg-5"><span class="ts">[01:59 – 02:46]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I entered the mobility space right after graduation — that&#x27;s now, what, 14, 15 years ago. I went from Uber and other startup companies towards bigger OEMs, and now I&#x27;m in consulting. That&#x27;s my professional career and professional path. Besides that, I have at least two passions. One is to work with startups in the space — some micromobility players, some navigation players — and I&#x27;m very active in the startup ecosystem. And my second passion is to share knowledge about industry transformation regarding autonomous driving, for example, what we talk about today, but also towards software-defined or AI-defined, AI-driven vehicles.</p>
+<p class="zh"><strong>Augustin：</strong> 我毕业后就直接进了出行行业——算下来到现在大概 14、15 年了。从 Uber 和其他初创公司，到更大的主机厂，再到现在做咨询。这是我的职业路径。除此之外我至少有两个热情所在：一是和这个领域的初创公司一起做事，比如一些微出行玩家、一些导航公司，我在创业生态里比较活跃；二是<strong>分享行业转型的知识</strong>——比如今天聊的自动驾驶，也包括软件定义、AI 定义、AI 驱动的车辆。</p></div></p>
+<p class="seg" id="seg-6"><span class="ts">[02:46 – 03:22]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I share that on my LinkedIn profile. Over the last couple of years I built a community of roughly 65,000 followers there, and I try to share highly relevant content that often goes way beyond the curtain — beyond all the high-flying messages and press releases of the different stakeholders. Basically to get to the details and put them into perspective. That&#x27;s what I do in addition to my day-to-day job at MHP.</p>
+<p class="zh"><strong>Augustin：</strong> 我在 LinkedIn 上做这件事。过去几年我攒下了大约 <strong>6.5 万关注者</strong>，尽量分享高相关度的内容，而且经常<strong>越过那层帷幕</strong>——越过各方那些天花乱坠的说法和新闻稿，把细节挖出来、放到上下文里。这就是我在 MHP 的日常工作之外的投入。</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[03:23 – 03:43]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Thank you. Yeah, I remember my days at Zag Daily where you were talking about micromobility. So would you say that software-defined vehicles and autonomous transportation is your go-to beat? That&#x27;s what you are an expert in?</p>
+<p class="zh"><strong>Ben：</strong> 谢谢。我记得我在 Zag Daily 的时候，你当时在聊微出行。所以可以说<strong>软件定义汽车和自动交通</strong>是你的主战场、你的专业领域吗？</p></div></p>
+<p class="seg" id="seg-8"><span class="ts">[03:44 – 04:32]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yes, this is definitely an area where I&#x27;m deeply involved, working with the different stakeholders on the OEM side, on the tech player side, and also the suppliers — and of course my colleagues at MHP support in there as well. I focus more on the strategic part: how to move on a strategic level towards more autonomous driving, more autonomy or automation within the automotive sector, supporting the different stakeholders that I just mentioned. And then I have roughly 300 colleagues who are more involved in the integration work — they basically implement an AD tech stack into an automotive platform,</p>
+<p class="zh"><strong>Augustin：</strong> 是的，这绝对是我深度参与的领域：和主机厂侧、技术玩家侧、以及供应商侧的不同角色一起做事，当然 MHP 的同事们也在其中支持。我更偏<strong>战略层面</strong>——在战略上如何推动整个汽车行业走向更强的自动驾驶、更强的自主化与自动化，去支持我刚才提到的那些人。然后我还有大约 <strong>300 位同事</strong>更偏集成落地：他们把自动驾驶技术栈集成进汽车平台。</p></div></p>
+<p class="seg" id="seg-9"><span class="ts">[04:32 – 04:50]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> or they support level four companies in preparing the on-the-ground networks for operations. So this is basically what we cover at MHP. And my passion, my focus is more on the strategical and technical advisory part.</p>
+<p class="zh"><strong>Augustin：</strong> 或者他们支持 L4 公司准备地面运营网络。这就是 MHP 覆盖的范围。而我个人的重心更偏<strong>战略与技术咨询</strong>这一块。</p></div></p>
+<h2 id="s3">三、欧洲的位置：项目思维 vs 平台思维 · Europe vs the US and China</h2>
+<p class="seg" id="seg-10"><span class="ts">[04:50 – 05:19]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Okay, so strategy is very much your area. Let&#x27;s talk about the commercialization of AVs in Europe. In the US, we&#x27;ve got Zoox, we&#x27;ve got Waymo that are already doing paid driverless rides — I think maybe four companies now doing paid driverless rides. Can you set the scene for what we have in Europe and what progress has been made so far?</p>
+<p class="zh"><strong>Ben：</strong> 明白了，战略确实是你的领域。那我们来聊自动驾驶在欧洲的商业化。在美国，Zoox、Waymo 已经在做<strong>付费的无人驾驶</strong>载客，我印象里现在大概有四家公司在做付费无人驾驶。你能不能先描述一下<strong>欧洲的现状</strong>、以及到目前为止取得过哪些进展？</p></div></p>
+<p class="seg" id="seg-11"><span class="ts">[05:20 – 06:05]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah. If you compare Europe to the US and China, the two other regions are far ahead if it comes to commercial offerings of autonomous mobility and also fleet sizes. I think a challenge that we have here in Europe is that <strong>we think more in projects and not in platforms</strong>. We have a very fragmented landscape here of small pilots, often with a start and an end date, in the different geographies of Europe. We have some of the big players here as well, especially from China — Baidu has been coming here now as well — but the scale that they have here is way below</p>
+<p class="zh"><strong>Augustin：</strong> 好。把欧洲和美国、中国比，在自动驾驶出行的<strong>商业化产品</strong>和<strong>车队规模</strong>上，另外两个地区都远远领先。我觉得欧洲这边的一个挑战是：<strong>我们是用「项目」思考，而不是用「平台」思考。</strong> 这里的格局非常碎片化——欧洲各地都是一些小试点，往往还带着明确的起止日期。这里也有一些大玩家，尤其是来自中国的（比如百度近来也进来了），但<strong>他们在这里的规模远低于</strong></p></div></p>
+<p class="seg" id="seg-12"><span class="ts">[06:05 – 06:43]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> what we see then in China and the US. And I think what&#x27;s also a pity for the European industry is that the local OEMs or the local suppliers that we have here in Germany, but also in France or in the Nordic — they are not part of the game. So there we have the risk that the value chain is moving towards China and the US here in Europe. That is something I would say we need to avoid, because we want to be part of this transformation, of this value chain and value creation here as well.</p>
+<p class="zh"><strong>Augustin：</strong> 他们在中国和美国能达到的量级。而且我觉得对欧洲产业来说很可惜的一点是：<strong>本地的主机厂和供应商——德国、法国、北欧的——都不在这局里。</strong> 所以风险在于：在欧洲这块土地上，<strong>价值链正在向中国和美国漂移</strong>。我认为这是必须避免的，因为我们想成为这场转型的一部分，也想留在这条价值链和价值创造里。</p></div></p>
+<h2 id="s4">四、逐城拆解：萨格勒布与伦敦 · Zagreb and London</h2>
+<p class="seg" id="seg-13"><span class="ts">[06:44 – 07:16]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> So in terms of the pilots that we&#x27;ve got, I think Zagreb was the place where it all began, right? With Uber and Verne. Verne is managing the operational side, Uber is the booking platform, and we have Pony.ai providing the vehicle. I saw a video the other day that they have progressed: they started with a safety driver and now they&#x27;re testing without a safety driver. So arguably there&#x27;s been a bit of progress in Zagreb. Wouldn&#x27;t you agree?</p>
+<p class="zh"><strong>Ben：</strong> 就现有的试点来说，我觉得<strong>萨格勒布</strong>是一切的起点，对吧？Uber 加 Verne：Verne 管运营侧，Uber 是预订平台，车辆技术由<strong>小马智行（Pony.ai）</strong> 提供。我前几天看到一个视频，他们确实在推进：一开始有安全员，现在开始做<strong>无安全员</strong>测试。所以萨格勒布应该算是有一些进展的吧？你同意吗？</p></div></p>
+<p class="seg" id="seg-14"><span class="ts">[07:18 – 08:03]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> At first, I think Zagreb is one of the many pilots that we have. There we had a lot of — I would say at least 30 to 50 pilots before — with different vehicle types, different configurations of vehicle providers, operators, customer interfaces, often linked to local public transit authorities and providers. So there was a lot of activity before what we see now in Zagreb. With Zagreb, I think we need to be a bit careful, and we need to look beyond the press releases. It&#x27;s great progress that they do, but as far as I know,</p>
+<p class="zh"><strong>Augustin：</strong> 首先，萨格勒布只是我们众多试点中的一个。在这之前我们已经有非常多——我至少会说 <strong>30 到 50 个试点</strong>——不同的车型、不同的车辆供应商/运营方/用户界面的组合，而且常常和当地公共交通管理机构与运营商挂钩。所以在今天萨格勒布之前，活动量其实很大。而对萨格勒布，我觉得<strong>要谨慎一点，要越过新闻稿往细节看</strong>。他们做的进展确实很棒，但据我所知，</p></div></p>
+<p class="seg" id="seg-15"><span class="ts">[08:04 – 08:39]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> the driver-out testing is just one route between the airport and the headquarters of Rimac, the mother company of Verne, the local operator. And I think there&#x27;s a third stop as well. So it&#x27;s one route with two stops. There&#x27;s no free-floating as we know it from Waymo or Zoox in some parts of the US. So it&#x27;s a very controlled ODD where they run it. I think it&#x27;s always important to look beyond what they share in the press and get to the details.</p>
+<p class="zh"><strong>Augustin：</strong> 那个「拿掉司机」的测试，<strong>只是机场到 Rimac 总部之间的一条线路</strong>——Rimac 是本地运营方 Verne 的母公司。我记得中间还有第三站。所以就是<strong>一条线、两三个停靠点</strong>。它<strong>没有</strong> Waymo 或美国部分地区的 Zoox 那种自由巡游（free-floating）。所以它是在一个<strong>非常受控的 ODD（运行设计域）</strong>里跑的。我一直觉得，重要的是越过他们给媒体的说法，去看细节。</p></div></p>
+<p class="seg" id="seg-16"><span class="ts">[08:40 – 09:06]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Yeah, I couldn&#x27;t agree more. In terms of what we&#x27;ve seen in London, we&#x27;ve also seen a little bit of progress there. I went to the launch event for Wayve and Uber — they now have 20 vehicles, but again, they have a safety driver behind the wheel, and they launched with 20. Again, very small scale to start with.</p>
+<p class="zh"><strong>Ben：</strong> 是啊，我完全同意。伦敦这边我们也看到了一些进展。我去过 <strong>Wayve 和 Uber</strong> 的发布活动——他们现在有 <strong>20 辆车</strong>，但同样，驾驶座上还坐着安全员。起步规模非常小。</p></div></p>
+<p class="seg" id="seg-17"><span class="ts">[09:07 – 09:53]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, I agree. And if you look into Switzerland, for example — the area around Zurich is one of the test beds for autonomous vehicles as well, but there you see the same. You have companies like Baidu — I think with 25 vehicles in cooperation with the local public transit operator, PostAuto. And I think WeRide from China is launching with around 20-plus vehicles. And I think the same is for Madrid. So that&#x27;s basically the level of deployments that we see here in Europe at the moment. It&#x27;s, I think, an important start.</p>
+<p class="zh"><strong>Augustin：</strong> 同意。再看瑞士——苏黎世一带也是自动驾驶的试验场之一，但情况一样。那里有百度这样的公司，我记得是<strong>和当地公交运营商 PostAuto 合作、约 25 辆车</strong>；中国的<strong>文远知行（WeRide）</strong> 也在以<strong>20 多辆</strong>的规模推进。马德里也差不多。<strong>这就是目前欧洲部署的水平</strong>。我认为这是一个重要的开始。</p></div></p>
+<h2 id="s5">五、规模化靠的不是驾驶软件 · What it takes to scale</h2>
+<p class="seg" id="seg-18"><span class="ts">[09:53 – 10:41]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> It&#x27;s important to get in all the experience that you need for doing the operations, because there it&#x27;s not only a technology and autonomous vehicle game, or a demand game. It&#x27;s also an <strong>infrastructure game</strong>. That&#x27;s also important to scale the infrastructure of charging, of maintenance, of everything that is basically needed with the scaling of the fleets — and they are the gap, and I think we need to speed up to close the gaps. And more importantly, as I mentioned before, we need to see that we can use <strong>European technology stacks</strong> on</p>
+<p class="zh"><strong>Augustin：</strong> 重要的是把运营需要的经验都攒起来，因为这件事<strong>不只是技术与自动驾驶车辆的游戏，也不只是需求的游戏，它同时是一场基础设施的游戏</strong>。充电、维护，以及车队规模化所必需的一切基础设施，都要跟着规模化——<strong>而这里恰恰是缺口</strong>，我觉得必须加速把差距补上。更重要的是，就像我之前提到的，我们要能用上<strong>欧洲自己的技术栈</strong>——</p></div></p>
+<p class="seg" id="seg-19"><span class="ts">[10:41 – 10:51]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> the driving side, the vehicle side, the self-driving stack side, and also on the demand platform side, to keep more of the value creation here within Europe.</p>
+<p class="zh"><strong>Augustin：</strong> 驾驶侧、车辆侧、自动驾驶技术栈侧，还有需求平台侧——把更多的价值创造留在欧洲。</p></div></p>
+<p class="seg" id="seg-20"><span class="ts">[10:52 – 11:02]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Yeah, I remember talking to Pony.ai and the CEO James Peng — I think there&#x27;s some bells ringing in the background.</p>
+<p class="zh"><strong>Ben：</strong> 嗯，我记得和小马智行 CEO James Peng 聊过——我好像听到背景里有钟声。</p></div></p>
+<p class="seg" id="seg-21"><span class="ts">[11:03 – 11:16]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, I think it&#x27;s now 6pm here in Germany, and at 6pm all the churches, or most of the church bells, are ringing. So sorry for that.</p>
+<p class="zh"><strong>Augustin：</strong> 对，德国这边现在 6 点，6 点所有教堂——大部分教堂的钟都会响。抱歉。</p></div></p>
+<p class="seg" id="seg-22"><span class="ts">[11:17 – 11:46]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> No problem at all. It&#x27;s really nice actually. So James Peng was saying that they will always take a partnership-level approach in Europe — they would not come to Europe alone. But I&#x27;d love to talk a little bit more about China coming into Europe. But first of all: clearly there&#x27;s not a pilot problem in Europe. Do you think that European demonstrations will become scalable businesses?</p>
+<p class="zh"><strong>Ben：</strong> 完全没问题，其实还挺好听的。James Peng 说他们在欧洲会始终采取<strong>合作（partnership）路径</strong>，不会单独进欧洲。不过我很想多聊一点中国进入欧洲这件事。先问一个更根本的：<strong>欧洲显然不缺试点。你觉得这些欧洲的示范项目会变成可规模化的生意吗？</strong></p></div></p>
+<h2 id="s6">六、Uber 就是当前的节奏制定者 · Uber as the pace setter</h2>
+<p class="seg" id="seg-23"><span class="ts">[11:49 – 12:37]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I would say it depends — not all of them. One factor could be <strong>who is financing the fleet</strong>, and how serious companies like Uber are about getting from this pilot level to scale level here in Europe. It might be a bit delayed compared to the US. I think the big players that are relevant here in Europe — you mentioned Zagreb, that&#x27;s an Uber project; you mentioned Wayve in London, Uber is involved there as well; you talked about WeRide in Zurich, Uber is involved as well. So there, I think <strong>Uber is the pace setter at the moment</strong> — or they control how fast they scale.</p>
+<p class="zh"><strong>Augustin：</strong> 我会说<strong>取决于具体项目，不是全部</strong>。一个关键因素是：<strong>谁来出钱养车队</strong>，以及像 Uber 这样的公司把「从试点走到规模化」这件事看得有多认真。相比美国，欧洲可能会慢一些。我认为欧洲真正相关的几个大项目——你说的萨格勒布是 Uber 的项目；伦敦的 Wayve，Uber 也在里面；苏黎世的文远知行，Uber 同样参与。所以在这里，<strong>Uber 目前就是节奏制定者</strong>，或者说，<strong>扩张速度由它控制</strong>。</p></div></p>
+<p class="seg" id="seg-24"><span class="ts">[12:38 – 13:23]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> At the moment it&#x27;s more about putting out the different pilots, because there&#x27;s basically no big project here that they need to compete against. We don&#x27;t have a Waymo here with hundreds or thousands of vehicles per city. So you don&#x27;t need to outpace them. <strong>If you have 20 or 25 vehicles in a city, you&#x27;re already the leading player.</strong> So I think that is the way forward. It depends a bit on how fast Waymo starts here in Munich or in Berlin when they launch in 2027, and how fast they scale. And I think this has an impact on how fast the other projects scale as well.</p>
+<p class="zh"><strong>Augustin：</strong> 目前更像是在「把各个试点铺出去」，因为这里基本上<strong>没有一个需要与之竞争的大项目</strong>。我们这里没有那种单城就有数百上千辆车的 Waymo，所以你并不需要拼命超车。<strong>在一座城市里有 20 到 25 辆车，就已经是领先玩家了。</strong> 我认为这就是眼下往前走的路径。这多少取决于：<strong>Waymo 2027 年在慕尼黑或柏林启动后，跑得有多快、铺得有多快。</strong> 而这会反过来影响其他项目的扩张速度。</p></div></p>
+<p class="seg" id="seg-25"><span class="ts">[13:24 – 13:58]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> And also, to be honest, some of the projects that we see now on the streets might also disappear, because they are basically running out of funding, or they see too strong competition. I would expect going forward that we will see a high level of dynamics, and the scaling speed and the scaling of the fleet depend on how fast Waymo is coming in here and then scaling their services.</p>
+<p class="zh"><strong>Augustin：</strong> 另外说实话，<strong>现在街上跑的一些项目以后可能会消失</strong>——因为它们要么资金烧完了，要么发现竞争太强。我预期接下来会非常动态，而扩张速度、车队规模，都取决于 <strong>Waymo 进来得有多快、服务铺得有多快</strong>。</p></div></p>
+<p class="seg" id="seg-26"><span class="ts">[13:59 – 14:10]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> So you actually think that Uber is the front runner at the moment — that it&#x27;s in control and setting the pace of development in Europe.</p>
+<p class="zh"><strong>Ben：</strong> 所以你真的认为，<strong>目前 Uber 是领跑者</strong>，是它在掌控并设定欧洲的发展节奏。</p></div></p>
+<p class="seg" id="seg-27"><span class="ts">[14:11 – 14:58]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yes, I would say so. Basically there are at least <strong>three buckets</strong> that are important to launch autonomous mobility services. You can also break it down into five layers. One is the <strong>demand side</strong>, one is the <strong>operation side</strong>, and the third one is basically the combination of the <strong>vehicle and the autonomous driving stack</strong>. There you mentioned Pony, and you can say the same for WeRide — they move basically into this fully vertical approach in China to show that this concept works; they finance the fleets and maybe also the operations. But as you mentioned, for Europe and for the rest of the world,</p>
+<p class="zh"><strong>Augustin：</strong> 是的，我会这么说。基本上，要落地自动驾驶出行服务，至少有三个重要的<strong>桶</strong>（也可以拆成五层）：一是<strong>需求侧</strong>，二是<strong>运营侧</strong>，三是<strong>车辆与自动驾驶技术栈</strong>的组合。你刚才提到小马智行，文远知行也一样——<strong>在中国他们走的是完全垂直整合的路线</strong>，来证明这个模式可行：自己出钱养车队，可能也自己做运营。但正如你所说，<strong>对欧洲和世界其他地方，</strong></p></div></p>
+<p class="seg" id="seg-28"><span class="ts">[14:58 – 15:44]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> they&#x27;re looking for partners, because they are also cash constrained — they can&#x27;t finance all the vehicle fleets across the world and the operations. So they are not the pace-setters in Europe, because they always rely on someone else. And then in the middle, for fleet management, charging and the infrastructure — that&#x27;s, I would say, not very defined at the moment here in Europe. You see some companies getting active in there, but they are not pacing ahead and defining the ecosystem. It&#x27;s clearly the <strong>demand side</strong> that is the strongest one that we have here. We see now that Lyft bought FREENOW, I think one year or one and a half years ago.</p>
+<p class="zh"><strong>Augustin：</strong> <strong>他们在找合作伙伴</strong>，因为他们自己现金也紧张——不可能给全世界的车队和运营出钱。所以<strong>他们在欧洲不是节奏制定者，因为他们总要依赖别人</strong>。而中间那层——车队管理、充电与基础设施——我会说<strong>在欧洲目前还很不明确</strong>：有几家公司在动，但它们并没有领跑、也没有在定义生态。这里最强的显然是<strong>需求侧</strong>。比如 Lyft 收购了 FREENOW，我记得是一年到一年半前的事。</p></div></p>
+<p class="seg" id="seg-29"><span class="ts">[15:45 – 16:02]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> They also tried to get active in London. And then the third one, also coming from the demand side, is Bolt. So for the larger projects, <strong>the demand layer is clearly the pace setter</strong>, and Uber is way ahead of the others at the moment.</p>
+<p class="zh"><strong>Augustin：</strong> 他们也试图在伦敦有所动作。第三个同样来自需求侧的，就是 <strong>Bolt</strong>。所以对较大的项目来说，<strong>需求层显然是节奏制定者</strong>，而目前 <strong>Uber 明显领先于其他所有玩家</strong>。</p></div></p>
+<h2 id="s7">七、Bolt：唯一的欧洲本土玩家 · Bolt</h2>
+<p class="seg" id="seg-30"><span class="ts">[16:03 – 16:09]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Yeah, Bolt is an interesting player. I mean, it&#x27;s the only homegrown European player, right?</p>
+<p class="zh"><strong>Ben：</strong> 对，Bolt 是个很有意思的玩家。它是唯一<strong>欧洲土生土长</strong>的平台，对吧？</p></div></p>
+<p class="seg" id="seg-31"><span class="ts">[16:10 – 16:17]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> And they&#x27;ve just recently announced, I think last week, the partnership with Lucid to deploy 24,000 vehicles.</p>
+<p class="zh"><strong>Ben：</strong> 他们最近——我记得是上周——宣布了和 <strong>Lucid</strong> 的合作，要部署 <strong>24,000 辆</strong>车。</p></div></p>
+<p class="seg" id="seg-32"><span class="ts">[16:18 – 16:22]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> But obviously, it&#x27;s a promise. It&#x27;s not a deployment.</p>
+<p class="zh"><strong>Ben：</strong> 但显然，<strong>那是承诺，不是部署</strong>。</p></div></p>
+<p class="seg" id="seg-33"><span class="ts">[16:23 – 17:07]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, that&#x27;s a promise. And there it&#x27;s always interesting to follow the narratives that they want to send out. I&#x27;m not sure how closely you follow Bolt, but they were very proud of their European heritage, and they wanted to launch autonomous mobility with a more European stack. But then the first project was with Stellantis — of course, you can say that&#x27;s a European player — but then with the driver from Pony, which is China, and the compute platform from NVIDIA. And you mentioned Lucid, and I think NVIDIA is also part of the game. So also for the second program they announced,</p>
+<p class="zh"><strong>Augustin：</strong> 对，那是承诺。而这里有意思的是去看他们想释放什么<strong>叙事</strong>。不知道你跟 Bolt 跟得多紧——他们非常以自己的「欧洲血统」自豪，说要用<strong>更欧洲的技术栈</strong>来落地自动驾驶。但<strong>第一个项目是 Stellantis</strong>——这当然是欧洲玩家——可驾驶技术来自<strong>中国的小马智行</strong>，算力平台来自 <strong>NVIDIA</strong>。你刚提到 Lucid，我想 NVIDIA 也在里面。所以<strong>他们宣布的第二个项目同样不是全欧洲的</strong>。</p></div></p>
+<p class="seg" id="seg-34"><span class="ts">[17:08 – 17:45]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> It&#x27;s not fully European, and this basically shows where the power is at the moment. I really like the ambition of launching with a European stack — as I mentioned before, I think that&#x27;s necessary, that as a European industry we need to own that. <strong>But they also can&#x27;t change the rules of the game at the moment.</strong> So they also need to rely, for commercialization of autonomous mobility, on technology from the US with NVIDIA, and on vehicles from the US with Lucid.</p>
+<p class="zh"><strong>Augustin：</strong> 这<strong>恰恰展示了当下的权力在哪里</strong>。我很欣赏他们「用欧洲栈上线」的雄心——就像我前面说的，我认为这是必要的，欧洲产业必须把这件事握在自己手里。<strong>但眼下他们也没法改变游戏规则。</strong> 所以要做自动驾驶出行的商业化，他们仍然得依赖美国的 NVIDIA 技术、美国的 Lucid 整车。</p></div></p>
+<h2 id="s8">八、风险：欧洲会不会变成「外国技术的市场」· Risk of becoming a foreign-tech market</h2>
+<p class="seg" id="seg-35"><span class="ts">[17:46 – 17:54]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> So do you think that Europe is at real risk of becoming a market for foreign AV technology?</p>
+<p class="zh"><strong>Ben：</strong> 那你认为，欧洲是否真的面临<strong>变成「外国自动驾驶技术市场」</strong>的风险？</p></div></p>
+<p class="seg" id="seg-36"><span class="ts">[17:55 – 18:40]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> At the moment there&#x27;s a high risk that this will be the case. Yes. Besides Bolt, we see no European player owning the customer. Uber is US-based. Lyft is the same. Let&#x27;s see if the Chinese demand platforms will come in again. So CaoCao, the demand platform from the Geely Group — they announced to launch in Europe as well. I&#x27;ve heard rumors that DiDi, the Chinese platform, wants to expand again. They were here in Europe already, or started in Europe, but then basically</p>
+<p class="zh"><strong>Augustin：</strong> 目前<strong>这个风险很高</strong>。是的。除了 Bolt，我们看不到任何欧洲玩家在<strong>拥有客户</strong>。Uber 是美国的，Lyft 也是。再看看中国需求平台会不会再来：<strong>曹操出行（CaoCao，吉利体系的需求平台）</strong> 已经宣布要进欧洲。我也听到传闻说中国的 <strong>DiDi</strong> 想再次扩张——它其实早就到过欧洲、在欧洲起步过，但后来基本上</p></div></p>
+<p class="seg" id="seg-37"><span class="ts">[18:41 – 19:31]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> they were forced to shut it down, basically, when they had the troubles there in China. But probably they have the ambition to expand as well. So the demand layer is controlled at the moment by mostly foreign players. And then the same goes for the vehicle stack: <strong>there&#x27;s no level four European tech stack that&#x27;s close to deployment.</strong> It&#x27;s either the Chinese technology from Baidu, WeRide, Pony, or the US technology. And then the vehicle layer — there we also see signals that this is moving towards foreign players. The Chinese players come here with Chinese-made vehicles:</p>
+<p class="zh"><strong>Augustin：</strong> 在它中国本土出问题的时候被迫关停。但它大概也有扩张的野心。所以<strong>需求层目前主要被外国玩家控制</strong>。车辆与技术栈也一样：<strong>欧洲没有任何接近部署状态的 L4 技术栈</strong>——要么是百度、文远知行、小马智行的中国技术，要么是美国技术。再到<strong>车辆层</strong>，信号同样指向外国玩家：中国玩家带来的是<strong>中国制造的车</strong>。</p></div></p>
+<p class="seg" id="seg-38"><span class="ts">[19:31 – 20:17]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Arcfox — and in Zagreb, WeRide, I think they use the minibus from the Geely Group; Pony, they have GAC; Waymo, when they launch here, it&#x27;s probably either the Zeekr vehicle or the Hyundai IONIQ 5. So the vehicle layer is dominated by foreign ones as well. And on the operation side, let&#x27;s see whether a European player jumps onto this value step, or whether we are also at risk there. In London you already have Moove — a player that&#x27;s financed, I think, with a couple of hundred million US dollars, and they have access to more than</p>
+<p class="zh"><strong>Augustin：</strong> 比如<strong>极狐（Arcfox）</strong>；萨格勒布那边文远知行用的是<strong>吉利集团的小巴</strong>；小马智行有<strong>广汽</strong>；Waymo 进来时大概会用 <strong>Zeekr 的车型或者现代 IONIQ 5</strong>。所以<strong>车辆层同样由外国玩家主导</strong>。而<strong>运营侧</strong>，就看有没有欧洲玩家愿意跳上这个价值链台阶，还是我们在这里也有失守的风险。伦敦已经有 <strong>Moove</strong>——一家我印象中融了几亿美元的玩家，而且凭借过往几轮融资，他们能调动<strong>超过十亿美元</strong>的资金来给车队做融资。</p></div></p>
+<p class="seg" id="seg-39"><span class="ts">[20:17 – 20:39]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> a billion for financing fleets, based on the rounds that they&#x27;ve done in the past. So for fleet operations we already see foreign players moving in here. So the whole value chain of commercialization — and of creating value for European players — is <strong>highly at risk</strong> at the moment, I would say.</p>
+<p class="zh"><strong>Augustin：</strong> 所以在<strong>车队运营</strong>这一层，我们已经看到外国玩家进场。因此整套商业化价值链——以及为欧洲玩家创造价值的那条链——<strong>目前都处在高风险之中</strong>。</p></div></p>
+<h2 id="s9">九、与中国自动驾驶公司合作，有顾虑吗 · Partnering with Chinese AV companies</h2>
+<p class="seg" id="seg-40"><span class="ts">[20:40 – 20:44]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> What would you say are some of the concerns of partnering with Chinese AV companies?</p>
+<p class="zh"><strong>Ben：</strong> 你会说，与中国自动驾驶公司合作有哪些顾虑？</p></div></p>
+<p class="seg" id="seg-41"><span class="ts">[20:47 – 21:31]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I think there are <strong>not really concerns</strong> of partnering with the Chinese ones. I mean, you see it in Switzerland: the public transit operator there has chosen a Chinese partner. And normally you would say Switzerland could be seen as very conservative — so even they have chosen a Chinese player. And if you look into Zagreb, it&#x27;s the same. There, with Verne, they also have links into European funding programs and to domestic funding programs in Croatia. So these projects don&#x27;t shy away from Chinese tech.</p>
+<p class="zh"><strong>Augustin：</strong> 我认为<strong>其实没有太多顾虑</strong>。你看瑞士：当地的公共交通运营商<strong>选择了中国伙伴</strong>。一般来说你会觉得瑞士非常保守——可连它都选了中国玩家。再看萨格勒布，一样。那边的 Verne 还能接入<strong>欧盟层面的资金项目</strong>以及<strong>克罗地亚本国的资金项目</strong>。所以这些项目<strong>并不回避中国技术</strong>。</p></div></p>
+<p class="seg" id="seg-42"><span class="ts">[21:33 – 21:54]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> And I think in the general public there&#x27;s also not really criticism of Chinese AV technology. So at the moment it&#x27;s not the case that anyone who wants to launch level four solutions has anything against Chinese technology.</p>
+<p class="zh"><strong>Augustin：</strong> 我也认为在<strong>公众层面</strong>，目前并没有对中国自动驾驶技术的实质批评。所以现在的情况是：<strong>任何想落地 L4 方案的人，都不会对中国技术有抵触。</strong></p></div></p>
+<h2 id="s10">十、被低估的基础设施层 · The underestimated infrastructure layer</h2>
+<p class="seg" id="seg-43"><span class="ts">[21:55 – 22:25]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Let&#x27;s move on then. So we&#x27;ve talked a little bit about level four, but that&#x27;s not the only success criteria, right? We need fleets, charging, financing, the depots. In the US, I&#x27;ve just spoken to a company called Terawatt — they supply Waymo, and they won&#x27;t tell me any other companies, but we know about others — to supply the charging infrastructure, right?</p>
+<p class="zh"><strong>Ben：</strong> 那我们往下聊。刚才谈了些 L4，但那不是唯一的成功标准，对吧？我们还需要车队、充电、融资、车场。在美国，我刚和一家叫 <strong>Terawatt</strong> 的公司聊过——他们给 Waymo 供充电基础设施（他们不肯告诉我还有哪些客户，但外面都知道还有别人）。</p></div></p>
+<p class="seg" id="seg-44"><span class="ts">[22:26 – 22:33]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> You&#x27;ve got companies like Voltera as well. And I feel like it&#x27;s lacking in Europe though, right?</p>
+<p class="zh"><strong>Ben：</strong> 也有 <strong>Voltera</strong> 这样的公司。但我感觉<strong>欧洲在这方面是缺失的</strong>，对吧？</p></div></p>
+<p class="seg" id="seg-45"><span class="ts">[22:34 – 22:54]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> I mean, I know that we have Hubber in London. They were set up by three ex-Tesla employees and they are working to supply the infrastructure for London. But do you know what I mean? Like in Europe, who are those companies?</p>
+<p class="zh"><strong>Ben：</strong> 我知道伦敦有 <strong>Hubber</strong>——三位前特斯拉员工创立的，他们在为伦敦供基础设施。但你懂我意思吗？<strong>在欧洲，这类公司到底是谁？</strong></p></div></p>
+<p class="seg" id="seg-46"><span class="ts">[22:57 – 23:42]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, that&#x27;s a good question. I think there, the industry has not recognized that autonomous mobility is not, let&#x27;s say, a software game or a vehicle game. <strong>It&#x27;s an infrastructure play.</strong> And the players that want to get in here have not recognized that the infrastructure is the super important part. What we see here are programs and projects where they use public charging infrastructure, or maybe some charging. We don&#x27;t see this big investment of Terawatts. And you can also look to Nashville,</p>
+<p class="zh"><strong>Augustin：</strong> 这是个好问题。我认为<strong>行业还没意识到：自动驾驶出行不是软件游戏，也不是整车游戏，它是一场基础设施的博弈。</strong> 想进场的玩家也还没有认识到——<strong>基础设施才是那个至关重要、比重最大的部分</strong>。我们看到的项目，用的往往是公共充电设施，或者少量自建充电。我们看不到 Terawatt 那种级别的投入。你还可以看看纳什维尔：</p></div></p>
+<p class="seg" id="seg-47"><span class="ts">[23:42 – 24:27]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> what Flexdrive, the Lyft unit, is doing there to build the depots — I think it&#x27;s at least two depots for Waymo. So we are far away from this level of investment and commercialization. Option one is that we, in Europe, lose this layer to foreign companies like Moove. They&#x27;re already in the US; they&#x27;re already in the UK with London, and they have the blueprints from the US programs that they do. And we talked about Lyft:</p>
+<p class="zh"><strong>Augustin：</strong> Lyft 旗下的 <strong>Flexdrive</strong> 在那里为 Waymo 建车场——我记得至少两个。所以<strong>我们离这种投资与商业化水平还差得很远</strong>。第一种可能是：<strong>欧洲把这一层输给 Moove 这样的外国公司。</strong> 他们已经在美国，也已经靠伦敦进了英国，而且手里有美国项目的现成蓝图。再说 Lyft：</p></div></p>
+<p class="seg" id="seg-48"><span class="ts">[24:32 – 25:17]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Lyft has Flexdrive. Flexdrive is basically their fleet management platform, and they are heavily investing now in infrastructure for autonomous fleets, as you see in Nashville for Waymo. So this could be one option — that they come in and take this layer as well. The second one could be local operators that we have — companies that are maybe active today in the rental car space, like Europcar or Sixt, or maybe the bigger leasing companies or fleet management companies. That could be an option too. The challenge there: they might have the skills, they might have access to a certain level of capital,</p>
+<p class="zh"><strong>Augustin：</strong> Lyft 有 Flexdrive，本质上就是它的车队管理平台，现在正在<strong>大力投资自动驾驶车队的基础设施</strong>——就是你在纳什维尔为 Waymo 看到的那种。所以<strong>路径一</strong>是：<strong>它们进来，把这一层也拿走</strong>。<strong>路径二</strong>是我们本地的运营商：比如今天在做租车的 <strong>Europcar、Sixt</strong>，或者更大的租赁公司、车队管理公司。这也是一种可能。挑战在于：他们可能有技能、能拿到一定量级的资本，</p></div></p>
+<p class="seg" id="seg-49"><span class="ts">[25:18 – 26:07]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> but they would need to repackage the skills that they have to be competitive in a market where every penny counts. The fleet operator is always improving operational infrastructure or the operational setup to meet the different cost levels and the downward spiral that we expect in fleet management. So that could be bucket number two. And then bucket number three is that we see local European startups moving into this value step. You mentioned the player from London. Maybe there are some other companies in there as well. Hopefully they will get enough funding or access to capital to be a relevant player</p>
+<p class="zh"><strong>Augustin：</strong> 但他们<strong>需要把已有的技能重新打包</strong>，才能在一个<strong>「一分钱都要抠」</strong>的市场里具备竞争力。车队运营方必须不断改进运营基础设施与运营配置，去应对各种成本门槛，以及我们预期中车队管理<strong>毛利持续下行的螺旋</strong>。这是<strong>路径二</strong>。<strong>路径三</strong>是欧洲本土创业公司跳上这个价值台阶——你提到的伦敦那家（Hubber），也许还有别的公司。希望它们能拿到足够的资金或资本渠道，成为有分量的玩家。</p></div></p>
+<p class="seg" id="seg-50"><span class="ts">[26:08 – 26:35]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> for investing in infrastructure like charging, maintenance facilities. And then also, I think <strong>the allocation of real estate is very important</strong>. They need to be very close to the operational design domains of the fleets, to avoid any efficiency loss of a car driving one hour or two hours to the driving or charging depot and not being utilized.</p>
+<p class="zh"><strong>Augustin：</strong> 去投资充电、维护设施这类基础设施。然后我认为，<strong>地产的配置非常关键</strong>。这些设施必须<strong>非常靠近车队的运行设计域（ODD）</strong>，否则就会出现纯效率损失：<strong>车要开一两个小时去回场或充电，这段时间完全没被利用。</strong></p></div></p>
+<h2 id="s11">十一、伦敦的地产困境与「分级枢纽」 · Siting infrastructure in cities like London</h2>
+<p class="seg" id="seg-51"><span class="ts">[26:35 – 27:19]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Yeah, I think this is one of the problems that we&#x27;re going to see in London. It&#x27;s a condensed city and everyone is fighting for real estate. This is the same problem that we had in our days in micromobility — delivery players trying to set up micro hubs for the last mile, and they needed those real estate drops. That&#x27;s why companies like Zedify — I don&#x27;t think it worked out in the end and they really struggled. So I think we&#x27;re going to see this more and more: the location of that real estate needs to be right in the center of the CBD, where these companies are going to be launching, because that&#x27;s where the populous is and that&#x27;s where they&#x27;re going to get the most rides.</p>
+<p class="zh"><strong>Ben：</strong> 对，我觉得这会成为伦敦的一大问题。它是一座<strong>高密度收缩型的城市，所有人都在抢地产</strong>。这和我们在微出行时代遇到的问题一模一样——配送玩家要给「最后一公里」建微型仓，也需要抢到那些地产点位。也正因如此，像 <strong>Zedify</strong> 这样的公司最后没能跑通，过得很艰难。所以我觉得我们会越来越多地看到：<strong>那些地产必须落在 CBD 正中心</strong>——因为这些公司要在那里上线，那里人口最密、单量最多。</p></div></p>
+<p class="seg" id="seg-52"><span class="ts">[27:20 – 27:21]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> But can you have the space?</p>
+<p class="zh"><strong>Ben：</strong> 可你有空间吗？</p></div></p>
+<p class="seg" id="seg-53"><span class="ts">[27:23 – 28:07]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, I think it will be very hard to find the space. And it depends, city by city, how you design your logistics network or fleet maintenance network. There might be cities where you have enough space in the city center for building larger hubs and larger charging facilities. Other cities, maybe you need to work with micro hubs for charging in the city, so that at least the vehicle can do a full day in the city without driving one hour or even longer to the outside depots. And then the charging will happen at those micro hubs.</p>
+<p class="zh"><strong>Augustin：</strong> 我认为会<strong>非常难找到空间</strong>。而且这取决于<strong>一座城市一座城市</strong>地去设计你的物流网络或车队维护网络。有些城市，市中心可能确实有足够空间去建<strong>更大的枢纽和更大的充电设施</strong>；另一些城市，也许就得靠<strong>市内的微型充电枢纽</strong>，让车至少能在城里跑满一整天，而不用开一个小时甚至更久去城外的车场。充电就在这些微型枢纽里完成。</p></div></p>
+<p class="seg" id="seg-54"><span class="ts">[28:08 – 28:57]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> And then maybe the heavy lifting of fleet cleaning or maintenance and repairs could happen a bit outside the city centers. So I think there&#x27;s also this: how do you design your fleet operation networks and your real estate network for the best fleet management? I think that&#x27;s something we need to develop. It might be different city by city, and it might be a mix of different sizes of hubs. And we might also see temporary hubs here. Harry sent me a picture of Los Angeles where there was a parking space equipped with mobile chargers powered by</p>
+<p class="zh"><strong>Augustin：</strong> 然后像<strong>清洁、检修这类重活</strong>，可以放到市中心之外一点去做。所以我认为这里还有一个课题：<strong>为了最优的车队管理，你要怎么设计你的车队运营网络和地产网络？</strong> 这是需要我们去建设的能力。它可能<strong>因城而异</strong>，可能是<strong>不同规模枢纽的混合</strong>，也可能出现<strong>临时枢纽</strong>。Harry 给我发过一张洛杉矶的照片：一个停车场被装上了移动充电设备，由……供电。</p></div></p>
+<p class="seg" id="seg-55"><span class="ts">[28:58 – 29:15]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> So this could also be something we see: these non-permanent hubs, more like pop-up hubs, until we get into a more stable fleet operation setup.</p>
+<p class="zh"><strong>Augustin：</strong> 所以我们可能也会看到这种<strong>非永久、更像「快闪」的枢纽</strong>，作为过渡，直到建立起更稳定的车队运营体系。</p></div></p>
+<p class="seg" id="seg-56"><span class="ts">[29:16 – 29:31]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Yeah, I think these sites are going to be absolutely critical. I know Terawatt reviews over 100 sites before they pick one. And they might not buy parking lots, but it can take years to find the right space.</p>
+<p class="zh"><strong>Ben：</strong> 我觉得这些场址会<strong>至关重要</strong>。我知道 Terawatt 是<strong>看完 100 多个场址才挑一个</strong>。他们可能不买停车场，但<strong>找到一个合适的场址可能要花好几年</strong>。</p></div></p>
+<p class="seg" id="seg-57"><span class="ts">[29:31 – 30:16]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, it could take years to find the right space. And if you talk about larger hubs, we also need to recognize that <strong>it takes years to connect them with the grid</strong>. Often they don&#x27;t have the connector. I don&#x27;t know how this is in the UK, but here in Germany, at least where I&#x27;m located, <strong>that&#x27;s a nightmare</strong> — to have a charger connected to the grid and then set it up so it&#x27;s ready to use. If we think about hub sizes like what we see in Nashville for Waymo, we are not talking about one high-performance or high-power charger;</p>
+<p class="zh"><strong>Augustin：</strong> 对，找到一个合适的场址可能要数年。而如果说到更大的枢纽，我们还得认识到：<strong>把它们接上电网也要好几年</strong>。很多时候连接口都没有。我不清楚英国的情况，但在德国、至少我在的地方，<strong>那简直是噩梦</strong>——要把充电桩接上电网、再调到可用状态。如果看向纳什维尔为 Waymo 建的那种枢纽规模，那<strong>不是一根高功率充电桩</strong>的问题；</p></div></p>
+<p class="seg" id="seg-58"><span class="ts">[30:16 – 30:52]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> we see maybe 20, 30, 40 high-power chargers at one location. So getting all of them connected to the grid, getting the permits for that, and everything around regulation and bureaucracy — that also takes time. So I think that&#x27;s something we need to recognize in Europe as well. We need the right locations, as we discussed, and then <strong>you also need to allocate time to get these locations up and running</strong> so that they&#x27;re fully functional.</p>
+<p class="zh"><strong>Augustin：</strong> 我们在一个点位上会看到<strong>20、30 甚至 40 根大功率充电桩</strong>。把所有这些接上电网、拿到许可，再加上监管与官僚流程，<strong>同样都要时间</strong>。我认为欧洲也必须认识到这一点：我们需要正确的位置（如前所述），<strong>而且还要为「让这些点位真正跑起来、完全可用」预留时间。</strong></p></div></p>
+<h2 id="s12">十二、价值分布：最赚钱的不是技术 · Where the real value lies</h2>
+<p class="seg" id="seg-59"><span class="ts">[30:52 – 31:02]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> So where do you think the real value lies in this business? Do you think it is in the fleet management? Do you think it&#x27;s in the self-driving system? Where do you think?</p>
+<p class="zh"><strong>Ben：</strong> 那你认为这门生意真正的价值在哪里？是在<strong>车队管理</strong>？还是在<strong>自动驾驶系统</strong>？你怎么看？</p></div></p>
+<p class="seg" id="seg-60"><span class="ts">[31:03 – 31:47]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> The fleet management system — it&#x27;s necessary that we build this up. If you compare the operational part to other shared mobility modes, as you mentioned micromobility: I have a background also in car sharing, I was involved in car rental schemes as well. <strong>The operations part was always necessary. It&#x27;s the make or break for those services.</strong> I think that&#x27;s the area where you need a lot of human power to set up and to keep up and running. This resides in high OPEX costs — and normally no one wants to pay for that.</p>
+<p class="zh"><strong>Augustin：</strong> 车队管理系统——我们必须把它建起来。如果把运营这块和其他共享出行模式比，就像你说的微出行：我自己也有分时租赁的背景，也参与过租车业务。<strong>运营这一块从来都是必需的，它是这些服务的成败关键</strong>。我认为在这一层，你需要<strong>大量人力</strong>去搭建、去维持运转，这直接体现为<strong>高企的 OPEX</strong>——而通常<strong>没人愿意为它付钱</strong>。</p></div></p>
+<p class="seg" id="seg-61"><span class="ts">[31:48 – 32:35]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> It was the same in micromobility or in car sharing, so <strong>the cost pressure always moved to the operations part</strong>, especially if the services were not profitable. So I would expect that fleet management will generate high revenue amounts, <strong>but the margins will be very thin</strong>. I think that&#x27;s the challenge for the different players and stakeholders there: always doing the cost optimization work so that they can stay in the market and stay competitive. If we talk about higher margins, it&#x27;s definitely <strong>the demand layer</strong>. Uber, Lyft and the others are all public listed companies, so we can see how</p>
+<p class="zh"><strong>Augustin：</strong> 微出行和分时租赁也是一样——<strong>成本压力最后总是转移到运营层</strong>，尤其是在服务不赚钱的时候。所以我预计<strong>车队管理会带来很高的收入，但毛利会非常薄</strong>。这就是这个领域各方玩家与利益相关者面临的挑战：<strong>必须一直在做成本优化</strong>，才能留在市场上、保持竞争力。如果说<strong>更高的毛利，那一定是需求层</strong>。Uber、Lyft 这些都是上市公司，所以我们可以看出来</p></div></p>
+<p class="seg" id="seg-62"><span class="ts">[32:35 – 33:21]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> highly profitable this market could be. And if they are the strong players towards the customers — if they own the customers — they can somehow also dictate the prices, and basically create pricing pressure on the underlying layers: operations, then vehicles, then self-driving stacks. So I think that&#x27;s a highly profitable layer. And then if you move to the self-driving technology stacks and the vehicles: as of today, we see heavy investments, but based on assumptions we made at MHP and on some other industry reports, this could — I often also get the question, is this layer of self-driving technology and vehicles already gone and captured</p>
+<p class="zh"><strong>Augustin：</strong> 这个市场可能有多赚钱。而如果他们是面向客户的强势方——<strong>如果他们掌握了客户，他们就能在某种程度上决定价格</strong>，并对下面的层级（运营、车辆、自动驾驶技术栈）<strong>制造定价压力</strong>。所以我认为需求层是<strong>高利润层</strong>。再往下看自动驾驶技术栈与车辆：到今天为止都是<strong>重投入</strong>，但基于我们在 MHP 做的假设以及一些行业报告，这一层可能会——我经常被问到的问题是：<strong>这个「自动驾驶技术 + 车辆」的层级，是不是已经被外国玩家拿走了？</strong></p></div></p>
+<p class="seg" id="seg-63"><span class="ts">[33:21 – 34:05]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> by foreign players, as we discussed before? I think we also need to recognize that <strong>we are talking about just a couple of hundred thousand vehicles globally</strong>. If we count Europe and China together — I think we have roughly four or five thousand vehicles in China. We are still at the beginning of scaling these layers. If we think a bit forward, based on our calculations and models,</p>
+<p class="zh"><strong>Augustin：</strong> 就像我们前面讨论的那样。但我认为我们还得认识到：<strong>全球范围也才几十万辆车</strong>。如果把欧洲和中国加起来——中国我印象里大约只有<strong>四五千辆</strong>无人车。<strong>我们还处在这几层规模化的起点。</strong> 往前推一推，基于我们的测算与模型，</p></div></p>
+<p class="seg" id="seg-64"><span class="ts">[34:06 – 34:51]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> we assume around 2% of new vehicles could be level four in 2030, and around 5% in 2035. We have roughly 15 or 16 million vehicles sold every year in Europe, so we are talking about 500,000 vehicles coming to the streets by 2035 on a yearly basis — way more than we have today on the streets. So I think that&#x27;s also a clear indication: we need to get our things together to play their role as well. Because if this is true, that&#x27;s a very valuable layer, and we don&#x27;t want it to go to Chinese or US technology and vehicle providers.</p>
+<p class="zh"><strong>Augustin：</strong> 我们假设 <strong>2030 年约 2% 的新车是 L4，2035 年约 5%</strong>。欧洲每年卖出大约 1,500 万到 1,600 万辆——也就是说，<strong>到 2035 年每年约有 50 万辆 L4 车辆上路</strong>，这远远高于今天街上的存量。所以这是一个明确的信号：<strong>欧洲必须把自己的事情收拾好，才能在这局里扮演角色。</strong> 因为这层如果真的这么值钱，<strong>我们就不希望它流向中国或美国的技术与整车供应商。</strong></p></div></p>
+<p class="seg" id="seg-65"><span class="ts">[34:51 – 34:57]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> We need to keep this in Europe. And I think that should be the motivation for the whole industry.</p>
+<p class="zh"><strong>Augustin：</strong> <strong>我们要把这一层留在欧洲。</strong> 我认为这应该成为整个产业的动力。</p></div></p>
+<h2 id="s13">十三、未来 12 个月：两个热点 · The next 12 months</h2>
+<p class="seg" id="seg-66"><span class="ts">[34:58 – 35:05]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> I think that&#x27;s really interesting insight, and good to point out that we really are just scratching the surface of this.</p>
+<p class="zh"><strong>Ben：</strong> 这个洞察很有意思，也很重要——<strong>我们其实才刚刚开始触及这件事的表面。</strong></p></div></p>
+<p class="seg" id="seg-67"><span class="ts">[35:06 – 35:18]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> We&#x27;re right at the start. So final question for you: over the next 12 months, what&#x27;s the biggest progress you think will be made in Europe?</p>
+<p class="zh"><strong>Ben：</strong> 我们还在起点。最后一个问题：未来 12 个月，你认为欧洲最大的进展会是什么？</p></div></p>
+<p class="seg" id="seg-68"><span class="ts">[35:22 – 36:07]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> To be honest, I think it will be Waymo, coming into Munich and then also Berlin, and of course London. Let&#x27;s say it in two ways. There&#x27;s one: the market, there&#x27;s a lot of activity happening today already — that&#x27;s London. So I think if there&#x27;s one city within Europe, this is the place to be for all the different AV players. Based on the dynamic and the activities of all the players that we have in London, I believe we will see immense progress in 2027. And then if we talk about continental Europe,</p>
+<p class="zh"><strong>Augustin：</strong> 说实话，我认为会是 <strong>Waymo——进慕尼黑、然后柏林</strong>，当然还有<strong>伦敦</strong>。分两头说：一是市场层面，今天已经有大量活动的地方——那就是伦敦。所以我认为<strong>如果欧洲只能选一个城市，那就是所有自动驾驶玩家都该去的地方</strong>。以伦敦所有玩家的活跃度与动能，我相信<strong>2027 年我们会看到巨大进展</strong>。再说到欧洲大陆，</p></div></p>
+<p class="seg" id="seg-69"><span class="ts">[36:08 – 36:34]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I think Waymo will outpace all the different programs that we have seen so far here in continental Europe, including what Uber has started in Zagreb, in Switzerland, or in Madrid. So these are the two hotspots: London, with all the different players there; and then the second one is continental Europe, with Waymo.</p>
+<p class="zh"><strong>Augustin：</strong> 我认为<strong>Waymo 会跑赢欧洲大陆迄今所有的项目</strong>，包括 Uber 在萨格勒布、瑞士、马德里已经启动的那些。所以两个热点是：<strong>伦敦</strong>（所有玩家都在那里）和<strong>欧洲大陆</strong>（因为 Waymo）。</p></div></p>
+<h2 id="s14">十四、收尾 · Conclusions and final thoughts</h2>
+<p class="seg" id="seg-70"><span class="ts">[36:36 – 36:43]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Augustin, it&#x27;s been a pleasure to have you on. Is there any other burning insight that you feel you might have missed?</p>
+<p class="zh"><strong>Ben：</strong> Augustin，非常高兴能请到你来。你觉得自己还有什么没来得及说的关键洞察吗？</p></div></p>
+<p class="seg" id="seg-71"><span class="ts">[36:45 – 37:00]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> I think we can talk for hours. But it might be getting too long for the audience. So let&#x27;s schedule maybe the next session in half a year or so, to give you an update then on all the burning topics here in Europe.</p>
+<p class="zh"><strong>Augustin：</strong> 我觉得我们可以聊好几个小时。但对听众来说可能太长了。那就<strong>约半年后再来一次</strong>，到时候再给你更新欧洲这边所有最热的话题。</p></div></p>
+<p class="seg" id="seg-72"><span class="ts">[37:01 – 37:10]</span><div class="seg-body">
+<p class="en"><strong>Ben:</strong> Agreed. Maybe we should make this into a little mini-series. But no, thanks so much for coming on and really appreciate you giving us your time.</p>
+<p class="zh"><strong>Ben：</strong> 同意，也许我们可以把它做成一档小系列。总之非常感谢你能来，真的很感激你抽时间给我们。</p></div></p>
+<p class="seg" id="seg-73"><span class="ts">[37:11 – 37:19]</span><div class="seg-body">
+<p class="en"><strong>Augustin:</strong> Yeah, thank you so much for having me, Ben. And looking forward to the next conversation.</p>
+<p class="zh"><strong>Augustin：</strong> 谢谢你邀请我，Ben。期待下一次对话。</p></div></p>
+<hr>
+<p>*逐字稿来源：Substack 官方转录（transcription CDN，586 段自动转录）。英文保留官方转录形态，中文为人工翻译；对自动转录的明显误拼已按上下文校正，主要条目：Rimac（原 Riematz）、Verne（原 Bern/Swern）、WeRide（原 V-Ride）、Wayve（原 Wave）、Zeekr（原 Seeker）、Hubber（原 Huber）、Moove（原 Move）、CaoCao/Geely（原 KauKau/GD Group）、Arcfox（原 ArcFox）、PostAuto（原 Post Auto）、Terawatt/Voltera、Flexdrive（原 Flex Drive）、Europcar/Sixt（原 Europe Car/Sixth）。另有少量原音不明处（如「BAME」疑为 Baidu、一处指代车队运营方的词疑为公司名）已在译文按上下文处理。*</p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../lyft-hybrid-autonomy-risher/index.html"><div class="rw"><img loading="lazy" src="../lyft-hybrid-autonomy-risher/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Lyft 的自动驾驶混合战略</div></div></a><a class="relcard" href="../beti-french-av-operator-weride/index.html"><div class="rw"><img loading="lazy" src="../beti-french-av-operator-weride/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">beti：WeRide 首个欧洲 robobus 背后的法国运营方</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["欧洲", "Europe", "robotaxi", "自动驾驶", "Augustin Friedel", "MHP", "保时捷", "Uber", "Bolt", "Lyft", "Waymo", "Pony.ai", "小马智行", "WeRide", "文远知行", "Verne", "Rimac", "Zagreb", "萨格勒布", "伦敦", "London", "慕尼黑", "Munich", "柏林", "Berlin", "马德里", "苏黎世", "PostAuto", "PostBus", "AmiGo", "百度", "Apollo Go", "CaoCao", "曹操出行", "吉利", "DiDi", "Lucid", "Stellantis", "NVIDIA", "Moove", "Hubber", "Flexdrive", "Terawatt", "Voltera", "L4", "ODD", "规模化", "试点", "基础设施", "充电枢纽", "车场", "depot", "需求层", "车队运营", "fleet operations", "价值链", "单位经济", "本地化", "平台思维"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
