@@ -1,0 +1,466 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」 · 总结分析</title><meta name='description' content='东南亚的自动驾驶不是「省掉司机」的生意，而是「让服务不出错」的生意。Grab 自动驾驶总经理 Dominic Ong 的框架：Grab 把自己定位成像自来水一样的公共事业，可靠性是 P0；自动驾驶只从两条通道贡献可靠性——削平高峰缺口（新加坡高峰期需求可达平峰 4–5 倍）与补上连通性缺口。由此推出混合模式：自动驾驶车辆与人类司机跑在同一张网络上，同一 App 下单，共享同一需求池，由平台逐单决定谁接。他明确否掉了 100% 全自动驾驶车队——因为那意味着为峰值过度配车、低谷大量闲置的利用率问题。真正的难题被他说得很具体：暴雨会把需求推高 9–10 倍，而 ODD 恰恰同时收缩——需求最高的时刻正是自驾车最不能跑的时刻；物理上最会打崩 AV 栈的三件事是雨、摩托车、右舵；而在新加坡，拥车资格成本逾六位数美元，「你没法藏住一辆利用率很差的车」。Punggol 项目三方分工清晰：WeRide 供车并持有 L4 栈，LTA 是监管者同时也是共创者，Grab 是登记在册的运营方、资产在表内。他给出的真正护城河不是车，而是「本地化层」——自研 KartaDashcam、maker-checker 式软件协同、跨 OEM 车队中间件。指标随阶段演进：每关键介入里程（已超 12 万公里无关键介入）→ 车辆在线时长 → 利用率 → 复合指标。对 WeRide、May Mobility、Momenta、Vay 的股权投资，逻辑不是拿货，而是技术尚未商品化阶段的「战略对齐」；平台反向输出真实世界数据（200 亿单、14 年）、监管共创关系与劳动力转型能力。对 Waymo 进入新加坡，他明确欢迎，理由是给消费者更多选择、验证了商业化路径、加速监管框架。'><meta property='og:title' content='Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」 · 总结分析'><meta property='og:description' content='东南亚的自动驾驶不是「省掉司机」的生意，而是「让服务不出错」的生意。Grab 自动驾驶总经理 Dominic Ong 的框架：Grab 把自己定位成像自来水一样的公共事业，可靠性是 P0；自动驾驶只从两条通道贡献可靠性——削平高峰缺口（新加坡高峰期需求可达平峰 4–5 倍）与补上连通性缺口。由此推出混合模式：自动驾驶车辆与人类司机跑在同一张网络上，同一 App 下单，共享同一需求池，由平台逐单决定谁接。他明确否掉了 100% 全自动驾驶车队——因为那意味着为峰值过度配车、低谷大量闲置的利用率问题。真正的难题被他说得很具体：暴雨会把需求推高 9–10 倍，而 ODD 恰恰同时收缩——需求最高的时刻正是自驾车最不能跑的时刻；物理上最会打崩 AV 栈的三件事是雨、摩托车、右舵；而在新加坡，拥车资格成本逾六位数美元，「你没法藏住一辆利用率很差的车」。Punggol 项目三方分工清晰：WeRide 供车并持有 L4 栈，LTA 是监管者同时也是共创者，Grab 是登记在册的运营方、资产在表内。他给出的真正护城河不是车，而是「本地化层」——自研 KartaDashcam、maker-checker 式软件协同、跨 OEM 车队中间件。指标随阶段演进：每关键介入里程（已超 12 万公里无关键介入）→ 车辆在线时长 → 利用率 → 复合指标。对 WeRide、May Mobility、Momenta、Vay 的股权投资，逻辑不是拿货，而是技术尚未商品化阶段的「战略对齐」；平台反向输出真实世界数据（200 亿单、14 年）、监管共创关系与劳动力转型能力。对 Waymo 进入新加坡，他明确欢迎，理由是给消费者更多选择、验证了商业化路径、加速监管框架。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/grab-autonomous-vehicle-playbook-ong/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/grabs-autonomous-vehicle-playbook" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Autonomy Insiders</div><h1>Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</h1><p class="sub">Grab&#x27;s Autonomous Vehicle Playbook for Singapore and Southeast Asia</p><div class="tags"><span class="tag">⏱ 45:14</span><span class="tag">👤 Dominic Ong（Grab 自动驾驶总经理，GM Autonomous；曾任职新加坡经济发展局 EDB，加入 Grab 十年，2016 年主导 nuTonomy 合作、2018 年投资 Drive.ai）；主持人 Daniel Abreu Marques（AV Market Strategist · Autonomy Insiders）</span><span class="tag">🗓 2026-10</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.youtube.com/watch?v=TKtYn4-oxcA" target="_blank" rel="noopener">▶ 在 YouTube 观看</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一句话结论</a><a href="#s1">一、先纠正一个前提：东南亚的司机「不贵也不缺」</a><a href="#s2">二、混合模式：拆开来看它到底「混合」了什么</a><a href="#s3">三、东南亚最能把 AV 栈打崩的三件事（真实答案）</a><a href="#s4">四、Punggol：三方怎么分工，谁扛风险</a><a href="#s5">五、从固定接驳到自动驾驶叫车：为什么是「用户推着我们走」</a><a href="#s6">六、他真正盯的指标：从「证技术」到「证运营」</a><a href="#s7">七、为什么买股权，而不是签商业供货协议</a><a href="#s8">八、Vay：不是自动驾驶，但可能是「辅助式自动驾驶」的那一块</a><a href="#s9">九、Waymo 进入新加坡：他给了三个理由说「欢迎」</a><a href="#s10">十、规模化后，谁持有车队？</a><a href="#s11">十一、把这一期压缩成 8 条可复用的判断</a><a href="#s12">十二、待验证 / 局限性</a><a href="#s13">附：专名与机构对照（自动转录 → 实际）</a></nav><main class="content"><h1>Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</h1>
+<blockquote>来源：<strong>AV Market Strategist · Autonomy Insiders</strong> 对 <strong>Dominic Ong</strong>（Grab 自动驾驶总经理 / GM Autonomous）的访谈。</blockquote>
+<blockquote>原文：Grab&#x27;s Autonomous Vehicle Playbook for Singapore and Southeast Asia（2026-10-01，45:14）。</blockquote>
+<blockquote>本文基于本期<strong>真实逐字稿</strong>整理（该期 Substack 无官方转录，英文为本机 Whisper 语音转写、按上下文校正专名；逐字稿见「📝 逐字稿」页）。</blockquote>
+<h2 id="s0">一句话结论</h2>
+<p><strong>在东南亚，自动驾驶的第一性问题不是「省掉司机」，而是「让服务不出错」。</strong></p>
+<p>Grab 的自动驾驶总经理 Dominic Ong 给出的框架很干净：Grab 把自己定位成<strong>像自来水一样的公共事业</strong>，可靠性是 <strong>P0（最高优先级）</strong>；而自动驾驶对可靠性的贡献只有两条通道——<strong>削平高峰缺口</strong>、<strong>补上连通性缺口</strong>。</p>
+<p>由此推出他整场访谈里最重要的一句话：</p>
+<blockquote><strong>「替代方案（100% 全自动驾驶车队）意味着你必须为了峰值过度配车，而在低谷时段大量车辆闲置——这是一个利用率问题。」</strong></blockquote>
+<p>于是他给出的答案是<strong>混合模式</strong>：<strong>自动驾驶车辆与人类司机跑在同一张网络上，同一个 App 下单，共享同一个需求池，由平台逐单决定谁来接。</strong> 不是「人 vs 机器人」的取舍，而是<strong>编排（orchestration）</strong>。</p>
+<hr>
+<h2 id="s1">一、先纠正一个前提：东南亚的司机「不贵也不缺」</h2>
+<p>大多数自动驾驶的商业逻辑都从「司机昂贵、甚至稀缺」开始。Ong 直接把这个前提拿掉了：</p>
+<ul><li><strong>人均 GDP 跨度极大</strong>：从柬埔寨约 <strong>2,000 美元</strong> 到新加坡 <strong>逾 10 万美元</strong>——这些市场不能用一个模型套。</li><li><strong>价格锚点极低</strong>：美国网约车平均车费约 <strong>14 美元</strong>；越南的<strong>摩托车网约出行</strong>平均只有约 <strong>1 美元</strong>。</li><li><strong>Grab 的自我定位</strong>：「<strong>用东南亚的价格，交付世界级的技术</strong>」——不是把 14 美元的体验打十四分之一折扣，而是<strong>用 1 美元的价格交付完整体验</strong>。</li></ul>
+<p>所以，自动驾驶要回答的不是「怎么省司机钱」，而是：</p>
+<table><thead><tr><th>问题</th><th>自动驾驶的角色</th></tr></thead><tbody><tr><td><strong>高峰缺口</strong>：新加坡这类高密度城市，高峰需求可达平峰 <strong>4–5 倍</strong></td><td>用可调度的自动驾驶运力<strong>削平尖峰</strong>，而不是让生意极端「尖峭」</td></tr><tr><td><strong>连通性缺口</strong>：远离市中心的城镇（township）不是司机最愿意去的地方</td><td>用自动驾驶<strong>补服务盲区</strong></td></tr></tbody></table>
+<p>两者最终都<strong>汇聚到同一个终点：可靠性</strong>。</p>
+<hr>
+<h2 id="s2">二、混合模式：拆开来看它到底「混合」了什么</h2>
+<p>Ong 的定义是操作性的，值得逐字记住：</p>
+<blockquote><strong>「自动驾驶车辆与人类司机运行在同一张网络上，通过同一个 App 下单，共享同一个需求池，但可以被互换地调度。」</strong></blockquote>
+<p>关键在最后半句：<strong>平台在背后逐单（trip by trip）判断，这一单由自驾车接还是由人接更合适。</strong></p>
+<h3>他为什么否掉「全自动驾驶车队」</h3>
+<table><thead><tr><th>方案</th><th>峰值</th><th>低谷</th><th>结果</th></tr></thead><tbody><tr><td><strong>100% 自动驾驶车队</strong></td><td>必须<strong>过度配车</strong>才能扛住峰值</td><td>大量车辆<strong>闲置</strong></td><td><strong>利用率问题 + 资本浪费</strong></td></tr><tr><td><strong>混合网络</strong></td><td>人类司机动态吸收峰值（他们本来就按需上下线）</td><td>资产在最需要时才投入</td><td>资本效率更高</td></tr></tbody></table>
+<p>再加一条更柔软、但也更本质的理由：<strong>混合网络保留了「白手套服务」的空间</strong>——儿童座椅、行李、行动不便的乘客、需要有人扶着走到诊所门口的老年人。Ong 的原话是，这些场景「<strong>依然依赖车里有一个『人』</strong>」。</p>
+<p>他也很坦白技术现状：</p>
+<blockquote><strong>「事实是，2026 年的今天，自动驾驶技术还谈不上完美。」</strong></blockquote>
+<p>混合模式的价值就在于：<strong>技术偶发失败时，服务不会塌</strong>，用户不会「试一两次就离开平台」。</p>
+<hr>
+<h2 id="s3">三、东南亚最能把 AV 栈打崩的三件事（真实答案）</h2>
+<p>主持人请他从<strong>真实里程</strong>出发排个序。Ong 先说了一个「非物理」的答案，然后才给物理三项：</p>
+<h3>先讲一个「经济上的边缘场景」：新加坡</h3>
+<ul><li>新加坡上路的<strong>拥车资格（拥车证 COE）成本超过六位数美元</strong>；这是政府为控制拥车量、避免道路过度拥堵而实行了<strong>数十年</strong>的制度。</li><li>后果：<strong>一辆闲置的自动驾驶车是「极端奢侈」</strong>——不是「小效率损失」，而是「每小时都在烧很多钱」。</li><li>他的判断极其锋利：<strong>「在这个市场里，你没法藏住一辆利用率很差的车。」</strong> 如果做不到高利用率，<strong>「那就会成为打崩整个模型的因素之一」</strong>。</li></ul>
+<h3>物理边缘场景前三名</h3>
+<table><thead><tr><th>排名</th><th>因素</th><th>为什么</th></tr></thead><tbody><tr><td><strong>1</strong></td><td><strong>雨</strong></td><td>一场热带暴雨会<strong>同时</strong>改变<strong>车道可视性、传感器回波与行人行为</strong>；他们见过能见度被压到<strong>接近零</strong>的情况——「即便人类司机也很难应对，而<strong>我们还没把车放到那种极端的条件下去测过</strong>」</td></tr><tr><td><strong>2</strong></td><td><strong>摩托车</strong></td><td>两轮车是东南亚各地最普遍的出行方式；Grab 大量<strong>配送骑手就是骑摩托</strong>，会出现「<strong>车辆被一整群摩托车包围</strong>」的场面——美国见不到</td></tr><tr><td><strong>3</strong></td><td><strong>右舵（RHD）</strong></td><td>不是障碍而是<strong>必须重新标定</strong>的挑战：行驶方向、乘客上/下车侧、通过大路口的方式都要彻底重算</td></tr></tbody></table>
+<p>他还给出一个被低估的技术细节：<strong>雨与 ODD 是负相关的</strong>——</p>
+<blockquote>「降雨引起的需求冲击，与自动驾驶 ODD 的收缩是<strong>正相关</strong>的。」</blockquote>
+<p>即：<strong>需求最高的时刻，恰恰是自驾车最不能跑的时刻</strong>（9–10 倍需求 vs 缩小的 ODD）。这正是前述「高峰缺口」的极端版本，也是混合模式最硬的论据。他们所在区域从 <strong>8 月到 12 月</strong>雷暴频繁。</p>
+<hr>
+<h2 id="s4">四、Punggol：三方怎么分工，谁扛风险</h2>
+<p>这是全篇最有信息量的部分。三方角色定义得很清楚：</p>
+<table><thead><tr><th>角色</th><th>主体</th><th>具体承担</th></tr></thead><tbody><tr><td><strong>车辆 + L4 技术栈</strong></td><td><strong>WeRide（文远知行）</strong></td><td>提供车辆、持有 L4 技术栈</td></tr><tr><td><strong>监管 + 共创</strong></td><td><strong>LTA（新加坡陆路交通管理局）</strong></td><td>立安全框架、指引、测试要求；<strong>同时与私营部门共创</strong>，让要求「不至于把技术创新直接扼杀」。Ong 也把交通部（MOT）列入共创方</td></tr><tr><td><strong>登记在册的运营方（operator of record）</strong></td><td><strong>Grab</strong></td><td><strong>车辆资产记在 Grab 资产负债表上</strong>；运营车辆；集成进 Grab App 供用户叫车</td></tr></tbody></table>
+<p>Ong 特别强调 LTA 的双重身份是<strong>一年半前就开始的对话</strong>的结果：「我们有些想法，能不能坐下来把所有细节过一遍？」——当时 LTA 正认真考虑<strong>怎么在新加坡让一支自动驾驶车队投入服务</strong>。</p>
+<h3>「本地化层」：Grab 真正的护城河</h3>
+<p>Ong 用 30 秒定义了这个概念，值得单独拎出来——<strong>Grab 的差异化不在车，而在把外部技术「接进新加坡」的那一层</strong>：</p>
+<table><thead><tr><th>组件</th><th>内容</th></tr></thead><tbody><tr><td><strong>硬件</strong></td><td>自研 <strong>KartaDashcam</strong>：<strong>内向 + 外向摄像头</strong>装进 WeRide 车辆，让监管方看清车内乘客行为，同时为车辆前方「多一双眼睛」</td></tr><tr><td><strong>软件协同（maker-checker 模式）</strong></td><td>Grab 与 WeRide <strong>并排坐着复盘</strong>边缘场景与车上回传数据，给出「新加坡独有」的调参建议（软件、驾驶特性）——而不是「你是软件栈方，这全是你的责任」</td></tr><tr><td><strong>车队管理中间件</strong></td><td>一套可<strong>对接不同 AV OEM</strong> 的中间件，提供对全部车辆的运行与平台表现的<strong>全局可见性</strong></td></tr></tbody></table>
+<p>他的姿态是一句话：<strong>「你就带着你现在的样子来，我们跟你一起，让新加坡跑通。」</strong></p>
+<hr>
+<h2 id="s5">五、从固定接驳到自动驾驶叫车：为什么是「用户推着我们走」</h2>
+<ul><li>测试<strong>从 2025 年 10 月</strong>在 Punggol 开始；方案与 <strong>MOT + LTA 共创</strong>。</li><li><strong>先做固定路线接驳</strong>，理由是<strong>分阶段</strong>：先本地化、先「把技术社会化给公众」（公众此前只在旧金山或中国见过这种技术）、先积累信任。</li><li>选址刻意选<strong>商业 + 住宅混合</strong>的社区，让不同画像的人都能接触到车。</li><li><strong>转向按需叫车，是被用户反馈推动的</strong>：居民要<strong>灵活预订、直达路线</strong>——「让我们能像叫 Grab 一样叫这个服务」。这给了 Grab 与监管方迈出下一步的信心。</li></ul>
+<p><strong>规模目标（他给出的口径）</strong>：</p>
+<table><thead><tr><th>指标</th><th>数值</th></tr></thead><tbody><tr><td>未来几个月车队规模</td><td><strong>约 50 辆</strong>（相当于现有车队的 <strong>5 倍</strong>）</td></tr><tr><td>测绘范围</td><td><strong>整个新加坡</strong></td></tr><tr><td>服务范围</td><td>走出 Punggol，覆盖更多区域</td></tr></tbody></table>
+<blockquote>注：本次访谈中他明确说车队将<strong>扩大到现有规模的 5 倍</strong>；此前公开信息显示 Punggol 初期车队为<strong>11 辆</strong>（10 辆 WeRide GXR + 1 辆 Robobus），5 倍后与此处「约 50 辆」相符。</blockquote>
+<hr>
+<h2 id="s6">六、他真正盯的指标：从「证技术」到「证运营」</h2>
+<p>这是全篇最实用的一段——<strong>换指标，等于换阶段</strong>：</p>
+<table><thead><tr><th>阶段</th><th>目标</th><th>指标</th></tr></thead><tbody><tr><td><strong>初期</strong></td><td><strong>证明技术</strong></td><td><strong>每关键介入里程（miles per critical intervention）</strong>——「行业标准，在证明技术的初期相关」</td></tr><tr><td><strong>现在</strong></td><td><strong>证明运营</strong></td><td><strong>车辆在线可用时长（vehicle uptime）</strong>——一天里有多少时间真正能跑；它直接反映<strong>场站（depot）运营效率</strong>（空间怎么布置、车辆进出动线）</td></tr><tr><td><strong>下一步</strong>（开始自动驾驶叫车）</td><td>商业运营</td><td><strong>利用率（utilization）</strong>——可用时间里有多大比例<strong>真的载着乘客</strong></td></tr><tr><td><strong>最终</strong>（多区商业化）</td><td>可持续</td><td>一个<strong>把运营效率、在线时长、利用率组合起来</strong>的复合指标</td></tr></tbody></table>
+<p><strong>他给的关键数字：</strong></p>
+<blockquote><strong>「目前我们已经超过 12 万公里、至今没有一次关键介入（no critical intervention so far）。」</strong></blockquote>
+<p>里程从 5 月初的 <strong>4 万公里</strong> 增长到访谈时的约 <strong>9 万公里</strong>（主持人口径），而关键介入里程口径已到 <strong>&gt;12 万公里</strong>。</p>
+<p><strong>场站（depot）策略</strong>：Punggol 场站已建成，起步<strong>自营</strong>——因为「第一批投放的 WeRide 车辆，资产本身就是我们持有的」；随着规模扩大、<strong>监管方向与扩张速度明确之后</strong>，才会看到现有车队业主产生接手兴趣。</p>
+<hr>
+<h2 id="s7">七、为什么买股权，而不是签商业供货协议</h2>
+<p>Grab 在 <strong>WeRide、May Mobility、Momenta、Vay</strong> 上都有股权。主持人的提问很到点：能签供货协议拿到的东西，为什么要用股权买？</p>
+<p>Ong 的回答是机制性的：</p>
+<blockquote><strong>「自动驾驶技术还没有被商品化，技术本身还在被持续打磨。股权投资，恰恰是达成『联合战略一致性』与『生态整合』的真正关键。」</strong></blockquote>
+<p>因为与 WeRide 的合作让他看到：<strong>有大量工作横跨技术集成、运营、数据、监管，且彼此高度纠缠</strong>——你需要伙伴<strong>跟你一起把身子探进来</strong>。股权让<strong>双方激励与利益对齐</strong>，从而<strong>共同拥有这次部署</strong>。</p>
+<h3>反过来，Grab 给对方什么？（需求是显而易见的答案，他说了另外三条）</h3>
+<table><thead><tr><th>#</th><th>Grab 的输出</th><th>细节</th></tr></thead><tbody><tr><td>1</td><td><strong>真实世界数据</strong></td><td>从创立至今 <strong>200 亿单</strong> 出行与配送、<strong>14 年</strong>运营数据，覆盖网约车与外卖两个领域；能帮伙伴<strong>加速攻克边缘场景</strong>。更特别的是：<strong>把司机伙伴纳入自动驾驶的训练过程</strong>，让车「像一位训练得极好的专职司机」——「你在新加坡坐这台车，能从<strong>乘坐的细腻程度</strong>上感受到」</td></tr><tr><td>2</td><td><strong>监管关系</strong></td><td>多年经营积累的深度监管关系，使 Grab 能<strong>与监管方共创</strong>——「我们有这些想法，想跟你们坐下来看看政策怎么容纳它」</td></tr><tr><td>3</td><td><strong>劳动力能力</strong></td><td>在东南亚，<strong>非正规零工经济</strong>是政府高度重视的劳动力类别（充当<strong>过渡性就业</strong>）。Grab 平台上大量司机/配送伙伴正属于此类，因此 Grab 的角色是<strong>帮他们过渡到新岗位</strong>：<strong>安全员、远程操作员、车队管理专家</strong></td></tr><tr><td>+</td><td><strong>本地化层</strong></td><td>见上文第四节</td></tr></tbody></table>
+<blockquote>他给所有潜在伙伴的邀约：<strong>「Come as you are — we will work with you to make Singapore work.」</strong></blockquote>
+<hr>
+<h2 id="s8">八、Vay：不是自动驾驶，但可能是「辅助式自动驾驶」的那一块</h2>
+<p>Grab 向柏林的遥驾（teledriving）公司 <strong>Vay</strong> 投资 <strong>6,000 万美元</strong>（公开信息显示最高可增至 <strong>4.1 亿美元</strong>，并在满足里程碑后可能取得多数股权）。</p>
+<p>Ong 把 Vay 放在<strong>「五到十年后可能相关」</strong>这根支柱下：</p>
+<ul><li><strong>工程上认可</strong>：「把遥驾栈集成进车辆」做得非常出色；</li><li><strong>定位为替代性技术</strong>：有能力以<strong>远低于现有玩家成本</strong>的方式交付共享出行/共享汽车服务；</li><li><strong>提出一个新概念——「辅助式自动驾驶（assisted autonomy）」</strong>：遥驾栈能否成为<strong>辅助整个自动驾驶产业的补充</strong>？</li><li><strong>已有先例</strong>：Vay <strong>已与 Kodiak 合作并集成进 Kodiak</strong>；他也点出<strong>车辆救援（vehicle recovery）</strong>这一潜在场景，以及 Vay 在<strong>拉斯维加斯</strong>的部署（那里有大量正在做商业运营的自动驾驶玩家）。</li></ul>
+<p><strong>一句话读法</strong>：这不是「选边」，而是 Grab 在<strong>为 L4 的时间表买一份期权</strong>，同时尝试把「遥驾」变成自驾栈的<strong>冗余层</strong>。</p>
+<hr>
+<h2 id="s9">九、Waymo 进入新加坡：他给了三个理由说「欢迎」</h2>
+<p><strong>背景（公开信息）</strong>：Waymo 于 <strong>2026 年 9 月</strong>宣布进入新加坡，计划车辆在数月内抵达、<strong>2027 年</strong>开始人工驾驶的准备阶段、<strong>2028 年</strong>上线商业服务（使用第五代 Waymo Driver 的捷豹 I-PACE）。新加坡 LTA 于 <strong>2026 年 9 月 18 日</strong>确认 Waymo 成为新的自动驾驶运营方，与 <strong>ComfortDelGro、Grab</strong> 并列。</p>
+<p>Ong 的反应是<strong>明确欢迎</strong>，并给出三条理由：</p>
+<table><thead><tr><th>#</th><th>理由</th><th>含义</th></tr></thead><tbody><tr><td>1</td><td><strong>消费者获得更多选择</strong></td><td>乘客可在现有运营方与 Waymo 之间自行选择</td></tr><tr><td>2</td><td><strong>商业化路径被「验证」</strong></td><td>「<strong>即便在新加坡这种经济模型很难算的市场，商业化也是有路可走的</strong>」——这验证了 Grab 关于「新加坡是否可行」的直觉</td></tr><tr><td>3</td><td><strong>加速监管与安全框架的演进</strong></td><td>Waymo 的进入会推动相关框架更快成熟</td></tr></tbody></table>
+<p>同时他明确 Grab 的立场：<strong>「保持极度专注」</strong>于把新加坡的服务交付好——<strong>五倍车队扩张即将上线</strong>、很快用自动驾驶叫车服务载客，并与新加坡政府<strong>步调一致</strong>推进监管变化。</p>
+<hr>
+<h2 id="s10">十、规模化后，谁持有车队？</h2>
+<p>这是一个「看似财务、实则战略」的问题。Ong 的回答很坦率：</p>
+<ul><li><strong>Grab 对承担 CapEx 并不陌生</strong>：在新加坡、马来西亚、印尼都设有<strong>自营租车公司</strong>，资产<strong>记在表内</strong>。原因很简单——<strong>当地很多司机难以获得信贷去买车</strong>。</li><li>这套逻辑最初也是<strong>在生态尚未长出来时</strong>由 Grab 自己先做的（「让我们把司机上平台这件事变得容易」）。</li><li><strong>自动驾驶会经历非常相似的演化</strong>：起步阶段<strong>车队业主在观望</strong>；等<strong>监管方向与扩张速度明确</strong>后，他们才会愿意接手。</li><li>他的判断：</li></ul>
+<blockquote><strong>「在我们拿到完整监管许可、能够在 Singapore 的许多区域真正经营一门可持续的生意之前，很可能我们仍要自己承担持有成本与运营开支。」</strong></blockquote>
+<hr>
+<h2 id="s11">十一、把这一期压缩成 8 条可复用的判断</h2>
+<ol><li><strong>先问「自动驾驶替代谁」，再问「它补什么」</strong>——在低人力成本市场，前者的答案往往是「替代不了」，后者的答案才成立。</li><li><strong>需求最高的时候，往往是自驾车最不能跑的时候</strong>（暴雨：需求 9–10 倍 vs ODD 收缩）——这是混合模式最硬的论据。</li><li><strong>可靠性 &gt; 覆盖率 &gt; 成本</strong>：把自驾看成「自来水」这一类公共事业，指标顺序自然就出来了。</li><li><strong>指标随阶段演进</strong>：介入里程（证技术）→ 在线时长（证运营）→ 利用率（证商业）→ 复合指标（可持续）。</li><li><strong>在小市场里，闲置资产藏不住</strong>——高拥车成本市场（如新加坡 COE 逾六位数美元）会把「利用率」逼成生死线。</li><li><strong>平台真正的护城河不是车，是「本地化层」</strong>：硬件（车内摄像头）+ maker-checker 式软件协同 + 跨 OEM 车队中间件。</li><li><strong>股权是为了「战略对齐」，不是为了拿货</strong>：在技术尚未商品化的阶段，利益对齐比供货合同更能保证伙伴「把身子探进来」。</li><li><strong>平台给自动驾驶公司的三样东西</strong>：真实世界数据（含司机参与训练）、监管共创关系、劳动力转型能力。</li></ol>
+<hr>
+<h2 id="s12">十二、待验证 / 局限性</h2>
+<ul><li><strong>数字均为嘉宾口径</strong>：如「覆盖 900+ 城市」「5,400 万月交易用户」「交易额约占东南亚 GDP 的 0.5%」「超过 12 万公里无关键介入」「约 50 辆」等，均来自受访者陈述，未见第三方审计口径；Grab 官方新闻材料此前的表述为「<strong>800 多个城市</strong>、8 个国家」。</li><li><strong>「约 50 辆 = 5 倍」是口径推算</strong>：5 倍推算对应约 55 辆，与「约 50 辆」一致；他并未在访谈中逐辆点明车型构成。</li><li><strong>时间表具不确定性</strong>：Waymo 的 2027 准备 / 2028 商业为公开计划，仍<strong>取决于监管审批</strong>；其进入是否会改变 Grab 的扩张节奏，本期未给结论。</li><li><strong>未触及关键技术参数</strong>：访谈未给出单车成本、单公里成本、远程人车比、车队安全员配比等硬指标。</li><li><strong>Vay 的角色仍在探索中</strong>：Ong 用词是「正在和他们一起试很多不同的商业模式」「可能」「能不能」，尚非确定的产品定义。</li><li><strong>转录误差</strong>：英文为本机 Whisper 语音转写（该期无官方转录），个别专名存在误听，本页与逐字稿已按上下文与公开资料校正，对照表见下。</li></ul>
+<h2 id="s13">附：专名与机构对照（自动转录 → 实际）</h2>
+<table><thead><tr><th>逐字稿中的形态</th><th>实际</th><th>说明</th></tr></thead><tbody><tr><td>We Write / B-Rite / rewrite</td><td><strong>WeRide（文远知行）</strong></td><td>Punggol 项目的车辆提供方与 L4 技术栈所有者</td></tr><tr><td>Pongol / Pongo / Pungo</td><td><strong>Punggol（榜鹅）</strong></td><td>新加坡东北部住宅区，东南亚首个公共自动驾驶载客服务所在地</td></tr><tr><td>Cary / Kari</td><td><strong>Carri</strong></td><td>Grab 自研室内外一体配送机器人（源自 2026 年 1 月收购的 Infermove / 推行科技）</td></tr><tr><td>Elos / Sailors</td><td><strong>Zelos</strong></td><td>自动驾驶物流公司，Grab 最早四家 MoU 伙伴之一</td></tr><tr><td>Carta dash cams</td><td><strong>KartaDashcam（KDC）</strong></td><td>Grab 自研车内摄像头，内向 + 外向</td></tr><tr><td>Neutonomy</td><td><strong>nuTonomy</strong></td><td>2016 年与 Grab 合作自动驾驶按需出行的新加坡公司</td></tr><tr><td>Drive AI</td><td><strong>Drive.ai</strong></td><td>吴恩达团队自动驾驶公司，Grab 2018 年小额投资</td></tr><tr><td>comfort Delgore</td><td><strong>ComfortDelGro</strong></td><td>新加坡主要交通运营商，同为 LTA 认证的自动驾驶运营方</td></tr><tr><td>Vey / VA</td><td><strong>Vay</strong></td><td>柏林遥驾（teledriving）公司，Grab 投资 6,000 万美元</td></tr><tr><td>Kodiak</td><td><strong>Kodiak Robotics</strong></td><td>美国自动驾驶卡车公司，Vay 已集成进其系统</td></tr><tr><td>mouse per critical intervention</td><td><strong>miles per critical intervention</strong></td><td>每关键介入里程，行业安全指标</td></tr><tr><td>right chair / right healing / ridegaling</td><td><strong>ride-hailing（网约车/叫车）</strong></td><td>—</td></tr><tr><td>NYU（一处）</td><td><strong>MoU（合作备忘录）</strong></td><td>「你们最早的四家 MoU 伙伴」</td></tr><tr><td>VA（另一处）</td><td><strong>Vay</strong></td><td>—</td></tr></tbody></table>
+<p>*本分析基于本期播客的真实逐字稿（本机语音转写）整理，供学习与参考；外部背景信息已标注来源口径，请以官方公告为准。*</p></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../europe-robotaxi-reality-check-friedel/index.html"><div class="rw"><img loading="lazy" src="../europe-robotaxi-reality-check-friedel/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</div></div></a><a class="relcard" href="../beti-french-av-operator-weride/index.html"><div class="rw"><img loading="lazy" src="../beti-french-av-operator-weride/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">beti：WeRide 首个欧洲 robobus 背后的法国运营方</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>

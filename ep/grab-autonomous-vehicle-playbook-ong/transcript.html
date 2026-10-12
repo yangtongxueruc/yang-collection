@@ -1,0 +1,698 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」 · 逐字稿</title><meta name='description' content='东南亚的自动驾驶不是「省掉司机」的生意，而是「让服务不出错」的生意。Grab 自动驾驶总经理 Dominic Ong 的框架：Grab 把自己定位成像自来水一样的公共事业，可靠性是 P0；自动驾驶只从两条通道贡献可靠性——削平高峰缺口（新加坡高峰期需求可达平峰 4–5 倍）与补上连通性缺口。由此推出混合模式：自动驾驶车辆与人类司机跑在同一张网络上，同一 App 下单，共享同一需求池，由平台逐单决定谁接。他明确否掉了 100% 全自动驾驶车队——因为那意味着为峰值过度配车、低谷大量闲置的利用率问题。真正的难题被他说得很具体：暴雨会把需求推高 9–10 倍，而 ODD 恰恰同时收缩——需求最高的时刻正是自驾车最不能跑的时刻；物理上最会打崩 AV 栈的三件事是雨、摩托车、右舵；而在新加坡，拥车资格成本逾六位数美元，「你没法藏住一辆利用率很差的车」。Punggol 项目三方分工清晰：WeRide 供车并持有 L4 栈，LTA 是监管者同时也是共创者，Grab 是登记在册的运营方、资产在表内。他给出的真正护城河不是车，而是「本地化层」——自研 KartaDashcam、maker-checker 式软件协同、跨 OEM 车队中间件。指标随阶段演进：每关键介入里程（已超 12 万公里无关键介入）→ 车辆在线时长 → 利用率 → 复合指标。对 WeRide、May Mobility、Momenta、Vay 的股权投资，逻辑不是拿货，而是技术尚未商品化阶段的「战略对齐」；平台反向输出真实世界数据（200 亿单、14 年）、监管共创关系与劳动力转型能力。对 Waymo 进入新加坡，他明确欢迎，理由是给消费者更多选择、验证了商业化路径、加速监管框架。'><meta property='og:title' content='Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」 · 逐字稿'><meta property='og:description' content='东南亚的自动驾驶不是「省掉司机」的生意，而是「让服务不出错」的生意。Grab 自动驾驶总经理 Dominic Ong 的框架：Grab 把自己定位成像自来水一样的公共事业，可靠性是 P0；自动驾驶只从两条通道贡献可靠性——削平高峰缺口（新加坡高峰期需求可达平峰 4–5 倍）与补上连通性缺口。由此推出混合模式：自动驾驶车辆与人类司机跑在同一张网络上，同一 App 下单，共享同一需求池，由平台逐单决定谁接。他明确否掉了 100% 全自动驾驶车队——因为那意味着为峰值过度配车、低谷大量闲置的利用率问题。真正的难题被他说得很具体：暴雨会把需求推高 9–10 倍，而 ODD 恰恰同时收缩——需求最高的时刻正是自驾车最不能跑的时刻；物理上最会打崩 AV 栈的三件事是雨、摩托车、右舵；而在新加坡，拥车资格成本逾六位数美元，「你没法藏住一辆利用率很差的车」。Punggol 项目三方分工清晰：WeRide 供车并持有 L4 栈，LTA 是监管者同时也是共创者，Grab 是登记在册的运营方、资产在表内。他给出的真正护城河不是车，而是「本地化层」——自研 KartaDashcam、maker-checker 式软件协同、跨 OEM 车队中间件。指标随阶段演进：每关键介入里程（已超 12 万公里无关键介入）→ 车辆在线时长 → 利用率 → 复合指标。对 WeRide、May Mobility、Momenta、Vay 的股权投资，逻辑不是拿货，而是技术尚未商品化阶段的「战略对齐」；平台反向输出真实世界数据（200 亿单、14 年）、监管共创关系与劳动力转型能力。对 Waymo 进入新加坡，他明确欢迎，理由是给消费者更多选择、验证了商业化路径、加速监管框架。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/grab-autonomous-vehicle-playbook-ong/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/grabs-autonomous-vehicle-playbook" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Autonomy Insiders</div><h1>Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</h1><p class="sub">中英对照逐字稿 · Grab&#x27;s Autonomous Vehicle Playbook for Singapore and Southeast Asia</p><div class="tags"><span class="tag">⏱ 45:14</span><span class="tag">Dominic Ong（Grab 自动驾驶总经理，GM Autonomous；曾任职新加坡经济发展局 EDB，加入 Grab 十年，2016 年主导 nuTonomy 合作、2018 年投资 Drive.ai）；主持人 Daniel Abreu Marques（AV Market Strategist · Autonomy Insiders）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">Grab</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">robotaxi</span><span class="chip" onclick="wbJumpKw(this)">东南亚</span><span class="chip" onclick="wbJumpKw(this)">Southeast Asia</span><span class="chip" onclick="wbJumpKw(this)">新加坡</span><span class="chip" onclick="wbJumpKw(this)">Singapore</span><span class="chip" onclick="wbJumpKw(this)">Punggol</span><span class="chip" onclick="wbJumpKw(this)">榜鹅</span><span class="chip" onclick="wbJumpKw(this)">Dominic Ong</span><span class="chip" onclick="wbJumpKw(this)">AV Market Strategist</span><span class="chip" onclick="wbJumpKw(this)">Autonomy Insiders</span><span class="chip" onclick="wbJumpKw(this)">混合模式</span><span class="chip" onclick="wbJumpKw(this)">hybrid model</span><span class="chip" onclick="wbJumpKw(this)">人机混合车队</span><span class="chip" onclick="wbJumpKw(this)">可靠性</span><span class="chip" onclick="wbJumpKw(this)">reliability</span><span class="chip" onclick="wbJumpKw(this)">高峰缺口</span><span class="chip" onclick="wbJumpKw(this)">peak-hour gap</span><span class="chip" onclick="wbJumpKw(this)">连通性缺口</span><span class="chip" onclick="wbJumpKw(this)">connectivity gap</span><span class="chip" onclick="wbJumpKw(this)">ODD</span><span class="chip" onclick="wbJumpKw(this)">运行设计域</span><span class="chip" onclick="wbJumpKw(this)">暴雨</span><span class="chip" onclick="wbJumpKw(this)">季风</span><span class="chip" onclick="wbJumpKw(this)">monsoon</span><span class="chip" onclick="wbJumpKw(this)">摩托车</span><span class="chip" onclick="wbJumpKw(this)">右舵</span><span class="chip" onclick="wbJumpKw(this)">right-hand drive</span><span class="chip" onclick="wbJumpKw(this)">RHD</span><span class="chip" onclick="wbJumpKw(this)">拥车证</span><span class="chip" onclick="wbJumpKw(this)">COE</span><span class="chip" onclick="wbJumpKw(this)">单位经济</span><span class="chip" onclick="wbJumpKw(this)">利用率</span><span class="chip" onclick="wbJumpKw(this)">utilization</span><span class="chip" onclick="wbJumpKw(this)">uptime</span><span class="chip" onclick="wbJumpKw(this)">车辆在线时长</span><span class="chip" onclick="wbJumpKw(this)">每关键介入里程</span><span class="chip" onclick="wbJumpKw(this)">miles per critical intervention</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">场站</span><span class="chip" onclick="wbJumpKw(this)">WeRide</span><span class="chip" onclick="wbJumpKw(this)">文远知行</span><span class="chip" onclick="wbJumpKw(this)">GXR</span><span class="chip" onclick="wbJumpKw(this)">Robobus</span><span class="chip" onclick="wbJumpKw(this)">LTA</span><span class="chip" onclick="wbJumpKw(this)">陆路交通管理局</span><span class="chip" onclick="wbJumpKw(this)">MOT</span><span class="chip" onclick="wbJumpKw(this)">operator of record</span><span class="chip" onclick="wbJumpKw(this)">本地化层</span><span class="chip" onclick="wbJumpKw(this)">localization layer</span><span class="chip" onclick="wbJumpKw(this)">KartaDashcam</span><span class="chip" onclick="wbJumpKw(this)">maker-checker</span><span class="chip" onclick="wbJumpKw(this)">车队管理中间件</span><span class="chip" onclick="wbJumpKw(this)">fleet management middleware</span><span class="chip" onclick="wbJumpKw(this)">Zelos</span><span class="chip" onclick="wbJumpKw(this)">Carri</span><span class="chip" onclick="wbJumpKw(this)">Infermove</span><span class="chip" onclick="wbJumpKw(this)">配送机器人</span><span class="chip" onclick="wbJumpKw(this)">delivery robot</span><span class="chip" onclick="wbJumpKw(this)">urban embodied AI</span><span class="chip" onclick="wbJumpKw(this)">城市具身智能</span><span class="chip" onclick="wbJumpKw(this)">ev</span><span class="chip" onclick="wbJumpKw(this)">May Mobility</span><span class="chip" onclick="wbJumpKw(this)">Momenta</span><span class="chip" onclick="wbJumpKw(this)">Vay</span><span class="chip" onclick="wbJumpKw(this)">teledriving</span><span class="chip" onclick="wbJumpKw(this)">遥驾</span><span class="chip" onclick="wbJumpKw(this)">assisted autonomy</span><span class="chip" onclick="wbJumpKw(this)">辅助式自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">Kodiak</span><span class="chip" onclick="wbJumpKw(this)">Waymo</span><span class="chip" onclick="wbJumpKw(this)">ComfortDelGro</span><span class="chip" onclick="wbJumpKw(this)">nuTonomy</span><span class="chip" onclick="wbJumpKw(this)">Drive.ai</span><span class="chip" onclick="wbJumpKw(this)">Tony Han</span><span class="chip" onclick="wbJumpKw(this)">韩旭</span><span class="chip" onclick="wbJumpKw(this)">股权</span><span class="chip" onclick="wbJumpKw(this)">战略对齐</span><span class="chip" onclick="wbJumpKw(this)">CapEx</span><span class="chip" onclick="wbJumpKw(this)">车队持有</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">冷开场 · Cold open</a><a href="#s1">一、Grab 是谁 · Who is Grab</a><a href="#s2">二、一个全新的岗位：GM Autonomous · The GM Autonomous mandate</a><a href="#s3">三、司机不贵也不缺，那自动驾驶解决什么？ · What autonomy actually solves for Grab</a><a href="#s4">四、混合模式：一张网、一个 App · The hybrid model</a><a href="#s5">五、Punggol：Grab、WeRide、LTA 的分工 · Punggol</a><a href="#s6">六、从固定接驳到自动驾驶叫车 · From shuttle to ride-hailing</a><a href="#s7">七、Grab 真正盯的指标 · The metrics Grab watches</a><a href="#s8">八、什么会把 AV 栈打崩 · What breaks an AV stack in Southeast Asia</a><a href="#s9">九、自动配送与机器人 · Autonomous delivery and robotics</a><a href="#s10">十、为什么要买股权，而不是签供货协议 · Equity stakes and AV partners</a><a href="#s11">十一、Vay 与「辅助式自动驾驶」 · Vay and assisted autonomy</a><a href="#s12">十二、Waymo 进入新加坡 · Waymo enters Singapore</a><a href="#s13">十三、规模化时，谁持有车队？ · Who owns the fleet at scale</a></nav><main class="content"><h1>Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</h1>
+<p><strong>Grab&#x27;s Autonomous Vehicle Playbook for Singapore and Southeast Asia</strong></p>
+<blockquote>播客：AV Market Strategist · Autonomy Insiders | 2026-10-01 | 45:14</blockquote>
+<blockquote>嘉宾：<strong>Dominic Ong</strong>（Grab 自动驾驶总经理 / GM Autonomous）</blockquote>
+<blockquote>主持人：Daniel Abreu Marques（AV Market Strategist）</blockquote>
+<blockquote>说明：本文为<strong>中英对照整理版</strong>。该期在 Substack 上<strong>没有官方逐字稿</strong>，YouTube 字幕源在本机网络下不可用，因此英文为<strong>本机 Whisper 语音转写</strong>（598 段），并按上下文对自动转写的专名误听与明显口误作了校正（如 We Write/B-Rite → <strong>WeRide</strong>、Pongol/Pongo → <strong>Punggol</strong>、Cary/Kari → <strong>Carri</strong>、Elos/Sailors → <strong>Zelos</strong>、Carta dash cams → <strong>KartaDashcam</strong>、Neutonomy → <strong>nuTonomy</strong>、comfort Delgore → <strong>ComfortDelGro</strong> 等）；中文为<strong>人工翻译</strong>，忠实原意，非逐字对译。</blockquote>
+<hr>
+<h2 id="s0">冷开场 · Cold open</h2>
+<p class="seg" id="seg-1"><span class="ts">[00:00 – 00:47]</span><div class="seg-body">
+<p class="en"><strong>Montage:</strong> &quot;Welcome to Autonomy Insiders, the show where global industry leaders in autonomous driving unpack their real-world insights.&quot; … &quot;In heavy rain situations, when there are occurrences of flash flooding, you actually see demand spiking 9 to 10 times. And interestingly, this kind of demand shock caused by rain is actually positively correlated with autonomous ODD contraction.&quot; … &quot;We&#x27;re actually aiming to roll out about 50 autonomous vehicles in the next few months — so that&#x27;s actually a step up of our existing fleet fivefold — and we intend to map the whole of Singapore.&quot;</p>
+<p class="zh"><strong>预告剪辑：</strong>「欢迎收听 Autonomy Insiders，在这档节目里，全球自动驾驶行业的领军者会拆解他们的一线实战洞见。」……「在暴雨、出现城市内涝的时候，需求会瞬间涨到 9 到 10 倍；而有趣的是，这种由降雨引发的需求冲击，与自动驾驶 ODD（运行设计域）的收缩是<strong>正相关</strong>的。」……「我们计划在未来几个月部署约 <strong>50 辆</strong>自动驾驶车辆——这相当于把现有车队规模扩大<strong>五倍</strong>——并且我们打算把<strong>整个新加坡</strong>都完成测绘。」</p></div></p>
+<hr>
+<p class="seg" id="seg-2"><span class="ts">[00:47 – 01:32]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Welcome back to Autonomy Insiders. I&#x27;m your host, Daniel. And most conversations about autonomous vehicles are conversations about San Francisco, or Phoenix, or Wuhan — so cities with wide lanes, clear markings, and expensive drivers. And Southeast Asia is none of those things. It has some of the densest and most improvised traffic on the planet, and some of the cheapest driver labor in any middle-income region. So on paper, it should be the last place robotaxis arrive. And yet, in April this year, a residential estate in northeast Singapore became the first neighbourhood in Southeast Asia with a public autonomous passenger service. And my guest today runs that program — Dominic Ong is the General Manager, Autonomous, at Grab. And Dominic, I&#x27;m so happy to have you on the show today.</p>
+<p class="zh"><strong>Daniel：</strong> 欢迎回到 Autonomy Insiders，我是主持人 Daniel。关于自动驾驶的讨论，大多是在讲旧金山、凤凰城或者武汉——那些车道宽阔、标线清晰、司机人力昂贵的城市。而东南亚一样都不占。它拥有地球上最密集、也最「即兴」的交通流，同时又是中等收入地区里司机人力成本最低的地方之一。所以从纸面上看，它本该是 robotaxi 最后才抵达的地方。但就在今年 4 月，新加坡东北部的一个住宅区成了东南亚第一个提供<strong>公共自动驾驶载客服务</strong>的社区——而今天这位嘉宾正是这个项目的负责人：<strong>Dominic Ong，Grab 自动驾驶总经理</strong>。Dominic，非常高兴能请到你。</p></div></p>
+<hr>
+<p class="seg" id="seg-3"><span class="ts">[01:32 – 02:09]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Thank you so much, Daniel, for having me. Really excited to be able to share our story on your platform. <strong>Daniel:</strong> Before we get into any of the technologies, let me start with the basics, because I think our audience knows the AV industry well, but maybe not everyone knows Grab to its full extent. So maybe give me the two-sentence version of what Grab is, and also what share of Southeast Asia&#x27;s daily movement runs through it.</p>
+<p class="zh"><strong>Dominic：</strong> 非常感谢你，Daniel，很高兴能在你的平台上分享我们的故事。<strong>Daniel：</strong> 在进入技术话题之前，我想先从最基础的开始——我们的听众对自动驾驶行业很熟，但未必每个人都完整了解 Grab。所以能不能用两句话讲清楚 Grab 是什么，以及东南亚每天有多少出行是跑在你们网络上的？</p></div></p>
+<hr>
+<h2 id="s1">一、Grab 是谁 · Who is Grab</h2>
+<p class="seg" id="seg-4"><span class="ts">[02:09 – 02:52]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> No problem. Well, I kind of want to say that if anyone has travelled to Southeast Asia and has tried to arrange transportation on their own, you likely would have touched the Grab app. In a nutshell, Grab is a NASDAQ-listed, founder-led super app company that has businesses in mobility, food delivery, grocery delivery, digital payments and financial services. Currently we are present in over 900 cities, 8 countries in Southeast Asia, and our total transaction volume currently accounts for about 0.5% of the GDP of the entire Southeast Asian region. In fact, today I want to say we serve over 54 million monthly transacting users.</p>
+<p class="zh"><strong>Dominic：</strong> 没问题。我想说的是，如果你去过东南亚、并且自己安排过出行，你多半用过 Grab 这个 App。简单讲，Grab 是一家<strong>纳斯达克上市、创始人主导的超级应用公司</strong>，业务覆盖出行、外卖、生鲜配送、数字支付和金融服务。目前我们覆盖东南亚 <strong>8 个国家、900 多个城市</strong>，平台总交易额大约相当于整个东南亚地区 GDP 的 <strong>0.5%</strong>。事实上，今天我们服务的<strong>月度交易用户超过 5,400 万</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-5"><span class="ts">[02:52 – 03:28]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> The company was basically founded with a mobility service as our foundation — we wanted to offer safe ride-share rides in a geography where this wasn&#x27;t always readily available. And we pride ourselves on being extremely, extremely hyper-local; basically, how do we make advanced technologies work in the Southeast Asian context. And of course, we also have a mission to drive Southeast Asia forward by creating economic empowerment for everyone — so the driver-partners, the delivery-partners and merchant-partners who actually work on our platform, their earnings, how they&#x27;re able to create a sustainable living for themselves on our platform, is something that&#x27;s very, very important to us. So in a nutshell, that&#x27;s Grab. And sorry, it took more than two sentences.</p>
+<p class="zh"><strong>Dominic：</strong> 这家公司基本上是以出行业务为根基创立的——我们想在这样一个原本并不总能便捷叫到车的地方，提供安全的共享出行。我们最引以为豪的是<strong>极度的超本地化</strong>：也就是「怎么让先进技术在东南亚的语境里真正跑起来」。当然，我们的使命还包括推动东南亚向前、为所有人创造经济赋权——所以那些在我们平台上工作的司机伙伴、配送伙伴和商户伙伴，他们的收入、他们能否靠平台过上可持续的生活，对我们来说非常重要。总之，这就是 Grab。抱歉，超过两句话了。</p></div></p>
+<hr>
+<h2 id="s2">二、一个全新的岗位：GM Autonomous · The GM Autonomous mandate</h2>
+<p class="seg" id="seg-6"><span class="ts">[03:28 – 04:07]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> That&#x27;s impressive. And you are the General Manager for Autonomous — and I think that title exists at Grab for the first time, probably. So what are you actually accountable for? <strong>Dominic:</strong> Okay, well, I just want to take a bit of a step back. The role may be new, but I&#x27;ve actually been looking at autonomous vehicles for over a decade. In fact, before I joined Grab many years ago, I used to work for the Economic Development Board of Singapore, and back then I was responsible for developing what was then a very nascent autonomous and automotive industry. Now, I joined Grab 10 years ago, and in these last 10 years I&#x27;ve actually always been looking at the autonomous portfolio. In 2016 we announced the first ever autonomous on-demand ride-share partnership with nuTonomy back then in Singapore. And in 2018 we made a small investment into Andrew Ng&#x27;s autonomous driving company called Drive.ai.</p>
+<p class="zh"><strong>Daniel：</strong> 很厉害。你是<strong>自动驾驶总经理</strong>——这个头衔在 Grab 大概是第一次出现。那你实际负责什么？<strong>Dominic：</strong> 我想稍微往回退一步讲。这个岗位是新的，但我看自动驾驶其实已经看了十多年。很多年前在我加入 Grab 之前，我在<strong>新加坡经济发展局（EDB）</strong>工作，当时负责培育一个还很稚嫩的自动驾驶与汽车产业。之后我加入 Grab，到现在正好十年，这十年里我一直都在看自动驾驶这条线。<strong>2016 年，我们和当时的 nuTonomy 一起，在新加坡宣布了全球首个自动驾驶按需出行合作</strong>；<strong>2018 年，我们对吴恩达的自动驾驶公司 Drive.ai 做了一笔小额投资</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-7"><span class="ts">[04:07 – 04:47]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So in fact, I&#x27;ve been looking at this space for a long time, despite the title being a relatively new one. I will say that as the GM of Autonomous, I do have a three-prong vision for autonomy. The first is, how do we actually make autonomous technology cost-effective, such that it is commercially deployable in our part of the world. The second mandate that I have is about how do I localize this technology properly in Southeast Asia so that customers are actually willing to pay for it — and this includes things like making sure the infrastructure surrounding autonomous technology actually supports it properly in our environment. The third mandate that I have is actually looking out for potentially interesting technologies that could be relevant five, ten years down the road for Southeast Asia — a similar philosophy to why we looked at nuTonomy back in 2016 and Drive.ai in 2018.</p>
+<p class="zh"><strong>Dominic：</strong> 所以事实上，尽管这个头衔比较新，我盯着这个领域已经很久了。作为自动驾驶总经理，我有<strong>三根支柱的愿景</strong>。第一，怎么让自动驾驶技术真正<strong>具备成本效益</strong>，从而在我们这一带可以被商业化部署。第二，怎么把这套技术在东南亚<strong>恰当地本地化</strong>，让用户真的愿意为它付费——这包括确保围绕自动驾驶的基础设施，在我们的环境里能真正支撑它。第三，是去<strong>前瞻性地寻找那些可能在未来 5 年、10 年对东南亚有意义的技术</strong>——这跟我们 2016 年看 nuTonomy、2018 年看 Drive.ai 是同一套逻辑。</p></div></p>
+<hr>
+<p class="seg" id="seg-8"><span class="ts">[04:47 – 05:30]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Now, obviously what I&#x27;m responsible for, that led us up to this entire three-prong vision: I look after strategy, partnerships, all kinds of investment deals. I&#x27;m responsible for the unit economics. And most importantly, the entire operational setup required to make autonomy successful in Southeast Asia.</p>
+<p class="zh"><strong>Dominic：</strong> 而我在这个三根支柱的愿景下实际负责的是：<strong>战略、合作伙伴关系、各类投资交易</strong>；我也负责<strong>单位经济模型</strong>；最重要的是，让自动驾驶在东南亚跑通所需要的<strong>整套运营体系</strong>。</p></div></p>
+<hr>
+<h2 id="s3">三、司机不贵也不缺，那自动驾驶解决什么？ · What autonomy actually solves for Grab</h2>
+<p class="seg" id="seg-9"><span class="ts">[05:30 – 06:03]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Super interesting. And maybe let&#x27;s now get started with the premise of this whole program. I think almost everywhere, the business case for AVs starts with expensive — or also scarce — drivers. But in most of your markets, drivers are not that expensive or scarce. So what is the actual problem autonomy solves for Grab?</p>
+<p class="zh"><strong>Daniel：</strong> 很有意思。那我们来谈整个项目的前提。几乎在所有地方，自动驾驶的商业逻辑都始于<strong>「司机昂贵、甚至稀缺」</strong>。但在你们大多数市场，司机既不太贵、也不太缺。所以对 Grab 来说，自动驾驶真正要解决的是什么问题？</p></div></p>
+<hr>
+<p class="seg" id="seg-10"><span class="ts">[06:03 – 06:43]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Okay, so maybe I just want to take a couple of steps back first and provide a little bit of context on Southeast Asia — which, I mean, you&#x27;ve kind of already started off very nicely at the beginning. Southeast Asia is a really dynamic region that comprises a mix of cultures and urban and suburban areas, and you can tell this from the GDP per capita, because it ranges from 2,000 US dollars in Cambodia to over 100,000 US dollars in Singapore. So we&#x27;re actually dealing with a wide spectrum of economies and cultures here. And amidst all of this, the main philosophy of Grab is: how do we deliver technology at Southeast Asian prices? So, for example, the average ride-share fare in the US is US$14. However, if you look at two-wheel motorcycle rides in Vietnam, they&#x27;re about US$1 on average.</p>
+<p class="zh"><strong>Dominic：</strong> 我想先退两步，给一点东南亚的背景——其实你开场已经讲得很好了。东南亚是一个非常动态的区域，文化多元，城市与郊区混杂；这一点从<strong>人均 GDP</strong> 就能看出来：从柬埔寨的约 <strong>2,000 美元</strong>，到新加坡的<strong>超过 10 万美元</strong>。所以我们面对的是一个跨度极大的经济体与文化谱系。而在这一切之上，Grab 的核心哲学是：<strong>怎么用东南亚的价格，交付世界级的技术。</strong> 举个例子，美国网约车的平均车费是 <strong>14 美元</strong>；但如果看越南的<strong>摩托车网约出行</strong>，平均只有大约 <strong>1 美元</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-11"><span class="ts">[06:43 – 07:22]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So the question here is: to make the economics work, do we actually try to deliver a US$14 experience and have it be 1/14th of the effect? Or do we really try to deliver the entire US$14 experience at a US$1 price? And we&#x27;ve basically chosen to offer the best possible technology at prices that are relevant to the region — and this, you can imagine, is not an easy technical feat. Because of everything that we&#x27;ve done to try to deliver a world-class technology to Southeast Asia, I think people actually see us as a reliable everyday service, akin to running water — because they rely on us for their commute to work, they rely on us for food delivery, grocery delivery. I mean, we really try to meet people where they are.</p>
+<p class="zh"><strong>Dominic：</strong> 所以这里的问题是：要让经济模型成立，我们是把「14 美元的体验」打个十四分之一折扣地交付？还是真的<strong>用 1 美元的价格，交付完整的 14 美元体验</strong>？我们选择的其实是后者——用与这个区域消费水平相匹配的价格，提供尽可能好的技术。你可以想象，这在技术上绝不是一件容易的事。正因为我们为了把世界级技术带到东南亚做了这一切，我认为人们其实把我们看成一种<strong>像自来水一样可靠的日常服务</strong>——他们依赖我们通勤上班，依赖我们点外卖、买菜。我们是真的想「在人们所在的地方，遇到他们」。</p></div></p>
+<hr>
+<p class="seg" id="seg-12"><span class="ts">[07:22 – 08:05]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So with all of this context in mind, you can imagine that for our business, reliability is basically <strong>P0</strong> to us. Our mandate is really that of reliability — look at us like a public utility service, like running water. And basically, the problem that autonomy has to then solve is: how does it contribute towards this P0 priority of reliability? And actually I see autonomy as contributing to this in two different areas. First of all, by helping us solve what we call <strong>peak-hour gaps</strong>. I was looking at our 2026 data: basically, in a city — in a very densely urban city like Singapore — the demand can easily spike about <strong>four to five times</strong> during peak hours.</p>
+<p class="zh"><strong>Dominic：</strong> 带着这个背景，你就能理解：对我们这门生意来说，<strong>可靠性基本就是 P0（最高优先级）</strong>。我们的使命其实就是可靠性——把我们看作一种公共事业服务，像自来水一样。那么自动驾驶要解决的问题就是：<strong>它如何为「可靠性」这个 P0 作出贡献？</strong> 我认为它会从两个方向作出贡献。第一，帮我们解决所谓的<strong>「高峰缺口」</strong>。我看了我们 2026 年的数据：在一座像新加坡这样高度城市化的城市里，<strong>高峰时段的需求很容易涨到平峰的四到五倍</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-13"><span class="ts">[08:05 – 08:43]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Then there&#x27;s always the question of: are the drivers available and online, and are they able to serve the demand during these intense peak-hour periods? And that&#x27;s where I suspect autonomy actually has a role to play — in helping smooth out what we call these peak-hour spikes, because you don&#x27;t want to run a business in which it&#x27;s super spiky. At the same time, I want to say that autonomy could potentially help us solve <strong>connectivity gaps</strong> as well — meaning you have situations where, let&#x27;s say, there are townships that are out of the city centre, sometimes they aren&#x27;t always the most popular locations for our driver-partners to want to serve. Can autonomy actually help us plug that gap? So I think in helping us solve these two problems, it basically ladders up to that end goal of reliability.</p>
+<p class="zh"><strong>Dominic：</strong> 于是问题总是：<strong>高峰那几个小时，司机是不是在线、能不能接得住这些需求？</strong> 我认为这正是自动驾驶可以发挥作用的地方——帮我们<strong>抹平这种「尖峰」</strong>，因为没有人想经营一门波动极其剧烈的生意。同时我也想指出，自动驾驶还可能帮我们解决<strong>「连通性缺口」</strong>：比如说，有些<strong>远离市中心的城镇（township）</strong>，并不总是司机伙伴最愿意去服务的地方。自动驾驶能不能帮我们把这个缺口补上？我想，解决这两个问题，最终都会<strong>汇聚到「可靠性」这个终点</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-14"><span class="ts">[08:43 – 09:04]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So for now, we&#x27;re looking at autonomy to help us continue our philosophy of being the most reliable platform in the region.</p>
+<p class="zh"><strong>Dominic：</strong> 所以现阶段，我们期望自动驾驶帮我们延续这条路——<strong>做这个区域里最可靠的平台</strong>。</p></div></p>
+<hr>
+<h2 id="s4">四、混合模式：一张网、一个 App · The hybrid model</h2>
+<p class="seg" id="seg-15"><span class="ts">[09:04 – 09:20]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> This makes sense. And also, your answer to all of this is what you call a <strong>hybrid model</strong> — it&#x27;s a term that&#x27;s also often used in the industry. But maybe let&#x27;s also define it. So what actually is the hybrid model for you? And also, maybe, what is the alternative you rejected?</p>
+<p class="zh"><strong>Daniel：</strong> 这说得通。而你给出的答案是所谓的<strong>「混合模式」</strong>——这个词在行业里也常被使用。不过我们还是把它定义清楚：对你来说，混合模式到底是什么？以及，你们<strong>否掉的替代方案</strong>又是什么？</p></div></p>
+<hr>
+<p class="seg" id="seg-16"><span class="ts">[09:20 – 09:49]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Yeah. So for the hybrid model, how I define it is: it is <strong>autonomous vehicles and human drivers operating on one network, booked via one app, from the same pool of demand, but dispatched interchangeably.</strong> Meaning we have the intelligence behind the scenes on the platform determining whether or not an autonomous vehicle or a human driver would best serve a customer&#x27;s request. The platform will choose between them, trip by trip.</p>
+<p class="zh"><strong>Dominic：</strong> 好。我对混合模式的定义是：<strong>自动驾驶车辆与人类司机运行在同一张网络上，通过同一个 App 下单，共享同一个需求池，但可以被互换地调度。</strong> 也就是说，平台在背后用智能来判断：这一单到底由自动驾驶车辆接、还是由人类司机接更合适。<strong>平台是一单一单地在两者之间做选择。</strong></p></div></p>
+<hr>
+<p class="seg" id="seg-17"><span class="ts">[09:49 – 10:29]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> In this situation, I would say that the hybrid model is one which really encompasses the best of both, instead of forcing a choice between human and robot. And in relation to the P0 being reliability, which is what I shared earlier: the hybrid network actually offers reliability in the most practical manner, from the perspective of wanting to administer and deliver a mobility service that is truly reliable. Now, we talked about peak-hour gaps and connectivity gaps. The other thing that I wanted to raise was that, in the context of Southeast Asia, <strong>rain</strong> really contributes to an extreme variance in demand. In heavy rain situations, when there are occurrences of flash flooding, you actually see demand spiking <strong>9 to 10 times</strong>.</p>
+<p class="zh"><strong>Dominic：</strong> 在这个意义上，混合模式其实是<strong>把两端的好处都收进来</strong>，而不是被迫在「人」和「机器人」之间二选一。回到我刚才说的 P0——可靠性：混合网络恰恰是<strong>用最务实的方式</strong>提供可靠性，从「要运营并交付一项真正可靠的出行服务」这个角度看，就是如此。我们刚谈了高峰缺口和连通性缺口。我还想再提一点：在东南亚，<strong>降雨</strong>会造成需求的极端波动。在暴雨、出现城市内涝的时候，需求会涨到 <strong>9 到 10 倍</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-18"><span class="ts">[10:29 – 11:07]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And interestingly, this kind of demand shock caused by rain is actually <strong>positively correlated with autonomous ODD contraction</strong>. And what I mean by this is: when demand spikes due to rain, you end up with autonomous vehicles that are maybe not able to support ride requests in areas of heavy rain — because the vehicles haven&#x27;t been trained, or because the floods actually prohibit the smooth operation of these vehicles. So what do you do in a situation like that, when you still have to serve the customer? Because to reject the ride request means that you will end up disappointing them, and they will leave the platform.</p>
+<p class="zh"><strong>Dominic：</strong> 而有趣的是，这种由降雨引发的需求冲击，与<strong>自动驾驶 ODD 的收缩是正相关的</strong>。我的意思是：当降雨把需求推高时，恰恰是那些区域里的自动驾驶车辆<strong>可能接不了单</strong>——因为车辆没有针对这种场景训练过，或者积水本身就让它没法顺畅运行。那你怎么办？需求还在，客人还得服务。因为<strong>拒单就意味着让用户失望，而失望的用户会离开平台。</strong></p></div></p>
+<hr>
+<p class="seg" id="seg-19"><span class="ts">[11:07 – 11:47]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Now, the second reason why I feel that it also offers reliability in a very practical manner is because you don&#x27;t have a situation where you&#x27;re <strong>over-scaling the fleet to meet peak demand</strong>. Because, as we ascertained, in a densely urban environment, demand can sometimes be very spiky due to a variety of different reasons. And if you had chosen an alternative — the alternative being you only have 100% autonomous vehicles — then basically you would have to over-fleet to cover that peak demand. And during periods of low demand, you end up with a situation where a lot of the vehicles end up remaining idle, creating a <strong>utilization problem</strong>.</p>
+<p class="zh"><strong>Dominic：</strong> 第二个理由同样很务实：混合模式让你<strong>不必为了扛住峰值而把车队规模撑得过大</strong>。因为我们已经确认，在高密度城市环境里，需求会因为各种原因变得极其尖峭。如果你选了那条替代路线——也就是<strong>100% 全自动驾驶车队</strong>——那你就必须为了覆盖峰值而<strong>过度配车</strong>；而在低谷时段，大量车辆就会闲置，形成<strong>利用率问题</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-20"><span class="ts">[11:47 – 12:23]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And because of the need for us to be extremely, extremely practical and prudent in our part of the world, we really want to be very conscious of how we&#x27;re utilizing capital, how we&#x27;re actually buying assets. And finally, one thing that I think is very close to my heart as well: in a hybrid network, you continue to allow for room to have <strong>white-glove services</strong> delivered by driver-partners. So for example, if you have families with children and they have problems with the car seat, with luggage; maybe you have passengers with certain disabilities who actually need help; you have elderly folk who are trying to take the vehicle and maybe they just need a bit of help with opening the door, or walking them to the entrance of a medical facility — there will still be that dependency on having a human in the vehicle.</p>
+<p class="zh"><strong>Dominic：</strong> 在我们这一带做生意，必须极度务实、极度审慎，所以我们对<strong>资本怎么用、资产怎么买</strong>非常在意。最后一点，也是我个人很看重的：在混合网络里，你<strong>始终保留了由司机伙伴提供「白手套服务」的空间</strong>。比如带着孩子、需要处理儿童座椅和行李的家庭；比如有某些行动障碍、确实需要帮助的乘客；再比如老年人上车，可能只是需要有人帮忙开个门，或者陪着走到诊所门口——这些场景<strong>依然依赖车里有一个「人」</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-21"><span class="ts">[12:23 – 12:57]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And so I think the hybrid network allows us to cover all of these situations effectively, without disappointing the customer too much. The fact of the matter is that autonomous technology today, in 2026, isn&#x27;t quite yet perfect. And hybrid allows us to continue running a trusted and reliable service. It doesn&#x27;t hurt confidence when autonomous vehicles fail — because you really don&#x27;t want people to try it once, twice, and then end up leaving the platform because they&#x27;re like, &quot;well, it doesn&#x27;t really fit into my daily needs.&quot;</p>
+<p class="zh"><strong>Dominic：</strong> 所以我认为，混合网络让我们能有效地覆盖所有这些场景，而不至于让用户太失望。事实是，<strong>2026 年的今天，自动驾驶技术还谈不上完美</strong>。混合模式让我们能继续提供一个<strong>可信、可靠</strong>的服务。它也不会因为自动驾驶偶发失败而伤害信任——因为你最不想要的，就是用户试了一两次之后离开平台，心里想的是：「这东西其实融不进我的日常需求。」</p></div></p>
+<hr>
+<p class="seg" id="seg-22"><span class="ts">[12:57 – 13:33]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Yeah, super interesting. And maybe one question that you cannot answer right from the spot, but it would be super interesting: how probable is it that you have such flooding or rain that you cannot drive an autonomous vehicle in Southeast Asia? Is it something that is really common, or is it more scarce? <strong>Dominic:</strong> Oh, yes, extremely — it&#x27;s extremely common in Southeast Asia, actually. In particular, in countries like Singapore, Malaysia, certain parts of Thailand as well. I mean, these are countries that are classified as being within the <strong>monsoon region</strong>. Thunderstorms are actually a fairly frequent occurrence in the period between <strong>August to December</strong>.</p>
+<p class="zh"><strong>Daniel：</strong> 很有意思。有一个你可能没法当场回答、但会很有意思的问题：在东南亚，<strong>「雨大到自动驾驶车根本开不了」这种情况到底有多常见？</strong> 是很普遍，还是很少见？<strong>Dominic：</strong> 哦，非常常见——在东南亚其实相当普遍。特别是新加坡、马来西亚，以及泰国的部分区域。这些国家都被划在<strong>季风区</strong>里，<strong>8 月到 12 月</strong>期间雷暴相当频繁。</p></div></p>
+<hr>
+<p class="seg" id="seg-23"><span class="ts">[13:33 – 14:13]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And then you end up with a situation like: when there is heavy rain, we have seen our demand spike easily 9 to 10 times. So imagine you have that kind of crazy spike, and yet you are constrained in being able to serve the customer because the vehicles cannot operate during those conditions. <strong>Daniel:</strong> Yeah, that&#x27;s super interesting. Maybe let&#x27;s go directly to your deployment. So as far as I can tell, <strong>Punggol</strong> is the first public autonomous passenger service ever deployed inside a residential neighbourhood in Southeast Asia. So maybe let&#x27;s build it from the ground up.</p>
+<p class="zh"><strong>Dominic：</strong> 于是就出现这种情况：暴雨一来，我们的需求轻松就能涨到 <strong>9 到 10 倍</strong>。你可以想象——需求疯狂飙升，而你恰恰在那样的天气里<strong>被限制住了</strong>，因为车辆在这种条件下没法运营。<strong>Daniel：</strong> 太有意思了。那我们直接进到你们的落地项目。据我所知，<strong>Punggol 是东南亚第一个部署在住宅区内部的公共自动驾驶载客服务</strong>。我们就从头把它拆开讲吧。</p></div></p>
+<hr>
+<h2 id="s5">五、Punggol：Grab、WeRide、LTA 的分工 · Punggol</h2>
+<p class="seg" id="seg-24"><span class="ts">[14:13 – 14:55]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Can you walk me through the division of labour between Grab, your autonomous vehicle partner <strong>WeRide</strong>, and the <strong>Land Transport Authority</strong> — so specifically, who is the operator of record, who owns the vehicles, and who carries the risk if something goes wrong? <strong>Dominic:</strong> Yeah, absolutely. So we have a very unique and great relationship with WeRide and with LTA as far as this Punggol pilot is concerned. In the case of WeRide, they are the <strong>provider of vehicles</strong>, they are the <strong>L4 technology stack owner</strong>. We have done a partnership with them in which they are offering the vehicles to us. In the case of LTA, they are the <strong>regulator</strong>, but at the same time, to some extent, I would say that they are the <strong>innovator</strong> as well — because when we did the Punggol pilot, we actually co-created a lot of what the pilot would look like with them.</p>
+<p class="zh"><strong>Daniel：</strong> 能不能讲一下 Grab、你们的自动驾驶伙伴 <strong>WeRide（文远知行）</strong>，以及<strong>陆路交通管理局（LTA）</strong> 之间的分工？具体说：谁是<strong>登记在册的运营方</strong>？车归谁所有？如果出了事，风险由谁承担？<strong>Dominic：</strong> 当然。就 Punggol 这个试点来说，我们和 WeRide、和 LTA 的关系非常特别、也非常好。WeRide 是<strong>车辆提供方</strong>，也是 <strong>L4 技术栈的所有者</strong>；我们跟他们建立了合作，由他们向我们提供车辆。LTA 方面，他们是<strong>监管者</strong>，但在某种程度上，我也会说他们同时是<strong>创新者</strong>——因为在做 Punggol 试点时，<strong>试点长什么样，很多是我们和他们一起共创出来的</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-25"><span class="ts">[14:55 – 15:36]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So I remember that the conversation took place quite — I want to say — over a year and a half ago, where we said, &quot;hey, we have some ideas about how we want to do this. Can we really sit down with you and work through all the details?&quot; Because back then, LTA was really seriously contemplating how to enter into service a fleet of autonomous vehicles in Singapore. <strong>Daniel:</strong> So they&#x27;re the regulator — meaning they put all the safety frameworks, all the guidelines, all the testing requirements in place.</p>
+<p class="zh"><strong>Dominic：</strong> 我记得那次对话大概是——我想想——<strong>一年半以前</strong>，我们说：「嗨，我们对怎么做有一些想法，能不能跟你们坐下来，把所有细节都过一遍？」因为当时 LTA 正在非常认真地考虑：<strong>在新加坡要怎么让一支自动驾驶车队投入服务</strong>。<strong>Daniel：</strong> 所以他们既是监管者——也就是把<strong>安全框架、指引、测试要求</strong>全都立起来的那一方。</p></div></p>
+<hr>
+<p class="seg" id="seg-26"><span class="ts">[15:36 – 16:14]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> At the same time, I also see them as an innovator as well, being able to sit down with the private sector and say, &quot;hey, all these requirements, all these boundary conditions — let&#x27;s try to do it in a way that doesn&#x27;t become prohibitive to technology innovation.&quot; Now, the role that Grab plays is that of the <strong>operator of record</strong>. And what this means is that for the purpose of this pilot, we actually <strong>own the vehicles on our balance sheet</strong>. We operate the vehicles, we integrate the vehicles onto the Grab app, such that they are available and you&#x27;re able to book a ride with them.</p>
+<p class="zh"><strong>Dominic：</strong> 同时我也把他们看作创新者——他们能坐下来跟私营部门说：「这些要求、这些边界条件，我们来试着用一种<strong>不会把技术创新直接扼杀</strong>的方式去实现。」Grab 扮演的角色是<strong>登记在册的运营方（operator of record）</strong>。这意味着，在这个试点里，<strong>车辆是记在我们资产负债表上的、归我们所有</strong>；我们运营这些车，把它们集成进 Grab App，让用户可以叫到车。</p></div></p>
+<hr>
+<p class="seg" id="seg-27"><span class="ts">[16:14 – 16:56]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> At the same time, we have invested heavily into what I call the <strong>localization layer</strong>. And maybe I&#x27;ll just take a little bit — 30 seconds — to describe what this means. The localization layer basically refers to Grab investing into software and hardware capabilities to actually help our autonomous vehicle partners. So imagine you could be an AV company who comes to Singapore with maybe not a full stack — but we could work with you and have our engineers sit down with you and try to make up for any gaps you have in launching the Singapore service.</p>
+<p class="zh"><strong>Dominic：</strong> 同时，我们在所谓的<strong>「本地化层」上投入很重</strong>。我用大概 30 秒解释一下这是什么。本地化层指的是：<strong>Grab 在软件和硬件能力上做投入，去实际帮助我们的自动驾驶伙伴</strong>。想象一下，你可能是一家带着「不完整技术栈」来到新加坡的自动驾驶公司——那我们的工程师可以坐下来跟你一起，<strong>把你在新加坡落地时的短板补齐</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-28"><span class="ts">[16:56 – 17:34]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> But of course, you could also have AV companies who come to Singapore and maybe they have a full stack — they say, &quot;hey, we want you to just adopt everything.&quot; And we&#x27;ll say, &quot;okay, no problem, we will build on top of your stack and try to improve efficiency and try to make this technology work in the Singaporean context.&quot; And concretely, what does this actually mean? For us, it comprises hardware. For example, we have our proprietary <strong>KartaDashcam</strong> — inward-facing cameras and outward-facing cameras that we install into the WeRide vehicles, so that the regulators actually have a very clear view of what the passengers are doing within the vehicle, as well as an additional pair of eyes on what the vehicle is seeing ahead of it.</p>
+<p class="zh"><strong>Dominic：</strong> 当然，也可能有伙伴带着<strong>完整技术栈</strong>来新加坡，说「你们直接全盘采用就好」。那我们就会说：「没问题，我们在你的栈之上再做一层，去提升效率、让这套技术在<strong>新加坡语境</strong>里跑起来。」具体到什么程度？对我们来说，这包括<strong>硬件</strong>。比如我们自研的 <strong>KartaDashcam</strong>——<strong>内向摄像头 + 外向摄像头</strong>，装到 WeRide 的车上，让监管方可以清楚地看到<strong>车内乘客在做什么</strong>，同时也为车辆<strong>前方看到的东西</strong>多增加一双眼睛。</p></div></p>
+<hr>
+<p class="seg" id="seg-29"><span class="ts">[17:34 – 18:08]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> We have what we call the <strong>maker-checker model</strong>, which is that, because of the type of partnership that we have with WeRide, our team also sits down with them and reviews all the edge cases, the data that comes from the car, what it&#x27;s actually telling us. And we say, &quot;hey, these circumstances are unique to Singapore — this is how you should tweak the software, this is how you should tweak the driving characteristics.&quot; So in a way, we regard them really as a partner, in that we sit down side by side to do these things — versus saying, &quot;hey, this is entirely your responsibility as a software stack provider.&quot;</p>
+<p class="zh"><strong>Dominic：</strong> 我们还采用所谓的<strong>「maker-checker（制作者—复核者）」模式</strong>：因为我们和 WeRide 是这样一种合作类型，我们的团队会跟他们坐在一起，<strong>复盘所有边缘场景、复盘从车上回传的数据、复盘数据到底在告诉我们什么</strong>。我们会说：「这种情况是新加坡独有的——软件这里应该这么调，驾驶特性那里应该那么调。」所以在某种意义上，我们<strong>真的把他们当成伙伴</strong>，是并排坐着一起做这些事，而不是说「你是软件栈提供方，这全是你的责任」。</p></div></p>
+<hr>
+<p class="seg" id="seg-30"><span class="ts">[18:08 – 18:34]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And the third aspect of this is that we also have invested into building a <strong>fleet-management middleware</strong> that actually plugs into different AV OEMs as well. Because what we want to do is: through this middleware, you&#x27;re able to actually have oversight on all the vehicles, how they operate, and exactly how they are functioning on the Grab platform itself. So this is what I call the localization layer.</p>
+<p class="zh"><strong>Dominic：</strong> 第三块是：我们还投入建设了一套<strong>车队管理中间件</strong>，它可以对接<strong>不同的自动驾驶 OEM</strong>。因为我们想做到的是：通过这套中间件，你能够对所有车辆、它们的运行状态、以及它们在 Grab 平台上的实际表现，拥有<strong>全局的可见性</strong>。这就是我所说的本地化层。</p></div></p>
+<hr>
+<p class="seg" id="seg-31"><span class="ts">[18:34 – 18:47]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> That&#x27;s really interesting. So basically, you then also help to tweak the AV partner&#x27;s virtual driver for Singaporean edge cases. That&#x27;s really cool. <strong>Dominic:</strong> Yes, I would say that we try our best to do that, because we also understand that in the Singaporean context, there are many local nuances that may not always be picked up automatically. And I think the philosophy here is that we just want to be a very helpful partner to you.</p>
+<p class="zh"><strong>Daniel：</strong> 这很有意思——也就是说，你们其实也帮着调校伙伴的<strong>「虚拟司机」</strong>，让它适配新加坡的边缘场景。太酷了。<strong>Dominic：</strong> 是的，我们尽力这么做。因为我们也明白，在新加坡的语境里，有很多<strong>地方性的细微差异</strong>，未必会被自动捕捉到。这里的理念很简单：<strong>我们就是想做一个对你非常有用的伙伴。</strong></p></div></p>
+<hr>
+<h2 id="s6">六、从固定接驳到自动驾驶叫车 · From shuttle to ride-hailing</h2>
+<p class="seg" id="seg-32"><span class="ts">[19:14 – 20:06]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> That makes sense. And maybe a bit more about your first pilot: the first pilot was on a fixed route, more or less. And now you&#x27;ve also announced an on-demand pilot. So for a Punggol resident, what actually changes? And also, maybe, why now? <strong>Dominic:</strong> Well, I have to say that we&#x27;re extremely excited about this step-up for Punggol. But maybe I&#x27;ll just take a little bit of time to address how we started this entire Punggol pilot. We started testing in Punggol — and, as I told you, the approach had been co-created with the <strong>Ministry of Transport</strong> and LTA in Singapore. We wanted to actually put autonomous vehicles in a neighbourhood that had a <strong>mix of commercial and residential</strong>, because you wanted people of different profiles and different backgrounds to be exposed to the vehicle.</p>
+<p class="zh"><strong>Daniel：</strong> 说得通。再说说你们第一个试点：最早大体上是<strong>固定路线</strong>，现在你们又宣布了<strong>按需（on-demand）试点</strong>。对一位 Punggol 居民来说，到底什么变了？以及，为什么是现在？<strong>Dominic：</strong> 我得说，对 Punggol 这次升级我们<strong>超级兴奋</strong>。不过我还是花一点时间讲讲整个 Punggol 试点是怎么开始的。我们从 Punggol 开始测试——如我所说，这套方案是跟新加坡<strong>交通部（MOT）</strong>和 LTA <strong>一起共创</strong>的。我们想把它放在一个<strong>商业与住宅混合</strong>的社区里，因为这样能让<strong>不同画像、不同背景的人</strong>都接触到这种车辆。</p></div></p>
+<hr>
+<p class="seg" id="seg-33"><span class="ts">[20:06 – 20:46]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> We did a fixed-route shuttle because we wanted to really try out this technology using a <strong>very phased approach</strong>. And this was very much in line with how the Singapore government in general rolls out innovation, because I would say the approach is usually very considered, very deliberate. And it&#x27;s particularly important to do so with autonomous vehicles, given that safety is obviously paramount. So we said: &quot;okay, let&#x27;s try it on a fixed-route shuttle. Let&#x27;s really make sure these vehicles can actually be localized properly. And let&#x27;s make sure we <strong>socialize</strong> this technology with the public — because so far the public has only ever seen this technology in San Francisco or in different parts of China; they haven&#x27;t actually seen it in Singapore.&quot;</p>
+<p class="zh"><strong>Dominic：</strong> 我们先做<strong>固定路线接驳</strong>，是因为我们想<strong>分阶段</strong>地把这项技术试出来。这也非常符合新加坡政府推进创新的整体风格——我认为他们的做法通常都很审慎、很有步骤。放到自动驾驶上，这一点尤其重要，因为<strong>安全显然是第一位的</strong>。所以我们说：「好，先在固定路线上试。先确保这些车能被恰当地本地化。然后要确保把这套技术<strong>「社会化」给公众</strong>——因为到目前为止，公众只在旧金山或中国某些城市见过这种技术，<strong>他们还没在新加坡见过</strong>。」</p></div></p>
+<hr>
+<p class="seg" id="seg-34"><span class="ts">[20:46 – 21:24]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So let&#x27;s enlist their help also — try out the rides and get as much feedback as we can from them, so that they also <strong>co-create</strong> what the eventual rollout will look like. And in a way, this is actually crucial for <strong>trust</strong>. So as we look towards the ride-hailing service rollout in Punggol, we&#x27;re actually aiming to roll out about <strong>50 autonomous vehicles in the next few months</strong> — so that&#x27;s actually a step up of our existing fleet <strong>fivefold</strong>. And we intend to <strong>map the whole of Singapore</strong>, and hopefully bring the service beyond Punggol — because I feel like we&#x27;ve done a lot of work in Punggol, people in Punggol are already very, very familiar with our service already. We really want to bring it to more parts of Singapore.</p>
+<p class="zh"><strong>Dominic：</strong> 所以要<strong>请公众参与进来</strong>：请他们试乘，尽可能多收集反馈，让他们也<strong>共创</strong>最终的服务形态。从某种意义上说，<strong>这对「信任」至关重要</strong>。所以展望 Punggol 的<strong>叫车服务</strong>上线，我们计划<strong>在未来几个月投放约 50 辆自动驾驶车辆</strong>——相当于把现有车队扩大<strong>五倍</strong>。我们还打算<strong>把整个新加坡测绘完成</strong>，并希望把服务带出 Punggol——因为我们在 Punggol 已经做了很多工作，Punggol 的居民对我们的服务也非常熟悉了。我们真的很想把它带到新加坡更多地方。</p></div></p>
+<hr>
+<p class="seg" id="seg-35"><span class="ts">[21:24 – 21:48]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Now you may ask: why are we going to ride-hailing now? This pivot was interestingly actually <strong>due to user demand</strong>. Because during the entire fixed shuttle service duration, we were collecting a lot of feedback from residents, and many of the residents were extremely forthcoming with their feedback. And they told us that they actually wanted <strong>flexible bookings, direct connections</strong> — basically, &quot;let us book this service exactly as we would book a Grab.&quot; And that was really what gave us — and the regulators — the confidence to say, &quot;okay, we&#x27;re ready to take this bold next step forward, to go into autonomous ride-hailing.&quot;</p>
+<p class="zh"><strong>Dominic：</strong> 你可能会问：为什么现在就转做<strong>叫车</strong>？有意思的是，<strong>这个转向其实是用户需求推动的</strong>。在整个固定接驳服务期间，我们收集了大量居民反馈，很多居民都非常乐于表达。他们告诉我们，他们想要<strong>灵活的预订、直达的路线</strong>——基本上就是：「让我们能像叫 Grab 一样叫这个服务。」<strong>正是这一点，给了我们和监管方信心</strong>，去说：「好，我们准备好迈出这大胆的下一步，进入<strong>自动驾驶叫车</strong>。」</p></div></p>
+<hr>
+<h2 id="s7">七、Grab 真正盯的指标 · The metrics Grab watches</h2>
+<p class="seg" id="seg-36"><span class="ts">[21:48 – 22:04]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> And you went from 40,000 kilometres in early May to about 90,000 now, in miles — whatever. And also <strong>disengagement</strong> is what the industry always quotes publicly. But it will also be interesting to hear from you: what is the metric your team actually watches internally?</p>
+<p class="zh"><strong>Daniel：</strong> 你们的里程从 5 月初的 4 万公里涨到了现在的约 9 万公里（公制/英制先不纠结）。而<strong>「脱离接管」</strong>是行业对外最爱引用的指标。但我更感兴趣的是：<strong>你们团队内部真正在盯的是哪个指标？</strong></p></div></p>
+<hr>
+<p class="seg" id="seg-37"><span class="ts">[22:04 – 22:39]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Okay. So <strong>miles per critical intervention</strong> — that is definitely an industry standard, and it is relevant in the initial phase when we&#x27;re trying to prove out the technology. And by the way, currently we are at <strong>over 120,000 kilometres with no critical intervention so far</strong>. So that&#x27;s something that we continue to amass and to work hard on. Miles per critical intervention is important in the initial phase, where you&#x27;re trying to prove the technology. Right now we&#x27;re in a phase where we&#x27;re trying to prove the <strong>operations</strong>.</p>
+<p class="zh"><strong>Dominic：</strong> 好。<strong>「每关键介入里程（miles per critical intervention）」</strong> 确实是行业标准，在我们要<strong>证明技术</strong>的早期阶段也很相关。顺便说一句，<strong>目前我们已经超过 12 万公里、至今没有一次关键介入</strong>——这是我们持续在积累、在努力的东西。「每关键介入里程」在<strong>证技术</strong>的初期很重要。而我们现在所处的阶段，是要<strong>证运营</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-38"><span class="ts">[22:39 – 23:16]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And so <strong>vehicle uptime</strong> — how much time in a day is usable for the ferrying of passengers — is a metric that we&#x27;re actually watching very closely right now, because it tells us how efficient our <strong>depot operations</strong> are. And we&#x27;ve just set up a depot in Punggol, and this is where we&#x27;re really bringing in a lot of know-how on operational efficiency: how we actually set up the entire space, how we think about the vehicles&#x27; ingress and egress. All these things have a bearing on the vehicle uptime, and so that&#x27;s a metric that we&#x27;re actually looking at very carefully right now.</p>
+<p class="zh"><strong>Dominic：</strong> 所以<strong>车辆在线可用时长（vehicle uptime）</strong>——也就是一天里有多少时间可以真正用来拉客——是我们现在盯得非常紧的指标，因为它能告诉我们<strong>场站（depot）运营效率</strong>到底如何。我们刚在 Punggol 建了一个场站，在这里我们投入了大量关于<strong>运营效率</strong>的经验：整个空间怎么布置、车辆的<strong>进出动线</strong>怎么设计。这些都会直接影响车辆在线时长，所以这个指标我们现在看得非常仔细。</p></div></p>
+<hr>
+<p class="seg" id="seg-39"><span class="ts">[23:16 – 23:38]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> In the next phase, when we start doing autonomous ride-hailing, that&#x27;s actually when we will start being concerned with <strong>utilization</strong> as a metric — which is: how much of the vehicle&#x27;s available time is actually occupied with a passenger. And I think eventually, when we are really comfortable and we start offering the service widespread in many, many different areas of Singapore, and we&#x27;re actually running it commercially — that&#x27;s also when we will look to getting a metric which is hopefully a <strong>combination of operational efficiency, uptime and utilization</strong>.</p>
+<p class="zh"><strong>Dominic：</strong> 到了下一个阶段，当我们真正开始做自动驾驶叫车时，我们就会开始关注<strong>「利用率（utilization）」</strong>这个指标——也就是：车辆的可用时间里，有多大比例<strong>真的载着乘客</strong>。而最终，当我们足够从容、开始在新加坡很多很多不同区域大范围提供服务、并且真正<strong>商业化运营</strong>的时候，我们就会去看一个<strong>把运营效率、在线时长和利用率组合起来</strong>的指标。</p></div></p>
+<hr>
+<p class="seg" id="seg-40"><span class="ts">[23:38 – 24:34]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> And you mentioned already the depot, and you said you built that in Punggol. So do you envision also to operate all the depots you need, and also do the fleet operations? Or do you want to outsource it to third-party providers? <strong>Dominic:</strong> Oh, that&#x27;s an interesting question. That is actually an important strategic decision we&#x27;re working through right now. I think what we see in other markets is that, in the case of Waymo — let&#x27;s take Waymo as an example — they have cities in which they handle their own fleet operations and they own the fleet themselves; they have cities in which they have contracted this function. And I think it&#x27;s great that in the U.S. market you actually have choice. In the Singaporean market, I would say that because this technology is still up and coming, we&#x27;re still at a very early stage where you don&#x27;t have a thriving ecosystem to actually support the different models.</p>
+<p class="zh"><strong>Daniel：</strong> 你刚提到了场站，说是在 Punggol 建的。那么你们是打算<strong>自己运营所有需要的场站和车队运营</strong>，还是<strong>外包给第三方</strong>？<strong>Dominic：</strong> 这是个好问题，而且是我们<strong>正在认真推敲的一个重要战略决策</strong>。我们在其他市场看到的情况是：以 <strong>Waymo</strong> 为例，他们有些城市是<strong>自己管车队运营、自己也持有车队</strong>，有些城市则把这块<strong>外包</strong>出去。我觉得美国市场的好处是<strong>你有选择</strong>。但在新加坡市场，我会说：因为这项技术还在发展当中，我们还处在一个很早的阶段——<strong>还没有一个成熟的生态来支撑不同的模式</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-41"><span class="ts">[24:34 – 25:22]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So I would say that as a start, we will look to relying on ourselves to do fleet operations. Also because, for the initial batch of WeRide vehicles that we are putting on our platform, we actually own the assets as well. So we will start with that. And I think as we start scaling up the fleet, we will also be looking at whether or not there are available fleet partners who may be prepared to actually take on this function. And I suspect that as we get closer and closer to commercialization, once there is <strong>regulatory clarity</strong> on the direction that we are going and the speed at which we are scaling up — that is probably the juncture at which there will be a lot more interest coming from existing fleet owners to say, &quot;hey, I&#x27;m willing to actually take this next step.&quot; And so the work that we&#x27;re doing, hopefully, will be an <strong>encouragement and a guidance</strong> for many of these players who might be watching the space but not ready to take the step yet.</p>
+<p class="zh"><strong>Dominic：</strong> 所以起步阶段，我们会<strong>靠自己做车队运营</strong>——也因为投放到平台上的<strong>第一批 WeRide 车辆，资产本身就是我们持有的</strong>。我们从这里开始。随着车队规模扩大，我们也会去看<strong>有没有现成的车队伙伴愿意接下这个职能</strong>。我倾向于认为：当我们越来越接近商业化、一旦<strong>监管方向明确</strong>、扩张速度也明确之后，那大概就是<strong>现有车队业主开始产生更多兴趣</strong>的拐点——他们会说：「嘿，我愿意迈出这一步了。」而我们现在做的这些事，希望能成为这些<strong>「在看但还没准备好下场」的玩家</strong>的<strong>鼓励和指引</strong>。</p></div></p>
+<hr>
+<h2 id="s8">八、什么会把 AV 栈打崩 · What breaks an AV stack in Southeast Asia</h2>
+<p class="seg" id="seg-42"><span class="ts">[25:22 – 25:46]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> And maybe now let us widen the lens a bit, because Punggol is Singapore, and it&#x27;s only one place in your entire footprint. So you now have real mileage. Could you maybe also rank the <strong>top three things about Southeast Asian roads that could break an AV stack</strong> — trained in China or the United States?</p>
+<p class="zh"><strong>Daniel：</strong> 现在我们不妨把镜头拉宽一点。Punggol 只是新加坡，只是你们整个版图里的一个点。现在你们有了<strong>真实里程</strong>，能不能排个序：<strong>东南亚道路上最可能「打崩」自动驾驶栈</strong>——尤其是那些在中国或美国训练出来的栈——的<strong>前三大因素</strong>？</p></div></p>
+<hr>
+<p class="seg" id="seg-43"><span class="ts">[25:46 – 26:23]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Yeah. So before we actually touch on the physical edge cases, I actually wanted to talk about an <strong>economics edge case</strong>, which is Singapore. I&#x27;m not sure if you&#x27;re familiar, but Singapore is likely the hardest place in the world for autonomous vehicle economics to work out. And that&#x27;s really because of the <strong>taxation regime</strong>, because the entitlement to put a vehicle on Singaporean roads actually costs <strong>more than six figures in US dollars</strong>. This was the approach that had been adopted by the Singapore government to moderate the level of car ownership in Singapore — because Singapore is a place of very limited land, and we don&#x27;t want a situation where we end up having to build too many roads, or having the existing roads be too congested. And so this approach towards car ownership has actually been in place for decades already.</p>
+<p class="zh"><strong>Dominic：</strong> 好。不过在谈物理上的边缘场景之前，我想先讲一个<strong>「经济上的边缘场景」</strong>，那就是新加坡本身。不知道你是否了解——<strong>新加坡可能是全世界最难让自动驾驶经济模型算得过来的地方</strong>。根本原因是<strong>税制</strong>：<strong>在新加坡上牌上路的资格，成本超过六位数美元</strong>。这是新加坡政府为了<strong>控制拥车水平</strong>所采取的办法——因为新加坡土地极其有限，我们不希望最后不得不修太多路，或者让现有道路过度拥堵。这套拥车制度其实<strong>已经实行几十年了</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-44"><span class="ts">[26:23 – 27:38]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So in a way, this presents also a bit of an economic edge case, because you can imagine that <strong>an idle autonomous vehicle here will be an extreme extravagance</strong>. It&#x27;s not just a small inefficiency problem — it&#x27;s like, &quot;oh my goodness, it&#x27;s really costing you a lot on a per-hour basis.&quot; So I would say that <strong>you cannot hide a badly utilized vehicle in this market</strong>. And in a way, one of the things that we do want to test out is whether the economics actually work out. And obviously, if we&#x27;re not able to get a high level of utilization in the vehicle, then that would be one of the things that would <strong>break the entire model</strong>. Now, but going back to the physical edge cases — which I believe is what your question was about — I would say that the top three are likely going to be <strong>rain</strong>, as I mentioned, because <strong>a tropical downpour changes lane visibility, sensor return and pedestrian behaviour all at once.</strong> In fact, we have seen situations where a tropical downpour can actually reduce visibility to near zero.</p>
+<p class="zh"><strong>Dominic：</strong> 所以这在某种程度上构成了一个<strong>经济上的边缘场景</strong>：你可以想象，<strong>在这里让一辆自动驾驶车闲置，是极其奢侈的事</strong>。它不只是一个「小效率损失」的问题——它更像是「天哪，这辆车每小时都在烧很多钱」。所以我会说：<strong>在这个市场里，你没法藏住一辆利用率很差的车。</strong> 从某种意义上说，我们确实想验证的一件事就是：<strong>这套经济模型到底算不算得过来。</strong> 显然，如果我们做不到高利用率，那就会成为<strong>打崩整个模型</strong>的因素之一。好，回到物理边缘场景——我想这才是你问题的重点。我认为前三名大概是：第一，<strong>雨</strong>——如我所说，因为<strong>一场热带暴雨会同时改变车道可视性、传感器回波和行人行为</strong>。事实上我们见过，一场暴雨能把能见度<strong>压到接近零</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-45"><span class="ts">[27:38 – 28:17]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So it&#x27;s really difficult even for human drivers to navigate that situation, and we haven&#x27;t actually put these autonomous vehicles to that kind of test yet. So rain is probably number one. The second would probably be <strong>motorcycles</strong>, because two-wheelers are actually a very common modality of transportation in all parts of Southeast Asia. And, for example, a lot of the Grab delivery riders actually deliver food using motorcycles. So you have situations where, at a rate, suddenly you have <strong>a swarm of motorcycles surrounding the vehicle</strong> — and you don&#x27;t see that in the US, because motorcycles are not as cheap or as commonly relied on as a mode of transportation.</p>
+<p class="zh"><strong>Dominic：</strong> 即便对<strong>人类司机</strong>来说，那种情形也很难应对，而<strong>我们还没有把自动驾驶车辆放到那种极端条件下去测过</strong>。所以雨大概排第一。第二大概是<strong>摩托车</strong>——因为两轮车在东南亚各地都是非常普遍的交通方式。比如，Grab 的大量<strong>配送骑手就是用摩托车送餐</strong>。于是就会出现这样的场面：<strong>突然间，车辆被一整群摩托车包围</strong>——这在美国是见不到的，因为摩托车在美国既没那么便宜，也没那么普遍地被依赖为出行方式。</p></div></p>
+<hr>
+<p class="seg" id="seg-46"><span class="ts">[28:17 – 28:55]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> The third one, which is not so much something that will break the stack, but rather something that the stack definitely must be tuned to, is the <strong>right-hand drive requirement</strong>. Because in certain markets in Southeast Asia, you actually have right-hand drive vehicles, which basically means that all the traffic directions have to be tuned for a different side of the road. Even things like how the passenger enters the vehicle, exits the vehicle, how you cross a big junction and things like that, has to be recalibrated completely. And I wouldn&#x27;t say that it&#x27;s an obstacle — it&#x27;s rather a challenge that needs to be worked through.</p>
+<p class="zh"><strong>Dominic：</strong> 第三点与其说是会「打崩」栈的东西，不如说是<strong>栈必须被调校适配</strong>的东西——那就是<strong>右舵（right-hand drive）的要求</strong>。因为在东南亚某些市场，车辆本身是右舵的，这意味着<strong>所有行驶方向都要为「另一侧车道」重新标定</strong>。连乘客怎么上车、怎么下车、怎么通过一个大路口这类事情，<strong>都必须彻底重新校准</strong>。我不会说这是一道障碍——它更像是一个<strong>需要被攻克的挑战</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-47"><span class="ts">[28:55 – 29:31]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> And I know that many of the players are experiencing this for the first time in London. I read that also — I think it&#x27;s also WeRide — that want to also create a <strong>right-hand drive version of their GXR</strong>. So some people ask, &quot;okay, what is the point? Do you then put the steering wheel on the right-hand side, or what is the difference?&quot; Can you talk about that? <strong>Dominic:</strong> I think there are two things here. First of all, I think it&#x27;s really great that WeRide has decided to invest into creating a right-hand drive vehicle, because it really shows their commitment to right-hand drive markets — and I honestly want to really <strong>salute Tony Han</strong> for that. Basically, it underscores his commitment towards cities like London and Singapore.</p>
+<p class="zh"><strong>Daniel：</strong> 我知道很多玩家是<strong>在伦敦第一次遇到这个问题</strong>。我也读到——我想也是 WeRide——他们要做 <strong>GXR 的右舵版本</strong>。那有人会问：「这有什么意义？不就是把方向盘挪到右边吗，差别在哪？」能不能讲讲这个？<strong>Dominic：</strong> 我觉得这里有两件事。首先，<strong>WeRide 决定投入做右舵车型，这非常了不起</strong>，因为它真正体现了他们对右舵市场的承诺——说真的，我想为此<strong>向 Tony Han（韩旭）致敬</strong>。这突显了他对伦敦、新加坡这类城市的投入。</p></div></p>
+<hr>
+<p class="seg" id="seg-48"><span class="ts">[29:31 – 30:10]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> One thing that is also extremely helpful is the fact that the GXR vehicle that we&#x27;re using <strong>has one sliding door</strong>. So by configuring the vehicle in right-hand drive mode, it also means that the sliding door actually opens on the <strong>correct side</strong> — meaning for passengers to board and get off easily — versus if we continued on with the left-hand drive vehicle, you&#x27;d end up having situations where the door has to open onto incoming traffic.</p>
+<p class="zh"><strong>Dominic：</strong> 还有一点也极其有用：我们用的这台 <strong>GXR 有一扇侧滑门</strong>。所以把车配成<strong>右舵</strong>之后，<strong>侧滑门也会开在正确的一侧</strong>——乘客上下车更方便；而如果继续用左舵车型，就会出现<strong>门朝着迎面车流打开</strong>的情况。</p></div></p>
+<hr>
+<h2 id="s9">九、自动配送与机器人 · Autonomous delivery and robotics</h2>
+<p class="seg" id="seg-49"><span class="ts">[30:10 – 30:53]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> So we&#x27;ve now talked a lot about the general ride-hailing part of your business, but you also have another half of your business, which is <strong>delivery</strong> — which you introduced also in the intro. So <strong>Zelos</strong> is also an autonomous logistics company; this was one of your four original <strong>MoU</strong> partners. Vietnam was announced as an autonomous vehicles and delivery-robots market. So in a dense Southeast Asian city, is autonomous goods movement maybe also a <strong>better product-market fit</strong> than moving passengers? Or where does it actually sit in your priority stack?</p>
+<p class="zh"><strong>Daniel：</strong> 我们聊了很多出行业务这一半，但你们还有另外一半——<strong>配送</strong>，你在自我介绍里也提到了。<strong>Zelos</strong> 也是一家自动驾驶物流公司，是你们最早那四家 <strong>MoU 伙伴</strong>之一；越南当时被宣布为自动驾驶车辆与配送机器人的市场。那么在一座密集的东南亚城市里，<strong>货物运输是不是比载人更「产品—市场契合」</strong>？还是说，它在你们的优先级排序里处在什么位置？</p></div></p>
+<hr>
+<p class="seg" id="seg-50"><span class="ts">[30:53 – 31:32]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Yeah, well, I want to say that using robotics for deliveries is actually an incredibly interesting use case, and it ties in with what we term as <strong>urban embodied AI</strong> in general. We really do see that there is an interesting use case that is emerging, which is basically using robotics for deliveries to <strong>complement</strong> the actual human delivery service. There are two specific problems that robotics actually helps us solve in this situation. The first problem is actually the <strong>first-and-last-mile problem</strong>, because we actually find that in many situations — especially when you&#x27;re doing a delivery service in very heavily built-up urban environments — you have delivery riders actually spending a lot of time trying to deliver a package or a food order within a high-rise building: you&#x27;re waiting for the elevator, you&#x27;re trying to locate the apartment unit.</p>
+<p class="zh"><strong>Dominic：</strong> 我想说，<strong>用机器人做配送其实是一个极其有意思的场景</strong>，它和我们所说的<strong>「城市具身智能（urban embodied AI）」</strong>整体上是连在一起的。我们确实看到一个正在浮现的场景：<strong>用机器人配送去「补充」人类配送服务</strong>。在这个情境里，机器人帮我们解决两个具体问题。第一个其实是<strong>首末公里问题</strong>：我们发现在很多情况下——尤其是在楼宇极其密集的城市环境里做配送时——<strong>骑手会在高层建筑里耗掉大量时间</strong>去送一个包裹或一份餐：等电梯、找门牌号。</p></div></p>
+<hr>
+<p class="seg" id="seg-51"><span class="ts">[31:32 – 32:11]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Sometimes you have to pick up the food in a massive shopping mall as well — so it&#x27;s very difficult to find where exactly you&#x27;re supposed to be going to pick that up. And we find that actually there is about <strong>10% of a delivery rider&#x27;s time that is wasted</strong> having to navigate all of this, versus being on the road in transit towards the delivery destination. So we feel that first-last mile is probably something that robotics can actually help us a lot with. And at the same time, during <strong>supply peaks</strong> — we talked about how demand spikes during peak periods — for food delivery, for grocery delivery, they all have separate peaks: delivery during the lunch and dinner-time crowd. We basically hope to also use robots to complement the actual delivery riders, to <strong>smooth out that curve</strong> a little bit.</p>
+<p class="zh"><strong>Dominic：</strong> 有时候你还得在<strong>巨大的商场里取餐</strong>——要找到到底该去哪里取，非常困难。我们发现，<strong>骑手大约有 10% 的时间是被浪费掉的</strong>——不是花在去目的地的路上，而是花在处理这些事上。所以我们觉得，<strong>首末公里很可能正是机器人能帮上大忙的地方</strong>。同时，在<strong>供给峰值</strong>方面——我们前面谈过需求在高峰怎么飙升——外卖和生鲜各有各的峰值：午餐档和晚餐档。我们大体上希望<strong>也用机器人来补充骑手</strong>，把这条曲线<strong>抹平一点</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-52"><span class="ts">[32:11 – 32:50]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Now, to this end, we&#x27;re actually considering innovations from many different players. <strong>Zelos</strong> is obviously one of them, and we&#x27;re trying to work through suitable use cases where we can actually use that solution in different parts of Southeast Asia. We also have an <strong>in-house robotics team</strong> that has a solution called <strong>Carri</strong>. So Carri is actually an <strong>indoor-outdoor robot</strong> as well, so it&#x27;s very unique in that the robot can actually travel indoors and some part outdoors. And so, in a way, it kind of solves that problem of having to navigate a very, very complicated complex or campus.</p>
+<p class="zh"><strong>Dominic：</strong> 为此，我们其实在考察很多不同玩家的创新。<strong>Zelos</strong> 显然是其中之一，我们正在<strong>打磨合适的用例</strong>，看能不能在东南亚不同地方用上这套方案。我们还有一支<strong>内部机器人团队</strong>，做了一款叫 <strong>Carri</strong> 的方案。Carri 其实是一款<strong>室内外一体的机器人</strong>，它的独特之处在于<strong>既能室内通行、也能在部分室外场景通行</strong>——所以在某种意义上，它解决的正是<strong>在非常复杂的大型综合体或园区里穿行</strong>这个问题。</p></div></p>
+<hr>
+<p class="seg" id="seg-53"><span class="ts">[32:50 – 33:13]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And you can imagine a situation in which a delivery rider just shows up at the <strong>entrance of a mall</strong>, and Carri kind of comes and he picks up the order from Carri — versus having to navigate the depths of the mall to actually find the restaurant or the cafe to pick the order up from. So these are some of the examples of emerging use cases that we&#x27;re seeing, and we&#x27;re actually very excited to continue experimenting to find out how best we can actually complement our existing service.</p>
+<p class="zh"><strong>Dominic：</strong> 你可以想象这样一个场景：<strong>骑手只需要出现在商场门口</strong>，Carri 过来，他从 Carri 那里取走订单——而不必<strong>深入到商场内部</strong>去找那家餐厅或咖啡店取餐。这些就是我们看到的、正在浮现的用例中的一些例子。我们也非常期待继续做实验，找出<strong>最能补充现有服务的方式</strong>。</p></div></p>
+<hr>
+<h2 id="s10">十、为什么要买股权，而不是签供货协议 · Equity stakes and AV partners</h2>
+<p class="seg" id="seg-54"><span class="ts">[33:13 – 33:33]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Super interesting. And maybe let&#x27;s also talk a bit more about the strategy behind all of this, because you mentioned you have an in-house solution, but you also have taken <strong>equity in players like WeRide, May Mobility, Momenta, also Vay</strong>. So why pay for something you could arguably probably get with a commercial supply agreement?</p>
+<p class="zh"><strong>Daniel：</strong> 很有意思。我们再多聊聊这背后的战略：你刚提到你们有内部方案，但同时你们也<strong>在 WeRide、May Mobility、Momenta，还有 Vay 这些玩家身上持了股</strong>。所以，<strong>为什么要在可以签一份商业供货协议拿到的东西上，用股权去买？</strong></p></div></p>
+<hr>
+<p class="seg" id="seg-55"><span class="ts">[33:33 – 34:43]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Now, that&#x27;s a very interesting question. We ask ourselves this question all the time. But as I told you, I&#x27;ve spent quite some time looking at this space already. And I think one conclusion that I&#x27;ve drawn from all the different partnership deals that have happened over the years is that <strong>it&#x27;s really critical to actually drive strategic alignment with your partner</strong>. Because autonomous technology is still a technology that is being worked out — it is not at a stage of yet being commoditized; that technology is still being refined. And <strong>equity investment is actually really, really key for joint strategic alignment and ecosystem integration</strong>. Because as we are finding out in the partnership with WeRide, there is a lot of work that needs to be done that traverses technology integration, operations, data, regulations — and you really need your partner to be able to <strong>lean in with you</strong> to solve all of these things, which are very frequently intertwined with one another. Which is why we decided that an equity investment, where both parties have their incentives aligned and their interests aligned, is the best way to really drive the <strong>joint ownership of the deployment</strong>, so that both parties can actually grow and mature together.</p>
+<p class="zh"><strong>Dominic：</strong> 这是个很有意思的问题——<strong>我们自己也在不停地问自己。</strong> 但如我所说，我已经在这个领域花了不少时间。这么多年看过各种不同的合作交易之后，我得出一个结论：<strong>真正和伙伴建立「战略一致性」是极其关键的。</strong> 因为自动驾驶技术<strong>仍然是一门正在被「做出来」的技术</strong>——它还远没到被<strong>商品化</strong>的阶段，技术本身还在被持续打磨。而<strong>股权投资，恰恰是达成「联合战略一致性」与「生态整合」的真正关键</strong>。因为正如我们在与 WeRide 的合作中发现的那样：<strong>有大量工作要做，而且横跨技术集成、运营、数据、监管</strong>——你真的需要你的伙伴<strong>跟你一起把身子探进来</strong>，去解决这些彼此高度纠缠的问题。这就是为什么我们认定：<strong>一笔让双方激励对齐、利益对齐的股权投资，才是真正推动「共同拥有这次部署」的最好方式</strong>，从而让双方能<strong>一起成长、一起成熟</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-56"><span class="ts">[34:48 – 35:24]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Makes sense. And maybe now flip it around — now from an AV developer&#x27;s side of the table: what does Grab bring to them that they cannot build or buy themselves? And I would say <strong>demand</strong> is the easy answer. So give me the second and the third reason, maybe. <strong>Dominic:</strong> Yeah, I think that it varies from partner to partner. So I can give you a few general points that I guess hold true across many of the different partners that we&#x27;ve had discussions with. I will say, first of all, it is <strong>real-world data</strong>.</p>
+<p class="zh"><strong>Daniel：</strong> 说得通。那我们反过来站到<strong>自动驾驶开发者</strong>那一侧问：<strong>Grab 能给他们什么，是他们自己造不出来、也买不到的东西？</strong> 我想<strong>「需求」</strong>是最容易想到的答案。所以请给我第二和第三个理由。<strong>Dominic：</strong> 我认为这<strong>因伙伴而异</strong>。我可以给你几条<strong>在多数伙伴身上都成立的一般性</strong>答案。首先第一条，是<strong>真实世界数据</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-57"><span class="ts">[35:24 – 36:06]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Because basically, across <strong>20 billion rides and deliveries since our inception, 14 years&#x27; worth of data</strong>, we do have operating data on the different kinds of conditions in the ride-sharing domain and the food-delivery domain. So in many occasions, partners have actually found this experience very interesting and very useful in helping them <strong>accelerate the tackling of edge cases</strong> and understanding and predicting how exactly the stack is going to work in different situations. And for us, because we have so many driver-partners on our platform with great driving behaviours, we also <strong>enrol our driver-partners in the process of training up the autonomous vehicle</strong>, so that the vehicle actually performs like a really, really well-trained chauffeur driver. So you can actually see this in the <strong>finesse of the ride</strong> when you actually take it in Singapore versus other deployments. So we do feel that this experience, this data, is something that is very cherished by our partners.</p>
+<p class="zh"><strong>Dominic：</strong> 因为基本上，<strong>从创立至今 200 亿单出行与配送、14 年的数据</strong>，我们确实拥有网约车与外卖两个领域、各种条件下的运营数据。所以很多时候，伙伴们发现这些经验<strong>很有意思、也非常有用</strong>，能帮他们<strong>加速攻克边缘场景</strong>，并理解、预测这套栈在不同情境下会怎么表现。而对我们来说，因为平台上有大量驾驶行为非常优秀的司机伙伴，我们<strong>也会把司机伙伴纳入到自动驾驶车辆的「训练」过程中</strong>，让车表现得<strong>像一位训练得极好的专职司机</strong>。你在新加坡坐这台车时，能从<strong>乘坐的细腻程度</strong>上感受到这一点——和别处的部署不太一样。所以我们确实认为，<strong>这些经验和数据，是我们的伙伴非常珍视的东西</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-58"><span class="ts">[36:06 – 36:42]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> The second thing that we could bring to the table is a <strong>regulatory relationship</strong>. Because as I told you earlier, one thing that we have also set in place, as a result of our many years of operating in the region, are the deep regulatory relationships that we have forged with the different regulators in the region. One of the great things about these relationships is that they allow us to <strong>co-create</strong> — because you call them a regulator, but the relationship that we have with them is one where we feel comfortable enough to come to the table to say, &quot;we have these ideas, we would like to implement them, and we would like to sit down with you to actually look at how policy can accommodate this new technology.&quot; And in many occasions, I would say we have been received with <strong>open-mindedness and collaboration</strong> — and I think that&#x27;s something that&#x27;s extremely critical and important, especially when it involves the rollout of new technology and new innovation.</p>
+<p class="zh"><strong>Dominic：</strong> 第二件我们能带到桌上的东西，是<strong>监管关系</strong>。如我前面所说，我们在这一区域经营多年，也由此建立起<strong>与各地监管机构之间深度的关系</strong>。这些关系最棒的一点，是它们让我们可以<strong>共创</strong>——虽然你称他们为监管者，但我们和他们之间的关系，<strong>足以让我们舒服地坐到桌前说</strong>：「我们有这些想法，我们想把它落地，我们想跟你们一起坐下来，看看<strong>政策怎么去容纳这项新技术</strong>。」而在很多场合，我们遇到的是<strong>开放的心态和协作的意愿</strong>——我认为这一点极其关键、也极其重要，尤其是在涉及新技术、新创新的落地时。</p></div></p>
+<hr>
+<p class="seg" id="seg-59"><span class="ts">[36:42 – 37:19]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> The third aspect of this is actually <strong>workforce capabilities</strong>. And what I mean by this is that in certain markets, we do see that governments actually view <strong>gig-economy workers</strong> as a very integral pillar to the economy. In Southeast Asia, in fact, in many jurisdictions, the informal gig economy is actually a very, very important category of the workforce that the government prioritizes — because depending on the economic situation in the country, because you have different economic cycles, you have ups and downs, they actually look to it as a means of providing <strong>transitory employment</strong> as people move between jobs.</p>
+<p class="zh"><strong>Dominic：</strong> 第三块是<strong>劳动力能力</strong>。我的意思是，在某些市场，我们确实看到政府把<strong>零工经济劳动者</strong>视为经济中<strong>非常核心的一根支柱</strong>。在东南亚，事实上在很多司法辖区，<strong>非正规的零工经济</strong>是政府高度重视的一类劳动力——因为经济有周期、有起落，<strong>他们会把它当作一种「过渡性就业」的手段</strong>，让人们在工作转换之间有个去处。</p></div></p>
+<hr>
+<p class="seg" id="seg-60"><span class="ts">[37:19 – 38:00]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So because of the contribution and how integral they are to the economy, they also do believe that whenever you bring in innovative new technologies, it&#x27;s also important to <strong>take care of this workforce</strong>, this informal economy as well. And this is where Grab also plays a very significant role, because many of these informal gig-economy workers actually work on our platform as driver-partners or delivery-partners. So we also feel that it&#x27;s very important that as we get ahead of the technology, we also <strong>help them transition into potential new jobs</strong> that open up as a result of these new technologies forming.</p>
+<p class="zh"><strong>Dominic：</strong> 正因为这一群体对经济的贡献和重要性，政府也相信：<strong>每当你引入新的创新技术时，同样重要的是要照顾好这部分劳动力、照顾好这个非正规经济。</strong> 而 Grab 在这里恰好扮演着很重要的角色——因为这些非正规零工劳动者里，<strong>很多人就是在我们平台上做司机伙伴或配送伙伴</strong>。所以我们同样觉得，<strong>在技术往前跑的时候，帮他们过渡到新技术所创造出的新岗位</strong>，非常重要。</p></div></p>
+<hr>
+<p class="seg" id="seg-61"><span class="ts">[38:00 – 38:39]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> I mean, one could say that as much as there is a lot of uncertainty about whether or not AI could actually impact jobs, you also see a world in which it helps to create a lot of new opportunities. And in the autonomous space, we actually see that in the form of <strong>safety drivers, remote operators, fleet management specialists</strong>. We actually do need a lot of people who are well trained in the mobility sector to come and support the entry into service of these vehicles. So those, I would say, are the areas that we would help them. And I guess in addition to that, I mentioned something earlier, which is the <strong>physical localization layer</strong> as well. So our invitation to partners is basically: <strong>come as you are — we will work with you to make Singapore work.</strong></p>
+<p class="zh"><strong>Dominic：</strong> 有人会说，AI 会不会冲击就业，存在大量不确定性；但你<strong>也能看到另一个世界——它创造出很多新机会</strong>。在自动驾驶领域，我们看到的形态是：<strong>安全员、远程操作员、车队管理专家</strong>。我们确实需要大量在出行行业受过良好训练的人，来支撑这些车辆投入服务。所以这些就是我们能帮上忙的方面。此外，我前面还提到过一点——<strong>物理层面的本地化层</strong>。所以我们对伙伴的邀约其实很简单：<strong>「你就带着你现在的样子来，我们跟你一起，让新加坡跑通。」</strong></p></div></p>
+<hr>
+<h2 id="s11">十一、Vay 与「辅助式自动驾驶」 · Vay and assisted autonomy</h2>
+<p class="seg" id="seg-62"><span class="ts">[39:16 – 39:53]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> That&#x27;s super interesting. So one partner I mentioned earlier — one investment in this way — Vay is not necessarily autonomy; it&#x27;s like a human driving remotely. And you invested <strong>60 million dollars</strong>, which is also a serious signal. So is remote driving for you a <strong>bridge technology</strong>, or is it a <strong>permanent layer in the stack</strong>? Or maybe also a <strong>hedge</strong>, in case Level 4 takes longer than everyone hopes?</p>
+<p class="zh"><strong>Daniel：</strong> 很有意思。前面提到的一个伙伴、一笔投资——<strong>Vay</strong>，严格说它不算自动驾驶，更像是<strong>「人在远端开车」</strong>。你们投了 <strong>6,000 万美元</strong>，这本身也是一个很重的信号。那么<strong>遥驾（remote driving）</strong>对你们来说，是一项<strong>过渡技术</strong>？还是<strong>技术栈里长期存在的一层</strong>？又或者，是<strong>万一 L4 比所有人期望的都要慢时的一个对冲</strong>？</p></div></p>
+<hr>
+<p class="seg" id="seg-63"><span class="ts">[39:53 – 40:31]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Yeah, so earlier on, when I was sharing about the role of the GM of Autonomous, I did say that one pillar in the vision was to keep a lookout for technologies that may be relevant in Southeast Asia five to ten years down the road. <strong>Vay</strong> stood out as a very interesting candidate as we were considering the entire spectrum of driverless technologies — because I think Vay is an incredible company, I think they have really done a lot of great work in integrating the remote driving stack into the vehicles. So from an engineering perspective, I think they&#x27;re really a great company. I would say that we are working with them to actually understand operationally where they stand in this world where autonomy is picking up. We see them as a very interesting <strong>alternative technology</strong> that has the means of delivering a ride-share service or car-sharing service <strong>at a fraction of the cost</strong> of what the incumbents are offering today.</p>
+<p class="zh"><strong>Dominic：</strong> 好。前面我讲自动驾驶总经理这个角色时说过，愿景里有一根支柱，就是<strong>去前瞻那些五到十年后可能对东南亚有意义的技术</strong>。在我们审视<strong>整个「无人驾驶技术谱系」</strong>的时候，<strong>Vay</strong> 是一个很突出的有趣候选——因为我认为 Vay 是一家了不起的公司，他们在<strong>把遥驾技术栈集成进车辆</strong>这件事上做得非常出色。所以从工程角度看，他们真的是很棒的公司。我们正在和他们一起<strong>从运营层面理解</strong>：在自动驾驶势头起来的这个世界里，他们处在什么位置。我们把他们看作一项<strong>很有意思的「替代性技术」</strong>——它有能力以<strong>远低于现有玩家成本</strong>的方式，去交付共享出行或共享汽车服务。</p></div></p>
+<hr>
+<p class="seg" id="seg-64"><span class="ts">[40:31 – 41:05]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> And to that end, we are working with them on many different business models to try to achieve this end goal. Now, in the area of autonomy, in fact, I will say that one interesting and emerging idea is basically what we call <strong>assisted autonomy</strong> — whether or not the remote driving stack that Vay has can actually be a very nice complement to help the autonomous industry. And to that end, they already have a partnership with <strong>Kodiak</strong>, for example — I know Vay is actually integrated into Kodiak today. At the same time, could they also be used in <strong>vehicle recovery</strong>, for example? Because they also happen to have a deployment in <strong>Vegas</strong>, where you have a lot of autonomous vehicle players that are currently running commercial services there. So I think Vay gives us an opportunity to really push the boundaries of how we&#x27;re thinking about autonomy, by presenting a technology that can be very nicely complementary to the incumbents.</p>
+<p class="zh"><strong>Dominic：</strong> 为此，我们正在和他们一起试<strong>很多不同的商业模式</strong>，去逼近这个目标。而在自动驾驶领域，我想说一个<strong>很有意思、正在浮现的概念</strong>，我们叫它<strong>「辅助式自动驾驶（assisted autonomy）」</strong>——也就是：Vay 的遥驾栈，能不能成为<strong>辅助整个自动驾驶产业的一个很好的补充</strong>？在这方面，他们<strong>已经和 Kodiak 建立了合作</strong>，我知道 <strong>Vay 现在已经集成进了 Kodiak</strong>。同时，它能不能也用于<strong>车辆救援（vehicle recovery）</strong>？因为他们恰好在<strong>拉斯维加斯</strong>有部署，而那里有大量正在做商业运营的自动驾驶玩家。所以我认为，<strong>Vay 给了我们一个机会，去把「我们如何思考自动驾驶」的边界真正往外推</strong>——因为它提供了一项<strong>能与现有玩家很好地互补</strong>的技术。</p></div></p>
+<hr>
+<h2 id="s12">十二、Waymo 进入新加坡 · Waymo enters Singapore</h2>
+<p class="seg" id="seg-65"><span class="ts">[41:41 – 42:24]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Sound exciting. And now let&#x27;s come to the big news in Singapore: <strong>Waymo</strong> just announced they&#x27;re also launching in Singapore — in 2027 they want to start, and they want to provide commercial rides in 2028. So how are you viewing this development? <strong>Dominic:</strong> Daniel, as someone who has looked at this industry for a long time, I want to say I am <strong>extremely excited</strong> about it. I am really glad that Waymo is actually joining us and <strong>ComfortDelGro</strong> on this joint mission of creating a thriving autonomous landscape for Singapore. There are three reasons for this. First of all, from a <strong>consumer perspective</strong>, Singaporean riders will now get <strong>more choice</strong>, because they would be able to choose from existing operators as well as the new operator Waymo, and make their own decisions on which operator actually serves them the best.</p>
+<p class="zh"><strong>Daniel：</strong> 很激动人心。现在我们来说新加坡最大的新闻：<strong>Waymo</strong> 刚刚宣布也要进入新加坡——2027 年启动，2028 年提供<strong>商业载客</strong>。你怎么看这件事？<strong>Dominic：</strong> Daniel，作为一个看了这个行业很久的人，我想说我<strong>极其兴奋</strong>。我真的很高兴 Waymo 加入到我们和 <strong>ComfortDelGro</strong> 的行列里，<strong>共同为新加坡打造一个繁荣的自动驾驶生态</strong>。理由有三点。第一，从<strong>消费者角度</strong>：新加坡乘客会有<strong>更多选择</strong>——他们可以在现有运营方和新运营方 Waymo 之间做选择，<strong>自己判断谁服务得最好</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-66"><span class="ts">[42:24 – 43:00]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> Second of all, I would say that <strong>Waymo&#x27;s entry is a validation that there is a pathway to commercialization even in a market like Singapore, where the economics are difficult</strong>. So in a way, it kind of validates all the intuition that we had about &quot;is Singapore viable as a market?&quot; And I feel like Waymo&#x27;s entry will also end up <strong>accelerating a lot of our thinking around the regulatory frameworks and the safety frameworks</strong>. So all in all, I would say that it&#x27;s a very positive development for autonomy in Singapore and Southeast Asia, and I&#x27;m really excited about them coming. On our end, we&#x27;re staying <strong>laser focused</strong> on delivering our service in Singapore, and we&#x27;re really excited about the expansion that we have announced already — the <strong>five-fold fleet increase</strong> that&#x27;s coming online very soon, how we&#x27;re actually going to be carrying passengers on autonomous ride-hailing services very soon. And I really look forward to being able to work in <strong>lockstep with the Singapore government</strong> to really work through the regulatory changes that will need to take place to accommodate all of us, while at the same time serving the Singaporean population.</p>
+<p class="zh"><strong>Dominic：</strong> 第二，我认为 <strong>Waymo 的进入本身就是一种「验证」——证明即便在新加坡这种经济模型很难算的市场，商业化也是有路可走的</strong>。所以从某种意义上，它<strong>验证了我们所有的直觉</strong>：新加坡作为一个市场到底是否可行。我也觉得 Waymo 的进入会<strong>加速我们在监管框架和安全框架上的思考</strong>。总而言之，我认为这对新加坡和东南亚的自动驾驶是一个非常积极的进展，我很期待他们到来。而我们这一边，会<strong>极度聚焦</strong>于在新加坡把服务交付好；我们对已经宣布的扩张也非常兴奋——<strong>车队规模扩大五倍</strong>很快就会上线，很快我们就会用<strong>自动驾驶叫车服务</strong>来载客。我非常期待能<strong>与新加坡政府步调一致地协作</strong>，把需要发生的监管变化推进下去，以容纳我们所有人，同时服务好新加坡民众。</p></div></p>
+<hr>
+<h2 id="s13">十三、规模化时，谁持有车队？ · Who owns the fleet at scale</h2>
+<p class="seg" id="seg-67"><span class="ts">[43:00 – 43:40]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> And maybe one follow-up question, because you again mentioned the five-fold increase of your fleet, and at the beginning you mentioned that you own the first WeRide vehicles. So if you look at things at scale, do you still want to <strong>own the vehicles and carry the CapEx</strong>? Or would you want to have <strong>third-party fleet ownership</strong> as well? So what would be the model at scale, at the end?</p>
+<p class="zh"><strong>Daniel：</strong> 我想追问一个问题。你又提到车队要扩大五倍，而开头你说<strong>第一批 WeRide 车辆是你们自己持有的</strong>。那么如果看规模化之后——你们还打算<strong>自己持有车辆、承担资本开支（CapEx）</strong>吗？还是也希望能有<strong>第三方持有车队</strong>？所以最终、规模化之后的模式会是什么样？</p></div></p>
+<hr>
+<p class="seg" id="seg-68"><span class="ts">[43:36 – 44:12]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So Grab is actually not a stranger to owning CapEx, because in our part of the world we have actually <strong>set up rental car companies in Singapore, Malaysia and Indonesia</strong>, where we actually own the assets on our balance sheet. And the reason for this is simple: it&#x27;s because in our part of the world, many drivers have difficulty getting access to credit to be able to purchase their own cars. And so, in having our own rental companies, we&#x27;ve basically made it a little bit easier for them to actually get access to a vehicle to drive on our platform. And we had made these investments in the early days when we first started the ride-hailing service — and the reason for this was because <strong>the ecosystem hadn&#x27;t yet grown</strong>.</p>
+<p class="zh"><strong>Dominic：</strong> 其实 <strong>Grab 对持有 CapEx 并不陌生</strong>——在我们这一带，我们<strong>在新加坡、马来西亚和印尼都设立了租车公司</strong>，这些资产是<strong>记在我们资产负债表上的</strong>。原因很简单：在这一带，<strong>很多司机很难获得信贷去买自己的车</strong>。通过自营租车公司，我们<strong>让他们更容易拿到一台能上我们平台跑活的车</strong>。这些投资是我们在<strong>刚做网约车业务的最早期</strong>就做的——原因就是，<strong>当时的生态还没有长出来</strong>。</p></div></p>
+<hr>
+<p class="seg" id="seg-69"><span class="ts">[44:12 – 44:50]</span><div class="seg-body">
+<p class="en"><strong>Dominic:</strong> So we took it upon ourselves to say, &quot;let&#x27;s make this easy for our drivers to be able to come onto our platform.&quot; I see this evolution happening similarly in autonomous as well — which is that, at the onset, as I mentioned earlier, you may have fleet owners who are <strong>waiting and watching</strong> to see if this is actually a viable business to be had. So we happen to be in this phase where the technology and the business model are still being proven. I would say that <strong>until we get full regulatory clearance to actually run a sustainable business in many parts of Singapore, it is likely that we will still end up owning the CapEx and operating CapEx ourselves.</strong></p>
+<p class="zh"><strong>Dominic：</strong> 所以我们<strong>主动承担</strong>了这件事，说：「让我们把司机上平台这件事变得容易。」我认为<strong>自动驾驶会经历非常相似的演化</strong>——如我前面提到的，起步阶段，<strong>会有车队业主选择「观望」，看这到底是不是一门可行的生意</strong>。所以我们恰好处在这样一个阶段：<strong>技术和商业模式都还在被验证</strong>。我会说：<strong>在我们拿到完整监管许可、能够在 Singapore 的许多区域真正经营一门可持续的生意之前，很可能我们仍要自己承担持有成本和运营开支。</strong></p></div></p>
+<hr>
+<p class="seg" id="seg-70"><span class="ts">[44:50 – 45:14]</span><div class="seg-body">
+<p class="en"><strong>Daniel:</strong> Makes sense. Dominic, we&#x27;re at the end, so thank you so much for taking the time today. It was really insightful to learn more about Grab, to learn more about the Southeast Asian market, and all the special edge cases you encounter over there. So thanks again for joining me today on the podcast. <strong>Dominic:</strong> Thanks so much, Daniel, for having me. Really enjoyed this conversation. Catch up with you soon.</p>
+<p class="zh"><strong>Daniel：</strong> 说得通。Dominic，我们到尾声了，非常感谢你今天抽时间。能更了解 Grab、更了解东南亚市场，以及你们在那里遇到的各种特殊边缘场景，收获很大。再次感谢你来上节目。<strong>Dominic：</strong> 非常感谢你邀请我，Daniel。这次对谈我非常享受，回头再聊。</p></div></p>
+<hr>
+<p>*逐字稿来源：本机 Whisper 语音转写（small.en，598 段，音频取自该期 Substack/RSS 官方 mp3，时长 45:14）。英文保留转写形态并按上下文校正；中文为人工翻译。主要校正条目：WeRide（原 We Write / B-Rite / rewrite）、Punggol（原 Pongol / Pongo / Pong World）、Carri（原 Cary / Kari）、Zelos（原 Elos / Sailors）、KartaDashcam（原 Carta dash cams）、nuTonomy（原 Neutonomy）、Drive.ai（原 Drive AI）、ComfortDelGro（原 comfort Delgore）、Vay（原 Vey / VA）、Kodiak、miles per critical intervention（原 mouse per critical intervention）、ride-hailing（原 right chair / right healing / ridegaling）、MoU（原 NYU）。*</p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../europe-robotaxi-reality-check-friedel/index.html"><div class="rw"><img loading="lazy" src="../europe-robotaxi-reality-check-friedel/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</div></div></a><a class="relcard" href="../beti-french-av-operator-weride/index.html"><div class="rw"><img loading="lazy" src="../beti-french-av-operator-weride/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">beti：WeRide 首个欧洲 robobus 背后的法国运营方</div></div></a><a class="relcard" href="../weride-built-global-robotaxi/index.html"><div class="rw"><img loading="lazy" src="../weride-built-global-robotaxi/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">文远知行如何用 9 年建起全球 Robotaxi 业务</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["Grab", "自动驾驶", "robotaxi", "东南亚", "Southeast Asia", "新加坡", "Singapore", "Punggol", "榜鹅", "Dominic Ong", "AV Market Strategist", "Autonomy Insiders", "混合模式", "hybrid model", "人机混合车队", "可靠性", "reliability", "高峰缺口", "peak-hour gap", "连通性缺口", "connectivity gap", "ODD", "运行设计域", "暴雨", "季风", "monsoon", "摩托车", "右舵", "right-hand drive", "RHD", "拥车证", "COE", "单位经济", "利用率", "utilization", "uptime", "车辆在线时长", "每关键介入里程", "miles per critical intervention", "depot", "场站", "WeRide", "文远知行", "GXR", "Robobus", "LTA", "陆路交通管理局", "MOT", "operator of record", "本地化层", "localization layer", "KartaDashcam", "maker-checker", "车队管理中间件", "fleet management middleware", "Zelos", "Carri", "Infermove", "配送机器人", "delivery robot", "urban embodied AI", "城市具身智能", "ev", "May Mobility", "Momenta", "Vay", "teledriving", "遥驾", "assisted autonomy", "辅助式自动驾驶", "Kodiak", "Waymo", "ComfortDelGro", "nuTonomy", "Drive.ai", "Tony Han", "韩旭", "股权", "战略对齐", "CapEx", "车队持有"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
