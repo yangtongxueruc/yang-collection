@@ -1,0 +1,501 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>欧洲自己的自动驾驶路径：不是追赶美国，而是把 robotaxi 变成公共交通的一部分 · 总结分析</title><meta name='description' content='「欧洲落后」和「欧洲该弃赛」都错了 —— Lukas Neckermann 认为三个地区的起点根本无法比较：欧洲的路径是公共交通的延展，在单一型式认证框架下授权（一次认证、27 国通行），而美国所有在运营服务区加起来只有伦敦的两倍大。更重要的是钱到底留在哪里：按每车每公里拆开，客户端只占 10%、技术栈 20–30%、整车厂 25–30%，而车队管理拿走约 40% —— 真正的利润池是编排、保险这些「无聊的生意」。'><meta property='og:title' content='欧洲自己的自动驾驶路径：不是追赶美国，而是把 robotaxi 变成公共交通的一部分 · 总结分析'><meta property='og:description' content='「欧洲落后」和「欧洲该弃赛」都错了 —— Lukas Neckermann 认为三个地区的起点根本无法比较：欧洲的路径是公共交通的延展，在单一型式认证框架下授权（一次认证、27 国通行），而美国所有在运营服务区加起来只有伦敦的两倍大。更重要的是钱到底留在哪里：按每车每公里拆开，客户端只占 10%、技术栈 20–30%、整车厂 25–30%，而车队管理拿走约 40% —— 真正的利润池是编排、保险这些「无聊的生意」。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/europe-own-path-autonomous-mobility/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/europes-own-path-to-autonomous-mobility" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">Autonomy Insiders（The AV Market Strategist / Substack + YouTube）</div><h1>欧洲自己的自动驾驶路径：不是追赶美国，而是把 robotaxi 变成公共交通的一部分</h1><p class="sub">Europe&#x27;s Own Path to Autonomous Mobility</p><div class="tags"><span class="tag">⏱ 41:53</span><span class="tag">👤 Lukas Neckermann（Neckermann Strategic Advisory 创始人；PAVE Europe 董事、Urban Places Lab 联合创始人；「mobility revolution」提出者）</span><span class="tag">🗓 2026-10</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.youtube.com/watch?v=ijMLO_ZbFe8" target="_blank" rel="noopener">▶ 在 YouTube 观看</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">TL;DR（结论先行）</a><a href="#s1">一、背景：一场「该不该参赛」的跨大西洋争论</a><a href="#s2">二、欧洲的结构性优势从哪来：起点差异</a><a href="#s3">三、监管：是起跑线，不是终点线</a><a href="#s4">四、试点为什么会「死」：问题不在试点，在你不学习</a><a href="#s5">五、奥斯陆样本：公共交通主导（PT-led）能做成什么</a><a href="#s6">六、钱到底留在哪里：拆开「品牌」看价值链</a><a href="#s7">七、垂直整合的神话：不是不愿，是算不过账</a><a href="#s8">八、谁拥有车队：银行在场边，卡在残值</a><a href="#s9">九、服务郊区：「出行荒漠」与拼车的诚实</a><a href="#s10">十、2027 / 2030：用什么指标算「欧洲赢了」</a><a href="#s11">十一、关键数字速查</a><a href="#s12">十二、值得记住的几句原话</a><a href="#s13">十三、批判性阅读：这套论证的三处薄弱点</a><a href="#s14">局限性与说明</a></nav><main class="content"><h1>欧洲自己的自动驾驶路径：不是追赶美国，而是把 robotaxi 变成公共交通的一部分</h1>
+<blockquote><strong>来源</strong>：Autonomy Insiders（The AV Market Strategist / Substack + YouTube + Spotify）</blockquote>
+<blockquote><strong>嘉宾</strong>：Lukas Neckermann —— Neckermann Strategic Advisory（伦敦）创始人，PAVE Europe 董事、Urban Places Lab 联合创始人，「mobility revolution」一词的提出者</blockquote>
+<blockquote><strong>主持</strong>：Daniel Abreu Marques｜<strong>时长</strong>：41:53｜<strong>发布</strong>：2026-10-14</blockquote>
+<hr>
+<h2 id="s0">TL;DR（结论先行）</h2>
+<ul><li><strong>「落后」和「该弃赛」两个说法都错了。</strong> 引爆点是同一周来自大西洋对岸的两篇评论：一篇说欧洲走得太慢，一篇说欧洲应该跳过这场比赛。嘉宾的核心反驳是：<strong>三个地区的起点根本无法比较</strong>，用一个地区的尺子去量另一个地区，本身就是错的。</li><li><strong>欧洲的路径是「公共交通的延展」，不是「公交的替代」。</strong> 美国把 robotaxi 当作填补公交空白的替代品（因为公交从未真正建起来），中国更像产业政策；而欧洲要做的是<strong>新增一种方式</strong>，去补充整个出行组合，并在<strong>单一型式认证框架</strong>下获得授权。</li><li><strong>监管是起跑线，不是终点线。</strong> 一旦车辆通过型式认证，就能在 <strong>27 个市场</strong>运营。反观美国：目前所有在运营服务区的面积加起来<strong>大约只有伦敦的两倍</strong>，且分属不同州、城市、机场规则，一张许可在别处一律无效 —— <strong>在这样的碎片化下，很难做出正向的单位经济</strong>。</li><li><strong>钱不在头条品牌里。</strong> Waymo、Uber 占据新闻，但按「每车每公里」追钱，背后全是<strong>物理而本地</strong>的活：金融、保险、场站、能源、清洁、维保、运营、客服。整条栈的收入分配大致是：<strong>客户端 10%、技术栈 20–30%、整车厂 25–30%、车队管理约 40%</strong>。也就是说，Waymo 自己掌控的部分最多只占 robotaxi 收入的三分之一。</li><li><strong>「无聊的生意」才是利润池。</strong> 两个被严重低估的环节：<strong>车队编排</strong>（决定资产周转与单位经济成败）与<strong>保险</strong>（占收入 5–10%，且几乎永远盈利）。老话重提：赚钱的不是挖金的人，是卖镐和铲子的人。</li><li><strong>垂直整合是神话。</strong> 不是「不愿意」，而是<strong>经济上不成立</strong>：整车厂 EBIT 利润率只有 6–8%，Uber 网约车也在同一量级，软件公司没有理由把自己拖进一条利润率远低于股东预期的业务线。</li><li><strong>司机的工作不会消失，只会换地方。</strong> 早期 robotaxi 部署在幕后的员工数量和有司机时一样多；远程监控（1:10 至 1:25）只是拼图的一小块，真正让单位经济受伤的是<strong>场站里的物理整备</strong>。</li><li><strong>银行与租赁公司还在场边看。</strong> 它们的资金成本最低、本该是最理想的车主，但 6,000–20,000 辆的规模对它们还不算「改变游戏规则」，卡点是<strong>残值</strong>：定制车没有残值历史、没有利用率历史、责任与保险结构不明 —— 在搞清之前只能假设「到期即核销」。</li><li><strong>欧洲最大的用例不在市中心，在外围。</strong> 用自动化接驳车/小巴把「出行荒漠」（mobility deserts）接到公交主干线上；行业要对自己诚实：<strong>拼车与网约车本质上是同一件事</strong>（单车载客率普遍低于 2 人，几乎全靠补贴）。</li><li><strong>衡量标准不是数量，是平台。</strong> 嘉宾拒绝「robotaxi 数量最多」这个指标，他要的是：<strong>2027 年底第一批通过型式认证的车辆、数千辆载客车辆在城市里跑、以及一个真正有竞争的环境</strong>（北美最强 + 亚洲最强 + 欧洲本土玩家同场）。</li></ul>
+<hr>
+<h2 id="s1">一、背景：一场「该不该参赛」的跨大西洋争论</h2>
+<p>2026 年 1 月，两篇来自大西洋对岸的评论几乎同时出现：一篇指责欧洲在自动驾驶上动作太慢，另一篇（《金融时报》的 &quot;Europe Doesn&#x27;t Need Driverless Cars&quot;）干脆主张欧洲不需要无人驾驶汽车。Lukas Neckermann 写了一篇回应，结论是<strong>两边都错</strong>。</p>
+<p>他引了一句德语谚语作为方法论：</p>
+<blockquote>&quot;You should sweep in front of your own door before you comment on the dirt in front of someone else&#x27;s.&quot; —— 先扫自家门前雪，再去评论别人门前的脏。</blockquote>
+<p>这句谚语不是修辞，而是这篇回应的<strong>核心论证结构</strong>：对美国自动驾驶的「成功」做归因时，必须先看它到底在解决什么问题 —— 而那个问题在欧洲并不存在。</p>
+<hr>
+<h2 id="s2">二、欧洲的结构性优势从哪来：起点差异</h2>
+<p>嘉宾用一个很具体的细节说明「起点不同」不是客套话：<strong>他在伦敦，出行分担率大约是主动出行 1/3、公共交通 1/3、汽车 1/3。</strong> 当一个城市三分之二的出行本来就不靠私家车，那么「robotaxi 填空白」这个叙事在欧洲天然就弱。</p>
+<table><thead><tr><th>维度</th><th>欧洲</th><th>美国</th><th>中国</th></tr></thead><tbody><tr><td>自动驾驶的定位</td><td><strong>公共交通的延展</strong>（新增方式）</td><td><strong>公共交通的替代</strong>（公交从未真正建起来）</td><td><strong>产业政策</strong>为主</td></tr><tr><td>城市结构</td><td>密集、汽车出现前已成型</td><td>围绕汽车建成，替代方案缺失</td><td>超密集超大城市，基建与人口结构差异大</td></tr><tr><td>每车英里碰撞率</td><td>基准</td><td><strong>英国/欧洲多数的 3–5 倍</strong></td><td>—</td></tr><tr><td>顶级安全表现</td><td>奥斯陆、赫尔辛基等大城市某年度<strong>零道路死亡</strong></td><td>道路死亡人数显著更高</td><td>—</td></tr><tr><td>数据隐私</td><td>CCTV 受<strong>极严格</strong>监管</td><td>路边摄像头（如 Flock）部署与数据使用缺乏约束</td><td>不同治理路径</td></tr></tbody></table>
+<p>嘉宾特别提醒听众记住安全对比这件事，因为它在公共讨论里经常被用错方向：</p>
+<blockquote>&quot;I need you and all of the listeners to remember this, especially when we hear statistics on how much safer autonomous vehicles are... The number of crashes per vehicle mile driven in the US is three to five times higher than we have in the UK or most of the rest of Europe.&quot;</blockquote>
+<p>也就是说：<strong>自动驾驶「比人类司机安全 N 倍」的统计，天然更容易在美国跑出漂亮数字</strong>，因为分母本来就烂得多。而当欧洲的城市已经能交出「零道路死亡」的年度成绩单时，用安全来论证「必须上车」就变得相当困难。</p>
+<p>他的结论因此很直接：</p>
+<blockquote>&quot;I&#x27;m frankly hesitant and very reluctant to let somebody else from any other region in the world tell us in Europe what we should be doing with regards to automated mobility.&quot;</blockquote>
+<hr>
+<h2 id="s3">三、监管：是起跑线，不是终点线</h2>
+<p><strong>「学会爱上监管」</strong> 是嘉宾在伦敦 Autonomy Summit 上对与会者的建议。他不是监管的辩护者，而是把它定义为<strong>真正的推动器（a real enabler）</strong>：</p>
+<blockquote>&quot;Regulation is our head start. It&#x27;s not the finish line. Once a vehicle is type approved, it can operate across 27 markets.&quot;</blockquote>
+<p>这句话是理解欧洲路径的关键：<strong>型式认证 = 一次审批，27 国通行。</strong> 这和美国形成鲜明对照：</p>
+<ul><li>把美国目前所有在运营的自动驾驶服务区<strong>加起来</strong>，总面积<strong>大约只有伦敦的两倍</strong>；</li><li>每个区域分属不同州、不同城市，去机场有特殊规定，报送要求各不相同；</li><li><strong>一张许可在别的任何地方都不作数。</strong></li></ul>
+<blockquote>&quot;It&#x27;s very, very hard to build positive unit economics when you have unique regulation across every single area where you deploy.&quot;</blockquote>
+<p>按嘉宾的判断，在「证明安全 + 支撑部署」的框架上真正有优势的是：<strong>英国、德国</strong>领先，<strong>瑞士</strong>紧随，<strong>法国</strong>可能也在其中。</p>
+<hr>
+<h2 id="s4">四、试点为什么会「死」：问题不在试点，在你不学习</h2>
+<p>一个有杀伤力的数据：<strong>EU 资助过的约 80 个自动驾驶项目，如今还在的只有 38 个</strong>，而且多数是在资金停止后就不再扩大规模。</p>
+<p>嘉宾先把矛头对准提问方式本身：</p>
+<blockquote>&quot;Pilots per se aren&#x27;t a problem. Pilots that you don&#x27;t learn from and apply to new deployments — that is a problem.&quot;</blockquote>
+<p>他对试点夭折给了两类归因：</p>
+<ol><li><strong>车不行。</strong> 这些试点可以回溯 10–14 年，当年的车「坦白讲根本不堪使用」。现在进入下一代车辆与下一代技术栈，试点的意义才真正显现。</li><li><strong>没有把试点当证据链，而是当成果展示。</strong> 于是 6 个月、12 个月，3 辆、5 辆、10 辆车跑短途之后就结束。</li></ol>
+<p>这一段最锋利的是他对美欧模式差异的总结：美国是<strong>延长版、放大版的试点</strong> —— 逻辑是「你可以在划定区域部署，但受地方监管、靠自我认证、自我监管，出了事是你自己的事」。</p>
+<blockquote>&quot;Self-regulation will only take you so far — just ask Boeing.&quot;</blockquote>
+<p>（借波音之喻，指向 737 MAX 的自我认证争议。）</p>
+<p>欧洲的顺序是反过来的：<strong>先证明安全案例，试点为证明服务，然后再做大规模铺开</strong> —— 而大规模铺开是要花钱的，这就把他带到了下一天的议程：单位经济。</p>
+<hr>
+<h2 id="s5">五、奥斯陆样本：公共交通主导（PT-led）能做成什么</h2>
+<p>奥斯陆的 Ruter 计划把<strong>最多 3 万辆</strong>共享自动驾驶车整合进奥斯陆公共交通网络，其 CEO 的说法是「乘客期待的是端到端解决方案」。</p>
+<p>嘉宾刻意剥离了「挪威有钱」这个解释：</p>
+<blockquote>&quot;The key to that particular one is A, the ambition, and B, the customer relationship.&quot;</blockquote>
+<ul><li><strong>雄心</strong>：用自动驾驶去补充公交，专门服务市中心以外的郊区与远郊 —— 那里开公交线既不赚钱、甚至不合理，但公交主管机关仍然想服务那里的居民。慕尼黑、汉堡、大多数瑞士城市都有相近的投资潜力。</li><li><strong>客户关系</strong>：Ruter 自身的 App 已被极大量用户使用；欧洲城市的出行分担率高度偏向公交，意味着<strong>大多数人手机里已经装着公交入口</strong>，公交、共享单车、共享滑板车都在同一个 App 里付费（瑞士 SBB 类似）。</li></ul>
+<p>但他也点了两个前提条件，说明这<strong>不是可无脑复制的模板</strong>：</p>
+<ol><li>奥斯陆的公交主管机关与运营商「几乎是一体两面（joined at the hip）」，这在欧洲并非所有城市都成立；</li><li>欧洲不是铁板一块，必须逐个城市看它的结构。</li></ol>
+<hr>
+<h2 id="s6">六、钱到底留在哪里：拆开「品牌」看价值链</h2>
+<p>面对「价值都流向美国和中国」这个行业共识，嘉宾的回应是一个方法论动作：<strong>把品牌拆开。</strong></p>
+<blockquote>&quot;Follow the money per vehicle kilometer driven, if you will, and you find financing, insurance, the depot, energy, cleaning, maintenance, operations, customer service, contracting. Everything behind it is very, very physical and local. And here&#x27;s where the branding ends.&quot;</blockquote>
+<p>即便在美国：品牌背后是 <strong>FlexDrive、Transdev、Moove</strong> 的车队管理，车来自 <strong>Zeekr、Jaguar、Volkswagen、Lucid</strong>，连客户端都不统一（Waymo 在某些城市挂在 Lyft 上，在另一些城市用自己的 App）。嘉宾称这是「一个试错期」。</p>
+<h3>6.1 一个可引用的收入拆解</h3>
+<table><thead><tr><th>环节</th><th>占 robotaxi 收入比例</th><th>说明</th></tr></thead><tbody><tr><td>客户端（customer layer）</td><td><strong>约 10%</strong></td><td>与 Uber 网约车业务的 EBIT 水平同量级</td></tr><tr><td>技术栈（tech stack）</td><td><strong>约 20–30%</strong></td><td>自动驾驶软件所在的位置</td></tr><tr><td>整车厂（manufacturer）</td><td><strong>约 25–30%</strong></td><td>EBIT 利润率通常只有 6–8%</td></tr><tr><td><strong>车队管理（fleet management）</strong></td><td><strong>约 40%</strong></td><td>最大的一块，EBIT 相当健康</td></tr></tbody></table>
+<p>结论：<strong>即便是 Waymo，实际掌控的部分最多也只有 robotaxi 收入的三分之一。</strong></p>
+<h3>6.2 安卓类比</h3>
+<p>嘉宾用安卓解释「软件公司为什么不追求吃下全部价值」：Alphabet 靠对外授权安卓平台赚到的收入，只占其总收入极小一部分（在欧洲约每台设备 30–40 欧元），真正的价值在<strong>增值服务</strong>。放到 robotaxi 上，最可能的增量价值是<strong>卖后座乘客的注意力</strong>（广告）。</p>
+<blockquote>&quot;For the operations itself, it&#x27;s really about hardware and moving things in the physical layer — much more than the software.&quot;</blockquote>
+<h3>6.3 两个「无聊」的利润池</h3>
+<ol><li><strong>车队编排（fleet orchestration）</strong> —— 整个商业模式只有在车辆利用率被压到最高时才成立：重新调度、充电、排班、场站可得性。嘉宾点名 <strong>Odyssey</strong>（目前为伦敦的一个部署提供编排），并说这将是「运营在单位经济上盈利或失败」的分水岭。</li><li><strong>保险</strong> —— 「极其无聊，但没有它一辆车都动不了」；<strong>收入的 5–10% 会流向保险</strong>，而且几乎永远是模式里盈利的那一块。</li></ol>
+<blockquote>&quot;It&#x27;s not the people who find the gold, it&#x27;s the people who sell the picks and the shovels.&quot;</blockquote>
+<hr>
+<h2 id="s7">七、垂直整合的神话：不是不愿，是算不过账</h2>
+<p>嘉宾明确否认垂直整合正以被宣传的程度发生：</p>
+<blockquote>&quot;I wouldn&#x27;t say that they&#x27;re vertically integrated by any stretch.&quot;</blockquote>
+<p>他的论证是纯经济学的：</p>
+<ul><li>整车厂的 EBIT 利润率是 <strong>6–8%</strong>；</li><li>Uber 网约车业务的 EBIT 也在<strong>同一量级</strong>；</li><li>车队管理的 EBIT「相当健康」，但仍<strong>远不及软件公司习惯的水平</strong>。</li></ul>
+<p>因此：<strong>一家软件公司为什么要垂直整合进一条利润率达不到自己、更达不到自己股东预期的业务线？</strong> 这也是为什么他认为 Waymo（以及所有玩家）会<strong>极其依赖</strong>那些把「做好后端」当作核心卖点的公司。</p>
+<p>对特斯拉的判断同样直接：以现有平台与硬件，robotaxi「往好里说也是一个非常、非常遥远的愿景」（连马斯克自己也承认），而他们当前的实际优先级是<strong>先让 L2 系统在欧洲过审</strong>，才谈得上 L4。</p>
+<h3>7.1 司机的活去哪了</h3>
+<p>嘉宾 2025 年就提出过：Uber 司机做的清洁、充电、注册、车队管理这些活<strong>不会消失，只会换地方</strong>。而且早期 robotaxi 部署在幕后的员工数量，和它有司机时一样多。</p>
+<p>远程监控的比例被反复引用为 <strong>1:10、1:20、1:25</strong>，但嘉宾提醒：<strong>监控只是整幅拼图的一小块</strong>。网约车的经济学之所以难，是因为有大量<strong>无报酬却必须发生</strong>的工作（清洁、充电、修车、换胎）。</p>
+<blockquote>&quot;As soon as that vehicle hits the depot, that vehicle has to go through the physical transformation to be able to go on its next trip. And that is where the unit economics really, really hurt.&quot;</blockquote>
+<p>对 LinkedIn 上那种「我的 robotaxi 行程很便宜，这是门好生意」的帖子，他的评价是：那些目前<strong>都还只是纸面数字</strong>，以现有规模单位经济根本算不过账 —— 这正是为什么<strong>规模化如此重要</strong>。</p>
+<hr>
+<h2 id="s8">八、谁拥有车队：银行在场边，卡在残值</h2>
+<p><strong>为什么银行/租赁公司是理想车主：</strong> 它们是这条栈里<strong>资金成本最低</strong>的参与者。如果其他公司要付「LIBOR + 2/3/4 个点」，银行的基础资金成本要低得多。</p>
+<p><strong>为什么它们还没下场：</strong></p>
+<ul><li>6,000–20,000 辆车对它们还<strong>不是「改变游戏规则」的规模</strong> —— 它们手上单个车队就比这大，最大的租赁公司拥有 <strong>100 万–250 万辆</strong>车；</li><li>真正的障碍是<strong>残值（residual value）</strong>：为出行场景定制的车没有残值历史、没有利用率历史，责任与保险结构也不清楚。</li></ul>
+<blockquote>&quot;Until we do, right now the assumption has to be that those vehicles, after a certain period of time, are a write-off. And if they&#x27;re a write-off, that makes them very, very expensive for a bank, a PE, for a lessor.&quot;</blockquote>
+<p><strong>转折信号：</strong> 嘉宾认为 Uber、Bolt 把 <strong>3.5 万辆 robotaxi</strong> 放到自己资产负债表上的动作，本质上就是<strong>先把球滚起来</strong>、把逻辑立住。等型式认证落地、车辆以<strong>数万辆乃至六位数</strong>规模进场，大玩家才会真正进来 —— 因为它们的成本比任何人都低。</p>
+<hr>
+<h2 id="s9">九、服务郊区：「出行荒漠」与拼车的诚实</h2>
+<p>这里有一个尖锐的结构性矛盾：<strong>商业 robotaxi 会去有钱的地方（市中心、机场）</strong>，而密度低的外围区域配上长长的空驶回程，对网约车模式并不友好。嘉宾的回答是：</p>
+<blockquote>&quot;This is where regulation comes in.&quot;</blockquote>
+<p>在欧洲，公交主管机关与运营商会同城市一起决定 <strong>哪里可以运营、哪里应该运营</strong>。城市在共享滑板车/电单车的部署中已经学到了教训，会把它们用到自动驾驶上。</p>
+<h3>9.1 伦敦的数字参照</h3>
+<table><thead><tr><th>项</th><th>数量</th></tr></thead><tbody><tr><td>黑色出租车（black cabs）</td><td>约 15,000–20,000 辆</td></tr><tr><td>私人租赁车（PHV / 网约车）</td><td>约 <strong>100,000 辆</strong></td></tr></tbody></table>
+<p>Uber 当年进入伦敦时确实填补了黑色出租车不服务外围客户的空缺 —— 一部分原因只是<strong>量</strong>。而在市中心，走路、骑车、公交永远最快，所以「坐在单人车里堵着」的吸引力本来就不高。</p>
+<h3>9.2 拼车 = 网约车（同一件事）</h3>
+<p>欧洲已有约 <strong>400 个</strong>按需拼车服务，通常由公交运营商提供，几乎全部是<strong>高额补贴</strong>模式，<strong>单车载客率低于 2 人</strong>。嘉宾对行业的喊话是：</p>
+<blockquote>&quot;We as an industry need to be really honest with ourselves that ride pooling and ride hailing are effectively the same thing.&quot;</blockquote>
+<p>车型可能不同、运营方可能一个是商业主体一个是公共服务，但本质都是<strong>把外围的人作为「接驳」送到公交枢纽</strong>。</p>
+<p>能不能做成，取决于公交运营商的<strong>承诺</strong>（奥斯陆）与<strong>资金</strong>，甚至可能是<strong>牌照要求</strong>。而真正的价值出现在「把司机拿掉」之后：</p>
+<blockquote>&quot;I do think that the greatest use case in Europe will not be in the city centers but will be on the outskirts, bringing people to the public transport network and the trunk lines.&quot;</blockquote>
+<hr>
+<h2 id="s10">十、2027 / 2030：用什么指标算「欧洲赢了」</h2>
+<h3>10.1 电气化是类比对象</h3>
+<p>嘉宾把自动化放进电气化的延长线上：目前约 <strong>1/4</strong> 的新车是纯电，<strong>1/3</strong> 的新自行车是电动（德国接近 <strong>2/3</strong>），<strong>超过一半</strong>的公交已是纯电。下一步是把出行拼图的各个部分<strong>自动化</strong> —— 横跨出租车/网约车、接驳车、公交、火车与物流。它会像电气化一样，对基础设施与一大票商业模式产生涟漪（高速路旁的餐厅、压低场站成本的无线充电……）。</p>
+<h3>10.2 未来 3–5 年的判断</h3>
+<ul><li><strong>robotaxi 会出现</strong>，会有增量需求，但也会在相当程度上<strong>替代现有网约车</strong>；</li><li>伦敦约 10 万辆网约车里若有 3,000–10,000 辆变成 robotaxi，<strong>数字不差，但仍只是既有车辆的一部分</strong>；</li><li>真正的任务是让它们被编排得<strong>少跑空驶</strong>，并在城市关心的维度上产生正面贡献：更低排放、更高生活质量、更好的可及性、更高的道路安全。</li></ul>
+<blockquote>&quot;Technology itself isn&#x27;t the end goal... Only when the technology is actually serving that goal will we actually see mass-scale deployments.&quot;</blockquote>
+<h3>10.3 记分卡（2027 年 10 月重录时的「我早就说过」）</h3>
+<p>嘉宾拒绝用「robotaxi 数量最多」衡量，给出的替代指标是<strong>平台是否建成</strong>：</p>
+<ol><li><strong>第一批通过型式认证的车辆</strong>（按现规划，2027 年底前很可能落地）；</li><li><strong>数千辆载客车辆</strong>在多个城市提供服务；</li><li><strong>真正的竞争环境</strong> —— 北美最强、亚洲最强都被请到欧洲，加上欧洲本土玩家；</li><li>上述各项加上监管与结构性框架，共同构成欧洲的<strong>基础平台</strong>。</li></ol>
+<p>他还指出一个当下的瓶颈：<strong>车本身</strong>。可获得的车辆数量并不多，这也是为什么「型式认证 + 有义务保障的可得车辆」被列为平台的第一要项。</p>
+<h3>10.4 欧洲自己的驾驶系统</h3>
+<p>关于「2030 年欧洲会不会有自己的规模化驾驶系统」，嘉宾点名 <strong>Wayve</strong> 为「本土英雄」，强调其大量合作（几乎每周公布与欧洲 OEM 的新合作）与巨大潜力；也提到 <strong>MOTOR AI</strong> 等规模尚差一档的技术栈。但他给了整个判断一个更重要的落脚点：</p>
+<blockquote>&quot;So much of the value will be created between the customer and the tech stack. And that&#x27;s always going to be a local activity, because it is geographically bound.&quot;</blockquote>
+<p>只要这一点成立，<strong>欧洲公司在这场游戏里就会有大量价值可以获取</strong> —— 这也让「软件是不是欧洲的」这个问题的重要性被显著下调。</p>
+<hr>
+<h2 id="s11">十一、关键数字速查</h2>
+<table><thead><tr><th>数字</th><th>含义</th></tr></thead><tbody><tr><td><strong>27</strong></td><td>通过型式认证后可在多少个国家/市场运营</td></tr><tr><td><strong>≈ 2×伦敦</strong></td><td>美国全部在运营自动驾驶服务区面积之和</td></tr><tr><td><strong>3–5 倍</strong></td><td>美国每车英里碰撞率相对英国/欧洲多数的倍数</td></tr><tr><td><strong>80 → 38</strong></td><td>EU 资助过的自动驾驶项目数 → 仍在的项目数</td></tr><tr><td><strong>10% / 20–30% / 25–30% / 40%</strong></td><td>收入分配：客户端 / 技术栈 / 整车厂 / 车队管理</td></tr><tr><td><strong>5–10%</strong></td><td>收入中流向保险的比例</td></tr><tr><td><strong>1:10 ~ 1:25</strong></td><td>远程监控与车辆的比例（业界流传）</td></tr><tr><td><strong>30,000</strong></td><td>Ruter 计划整合进奥斯陆公交网的共享自动驾驶车上限</td></tr><tr><td><strong>≈ 400</strong></td><td>欧洲在运营的按需拼车服务数量</td></tr><tr><td><strong>&lt; 2</strong></td><td>这些拼车服务的单车载客率</td></tr><tr><td><strong>15–20 千 vs 100 千</strong></td><td>伦敦黑色出租车 vs 私人租赁车数量</td></tr><tr><td><strong>35,000</strong></td><td>Uber / Bolt 宣布放进自身资产负债表的 robotaxi 规模量级</td></tr><tr><td><strong>3,000–10,000 / 100,000</strong></td><td>伦敦未来可能转为 robotaxi 的网约车数量 / 网约车总量</td></tr><tr><td><strong>1/4 · 1/3 · &gt;1/2</strong></td><td>新车纯电占比 · 新自行车电动占比（德国约 2/3）· 公交纯电占比</td></tr></tbody></table>
+<hr>
+<h2 id="s12">十二、值得记住的几句原话</h2>
+<blockquote>&quot;Regulation is our head start. It&#x27;s not the finish line.&quot;</blockquote>
+<blockquote>&quot;Pilots per se aren&#x27;t a problem. Pilots that you don&#x27;t learn from and apply to new deployments — that is a problem.&quot;</blockquote>
+<blockquote>&quot;Self-regulation will only take you so far — just ask Boeing.&quot;</blockquote>
+<blockquote>&quot;Everything behind it is very, very physical and local. And here&#x27;s where the branding ends.&quot;</blockquote>
+<blockquote>&quot;It&#x27;s not the people who find the gold, it&#x27;s the people who sell the picks and the shovels.&quot;</blockquote>
+<blockquote>&quot;I don&#x27;t want us to be measured by having the most robotaxis in operation. I want us to be measured by how we have created the platform, the basis for success in Europe.&quot;</blockquote>
+<hr>
+<h2 id="s13">十三、批判性阅读：这套论证的三处薄弱点</h2>
+<p>把嘉宾的立场当成「乐观派」接受之前，有三个地方值得打问号：</p>
+<ol><li><strong>「起点不同所以不可比较」既是洞见，也是护城河。</strong> 这个论证很强地挡住了「欧洲落后」的批评，但它同时绕开了一个更难的问题：如果欧洲市场在绝对规模上始终只有美国/中国的一个零头，<strong>「路径不同」能不能换算成「产业能力不同」</strong>？嘉宾给出的替代指标（平台、竞争、认证车辆）是<strong>过程指标</strong>，不是结果指标。</li><li><strong>监管优势存在自我抵消的风险。</strong> 「一次认证、27 国通行」的价值，取决于 27 个成员国的执行一致性与地方层面（同意机关、城市准入）的配合度。英国自身就是反面教材：地方同意权可以合法地把申请「无限期拖住」。<strong>统一框架的名义覆盖面 ≠ 实际可运营面积。</strong></li><li><strong>「价值留在欧洲」的论证高度依赖本地性假设。</strong> 车队管理、保险、场站、维保确实是本地的 —— 但这也意味着<strong>它们是低利润、低壁垒、可被比价的环节</strong>。如果欧洲公司拿到的主要是价值分配的 40%，而这 40% 的资本回报率显著低于技术栈的 20–30%，那么「钱留在欧洲」与「欧洲赚到钱」是两回事。嘉宾自己在谈到银行/租赁公司时其实承认了这一点（低回报、需靠资金成本取胜）。</li></ol>
+<p>另外一个时间风险：嘉宾多次以「2026 年是自动驾驶从试点走向市场的一年」「2027 年底第一批型式认证车辆」作为锚点，这些判断<strong>可验证</strong>，但也<strong>很容易被推迟</strong> —— 英国完整的无人驾驶框架目标本身就是 2027 年下半年。</p>
+<hr>
+<h2 id="s14">局限性与说明</h2>
+<ul><li><strong>本文基于该期播客的完整音频转写（faster-whisper small.en，563 段，41:53）整理。</strong> 该期在 Substack 上<strong>没有官方转录</strong>，YouTube 自动字幕在当前网络环境下不可获取，因此英文底稿来自<strong>语音识别</strong>，中文为人工逐段翻译 + 专名归一，<strong>以英文原文为准</strong>。</li><li><strong>语音识别存在误拼，已按上下文修正</strong>，例如：<code>Luca Snackerman / Nékaman</code> → <strong>Lukas Neckermann</strong>；<code>Alianz</code> → <strong>Allianz</strong>；<code>Ruta / router</code> → <strong>Ruter</strong>；<code>Wave</code> → <strong>Wayve</strong>；<code>Zieker / Zikr</code> → <strong>Zeekr</strong>；<code>move</code> → <strong>Moove</strong>；<code>motor AI</code> → <strong>MOTOR AI</strong>；<code>PEO</code> → <strong>PE</strong>。其中 ride-pooling 年度综述作者的姓名因转写不清，正文<strong>未给出人名</strong>，以免误植。</li><li>文中<strong>收入拆解表</strong>（10% / 20–30% / 25–30% / 40%）是嘉宾给出的<strong>估计区间</strong>，不是行业统计口径；<strong>远程监控比例 1:10~1:25</strong> 亦为「业界流传的数字」，嘉宾本人明确表示这是「被反复引用的数字」，非其核实结论。</li><li>涉及<strong>波音（Boeing）、特斯拉、Waymo、Uber</strong> 的判断均为<strong>嘉宾个人观点与预测</strong>，不代表这些公司的官方立场。</li><li>事件时点截止于<strong>录制当天（2026-10-14 前后）</strong>。欧洲自动驾驶监管与部署状态处在快速变动期，<strong>具体时间表可能已变化</strong>。</li><li>文中机构名、职务名与专有名词以英文原名为准，中文译名为便于阅读的意译。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../germany-autonomous-driving-law/index.html"><div class="rw"><img loading="lazy" src="../germany-autonomous-driving-law/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders（The AV Market Strategist）· Substack</div><div class="rt">德国自动驾驶法：全球最全的 L4 框架，为什么五年没有第一家运营商拿到正式许可</div></div></a><a class="relcard" href="../france-driverless-transport-rules/index.html"><div class="rw"><img loading="lazy" src="../france-driverless-transport-rules/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">法国的无人驾驶公共交通审批规则，由评估方亲解</div></div></a><a class="relcard" href="../av-public-trust-europe-pasquale/index.html"><div class="rw"><img loading="lazy" src="../av-public-trust-europe-pasquale/cover.jpg" alt=""></div><div class="rb"><div class="rs">Autonomy Insiders · Podcast（AV Market Strategist）</div><div class="rt">欧洲为何不信任自动驾驶：信任、教育与监管的真相</div></div></a><a class="relcard" href="../grab-autonomous-vehicle-playbook-ong/index.html"><div class="rw"><img loading="lazy" src="../grab-autonomous-vehicle-playbook-ong/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Autonomy Insiders</div><div class="rt">Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
