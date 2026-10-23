@@ -1,0 +1,411 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>与 Aurora 首席安全官 Nat Beuse 谈无人卡车如何安全规模化 · 总结分析</title><meta name='description' content='Robotaxi 拿融资，无人卡车拿合同 —— Aurora 把「什么时候撤掉司机」做成了一份可被审计的安全论证：ODD 拆成需求与测试、每版软件做 claims 影响面分析、公开关闭进度到 95% 才继续，最终以「超越政府指导要求」通过独立第三方复核。10 条无人验证路线，货物从压裂砂到浆果。'><meta property='og:title' content='与 Aurora 首席安全官 Nat Beuse 谈无人卡车如何安全规模化'><meta property='og:description' content='Robotaxi 拿融资，无人卡车拿合同 —— Aurora 把「什么时候撤掉司机」做成了一份可被审计的安全论证：ODD 拆成需求与测试、每版软件做 claims 影响面分析、公开关闭进度到 95% 才继续，最终以「超越政府指导要求」通过独立第三方复核。10 条无人验证路线，货物从压裂砂到浆果。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/aurora-scaling-driverless-trucks-beuse/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection/ep/aurora-scaling-driverless-trucks-beuse/index.html'>><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/scaling-driverless-trucks-safely" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · Substack</div><h1>与 Aurora 首席安全官 Nat Beuse 谈无人卡车如何安全规模化</h1><p class="sub">Scaling Driverless Trucks Safely with Aurora CSO Nat Beuse</p><div class="tags"><span class="tag">⏱ 45:23</span><span class="tag">👤 Nat Beuse（Aurora 首席安全官；前 NHTSA 车辆安全研究副局长）</span><span class="tag">🗓 2026-10-19</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.thedriverlessdigest.com/p/scaling-driverless-trucks-safely" target="_blank" rel="noopener">▶ 在来源站收听本期</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">一句话结论</a><a href="#s1">人物：一个从"减少伤害"转向"消灭事故"的人</a><a href="#s2">安全案例到底是一份什么东西</a><a href="#s3">关键数字</a><a href="#s4">四个可复用的动作</a><a href="#s5">ODD 的演进：爬、走、跑</a><a href="#s6">上线指标：对齐人类司机，然后超过</a><a href="#s7">监管：法案只是开始，写规则才是硬仗</a><a href="#s8">和 Auve Tech 那期对照着看</a><a href="#s9">待核与风险</a></nav><main class="content"><h1>与 Aurora 首席安全官 Nat Beuse 谈无人卡车如何安全规模化 · 深度分析</h1>
+<blockquote>基于 2026-10-19 The Driverless Digest 播客访谈全文听写整理。嘉宾 Nat Beuse（Aurora 首席安全官，前 Uber ATG 安全负责人、前 NHTSA 车辆安全研究副局长），主持人为 Harry。 原文链接：https://www.thedriverlessdigest.com/p/scaling-driverless-trucks-safely</blockquote>
+<h2 id="s0">一句话结论</h2>
+<p><strong>Aurora 卖的不是"自动驾驶卡车"，而是一份可以被审计的安全论证。</strong> Nat Beuse 讲的所有事情——ODD 分解、claims 影响面分析、独立第三方复核、公开关闭进度——本质都是在把"我们什么时候可以撤掉司机"从一句主观判断，变成一份监管、保险方、投资人、公众都能逐条查验的证据链。他的原话是：「<strong>Demo 无法规模化，能规模化的只有产品。</strong>」而安全案例就是让产品成立的那层壳。</p>
+<h2 id="s1">人物：一个从"减少伤害"转向"消灭事故"的人</h2>
+<p>Beuse 的职业轨迹本身就是这套安全观的注脚：</p>
+<ul><li>研究生训练方向是假肢——目标是"把人修复完整"；</li><li>进 NHTSA 后第一份工作是<strong>做碰撞假人</strong>，用金属、塑料和传感器复现人体伤害；</li><li>转折点是电子稳定控制（ESC）：从"假设事故一定发生、去保护人"，转向"也许存在事故根本不发生的世界"；</li><li>然后做碰撞避免、ADAS，直到看见 Chris Urmson 在加州做自动驾驶，意识到"真的可能做成"；</li><li>离开政府去 Uber ATG（在其事故之后），随 ATG 被 Aurora 收购，与三位联合创始人重聚。</li></ul>
+<p>他给出的行业判断：<strong>美国每年约 4 万人死于车祸、600 多万起碰撞，而这一切"大部分是可预防的"</strong>——因为人类会分心、酒驾、超速，而计算机不会。</p>
+<h2 id="s2">安全案例到底是一份什么东西</h2>
+<p>他把它拆成四层，缺一层就不算关闭：</p>
+<ol><li><strong>ODD → 需求 → 测试</strong>：先定义车要在什么环境里跑，把环境分解成需求，每个需求对应可执行的测试，车必须通过。</li><li><strong>安全政策</strong>：让问题能被提出、被裁定——组织层面怎么处理安全异议。</li><li><strong>运营</strong>：他反复强调"自动驾驶卡车如果不会运营就毫无价值"——场站、调度、救援、天气预案。</li><li><strong>事件响应</strong>：真的出事时该做什么，也必须写进框架。</li></ol>
+<p><strong>然后是真正的难点：下一个版本怎么办？</strong><br>每改一行代码、每开一条新路线，都等于一个新的安全案例。Aurora 的做法是做<strong>claims 影响面分析</strong>——识别哪些"安全主张"被这次变更波及，只重跑受影响的部分，实现外科手术式增量验证。这是把安全工程从"一次性大考"变成"持续集成"的关键。</p>
+<p><strong>外部背书</strong>：他们请独立第三方复核安全案例，并特意用"Beuse 自己当年在政府参与撰写的指导文件"作为标尺。结论是：完整、全面，且<strong>超出了政府指导的要求</strong>。</p>
+<h2 id="s3">关键数字</h2>
+<ul><li><strong>10 条</strong>已通过无人验证的路线</li><li><strong>2025 年 4 月</strong>关闭安全案例，至今一年多纯无人公共道路运营</li><li><strong>4 万</strong>：美国每年交通死亡人数（Beuse 口述；注意他说的是"每天"，明显口误）</li><li><strong>600 万+</strong>：美国每年交通碰撞起数</li><li><strong>1.2 万</strong>：ESC 每年可减轻的死亡数（对照基准）</li><li><strong>95% → 100%</strong>：Aurora 公开的"安全案例关闭进度"，不达 100% 不撤司机</li><li><strong>12 年</strong>：美国倒车影像强制法规从立项到落地耗时（用来说明监管之慢）</li><li><strong>数十条 → 数百条</strong>：路线规模扩张的预期区间（他未给确切目标）</li></ul>
+<p>覆盖州：新墨西哥、德州、亚利桑那，加上刚解锁的加州。货物从二叠纪盆地的<strong>压裂砂</strong>到<strong>浆果</strong>——这个细节很关键：说明这不是演示线路，是真实的多品类货运。</p>
+<h2 id="s4">四个可复用的动作</h2>
+<p><strong>① 把"撤人"做成可验证的里程碑，而不是勇气表演。</strong><br>首次无人运行把 CEO 放进卡车后厢，是为了堵死"其实偷偷留了人"的猜疑。Beuse 的原话：「我们不允许自己走那条路。」</p>
+<p><strong>② 公开"还没做到哪一步"。</strong><br>Aurora 是唯一公开发布<strong>关闭进度百分比</strong>的公司——「我们只到 95%，不到 100% 不撤司机」。这比发布"已完成"更有说服力，因为它可被持续核对，后来同行跟进。</p>
+<p><strong>③ 先自己当运营商，再卖产品。</strong><br>TaaS（运输即服务，Aurora 全包）→ DaaS（司机即服务，客户拥有并运营卡车）。前者的目的是"学会这门生意里难的部分"，让产品交给客户时不需要客户迁就。</p>
+<p><strong>④ 安全上不设竞争壁垒。</strong><br>AVSC（自动驾驶车辆安全联盟）的机制很硬：<strong>在某份最佳实践撰写期间是成员，就承诺执行它</strong>——不同于一般行业标准组织"签个名就算"。他把这比作航空业互相共享安全信息。</p>
+<h2 id="s5">ODD 的演进：爬、走、跑</h2>
+<p>白天 + 单路线 + 晴朗 → 加夜间 → 加恶劣天气。关键在于：<strong>这些能力技术上早就在跑，但"没为无人运营做过验证"</strong>。所以每一次升级不是加功能，而是"把已有能力解锁到可以撤人的程度"。</p>
+<p>他对运营极限的坦诚值得注意：飓风不是"不用管"的例外，而是必须写进商业计划——三级飓风几点到、那段时间车怎么部署、道路封闭怎么办、佛州下午四点的雷暴哪些能过哪些过不去（路淹了就真的过不去）。<strong>"运营化"是这份工作里被外界最低估的部分。</strong></p>
+<h2 id="s6">上线指标：对齐人类司机，然后超过</h2>
+<p>可用率和可靠性都要求"九十几个百分点，不是七十、六十几"。锚点非常明确：<strong>今天客户用人类司机是什么体验，我们就必须匹配或更好</strong>——司机请病假、道路封闭这些人类方案的失效模式，同样要计入自己的指标。</p>
+<p>他还点出 B2B 与 2C 的门槛差异：C 端叫车晚到十分钟，用户换个选择就完了；B2B 你承诺了产品保真度和可用率，做不到对方账本上会有严重后果。</p>
+<h2 id="s7">监管：法案只是开始，写规则才是硬仗</h2>
+<ul><li>国会山有一部在流转的法案，可能成为<strong>统一联邦框架</strong>；他的理由很直白：州有州的角色，但不能有 50 个版本的安全标准。</li><li><strong>全球技术法规（GTR）</strong>：多国先就框架达成一致，再各自回去填细节——他认为这是重要进展。</li><li>美国"大部分已经开放"，剩下的是调适而非硬堵点。</li><li>真正的瓶颈在<strong>行政部门的规则制定</strong>：必须可重复、可复现、不能任意反复无常，还要算"成本与负担"。他参与过的倒车影像规则写了 12 年。</li><li>他的主张非常务实：<strong>别想一口吃成胖子，先动起来</strong>，后面可以往上加。</li></ul>
+<h2 id="s8">和 Auve Tech 那期对照着看</h2>
+<p>收藏库里这两期刚好构成一组很好的对照——同样讲"无人化怎么落地"，路径完全不同：</p>
+<p><strong>场景</strong>｜Auve Tech 是机场、园区等私有地面；Aurora 是公共道路和跨州高速。</p>
+<p><strong>监管依赖</strong>｜Auve Tech 极低，业主点头即可；Aurora 极高，需要联邦框架。</p>
+<p><strong>关键约束</strong>｜Auve Tech 看远程人车比（1:3 打平）；Aurora 看 ODD 覆盖与安全案例的可审计性。</p>
+<p><strong>卖点</strong>｜Auve Tech 是省掉司机、解决招不到人；Aurora 是安全论证超越监管要求。</p>
+<p><strong>共同点</strong>｜<strong>都靠数据/证据换许可</strong>，都把"什么时候撤人"写成了可验证的门槛。</p>
+<p>一句话差异：Auve Tech 在<strong>绕开监管</strong>，Aurora 在<strong>定义监管</strong>。前者赢在决策链短，后者赢在证据链硬。而两家都同意同一件事——<strong>示范（demo）不值钱，能重复交付的运营才值钱。</strong></p>
+<h2 id="s9">待核与风险</h2>
+<ul><li><strong>10 条路线、跨州覆盖的具体规模未披露</strong>：多少台车、日均里程、载重利用率都没有数字，只有"会越来越多"。</li><li><strong>"独立第三方评估"的机构与方法未公开</strong>：谁评的、评了什么、结论原文在哪，都没有指向。</li><li><strong>95% 关闭进度是自报口径</strong>，且"率"的分母（多少个 claims）从未公布，跨公司不可比。</li><li><strong>Gen Two / Gen Three 的供应商信息在音频里含糊</strong>：Movio、Roush 两处音近但无法核实，已标 [?]；Volvo 线侧安装是明确提到的。</li><li><strong>加州"解锁卡车"的规则细节</strong>未展开，只说了安全案例概念进入了 rulemaking。</li><li><strong>联邦法案仍在流转阶段</strong>，两院 + 总统签署 + 行政部门写规则，任何一环都可能拖数年。Beuse 自己用"12 年的倒车影像"做了最好的风险提示。</li></ul>
+<blockquote>本笔记由播客音频全文听写后整理，非原文转述。引号内为访谈原话译文。</blockquote>
+</main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../kodiak-don-burnette-driverless-trucking/index.html"><div class="rw"><img loading="lazy" src="../kodiak-don-burnette-driverless-trucking/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">与 Kodiak AI CEO Don Burnette 谈无人驾驶卡车规模化</div></div></a><a class="relcard" href="../applied-intuition-physical-ai-ludwig/index.html"><div class="rw"><img loading="lazy" src="../applied-intuition-physical-ai-ludwig/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">把物理 AI 送上十亿台机器：Applied Intuition 联合创始人 Peter Ludwig 访谈</div></div></a><a class="relcard" href="../grab-autonomous-vehicle-playbook-ong/index.html"><div class="rw"><img loading="lazy" src="../grab-autonomous-vehicle-playbook-ong/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Autonomy Insiders</div><div class="rt">Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</div></div></a><a class="relcard" href="../europe-robotaxi-reality-check-friedel/index.html"><div class="rw"><img loading="lazy" src="../europe-robotaxi-reality-check-friedel/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
