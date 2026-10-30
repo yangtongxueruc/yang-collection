@@ -1,0 +1,676 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>赫兹把一百年的车队经验押到 Robotaxi：Oro Mobility 的地面层生意（中英对照） · 逐字稿</title><meta name='description' content='Robotaxi 的下一层竞争不在算法，而在谁把车充上电、洗干净、修好、并且买得起。赫兹把这项做了百年的活拆成独立公司 Oro Mobility：先用 45,000 台人类驾驶的网约车车队在 33 个市场练周转与调度，再把这套节奏迁移到无人驾驶车队。最硬的一关不是技术，是残值——AV 没有成熟的二手市场，融资结构就搭不起来。'><meta property='og:title' content='赫兹把一百年的车队经验押到 Robotaxi：Oro Mobility 的地面层生意'><meta property='og:description' content='Robotaxi 的下一层竞争不在算法，而在谁把车充上电、洗干净、修好、并且买得起。赫兹把这项做了百年的活拆成独立公司 Oro Mobility：先用 45,000 台人类驾驶的网约车车队在 33 个市场练周转与调度，再把这套节奏迁移到无人驾驶车队。最硬的一关不是技术，是残值——AV 没有成熟的二手市场，融资结构就搭不起来。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/hertz-oro-mobility-robotaxi-fleets/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection/ep/hertz-oro-mobility-robotaxi-fleets/transcript.html'>><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/from-rental-cars-to-robotaxis-hertzs" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Autonomy Insiders</div><h1>赫兹把一百年的车队经验押到 Robotaxi：Oro Mobility 的地面层生意</h1><p class="sub">中英对照逐字稿 · From Rental Cars to Robotaxis: Hertz&#x27;s Bet on Fleet Operations</p><div class="tags"><span class="tag">⏱ 30:08</span><span class="tag">👤 Doria Holbrook（Oro Mobility CEO，前 Cruise / Amazon）</span><span class="tag">📅 2026-10-29</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">Oro Mobility</span><span class="chip" onclick="wbJumpKw(this)">赫兹</span><span class="chip" onclick="wbJumpKw(this)">Hertz</span><span class="chip" onclick="wbJumpKw(this)">Doria Holbrook</span><span class="chip" onclick="wbJumpKw(this)">pit stop</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">基地</span><span class="chip" onclick="wbJumpKw(this)">周转时间</span><span class="chip" onclick="wbJumpKw(this)">turn time</span><span class="chip" onclick="wbJumpKw(this)">残值</span><span class="chip" onclick="wbJumpKw(this)">residual value</span><span class="chip" onclick="wbJumpKw(this)">ABS</span><span class="chip" onclick="wbJumpKw(this)">资产证券化</span><span class="chip" onclick="wbJumpKw(this)">Lucid</span><span class="chip" onclick="wbJumpKw(this)">Nuro</span><span class="chip" onclick="wbJumpKw(this)">Uber</span><span class="chip" onclick="wbJumpKw(this)">湾区</span><span class="chip" onclick="wbJumpKw(this)">亚特兰大</span><span class="chip" onclick="wbJumpKw(this)">加盟商</span><span class="chip" onclick="wbJumpKw(this)">欧洲</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">开场：谁在给 Robotaxi 干脏活</a><a href="#s1">为什么先把人类驾驶做大（pit stop vs depot）</a><a href="#s2">Oro 到底卖给 AV 公司什么</a><a href="#s3">亚特兰大教了什么：SOP 的颗粒度</a><a href="#s4">电动车遗产：5 万台特斯拉变成 AV 的维保底座</a><a href="#s5">8,000 万美元，与真正的拦路虎</a><a href="#s6">残值：卡住整个行业的隐形闸门</a><a href="#s7">欧洲、加盟商与五年后的成功</a></nav><main class="content"><h1>赫兹把一百年的车队经验押到 Robotaxi：Oro Mobility 的地面层生意 · 中英对照逐字稿</h1>
+<blockquote>说明：英文为音频全文听写稿（机器识别后经人工校对专有名词与断句），中文为逐段翻译。时间戳为音频位置，章节划分依据节目公布的章节表。嘉宾 Doria Holbrook（Oro Mobility CEO，前 Cruise / Amazon），主持 Daniel Abreu Marques。原文：https://avmarketstrategist.substack.com/p/from-rental-cars-to-robotaxis-hertzs</blockquote>
+<h2 id="s0">开场：谁在给 Robotaxi 干脏活</h2><p class="seg"><span class="ts">[00:00 – 00:52]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 0:04</strong>
+Look, AVs are still going to need people to operate them, and so building a people-centric business with safety and people at the core of what we do is only going to help us be more effective as operators. Underneath every AV stack is an actual car that's got to be maintained. The challenge with AVs is that there isn't a proven residual market. So if a company that finances a vehicle wants to take a car back, there's a known value of what that car is worth. That isn't how AVs exist yet. We will get there at some point, but it's not there yet.</p>
+<p class="zh"><strong>Doria Holbrook 0:04</strong>
+无人驾驶车仍然需要人来运营。把安全和「人」放在核心去建一家以人为中心的公司，只会让我们成为更高效的运营商。每一套无人驾驶软件栈的底下都是一台真车，它必须被维护。AV 的难点在于：目前还没有一个被验证的残值市场。给车辆提供融资的公司想把车收回来时，传统车有一个已知的价值，而 AV 今天还不是这样。某个时点我们会走到那一步，但现在还没有。</p>
+</div></p><p class="seg"><span class="ts">[00:52 – 01:41]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 0:52</strong>
+Welcome back to Autonomy Insiders, I'm your host Daniel. Most of the attention in autonomous vehicles goes to the technology, but there's a layer underneath all of it that decides whether any of this becomes a business, because somebody has to charge these cars, clean them, fix them, get them back on the road before the morning peak. And that layer is where a very old industry is quietly repositioning itself. In April Hertz launched Oro Mobility, a separate operating company built to run fleets for autonomous and driver-led mobility platforms. And my guest today is Doria Holbrook, CEO of Oro Mobility. Before Hertz she was at Cruise, she was at Amazon where she helped build the last-mile delivery network. So Doria, welcome, so happy to have you on the show today.</p>
+<p class="zh"><strong>Daniel Abreu Marques 0:52</strong>
+欢迎回到 Autonomy Insiders，我是主持人 Daniel。自动驾驶行业把大部分注意力放在技术上，但在这整套东西的下面还有一层，它决定这件事最终能不能成为一门生意——总得有人去充电、清洁、维修，并且在早高峰之前把车重新送回路上。而这一层，正是一个非常古老的行业在悄悄重新给自己定位。今年 4 月，赫兹成立了 Oro Mobility，一家独立的运营公司，专门为自动驾驶和人类驾驶的出行平台跑车队。今天的嘉宾是 Oro Mobility 的 CEO Doria Holbrook。到赫兹之前，她在 Cruise 工作过，也在 Amazon 参与搭建了最后一公里配送网络。Doria，欢迎你，很高兴你今天能来。</p>
+<p class="en"><strong>Doria Holbrook 1:39</strong>
+Thank you so much. I'm excited to be here.</p>
+<p class="zh"><strong>Doria Holbrook 1:39</strong>
+非常感谢，我很期待。</p>
+</div></p><p class="seg"><span class="ts">[01:41 – 02:05]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 1:41</strong>
+Let's start with the basics. Can you give me Oro in maybe one or two sentences? How would you describe it to someone who has never heard of it?</p>
+<p class="zh"><strong>Daniel Abreu Marques 1:41</strong>
+我们从最基础的开始。你能用一两句话介绍一下 Oro 吗？如果对方完全没听说过，你会怎么描述它？</p>
+<p class="en"><strong>Doria Holbrook 1:49</strong>
+Yeah, Oro is really focused on servicing the ownership, operation and orchestration layer that connects supply and demand platforms and fulfilling ride-hail and other demand, whether that's driver-led or driverless.</p>
+<p class="zh"><strong>Doria Holbrook 1:49</strong>
+Oro 专注服务的是「所有权、运营与调度」这一层：它把供给端和需求平台连接起来，去满足网约车以及其他出行需求——不管这些需求是由人驾驶满足，还是由无人驾驶满足。</p>
+</div></p><p class="seg"><span class="ts">[02:05 – 03:20]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 2:05</strong>
+And can you also walk me back? Who had the idea, and what was the moment inside of Hertz where somebody said we should build a separate company for this?</p>
+<p class="zh"><strong>Daniel Abreu Marques 2:05</strong>
+能不能也带我回溯一下：这个想法是谁提出来的？在赫兹内部，是什么时刻让某个人说「我们应该为这件事单独建一家公司」？</p>
+<p class="en"><strong>Doria Holbrook 2:15</strong>
+That's a good question. I think we have been in the rideshare rental business, which is the most adjacent to Hertz's core business, for about the last 10 years. And so as we have seen the industry evolve, it became clear that there was a need for this rapid turn, mass dispatch capability that Hertz already had. We just need to apply it in a new use case. And so we launched our managed fleet business where we put Oro drivers in Oro vehicles to fulfil ride-hail demand on demand platforms about a year and a half ago in pilot, and then we decided to commercialize about a year ago now, last September. And then from there it was just a decision of would it make the most sense to commercialize under the Hertz brand name, or should we actually go launch a separate company to allow us to go even faster.</p>
+<p class="zh"><strong>Doria Holbrook 2:15</strong>
+这是个好问题。我们做网约车租赁业务大概已经有十年了，那是和赫兹核心业务最邻近的一块。随着行业演变，我们清楚地看到市场需要一种「快速周转 + 大规模调度」的能力——而这种能力赫兹本来就有，只是要把它用到新的场景里。所以我们推出了管理车队业务：Oro 的司机开 Oro 的车，在需求平台上承接网约车订单。大约一年半前先做试点，然后一年前、也就是去年九月决定商业化。接下来的问题就只是：继续挂在赫兹品牌下商业化更合适，还是干脆另起一家公司，让我们能跑得更快。</p>
+</div></p><p class="seg"><span class="ts">[03:20 – 04:21]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 3:20</strong>
+And that's where Oro came from, because we know that innovation in a large company can be difficult, and so creating more of that independence allows us to go and break stuff and move very quickly, versus in Hertz where it would be a higher risk for the business to do the same thing. So that's really where it came from. And then in January we said should we take that one step further and one, announce it to the world, what's going on behind the scenes, and then two, should we actually go out and fundraise independently to try to get additional investment and growth capital into the business.</p>
+<p class="zh"><strong>Doria Holbrook 3:20</strong>
+Oro 就是这么来的。我们知道在大公司里做创新很难，所以多给一点独立性，就能让我们去试错、去把事情弄坏再修好，并且跑得很快；同样的事情放在赫兹体内做，对公司来说风险更高。它真正的来源就是这样。到了今年一月我们又问：要不要再往前走一步——第一，把幕后正在做的事对外公布；第二，是不是该独立去融资，为这门业务拿到额外的投资和成长资本。</p>
+<p class="en"><strong>Daniel Abreu Marques 3:43</strong>
+As you mentioned, Hertz is a hundred-year-old rental company and building a new business inside such an established company is hard. So what have you found most challenging?</p>
+<p class="zh"><strong>Daniel Abreu Marques 3:43</strong>
+正如你提到的，赫兹是一家百年租车公司，在这样一家成熟企业里建新业务很难。你觉得最挑战的是什么？</p>
+</div></p><p class="seg"><span class="ts">[04:21 – 04:54]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 4:21</strong>
+I think the hardest part is large companies run a lot of pilots, and so getting folks to go from &quot;this is just another thing we have to test&quot; to being excited about the testing and then knowing we're actually going to turn this into something — this isn't just another test that we're running. And so as we made that pivot from testing to commercialization, it was really about telling the story and winning over the hearts and minds of our people. And that came over time.</p>
+<p class="zh"><strong>Doria Holbrook 4:21</strong>
+最难的我觉得是：大公司会跑很多试点，所以要让大家从「这不过是又一个要测的东西」，转变为对测试本身感到兴奋、并且相信我们真的会把它做成事——这不是又一次跑完就存档的试验。当我们从测试转向商业化时，本质上是在讲故事、争取人心，而这是靠时间慢慢赢来的。</p>
+</div></p><p class="seg"><span class="ts">[04:54 – 05:48]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 4:54</strong>
+The other thing that's been challenging about innovation within a large company is making build-versus-buy decisions: where do you use the existing infrastructure, where do you augment infrastructure, where do you build your own technology versus leverage the existing technology versus go and vendorize new technology. So everything across both the real estate and the technology was a conversation throughout, and I think sometimes that can be tricky conversations even within a large organization.</p>
+<p class="zh"><strong>Doria Holbrook 4:54</strong>
+在大公司里做创新的另一个难点，是做「自建还是外购」的决策：哪些地方直接用现有基础设施，哪些地方要去增强，哪些技术自己做、哪些复用公司已有的、哪些去买第三方。地产和技术这两条线上的每一个环节，全程都是讨论，而且有时候在大组织内部，这些讨论可以相当棘手。</p>
+<p class="en"><strong>Daniel Abreu Marques 5:09</strong>
+You already mentioned that Oro is a new brand, and I probably think something like Hertz Mobility Solutions would have carried recognition. Why did you decide to name the new company Oro Mobility instead of something that connects to Hertz?</p>
+<p class="zh"><strong>Daniel Abreu Marques 5:09</strong>
+你提到 Oro 是一个新品牌。我本以为叫「Hertz Mobility Solutions」这类名字会自带认知度。为什么最后选了 Oro Mobility，而不是一个和赫兹挂钩的名字？</p>
+<p class="en"><strong>Doria Holbrook 5:09</strong>
+Yeah, so our origin story is with Hertz. Oro is gold in Portuguese, and so we take that from our origins within Hertz, but we ended up going with a different brand, even grounded in the history that is Hertz, largely to try to continue to differentiate the products and services and capabilities that we're building within Oro versus what we would be building purely as something tangential to Hertz. And so it was really a goal to create both the connection back to our origins as well as a sign of the separation and independence that we're working towards.</p>
+<p class="zh"><strong>Doria Holbrook 5:09</strong>
+我们的起源故事在赫兹。Oro 在葡萄牙语里是「黄金」的意思，这来自我们在赫兹的出身；但最终我们还是用了另一个品牌，虽然它扎根于赫兹的历史，主要是想持续区分开：Oro 内部正在打造的产品、服务和能力，和单纯作为赫兹附属业务去做的东西不是一回事。所以目标其实是两个：既保留与出身的连接，也给出一个我们正在走向独立分离的信号。</p>
+</div></p>
+<h2 id="s1">为什么先把人类驾驶做大（pit stop vs depot）</h2><p class="seg"><span class="ts">[05:50 – 06:43]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 5:50</strong>
+Can you also tell me what was the market signal that told you the timing is right to go into AVs right now?</p>
+<p class="zh"><strong>Daniel Abreu Marques 5:50</strong>
+能不能也说说什么样的市场信号让你们判断，现在正是切进 AV 的时机？</p>
+<p class="en"><strong>Doria Holbrook 5:57</strong>
+It's a great question. We're starting to see autonomous vehicles expand from testing to commercialization now, and then the question is where, with what partners, who's at what stage in the journey — because not all AV companies are at the same point in their go-to-market. And so for us, the question was not necessarily &quot;is now the right time&quot;, but more so &quot;how should we do it to get the timing right&quot;.</p>
+<p class="zh"><strong>Doria Holbrook 5:57</strong>
+这是个好问题。我们现在开始看到自动驾驶从测试走向商业化，接下来的问题是：在哪里、和哪些伙伴、对方处在旅程的哪个阶段——因为并不是所有 AV 公司都在同一个商业化进度上。所以对我们来说，问题不是「现在时机对不对」，而更像是「我们该怎么做，才能把时机踩准」。</p>
+</div></p><p class="seg"><span class="ts">[06:43 – 07:18]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 6:43</strong>
+And for us, that's why you'll hear us talk a lot about our driver-led businesses, which we see as a precursor to our driverless businesses, because it allows us to build the infrastructure, the capabilities, the turn times, the SOPs, the operating rhythm of a business while you have revenue and profitability against it, and then convert that business to driverless operations over time — or I would actually say augment the business to driverless operations over time. So when you think about a driver coming in from dispatch, that vehicle needs to get cleaned, charged, turned in minutes, or less than 30 minutes, before the next set of dispatch needs to happen. That skill is the exact same one that we'll need to use when an AV is coming in: it needs to be turned quickly and dispatched quickly.</p>
+<p class="zh"><strong>Doria Holbrook 6:43</strong>
+对我们来说，这就是为什么你会经常听到我们谈「人类驾驶」这块业务，我们把它看作无人驾驶业务的前身。因为它让我们能先把基础设施、能力、周转时间、SOP、运营节奏建起来，同时这块业务本身是有收入和利润的；然后再随着时间把它转成无人驾驶运营——更准确地说，是把它扩展到无人驾驶运营。你想想，一个司机从调度进来，这辆车必须被清洁、充电、周转，时间要按分钟计，或者在下一批调度发生前少于 30 分钟完成。这项技能和 AV 进来时需要的完全一样：快速周转、快速再调度。</p>
+</div></p><p class="seg"><span class="ts">[07:18 – 08:03]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 7:18</strong>
+The other thing that this allows us to do is that our driver-led rental business has real estate throughout 33 markets in the US, and that retail footprint we think about as our pit stops, versus our larger depots. And so we're able to build those pit stops throughout the cities that AVs could stop at for opportunistic charging, they could stop at for lost and found, for quick cleaning. And together that business today — we have 45,000 vehicles in that fleet, it's growing, it's profitable — and so we're able to start building out this network and these capabilities but with a business that exists today, that's profitable and growing today.</p>
+<p class="zh"><strong>Doria Holbrook 7:18</strong>
+这还带来另一个好处：我们这块人类驾驶的租赁业务，在美国 33 个市场都有地产。我们把这个零售网点看作「快修补给点（pit stops）」，与更大的「基地（depots）」相区分。这样我们就能在 AV 会经过的各个城市铺这些补给点——它们可以顺路充电，可以处理失物招领，可以做快速清洁。合在一起，这块业务今天有 45,000 台车，在增长，也是盈利的。所以我们是在用一个今天已经存在、今天就在盈利和增长的业务，去把这张网络和这些能力建起来。</p>
+</div></p>
+<h2 id="s2">Oro 到底卖给 AV 公司什么</h2><p class="seg"><span class="ts">[08:03 – 09:14]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 8:03</strong>
+Now let's get really concrete about what Oro actually sells on the AV side. Can you break down the service deck? If I'm an AV developer and I sign with Oro, what exactly am I buying, and what is still the responsibility of them?</p>
+<p class="zh"><strong>Daniel Abreu Marques 8:03</strong>
+现在我们具体一点：Oro 在 AV 这一侧到底卖的是什么？能不能拆一下服务清单——假设我是一个 AV 开发商，和 Oro 签约，我究竟买到了什么，哪些仍然是我自己的责任？</p>
+<p class="en"><strong>Doria Holbrook 8:15</strong>
+Great question. So Oro will own, operate and orchestrate AVs. That means you can operate out of our depots, you can leverage our maintenance services, our technicians, our turn times, we can run the depots for you. And I would say the second component of this is we work with the AV partners to find out what do they want to do, what do they want partners to do, how can we support and help them scale their businesses. And so some of it is meeting different players where they are in their crawl, walk, run journey. And it's really about serving those customers in whatever they need at that point in time. So some folks need safety drivers, some folks need supervised driving, some folks just need real estate access, some folks need advice on how to do maintenance on the core vehicles. So we do all sorts of stuff, whether it's a la carte or full service, we're really here to help accelerate development of this industry.</p>
+<p class="zh"><strong>Doria Holbrook 8:15</strong>
+好问题。Oro 会拥有、运营并调度 AV。这意味着你可以从我们的基地出车，可以用我们的维保服务、我们的技师、我们的周转节奏，我们可以替你运营基地。第二块是：我们和 AV 伙伴一起搞清楚——他们想做什么、希望伙伴承担什么、我们怎么支持并帮他们把业务规模化。所以一部分工作是「按对方所处的爬、走、跑阶段去接住他」。核心就是在这个时点满足客户需要的任何东西。有的客户需要安全员，有的需要有人监督的驾驶，有的只需要场地使用权，有的需要在核心车辆维护上获得建议。所以从单项服务到全包，我们什么都做，本质上是在帮这个行业加速。</p>
+</div></p><p class="seg"><span class="ts">[09:14 – 10:14]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 9:14</strong>
+That sounds great. And in some offerings I think there is somehow a gray zone — things like remote assistance, incident response or roadside recovery. Where do you as Oro draw that line?</p>
+<p class="zh"><strong>Daniel Abreu Marques 9:14</strong>
+听起来不错。不过有些服务在我看来自带「灰色地带」，比如远程协助、事故响应、道路救援。作为 Oro，你们把线划在哪里？</p>
+<p class="en"><strong>Doria Holbrook 9:25</strong>
+I would say remote assistance is one that we're open to. We're not doing it today. We have large teams that are capable of expanding into that. We run obviously large call centers today. Now I know that that capability is somewhat different than a roadside or a remote assistance, but those same capabilities and skills can be adapted for the remote assistance piece. We already have a huge roadside business today across not only the 45,000 vehicles in Oro's fleet, but across the 500,000 vehicles in Hertz's fleet. There's capabilities that we can leverage as we think about roadside and other capabilities. So it's actually all grounded in the fact that we have been running very large fleets through their entire life cycle for 100 years. That allows us to adapt that to AVs.</p>
+<p class="zh"><strong>Doria Holbrook 9:25</strong>
+远程协助这块我们是开放的，只是今天还没做。我们有可以扩展到这项业务的大型团队——我们目前就在运营大型呼叫中心。我知道这跟道路救援或远程协助有差别，但同样的能力和技能是可以改造过去用的。今天我们已经有一块很大的道路救援业务，不只是 Oro 车队这 45,000 台，还包括赫兹车队那 50 万台。所以在考虑道路救援和其他能力时，我们是有可复用的。归根到底，这一切成立的前提是：我们做大型车队的全生命周期运营，已经做了一百年。这让我们能把这些能力迁移到 AV 上。</p>
+</div></p><p class="seg"><span class="ts">[10:14 – 11:32]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 10:14</strong>
+Make sense. And you already explained that you have two different businesses under one roof — the driver-led side and also the autonomous fleet operations. Where are the synergies? Are those two different companies under the one roof, or is it more like one company with shared infrastructure that you can leverage for both business units?</p>
+<p class="zh"><strong>Daniel Abreu Marques 10:14</strong>
+明白了。你也提到，同一个屋檐下有两块业务：人类驾驶这一侧，以及无人驾驶车队运营。协同在哪里？它们是同一个屋檐下的两家不同公司，还是更像一家公司、共享基础设施供两个业务单元使用？</p>
+<p class="en"><strong>Doria Holbrook 10:35</strong>
+It's a good question. I would say a little bit of both. We definitely can leverage shared infrastructure. So for example, let's say we have a vehicle that comes back that's having mechanical issues. While we could service it or outsource it to a local vendor, we could equally send it back to a Hertz depot to get maintenance and services on. That's an option depending on the type of maintenance that it needs. Let's say it's a tire change: we have the tires in stock at the airport, we could pop the vehicle over, have the tires switched out and come right back to the business, and so you can decrease your turn times in that way. So I would say there's more overlap or sharing of capabilities that we can leverage. But to be honest, we're still trying to define where those lines are between each organization, and that's part of what makes this fun and makes it an adventure — we have so many shared capabilities that we could leverage, and we're working through that over time.</p>
+<p class="zh"><strong>Doria Holbrook 10:35</strong>
+好问题，我觉得两者都有一点。我们显然可以复用共享的基础设施。举个例子：一台车回来发现有机械问题，我们可以自己修，也可以外包给本地供应商，但同样可以把它送回赫兹的基地去做维保。这取决于需要哪类维保。比如换轮胎：机场那边有轮胎库存，把车开过去换完再回到业务里，这样周转时间就降下来了。所以我会说更多是能力的重叠与共享。但说实话，我们仍在界定两个组织之间的边界在哪里，而这正是这件事有意思、像一场冒险的一部分——可复用的共享能力太多了，我们在逐步理清。</p>
+</div></p><p class="seg"><span class="ts">[11:32 – 12:55]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 11:32</strong>
+What I'm also curious to learn about: what are you actually measured on by your partners on the AV side? Is it vehicle uptime? Is it turnaround time in the depot? What's the KPI that defines whether you're doing a good job?</p>
+<p class="zh"><strong>Daniel Abreu Marques 11:32</strong>
+我还很好奇：在 AV 这一侧，伙伴们到底用什么指标衡量你？是车辆可用率？还是基地里的周转时间？判断你们干得好不好的 KPI 是哪个？</p>
+<p class="en"><strong>Doria Holbrook 11:45</strong>
+I would say it's a suite of KPIs. Turn time is obviously one, except I would say safety is probably the key metric. And so how quickly are we responding to safety incidents, how quickly are we measuring safety, do we have the appropriate safety management system in place to address the challenges that an AV might see. And then on the operational side, yes, it's absolutely turn time. And a couple of things I'm a little limited on what I can say given our contract and our NDA, but I would say it's pretty typical of what you would see in any fleet organization. So you have both your cycle time and turning the vehicles: the cycle time on every single piece of the pie, whether it's your charging cycle time, whether it's your tire change cycle time, whether it's just maintenance downtime. Overall there's different cycle times and safety records that are required on everything. So for us it's a lot more about we want to get vehicles ready to be in service — whether they're dispatched into service or not — that the capacity and the supply is ready to go as safely and as quickly as possible.</p>
+<p class="zh"><strong>Doria Holbrook 11:45</strong>
+我会说是一整套 KPI。周转时间显然是其中之一，但我会说安全大概是最核心的指标：我们对安全事件的响应有多快、我们对安全的度量有多快、我们是否有合适的安全管理体系去应对 AV 可能遇到的挑战。运营侧当然是周转时间。有几件事因为合同和保密协议我能说的有限，但它基本就是任何车队组织都会看的那套：整体周期时间，以及车辆周转——每一个环节的周期时间，充电的周期时间、换胎的周期时间、单纯的维保停机时间。总之每个环节都有各自的周期时间和安全记录要求。对我们来说更重要的是：我们要让车准备好随时可以投入服务——不管它最终有没有被派出去——也就是产能和供给要尽可能安全、尽可能快地就位。</p>
+</div></p>
+<h2 id="s3">亚特兰大教了什么：SOP 的颗粒度</h2><p class="seg"><span class="ts">[12:55 – 13:52]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 12:55</strong>
+All right, now we have talked a lot about the model and now it's time to look at what's actually running today. Maybe we start on the driver-led side. I think Atlanta was your pilot and then you went to LA and San Francisco and northern New Jersey. Was there something that Atlanta taught you that changed the model before you scaled it to the other cities?</p>
+<p class="zh"><strong>Daniel Abreu Marques 12:55</strong>
+好，我们聊了很多模式，现在来看看今天真正在跑的东西。也许从人类驾驶这一侧开始。亚特兰大应该是你们的试点，之后去了洛杉矶、旧金山和新泽西北部。在复制到其他城市之前，亚特兰大教了你们什么、改变了模式吗？</p>
+<p class="en"><strong>Doria Holbrook 13:17</strong>
+A lot. I think some of the things that we learned in Atlanta were learning about hours of operation — what times do you operate in order to maximise and meet ride-hail demand. We learned about safety inspection: what is the appropriate amount of time and level of inspection that you need to do at the start and end of every shift. Do you snap to DOT standards, do you write your own standards, because these are not DOT-regulated vehicles. So a lot of these things we were refining through our pilot in Atlanta.</p>
+<p class="zh"><strong>Doria Holbrook 13:17</strong>
+很多。在亚特兰大我们学到的一件事是运营时段：为了让网约车需求被最大化满足，你该在哪些时间运营。我们学了安全巡检：每个班次开始和结束时，需要做多长时间、多深度的检查。你是直接对齐 DOT 标准，还是自己写一套标准——因为这些车并不属于 DOT 监管车辆。很多这类问题都是在亚特兰大的试点里逐步打磨出来的。</p>
+</div></p><p class="seg"><span class="ts">[13:52 – 14:54]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 13:52</strong>
+I'd say the other thing is we learned just how important it was to get to standard work on every piece of the supply chain. So even things like how do you configure the parking lot, how do you dispatch safely, what are your walking lanes versus your dispatch lanes. So we switched from 90-degree parking to 45-degree parking to linear parking, all in the goal of dispatching faster and more safely than before. Things like: it's really dark in the morning and at night in the winter, so what are your de-icing standards, how early do you defrost all the vehicles so that we weren't spending time waiting for the windshields to de-ice. So it's as much the big stuff as it is all these little micro procedures that you have to get locked down in order to get your highest amount of uptime as safely as possible.</p>
+<p class="zh"><strong>Doria Holbrook 13:52</strong>
+另一件事是：我们学到「让供应链的每一个环节都进入标准作业」有多重要。就连停车场怎么布置、怎么安全发车、人行通道和发车通道怎么分这种细节都是。我们从 90 度停车改成 45 度，再改成一字排开，目的都是比之前更快、更安全地发车。再比如：冬天早晚都特别黑，那你的除冰标准是什么、多早就开始给所有车除霜，免得大家把时间耗在等前挡风玻璃化冰上。所以它既是大问题，也是所有这些细小的微流程——你必须把它们固定下来，才能以最安全的方式拿到最高的可用率。</p>
+</div></p><p class="seg"><span class="ts">[14:54 – 15:53]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 14:54</strong>
+Another point that some would probably argue is that the driver-led business puts you in a kind of strange position: you're building a business around human drivers while also preparing to operate a technology that replaces them, maybe at some point. How do you think about it internally? I think you already gave some hints that it's also helping you to have early revenue and to learn a lot of things. But maybe also: what are the drivers telling you?</p>
+<p class="zh"><strong>Daniel Abreu Marques 14:54</strong>
+还有一点，可能有人会争论：人类驾驶这块业务让你们处在一个有点微妙的位置——你在围绕人类司机建生意，同时又在为一项或许某天会取代他们的技术做准备。你们内部怎么看这件事？我想你已经给了一些线索，说它带来早期收入、也让你们学到很多。但也许还有：司机们在告诉你们什么？</p>
+<p class="en"><strong>Doria Holbrook 15:17</strong>
+So look, AVs are still going to need people to operate them, and so building a people-centric business with safety and people at the core of what we do is only going to help us be more effective as operators. So creating career paths for our drivers is a key part of what we're doing — whether that's going through maintenance academy, whether that's being a dispatcher, or whether that's being a talent coordinator or an HR coordinator. These are all capabilities that we're going to need to be successful.</p>
+<p class="zh"><strong>Doria Holbrook 15:17</strong>
+AV 仍然需要人来运营它。所以把安全和「人」放在核心，去建一家以人为中心的公司，只会让我们成为更有效的运营商。为司机创造职业路径是我们正在做的关键一环——可以是走维保学院，可以是做调度员，也可以是做人才协调或人力协调。这些都是我们未来要成功所必需的能力。</p>
+</div></p>
+<h2 id="s4">电动车遗产：5 万台特斯拉变成 AV 的维保底座</h2><p class="seg"><span class="ts">[15:53 – 16:50]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 15:53</strong>
+Maybe now let's go to the autonomous side. You have the Lucid Gravity with the Nuro stack in the Bay Area on Uber's platform. What does day one actually look like for a team there? And can you also walk us through the depot?</p>
+<p class="zh"><strong>Daniel Abreu Marques 15:53</strong>
+现在到无人驾驶这一侧。你们在湾区、在 Uber 的平台上跑的是搭载 Nuro 软件栈的 Lucid Gravity。对那边的团队来说，「第一天」实际是什么样子？能不能也带我们看看基地？</p>
+<p class="en"><strong>Doria Holbrook 16:07</strong>
+Yeah, so day one for the team: everyone's onboarded now, they're going through training, they're learning about safety checks, they're learning about all of the vehicles, what they need to be looking out for, and they're providing feedback to the engineering teams of what they're seeing. So all good relationships between all the players — whether it's with Nuro, with Lucid, with Uber and the Oro team — everyone's working really well together and we're excited about what is next on that relationship. And I can't comment a whole lot on the depot, I'm sorry. But we feel really lucky that we've been able to work as closely with these partners as we can to help ultimately make them successful and serve customers.</p>
+<p class="zh"><strong>Doria Holbrook 16:07</strong>
+团队的第一天：现在所有人都已经入职，正在培训，学安全检查和各类车辆、需要注意什么，同时把他们看到的情况反馈给工程团队。各方关系都很好——和 Nuro、和 Lucid、和 Uber、和 Oro 团队——大家协作得非常好，我们对这段关系的下一步很期待。基地的细节我不方便多讲，抱歉。但我们觉得很幸运，能和这些伙伴走得这么近，最终帮他们成功、把服务交付给乘客。</p>
+</div></p><p class="seg"><span class="ts">[16:50 – 18:27]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 16:50</strong>
+If you think about servicing a Lucid Gravity with a Nuro sensor set, I think it's not like servicing a typical Toyota or something like that. So you have sensor calibration and stuff. How much of your existing technician workforce also transfers to that, and how much did you have to rebuild from scratch, so to speak?</p>
+<p class="zh"><strong>Daniel Abreu Marques 16:50</strong>
+如果要维护一台带 Nuro 传感器套件的 Lucid Gravity，我想这跟维护一台普通丰田完全不是一回事。里面有传感器标定之类的活。你们现有技师队伍有多少能平移过去，又有多少得从零重建？</p>
+<p class="en"><strong>Doria Holbrook 17:09</strong>
+I get this question a lot and I would say there's actually more overlap than one might think. Most vehicles today have some version of calibrated sensors, so vehicles are getting progressively more complicated and our technicians have been coming along with those vehicles as the technology has advanced. And so to go from managing a car with different ADAS capabilities, it's not as big of a step to go to a fully autonomous vehicle. The other component is that we have owned large EV fleets. So we had a fleet of 50,000 Teslas several years ago and we've been maintaining those vehicles, and we still have quite a few left in our fleet.</p>
+<p class="zh"><strong>Doria Holbrook 17:09</strong>
+这个问题我被问得很多，我会说重叠比大家想的要多。今天大多数车都装了某种需要标定的传感器，车是逐步变复杂的，而我们的技师是随着技术一起走过来的。所以从管理一台具备各种 ADAS 能力的车，到一台完全无人驾驶的车，跨步没有那么大。另一块是我们养过大规模的电动车队：几年前我们有过一支 5 万台特斯拉的车队，一直在维护它们，现在车队里还留着不少。</p>
+</div></p><p class="seg"><span class="ts">[18:27 – 19:04]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 18:27</strong>
+And what's been unique about our EV strategy has been that we have gone down the path of learning how to hold EVs for extended periods of time. So all the capabilities that we've been developing on those Tesla fleets, and holding them for multiple hundreds of thousands of miles, is going to be very similar to what it's going to take to maintain an AV, which we expect to hold for three, four or 500,000 miles. And so all the skills and capabilities that we've been learning on our Tesla fleet will directly translate over into an AV fleet. And then what you're thinking about is: okay, now we have high-voltage experience, now we have all of your general wear and tear, your tires, your brakes — these are some of the things that go first on EVs because the vehicles are so heavy. So then the step change of getting from a more sophisticated ADAS system on an existing vehicle to a level-four autonomy, that's just another module on top of our maintenance academy workflow. So there were a lot of similarities between the vehicles that exist today and where AVs are going, because underneath every AV stack is an actual car that's got to be maintained.</p>
+<p class="zh"><strong>Doria Holbrook 18:27</strong>
+我们电动化策略里比较独特的一点是：我们走的是「长期持有电动车」这条路。在特斯拉车队的这些积累——把它们开到几十万英里的经验——和未来维护一台 AV 所需要的能力非常接近，我们预计 AV 要持有到 30 万、40 万甚至 50 万英里。所以特斯拉车队上练出来的技能和能力，会直接迁移到 AV 车队。接下来你会想：好，我们现在有高压电经验了，有通用磨损的经验了，轮胎、刹车——这些在电动车上消耗得更快，因为车太重。那么从现有车上更复杂的 ADAS 系统，跨到 L4 无人驾驶，在我们的维保学院作业流程里只是再加一个模块而已。所以今天的车和 AV 要去的地方之间，相似点非常多，因为每一套 AV 软件栈的底下都是一台真车，它必须被维护。</p>
+</div></p><p class="seg"><span class="ts">[19:04 – 20:09]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 19:04</strong>
+Absolutely. And you just mentioned your Tesla fleet era, and I think Hertz was also building out a significant EV charging infrastructure during that period. Is that infrastructure now an asset that Oro can leverage as well?</p>
+<p class="zh"><strong>Daniel Abreu Marques 19:04</strong>
+确实。你刚提到特斯拉车队那个阶段，我记得赫兹在那段时间也建了相当规模的充电基础设施。这部分现在是不是也成为 Oro 可以复用的资产？</p>
+<p class="en"><strong>Doria Holbrook 19:16</strong>
+Absolutely. So we have both L2 and DC fast chargers throughout our network that we can leverage. If you think about where ride-hail demand is concentrated, a lot of it is at the airports, where a lot of our charging infrastructure has been built. We do have off-airport infrastructure as well, but if you think about it: Oro via Hertz now has depots at every major airport across the US and in many cases across the world, and if that's a concentration of where ride-hail demand is, it's quite an advantageous position to be in as these scale and as they're able to start servicing these airports. And so having our charging network that we've learned about and built, and this long-hold strategy that we've been taking with EVs, it all coalesces quite nicely around bringing robotaxis to market and bringing them to customers specifically at the airport, where many people start their journeys.</p>
+<p class="zh"><strong>Doria Holbrook 19:16</strong>
+绝对是。我们网络里既有 L2 也有直流快充，都可以复用。你想想网约车需求密集在哪里——很多在机场，而我们的充电设施很多就建在那里。机场外我们也有设施。但更重要的是：通过赫兹，Oro 现在在美国每一个主要机场都有基地，在全球很多地方也有。如果需求真的集中在这些地方，那么随着规模上来、随着它们开始服务这些机场，这是一个相当有利的位置。所以，我们自己摸索并建成的充电网络，加上对电动车采取的长期持有策略，在把 robotaxi 推向市场、并且是把车直接送到机场——很多人旅程的起点——这件事上，恰好都汇合到一处。</p>
+</div></p>
+<h2 id="s5">8,000 万美元，与真正的拦路虎</h2><p class="seg"><span class="ts">[20:09 – 21:15]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 20:09</strong>
+And the latest news that you had was a strategic investment that you announced. What does that mean in practice for you? How does that structure help you serve your customers and scale your business?</p>
+<p class="zh"><strong>Daniel Abreu Marques 20:09</strong>
+你们最新的消息是宣布了一笔战略投资。这对你们实际意味着什么？这个结构怎么帮你们服务客户、扩张业务？</p>
+<p class="en"><strong>Doria Holbrook 20:21</strong>
+So we took an $80 million investment from a couple of strategic partners: Cohen Private Ventures, Certares and Knighthead. And what that allows us to do is, one, create more independence, and it's the growth equity that we've needed to accelerate our development. So I think between investment and independence, those are the two things that will help us go faster. And so some of the investments that you're going to see us make will be in infrastructure — augmenting our existing depots or customising our pit stops to meet more of an AV use case. You'll see us invest in fleets, buying additional vehicles and additional fleets. You'll see us invest in people: cultivating maintenance academy, allowing it to move up into new capabilities that can service both EVs and AVs, will also be a key part of the investment that we make — and of course technology.</p>
+<p class="zh"><strong>Doria Holbrook 20:21</strong>
+我们拿了 8,000 万美元，来自几个战略伙伴：Cohen Private Ventures、Certares 和 Knighthead。它带来的：一是更多独立性；二是我们加速发展所需要的成长股权。所以投资加上独立性，这两件事会让我们跑得更快。接下来你会看到我们投在几个方向：基础设施——扩建现有基地，或者改造快修补给点，让它更贴合 AV 的使用场景；车队——买更多车、更多车队；人——把维保学院做深，让它往上长出新能力，能同时服务电动车和 AV，这也是投资的重点之一；当然还有技术。</p>
+</div></p><p class="seg"><span class="ts">[21:15 – 22:24]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 21:15</strong>
+So you need tech in order to effectively manage your depots, your turn times, your information. All these AVs are very smart, but they need to send all of their intelligence somewhere to be interpreted and have actions taken against them. And so that needs to be ingested and then turned into tasks that your depot staff or back to OEMs can act on, in order for that AV to have action taken on it. And so that is also a critical component of what the depot stack needs to look like.</p>
+<p class="zh"><strong>Doria Holbrook 21:15</strong>
+你需要技术来有效管理基地、管理周转时间、管理信息。这些 AV 都很聪明，但它们得把所有「智能」发送到某处去被解释、被转化为动作。这些数据要被摄取，然后变成基地员工可以执行的任务，或者回流给 OEM，这样那台 AV 才会真正被处理。这也是基地这套系统必须要有的关键一环。</p>
+<p class="en"><strong>Daniel Abreu Marques 21:48</strong>
+Makes sense. And if we look at your customer base, we know you have Lucid and Uber as partners, but there will probably be more platforms — on the vehicle side, and also on the virtual driver side — that you will partner with. Correct?</p>
+<p class="zh"><strong>Daniel Abreu Marques 21:48</strong>
+明白。看你们的客户基础，目前已知有 Lucid 和 Uber，但大概率还会有更多平台——无论是车这一侧还是「虚拟司机」这一侧——会成为你们的伙伴。对吗？</p>
+<p class="en"><strong>Doria Holbrook 22:02</strong>
+Absolutely. Can't comment a whole lot on that yet, but hopefully soon.</p>
+<p class="zh"><strong>Doria Holbrook 22:02</strong>
+当然。这方面我暂时还不能多讲，但希望很快可以。</p>
+</div></p><p class="seg"><span class="ts">[22:24 – 23:55]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 22:24</strong>
+And if we look at the competition, there are a lot of other names — some like Avomo, Moove — and every one of them says operational excellence at scale, so to speak. Where do you believe Oro is differentiated, and which strengths are customers responding to the most?</p>
+<p class="zh"><strong>Daniel Abreu Marques 22:24</strong>
+看看竞争格局，还有很多别的名字——比如 Avomo、Moove——每一家都在说自己是「规模化的运营卓越」。你认为 Oro 的差异化在哪？客户最买账的是哪一点？</p>
+<p class="en"><strong>Doria Holbrook 22:24</strong>
+Yeah, I think there's a couple of things. We're already present in 33 markets in the US with our rideshare rental fleet. We have 500,000 vehicles in the Hertz fleet that we've learned how to finance, manage, sell, disposition, take apart. That scale of operation, that ability to ingest, manage, turn on a frequent basis — that's something that's really difficult to replicate. And you pair that capability with the speed of a startup, and you're going to get the best of what a hundred years of fleet infrastructure, fleet management, fleet financing looks like, with the speed and agility of a startup. So it's really the combination of these two things that's going to differentiate Oro and help us serve our customers even better.</p>
+<p class="zh"><strong>Doria Holbrook 22:24</strong>
+我觉得有几点。我们已经以网约车租赁车队进入了美国 33 个市场。赫兹车队有 50 万台车，我们学会了怎么给它们融资、管理、销售、处置、拆解。这种运营规模、这种高频摄取—管理—周转的能力，是很难复制的。然后把这种能力配上创业公司的速度，你得到的就是：一百年车队基础设施、车队管理、车队融资的精华，加上创业公司的速度与灵活。所以真正让 Oro 形成差异化的，是这两件事的组合，它让我们能更好地服务客户。</p>
+<p class="en"><strong>Daniel Abreu Marques 23:14</strong>
+Now if we think again about expansion, what's the unit of your next expansion? Would it be more like a next city, a new depot, or maybe a partner? What would be next in your opinion?</p>
+<p class="zh"><strong>Daniel Abreu Marques 23:14</strong>
+再回到扩张：你们下一轮扩张的「单位」是什么？是下一座城市、一个新基地，还是一个新伙伴？</p>
+<p class="en"><strong>Doria Holbrook 23:25</strong>
+Both, I would say. We're looking at new city expansions for our driver-led fleet, and again those are precursors for our driverless operations with strategic partners. So I think you'll see us augment with additional partners as well as additional cities, and that's really the method that we're taking to be responsible and judicious as we continue to expand our operation across the US and then eventually the world.</p>
+<p class="zh"><strong>Doria Holbrook 23:25</strong>
+我会说两者都是。我们在为人类驾驶车队看新城市，而这些又是我们与战略伙伴做无人驾驶运营的前身。所以你会看到我们同时增加伙伴和城市，这正是我们继续在美国、最终在全球扩张时，采取负责任、审慎做法的方式。</p>
+</div></p>
+<h2 id="s6">残值：卡住整个行业的隐形闸门</h2><p class="seg"><span class="ts">[23:55 – 24:33]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 23:55</strong>
+And maybe one more follow-up question on vehicle ownership, because you mentioned some part of the money you raised will be spent on fleet. Is there a difference between the driver-led and the autonomous vehicle business in terms of asset ownership?</p>
+<p class="zh"><strong>Daniel Abreu Marques 23:55</strong>
+再追一个问题，关于车辆的所有权——你提到融资的一部分会花在车队上。人类驾驶业务和无人驾驶业务，在资产所有权上有什么不同吗？</p>
+<p class="en"><strong>Doria Holbrook 24:09</strong>
+So a vehicle is a vehicle is a vehicle, and those vehicles need to be financed. There are differences between a driverless vehicle and a driver-led vehicle. So the biggest thing is the residual value and understanding what that vehicle is going to be worth at any point in time. Now the challenge with AVs is that there isn't a proven residual market.</p>
+<p class="zh"><strong>Doria Holbrook 24:09</strong>
+车就是车，而这些车都需要融资。无人驾驶车和人类驾驶车之间确实有差别，最大的一点是残值——也就是要搞清楚这台车在任意时点值多少钱。而 AV 的难点在于：目前还没有一个被验证的残值市场。</p>
+</div></p><p class="seg"><span class="ts">[24:33 – 25:54]</span><div class="seg-body">
+<p class="en"><strong>Doria Holbrook 24:33</strong>
+So if a company that finances a vehicle wants to take a car back, there's a known value of what that car is worth. That isn't how AVs exist yet. We will get there at some point, but it's not there yet. And so the question is: if you have an unknown residual value at any point in time, you have a straight-line depreciation curve potentially. And it's really a matter of what's the financing structure that we're going to pursue in order to account for that.</p>
+<p class="zh"><strong>Doria Holbrook 24:33</strong>
+如果一家为车辆提供融资的公司要把车收回来，传统车有一个已知的价值，而 AV 今天还不是这样。某个时点我们会走到那一步，但现在还没有。所以问题是：如果你在任意时点都没有一个已知的残值，你可能就只能用一条直线折旧曲线。真正要解决的是：我们该采用什么样的融资结构来对应这件事。</p>
+<p class="en"><strong>Doria Holbrook 25:03</strong>
+And so if you think about Hertz has $13 billion of assets under management, hundreds of thousands of vehicles in really sophisticated asset-backed securities, that creates the diversification that you need in order to start absorbing potentially AVs and other vehicles into your ABS. And really the reason an ABS works so well is because of that diversification. But if you have exclusively only an AV ABS, there's not enough diversification with an unknown residual value market to get as many investors to buy in at efficient interest rates. And so that's really what we're working on: figuring out what's the right way to do that, leveraging the capabilities that we have through our existing ABSs and seeing how we essentially create a new mechanism for the industry.</p>
+<p class="zh"><strong>Doria Holbrook 25:03</strong>
+你可以这样看：赫兹管理着 130 亿美元资产、几十万台车，装在做得很精细的资产证券化（ABS）里，这带来了分散度——而分散度正是你开始把 AV 和其他车辆吸收进 ABS 所需要的东西。ABS 之所以好用，本质就在于这种分散。但如果你只有一个纯粹由 AV 组成的 ABS，在残值市场未知的情况下分散度不够，就无法以有效率的利率吸引足够多的投资人。所以我们在做的，就是搞清楚正确的做法：借助我们现有 ABS 体系的能力，看我们怎么为这个行业造出一个新机制。</p>
+</div></p>
+<h2 id="s7">欧洲、加盟商与五年后的成功</h2><p class="seg"><span class="ts">[25:54 – 27:25]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 25:56</strong>
+Hertz also has a global footprint, and as mobility platforms expand, they probably expand globally. So how do you think about Oro's long-term opportunity beyond the US?</p>
+<p class="zh"><strong>Daniel Abreu Marques 25:56</strong>
+赫兹还有全球布局，而出行平台扩张时大概率也是全球扩张。你怎么看 Oro 在美国之外的长期机会？</p>
+<p class="en"><strong>Doria Holbrook 26:06</strong>
+Yeah, so I think Europe's probably next for us. And we will go to market both through Hertz and through our franchisees throughout the world. We have some of the best franchisees that we could ask for, who have been operating for a very long time, and we have a robust franchise program within Hertz. And so I think what that gets you is you get the power of the standardisation, the standard operating procedures, the rigour, the technology by doing it ourselves, and then you get the hyper-local knowledge by working with our local teams or our local franchisees. And that's the power of partnership within our service offerings. So still early days there, but couldn't be prouder of the franchise partners that we have around the world and the potential for us to work together in bringing these vehicles to market.</p>
+<p class="zh"><strong>Doria Holbrook 26:06</strong>
+我想欧洲大概率是我们的下一步。我们会同时通过赫兹自营和全球的加盟商进入市场。我们有最好的加盟伙伴，他们经营了很多年，赫兹内部也有一套成熟的加盟体系。这样做的好处是：一方面，自己做能带来标准化、SOP、严谨度和技术的力量；另一方面，和本地团队或本地加盟商合作，能拿到超本地化的知识。这就是我们服务里「伙伴关系」的力量。那边还很早期，但我为我们在全球的加盟伙伴感到非常自豪，也很看重我们一起把这些车推向市场的潜力。</p>
+<p class="en"><strong>Daniel Abreu Marques 26:53</strong>
+Sounds good. But probably no timeline possible to mention here for European expansion?</p>
+<p class="zh"><strong>Daniel Abreu Marques 26:53</strong>
+听起来不错。不过欧洲扩张的时间表大概不方便提？</p>
+<p class="en"><strong>Doria Holbrook 27:00</strong>
+Not yet, not yet. So we'll definitely, as we move throughout the process, announce and let folks know. But for right now, I think we might be a little different in that we like to prove stuff out before we tell the world about it. You saw that we were in operation for almost a year and a half before we told the world about Oro in a meaningful way. And so I think you'll probably see that from us for the foreseeable future.</p>
+<p class="zh"><strong>Doria Holbrook 27:00</strong>
+还没有，还没有。随着进程推进，我们肯定会对外公布、让大家知道。但眼下，我们可能有点不一样：我们喜欢先把事情验证出来，再告诉世界。你也看到了，我们运营了将近一年半，才真正意义上对外讲 Oro。所以在可预见的未来，你大概还会看到我们这样做。</p>
+</div></p><p class="seg"><span class="ts">[27:25 – 28:41]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 27:25</strong>
+Sounds good. And for you, if you look in the future, what would success look like for Oro over, let's say, the next five years, and what milestones will tell you you're on the right path?</p>
+<p class="zh"><strong>Daniel Abreu Marques 27:25</strong>
+好。那对你来说，往后看，比方说未来五年，Oro 的成功是什么样子？哪些里程碑会告诉你方向对了？</p>
+<p class="en"><strong>Doria Holbrook 27:37</strong>
+I think for us, success looks like multiple cities, multiple markets of dispatch scale for our managed fleet business, as well as multiple AV partnerships underway. Those would be the key milestones that I would be looking for. And then in addition, the safety record to back it up. So understanding that our safety management systems and how we're running fleets is better than where the market is today. Look, there are people that die every single day on the roads in the US, and so AVs have a tremendous opportunity to cut that. And so if we're the operating partner that helps accelerate AVs to make an impact and save lives, we're going to be out there doing everything we can to scale as quickly as we can with these AV partners, because we have a lot of conviction that safety is one of the biggest reasons we're in this business. And so as long as we're creating that safe track record and serving our communities, that's how we'll also know that we're being successful.</p>
+<p class="zh"><strong>Doria Holbrook 27:37</strong>
+对我们来说，成功是：管理车队业务在多个城市、多个市场达到调度规模，同时有多条 AV 合作在推进。这些是我会去看的关键里程碑。除此之外，还要有安全记录来支撑——也就是让我们的安全管理体系、我们的车队运营方式，比今天市场的普遍水平更好。要知道，美国道路上每天都有人死去，AV 有巨大的机会去削减这个数字。如果我们就是那个帮助 AV 加速落地、产生影响并挽救生命的运营伙伴，那我们就会尽全力和这些 AV 伙伴一起尽快规模化——因为我们非常确信，安全是我们进入这门生意最大的原因之一。所以只要我们在建立那份安全记录、在服务我们的社区，我们也就知道自己走在成功的路上。</p>
+</div></p><p class="seg"><span class="ts">[28:41 – 30:08]</span><div class="seg-body">
+<p class="en"><strong>Daniel Abreu Marques 28:41</strong>
+My last question is: in ramping up your first AV partner business with Lucid, was there something that surprised you, or something that you had not modelled on day one that happened?</p>
+<p class="zh"><strong>Daniel Abreu Marques 28:41</strong>
+最后一个问题：在把与 Lucid 的第一个 AV 伙伴业务做起来的过程中，有没有什么让你意外、或者第一天没有建模到的情况发生？</p>
+<p class="en"><strong>Doria Holbrook 28:51</strong>
+I think when you go to market on unknown products you model the unknown, and so for us I think it was more about being patient, being willing to pivot, having this test-and-learn mindset and really a growth mindset as we went into the business. And so: all right, a timeline slipped, no problem, how do we then pivot and deploy our people to keep learning? Okay, we're learning more — should we switch them into learning turn times on the managed fleet and practising some of those capabilities? And so I think as every curveball gets thrown at you in this business, you can either get frustrated or you can say, okay, now what are we going to do next and how are we going to learn from this moment. And ultimately that's what we're focused on: just keep learning and sharing that knowledge out with our partners to make us both as wildly successful as we can.</p>
+<p class="zh"><strong>Doria Holbrook 28:51</strong>
+做未知产品的时候，你本来就要把「未知」建模进去。所以对我们来说，更多的是耐心、愿意转向、保持「测试—学习」的心态，以及真正意义上的成长型心态。比如：时间表滑了，没问题，那我们怎么转向、把人重新部署到能继续学习的地方？好，我们学到了更多——是不是该让他们去学管理车队的周转时间、去练那几项能力？所以在这个行业里，每当一个变化球扔过来，你要么被激怒，要么就说：好，那我们下一步做什么，怎么从这个时刻学到东西。归根到底我们专注的就是：持续学习，并把知识分享给伙伴，让我们双方都尽可能成功。</p>
+<p class="en"><strong>Daniel Abreu Marques 29:49</strong>
+Doria, thank you so much for taking the time today and shedding some light on Oro and your first deployments in the US. I'm really looking forward to hearing more from Oro in the future, and also hopefully soon in Europe, where I'm located. So thanks again for your time, see you soon.</p>
+<p class="zh"><strong>Daniel Abreu Marques 29:49</strong>
+Doria，非常感谢你今天抽时间，把 Oro 和你们在美国的第一批落地讲得这么清楚。我很期待未来听到更多 Oro 的消息，也希望不久能在欧洲——我所在的地方——看到你们。再次感谢，回头见。</p>
+<p class="en"><strong>Doria Holbrook 30:06</strong>
+Sounds good, thank you.</p>
+<p class="zh"><strong>Doria Holbrook 30:06</strong>
+好的，谢谢。</p>
+</div></p>
+</main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回总结分析</a><a class="btn" href="https://www.youtube.com/watch?v=ajBRmD2S9K4" target="_blank" rel="noopener">▶ YouTube 原片</a></div><footer>本站点由 WorkBuddy 自动整理 · 英文为音频听写、中文为逐段翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["Gatik", "Gautam Narang", "无人驾驶卡车", "autonomous trucking", "中程货运", "middle-mile", "仓到仓", "dock-to-dock", "Gatik Driver", "Isuzu", "合约收入", "contracted revenue", "自动驾驶", "安全框架", "safety framework", "百事", "PepsiCo", "混合架构", "hybrid architecture"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
