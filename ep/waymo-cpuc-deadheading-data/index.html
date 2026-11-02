@@ -1,0 +1,496 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>把 Waymo 的加州监管数据拆开：44% 的里程空着跑，每单还有 20 分钟没人认领 · 总结分析</title><meta name='description' content='加州那张被涂黑了大半的 CPUC 季报里，藏着外界唯一能拿到的 Waymo 运营里程数据 —— 它把里程拆成「没任务」「赶去接人」「车上有客」三段。Raifman 把它拉成近两年的曲线：月订单从 8 万涨到 100 万单，空驶里程占比却从 52% 降到 44%，每单等待时间从 40 分钟砍到 20 分钟以内。但他认为这不值得庆祝 —— 44% 只是把 Waymo 拉到了人类网约车 40–50% 的水位，而它本来没有「说服司机挪车」这个摩擦。更麻烦的是 P1（30%）远高于 P2（14%）：大量里程既不是接客也不是载客；折算下来每台车每月有 10–12 天处于无任务状态，而我们对「没单时该停着还是该转圈」还没有政策答案。'><meta property='og:title' content='把 Waymo 的加州监管数据拆开：44% 的里程空着跑，每单还有 20 分钟没人认领 · 总结分析'><meta property='og:description' content='加州那张被涂黑了大半的 CPUC 季报里，藏着外界唯一能拿到的 Waymo 运营里程数据 —— 它把里程拆成「没任务」「赶去接人」「车上有客」三段。Raifman 把它拉成近两年的曲线：月订单从 8 万涨到 100 万单，空驶里程占比却从 52% 降到 44%，每单等待时间从 40 分钟砍到 20 分钟以内。但他认为这不值得庆祝 —— 44% 只是把 Waymo 拉到了人类网约车 40–50% 的水位，而它本来没有「说服司机挪车」这个摩擦。更麻烦的是 P1（30%）远高于 P2（14%）：大量里程既不是接客也不是载客；折算下来每台车每月有 10–12 天处于无任务状态，而我们对「没单时该停着还是该转圈」还没有政策答案。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/waymo-cpuc-deadheading-data/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/a-deep-dive-into-waymos-cpuc-data" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest（Harry Campbell / Substack 播客）</div><h1>把 Waymo 的加州监管数据拆开：44% 的里程空着跑，每单还有 20 分钟没人认领</h1><p class="sub">A Deep Dive into Waymo’s CPUC Data with Dr. Matthew Raifman</p><div class="tags"><span class="tag">⏱ 50:17</span><span class="tag">👤 Matthew Raifman 博士（UC Berkeley SafeTREC 政策与自动驾驶研究负责人；原福特智能出行东海岸合作负责人）</span><span class="tag">🗓 2026-01</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://www.thedriverlessdigest.com/p/a-deep-dive-into-waymos-cpuc-data" target="_blank" rel="noopener">▶ 在来源站观看视频</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">TL;DR（结论先行）</a><a href="#s1">一、一份被涂黑的季报，为什么成了唯一可用的数据</a><a href="#s2">二、P1 / P2 / P3：三个周期到底在数什么</a><a href="#s3">三、两年曲线：订单涨了十几倍，空驶降到 44%</a><a href="#s4">四、44% 不该是终点：为什么 Waymo 本该比人类更好</a><a href="#s5">五、P1 远高于 P2：一个「意外，但不意外于它让人意外」的谜题</a><a href="#s6">六、电动不等于零污染</a><a href="#s7">七、第二篇：等待时间砍半，以及每台车每月 10–12 天的空转</a><a href="#s8">八、该停着还是该转圈：一个还没有政策答案的问题</a><a href="#s9">九、路侧的下一步：从「上落客专区」到机器对机器的协商</a><a href="#s10">十、数据真正缺的是什么：exposure</a><a href="#s11">十一、不是所有行程都等价</a><a href="#s12">十二、私家车才是下半场</a><a href="#s13">结语：这期节目的真正贡献，是把「不可见」变成「可数」</a><a href="#s14">局限与说明</a></nav><main class="content"><h1>把 Waymo 的加州监管数据拆开：44% 的里程空着跑，每单还有 20 分钟没人认领</h1>
+<blockquote><strong>来源</strong>：The Driverless Digest（Harry Campbell，Substack 播客 + 文字分析）</blockquote>
+<blockquote><strong>嘉宾</strong>：Matthew Raifman 博士 —— UC Berkeley SafeTREC（交通安全研究中心）政策与自动驾驶研究负责人；此前在福特智能出行（Ford Smart Mobility）任东海岸合作负责人，主导迈阿密-戴德县与华盛顿特区的自动驾驶试点，经历过福特入股 Argo AI 的那段时期</blockquote>
+<blockquote><strong>主持</strong>：Harry Campbell（The Rideshare Guy 创始人，做这行 11 年）｜<strong>时长</strong>：50:17｜<strong>发布</strong>：2026-01-19</blockquote>
+<hr>
+<h2 id="s0">TL;DR（结论先行）</h2>
+<ul><li><strong>外界能拿到的 Waymo 运营数据，本质上只有一张表。</strong> 加州公共事业委员会（CPUC）每季度的报告被大幅涂黑，但保留了每家公司在该州的总里程，以及里程在三个周期上的分布 ——「没任务（P1）」「赶去接客（P2）」「车上有客（P3）」。这是目前唯一可以公开分析的自动驾驶商业运营里程数据。</li><li><strong>只对「收费」强制报送。</strong> CPUC 数据只覆盖 deployment（收费载客），纯测试不报。目前 Waymo 是唯一在收费的，所以这张表几乎等于「Waymo 专项」—— 不是因为监管偏心，而是因为没有第二个玩家。</li><li><strong>两年曲线：订单涨了十几倍，空驶降了 8 个点。</strong> 2024-01 至 2025-09，月订单从约 8 万单涨到最近一个季度单月超过 100 万单；同期空驶（P1+P2）占里程比重从 <strong>52% 降到 44%</strong>。</li><li><strong>44% 恰好是「人类水平」，而嘉宾认为这不是目标。</strong> 人类网约车（Uber/Lyft）的空驶大致在 40–50%。Raifman 的论点很锋利：<strong>人类 TNC 空驶高，是因为你没法直接命令司机，只能靠溢价、热力图、派单机制去「劝」；Waymo 不需要谈判。</strong> 没有摩擦的一方，理应做得比有摩擦的一方更好。</li><li><strong>真正的谜题是 P1 ≫ P2。</strong> 2025-09，P1 约占 30%，P2 只占 14%。也就是说，<strong>「没有任何任务却在跑」的里程，是「正在赶去接客」的两倍多</strong>。他给出的可能解释是：Waymo 可能在同一台车上切换「测试许可 / 部署许可」，用 P1 时间采集道路、地图、上落客点位数据 —— 那些里程对公司并不「无用」。</li><li><strong>「电动 = 零排放」在这里站不住。</strong> 空驶加剧拥堵 → 周边燃油车尾气上升；充电电力的来源在别处；刹车与轮胎磨损随里程同步增长。P1/P2/P3 这个拆分最初就是<strong>为了空气质量监管</strong>设计的，来自 TNC 时代，不是 Waymo 发明的。</li><li><strong>第二篇把「时间」也算了进来：每单等待从 40 分钟砍到 20 分钟以内。</strong> 方法是拿 P1 里程 + 假定车速，反推「停着的时间」。折算下来，期内加州约 1,000 台车的规模下，<strong>每台车每月有 10–12 天处于无任务状态</strong>。</li><li><strong>「没单时该停着还是该转圈」没有普适答案，而且我们还没开始回答。</strong> 空旷街区有空车位，停着更好；密集商业区，停和转都是给已经复杂的局面再加一台车。真正缺的是政策：作为社会，我们期望这些车在没单时做什么，并把这个期望明确告知企业。</li><li><strong>数据真正缺的是 exposure（暴露量）。</strong> 不是全州总里程，而是「什么时段、在哪个城市、哪个街区跑」。没有分母，事故率无法比较 —— 同一个交叉口，同样的死亡数，车流量不同，风险完全不同。</li></ul>
+<hr>
+<h2 id="s1">一、一份被涂黑的季报，为什么成了唯一可用的数据</h2>
+<p>这期节目的方法论起点非常朴素：<strong>数据是稀缺的，所以只能把手边唯一的那张表榨干。</strong></p>
+<p>Raifman 先交代了 CPUC 的角色 —— 加州公共事业委员会，是 TNC（Uber、Lyft）的监管者，也是自动驾驶公司的监管者。关键在于报送义务的边界：</p>
+<blockquote>&quot;CPUC data is only required for deployments, which are essentially public revenue driven rides. So testing rides, companies testing AVs are not required to report CPUC data unless they&#x27;re generating revenue from trips.&quot;</blockquote>
+<p>也就是说：<strong>只有收费载客才强制报送。</strong> 测试不报。而今天在加州真正在收费的只有 Waymo —— 于是「行业数据」实际上退化为「一家公司的数据」。这不是监管设计偏心，而是市场还没出现第二个玩家。</p>
+<p>公开数据的其余部分同样稀薄：</p>
+<table><thead><tr><th>数据来源</th><th>覆盖内容</th><th>局限</th></tr></thead><tbody><tr><td>CPUC 季度报告（大幅涂黑）</td><td>各公司总里程 + 三周期分布 + 等待时间</td><td>涂黑严重，无地理与时点信息</td></tr><tr><td>DMV 测试里程</td><td>测试状态下的总里程</td><td>只反映测试，不代表商业运营</td></tr><tr><td>企业自愿披露</td><td>部分公司主动公布的运营里程</td><td>口径自定，无法横向比较</td></tr></tbody></table>
+<p>所以那份被涂黑到只剩几列的表，反而成了<strong>唯一能做纵向分析的公开素材</strong>。这也解释了为什么这个选题值得做两年 —— 不是数据好用，是没得选。</p>
+<hr>
+<h2 id="s2">二、P1 / P2 / P3：三个周期到底在数什么</h2>
+<p>这套拆分是整个分析的骨架，必须先讲清楚：</p>
+<table><thead><tr><th>周期</th><th>定义</th><th>通俗说法</th><th>是否「空驶」</th></tr></thead><tbody><tr><td><strong>P1</strong></td><td>车辆在累计里程，但没有被分配行程；可以是在跑，<strong>也可以是停着</strong></td><td>漫无目的</td><td>✅</td></tr><tr><td><strong>P2</strong></td><td>已分配到行程，正从当前位置开往下一个上客点</td><td>赶去接客</td><td>✅</td></tr><tr><td><strong>P3</strong></td><td>车上有乘客</td><td>真正在赚钱</td><td>❌</td></tr></tbody></table>
+<p>几个容易被忽略的细节，恰好是这期节目里最有价值的部分：</p>
+<ol><li><strong>P1 包含「停着」的时间。</strong> 主持人在对话中确认了这一点，Raifman 强调「这点很重要」—— 因为只有承认 P1 可以是静止的，才可能在后面用「P1 里程 + 假定速度」反推停车时间。</li><li><strong>deadheading = P1 + P2。</strong> 这个词来自巴士与航运业，指空载返程，飞机也一样。</li><li><strong>三段是分开统计报送的。</strong> 这正是它能被用来做监管的因果：如果你只能看到「总里程」，你永远不知道里面有多少是白跑的。</li><li><strong>这套拆分的原始动机是空气质量，不是运营效率。</strong> Raifman 明确指出它起源于 TNC 时代的环保关切 —— 「这是潜在的空气质量污染来源」。这一点在后半段会变成一条重要论证。</li></ol>
+<p>主持人 Harry 补了一个操作者视角，把这个表格翻译成了钱：</p>
+<blockquote>&quot;You can&#x27;t really charge people to drive to them, to wait for them... You want to be moving with a passenger in the car because that&#x27;s when you can charge people the most.&quot;</blockquote>
+<p>于是我们就得到了一个罕见的<strong>利益一致点</strong>：城市想减少空驶（少堵车），公司也想减少空驶（不产生收入还烧钱）。Raifman 特意点出这一点 —— 在路侧使用权这类零和议题上双方是对立的，但空驶上不是。</p>
+<hr>
+<h2 id="s3">三、两年曲线：订单涨了十几倍，空驶降到 44%</h2>
+<p>观察区间是 <strong>2024 年 1 月至 2025 年 9 月</strong>，接近两年。选这个起点的理由很实际：这是 Waymo 在加州稳定做收费行程、并持续报送的完整窗口。</p>
+<table><thead><tr><th>指标</th><th>2024-01</th><th>2025-09</th><th>变化</th></tr></thead><tbody><tr><td>月订单量</td><td>约 8 万单</td><td>超过 100 万单（最近一季）</td><td><strong>约 12–13 倍</strong></td></tr><tr><td>空驶占里程（P1+P2）</td><td>约 52%</td><td>约 44%</td><td><strong>−8 个百分点</strong></td></tr><tr><td>P1 占里程</td><td>—</td><td>约 30%</td><td>仍是最大单项</td></tr><tr><td>P2 占里程</td><td>—</td><td>约 14%</td><td>不到 P1 的一半</td></tr><tr><td>每单等待时间</td><td>约 40 分钟</td><td>20 分钟以内</td><td><strong>砍半</strong></td></tr></tbody></table>
+<p>主持人用了一个很好的量级换算：一个月一百万单、44% 的里程没有乘客，如果一单几英里，那就是<strong>每月在加州有超过一百万英里是空跑的</strong>。</p>
+<p>Raifman 对这个趋势的定性是「正面但不值得庆祝」：</p>
+<blockquote>&quot;The trajectory is downward, which is a positive thing for society, but it&#x27;s still quite high and reflects some of the negative externalities of this mobility option.&quot;</blockquote>
+<hr>
+<h2 id="s4">四、44% 不该是终点：为什么 Waymo 本该比人类更好</h2>
+<p>这是全期最锋利的一段论证。先看事实：按 Raifman 查到的关于 TNC 的文献，人类驾驶的网约车空驶水平大致落在 <strong>40–50%</strong> 区间：</p>
+<blockquote>&quot;That 40 to 50 range is pretty consistent with the level of deadheading that&#x27;s occurring amongst human-driven transportation network companies. So Waymo has brought their statistic in line with TNCs.&quot;</blockquote>
+<p>然后他立刻拆掉了「对齐行业水平」这个说法：</p>
+<blockquote>&quot;Now, I don&#x27;t personally think that&#x27;s the ultimate goal. I think Waymo should be able to do better than human-driven TNCs.&quot;</blockquote>
+<p>理由是结构性的，而且只有做过两边的人才说得出来：</p>
+<ul><li><strong>人类 TNC 的空驶，有一部分是「谈判成本」。</strong> 平台不能直接命令司机，只能通过溢价、热力图、派单机制去引导。「你需要说服你的司机移动到你需要的位置，这中间存在某种谈判。」</li><li><strong>Waymo 没有这个摩擦。</strong> 它同样要挪车、同样要优化等待时间，但「它可以完全按自己的意愿来做」。</li></ul>
+<p>换句话说：<strong>人类 44% 里有一部分是制度摩擦的产物，自动驾驶没有理由继承这笔摩擦。</strong> 主持人进一步补了机制细节，把「摩擦」讲得更具体：Trip Radar 让司机从十个行程里挑，本质是反向竞价；司机可能为了去自己喜欢的区域而空跑十分钟，而平台不必为那段时间付钱。</p>
+<p>Raifman 顺手把标尺本身也质疑了一遍 —— 这是全期最好的一句：</p>
+<blockquote>&quot;Is the discussion that we want Waymo, we want AV companies to just be better than killing 40,000 Americans every single year? Is that really the utopia that we&#x27;re designing with these new innovations?&quot;</blockquote>
+<p>他的期望值很具体，也很克制：<strong>降到 40% 以下应该做得到，是否现实到 30% 以下他不知道，但方向应该是「尽可能接近零」。</strong></p>
+<hr>
+<h2 id="s5">五、P1 远高于 P2：一个「意外，但不意外于它让人意外」的谜题</h2>
+<p>主持人从图上读出的异常是：<strong>P1 的里程份额远高于 P2</strong>。2025 年 9 月，P1 约 30%，P2 只有 14%。</p>
+<blockquote>&quot;The miles traveled that these vehicles are doing without an assignment is surprisingly high compared to the amount of miles traveled going from wherever they are to their next assignment. I was surprised, but also not surprised that it is surprising.&quot;</blockquote>
+<p>他给的解释清单如下：</p>
+<table><thead><tr><th>假设</th><th>逻辑</th><th>能否被数据证实</th></tr></thead><tbody><tr><td><strong>伪装成 P1 的数据采集</strong></td><td>车本来可以停着，但「不如开着收集数据」；更新地图、采集路径效率、寻找潜在上落客点</td><td>❌ 表格只有数字</td></tr><tr><td><strong>许可切换</strong></td><td>同一台车可同时持有测试许可与部署许可，完成收费行程后可切到测试运行</td><td>⚠️ 技术上可行，但通常测试用于新软件/新地图/新车型</td></tr><tr><td><strong>需求密度</strong></td><td>用户基数大时，从上个落客点到下个上客点的距离更短，P2 被压低</td><td>✅ 与扩张节奏吻合</td></tr><tr><td><strong>算法主动放弃</strong></td><td>车虽然空着，但离你太远，系统索性不派单 —— 它就从「潜在 P2」退回 P1</td><td>✅ 逻辑成立</td></tr></tbody></table>
+<p>最后一条尤其值得记住，因为它说明 <strong>P1/P2 的边界并不完全由物理状态决定，而由调度决策决定</strong>：</p>
+<blockquote>&quot;Even if a vehicle is free, it might be too far away. So they might opt out of allocating that to your ride. And therefore that vehicle that was potentially an option for you becomes a P1 aimlessly driving around vehicle.&quot;</blockquote>
+<p>主持人也贡献了一个「我原本想错了」的复盘：他起初认为高峰期必然 P1≈0（车都在行程里），后来意识到<strong>必须在非高峰时段也成立</strong>，而且洛杉矶的 ETA 常是 10–20 分钟，其中一半时间车还在服务上一位乘客 —— 那段时间根本不计入 CPUC 的 P2。</p>
+<p>这段对话的价值不在结论，而在<strong>方法论的坦白</strong>：外部研究者看到的只是一个聚合数字，任何因果解释都只能是假设。Raifman 的处理方式值得学习 —— 承认不确定，然后把论证拉回「不管为什么，里程就在那里」：</p>
+<blockquote>&quot;Just because it&#x27;s complicated doesn&#x27;t mean the high level statistics don&#x27;t matter... the deadheading matters. It doesn&#x27;t really matter why.&quot;</blockquote>
+<hr>
+<h2 id="s6">六、电动不等于零污染</h2>
+<p>这一段来自 Raifman 读博期间的空气质量与排放研究背景，也是「空驶」为什么是一个监管指标的原始答案。</p>
+<blockquote>&quot;Just because these vehicles are electric vehicles does not mean that their net impact on pollution is zero.&quot;</blockquote>
+<p>三条传导链：</p>
+<ol><li><strong>拥堵传导</strong> —— 电动车本身没有尾管，但它让车流变慢；同一条路上其它燃油车因为低速与拥堵，<strong>单位时间排放上升</strong>。</li><li><strong>电力传导</strong> —— 充电要用能，电在别处发出来；如果不是可再生能源，等于把污染<strong>外包</strong>到电厂所在的社区。</li><li><strong>非尾管传导</strong> —— 里程越多，刹车与轮胎磨损越多，这部分颗粒物同样不容忽视。</li></ol>
+<p>所以「零排放车队」在<strong>城市尺度的账本上并不等于零外部性</strong>。这也解释了为什么 P1/P2/P3 的拆分最早是环保署式的关切，而不是运营指标 —— 它是用来量化「这些车到底给路面添了多少负担」的。</p>
+<hr>
+<h2 id="s7">七、第二篇：等待时间砍半，以及每台车每月 10–12 天的空转</h2>
+<p>如果第一篇看的是「移动」，第二篇看的就是「静止」。触发点非常具体：</p>
+<blockquote>&quot;I had witnessed a Waymo in a very popular, well-trafficked area near the Embarcadero in San Francisco. And I watched it park at a red curb and I watched it sit there for a couple of minutes.&quot;</blockquote>
+<p>他特意声明这不是「抓现行」：</p>
+<blockquote>&quot;I am not in the practice or in the business here of gotcha.&quot;</blockquote>
+<p>而是想把肉眼观察变成可量化的东西。方法上有一个巧妙之处：CPUC 表里另有一列「<strong>等待时间</strong>」，定义恰好就是 P1 ——</p>
+<blockquote>&quot;Waiting time is a time when an AV is unassigned and either parked or driving around.&quot;</blockquote>
+<p>于是可以做一个减法：</p>
+<p><strong>已知 P1 里程（另一组数据） + 已知 P1 总时间 + 假定车速 → 反推「停着的时长」</strong></p>
+<p>这是这项分析真正的新意。结论有两层：</p>
+<ul><li><strong>每单等待时间从约 40 分钟降到 20 分钟以内</strong>，降幅比里程更剧烈。Raifman 把功劳归于路由、匹配效率以及车队规模扩张 —— 而且是在服务范围大幅扩张（湾区 → 洛杉矶 → 东湾/伯克利，未来可能延伸到太浩湖）的同时做到的。</li><li><strong>折算到车队，量级相当惊人。</strong> 期内加州平均约 1,000 台车，按此推算约等于<strong>每台车每月有 10–12 天处于无任务状态</strong>。</li></ul>
+<p>需要提醒的是，这个数字是<strong>估算</strong>，且基于两个不确定假设（车辆规模、平均车速）。Raifman 自己也很谨慎：「这些数字很难精确锁定」。但即使只取数量级，它提出的问题也是真的：<strong>这些时间，车是在跑，还是在停？</strong></p>
+<hr>
+<h2 id="s8">八、该停着还是该转圈：一个还没有政策答案的问题</h2>
+<p>这是全期最「没有答案」的一段，也是最有价值的一段。</p>
+<p>Raifman 的立场是：<strong>答案必须由情境决定</strong>，两个极端说明了为什么不存在统一规则。</p>
+<table><thead><tr><th>情境</th><th>更优行为</th><th>原因</th></tr></thead><tbody><tr><td>空旷街区、合法空车位充足</td><td><strong>停着</strong></td><td>兜圈纯属浪费里程与排放</td></tr><tr><td>密集商业区、行人与骑行者密集</td><td><strong>两者都不理想</strong></td><td>已经是复杂环境，再加一台车只会更复杂</td></tr></tbody></table>
+<blockquote>&quot;It&#x27;s absolutely situation driven, what&#x27;s best for society. But we need to ask the questions about what these vehicles are doing.&quot;</blockquote>
+<p>然后他把问题从「车的行为」抬到「社会的期望」：</p>
+<blockquote>&quot;It&#x27;s worth asking what we&#x27;re doing from a regulatory perspective and a policy perspective... what we expect and what our goals are for how these vehicles would operate in our environment when they&#x27;re not on a trip. And I&#x27;m not sure we&#x27;re at the point here yet where we are as a society answering that question and signaling to the companies what we expect them to do.&quot;</blockquote>
+<p>主持人的补充很关键：<strong>城市根本没为这种主体设计过。</strong> 人类不会一整天绕着一个街区转（为什么要？），但自动驾驶可以，因为「这么做没有成本」；人类不会无目的一直占着咪表车位（管理员来了会走），但机器可以。城市空间规则里默认的「行为人」是有目的、有成本、有羞耻感的 —— 这个默认正在失效。</p>
+<p>还有一个容易被忽略的收尾：<strong>这本来不是自动驾驶的问题。</strong></p>
+<blockquote>&quot;It&#x27;s not actually an AV problem. It&#x27;s just brought up because of the presence of AVs pushing these questions.&quot;</blockquote>
+<p>私家车 95% 的时间在占用空间；Uber/Lyft 在多数大城市只占 5–10% 的里程，却承担了「新增拥堵三分之二」的叙事。所以任何只针对自动驾驶的规则（比如「禁止 AV 兜圈」）都会留下同样的漏洞 —— 因为人还可以继续兜圈。<strong>能真正解决问题的，必须是对所有车辆成立的政策，比如拥堵定价。</strong></p>
+<hr>
+<h2 id="s9">九、路侧的下一步：从「上落客专区」到机器对机器的协商</h2>
+<p>主持人抛出一个类比：人行道配送机器人一开始就选择走人流较少的路线 —— 能不能让 Waymo 也停在「没人抢车位」的地方？Raifman 承认这类原则有价值，但他对上一代解法有明确的否定：</p>
+<ul><li><strong>上落客专区（pickup/drop-off zone）试点不可扩展。</strong> 当年城市和 Uber/Lyft 试过指定上下客点，「问题是它扩展不到现在市场需要的量级」—— 如今上落客发生在这些城市的<strong>每一条街</strong>上，退回「定点服务」不现实。</li><li><strong>但他也不认为现状可以一直这样。</strong></li></ul>
+<p>他给出的方向是全期最具体的一个机制设想：</p>
+<blockquote>&quot;There probably needs to be an endpoint here where behind the scenes, there&#x27;s a negotiation... a computer negotiation... where the AV is negotiating with some map of available locations across the city and it&#x27;s reserving a small segment of a pickup drop-off at that location.&quot;</blockquote>
+<p>关键在最后一层：<strong>这套协商必须在后台自动完成</strong>，因为对面已经不再是「Uber 司机」这个可沟通的人，而是自动化服务。城市要能管路侧（保留计费、保留优先权、保留禁停），企业要能拿到可靠的上落客位 —— 这两件事只能通过机器与机器之间的实时预订来同时成立。</p>
+<hr>
+<h2 id="s10">十、数据真正缺的是什么：exposure</h2>
+<p>被问到「还希望 CPUC 公开什么」时，Raifman 给出的答案是 <strong>exposure（暴露量）</strong> —— 一个借自公共卫生的概念。</p>
+<p>现在的数据只有全州总量；缺的是<strong>分布</strong>：</p>
+<ul><li>这些里程发生在<strong>什么时段</strong>？</li><li>在<strong>哪个城市</strong>（旧金山 / 洛杉矶 / 太浩湖）？</li><li>在<strong>哪个街区</strong>？是不是某些社区被跑得更频繁？</li></ul>
+<p>为什么这决定了结论能不能成立：</p>
+<blockquote>&quot;If the busy intersection has the same fatalities per intersection as the not busy one, then the risk is very different, because the denominator of the number of vehicles going through that intersection is much higher in one case versus the other.&quot;</blockquote>
+<p>换句话说：<strong>没有分母的事故数是不可比的。</strong> 如果自动驾驶在某个街区跑得特别多，那里事故多并不稀奇；反过来，如果某个街区事故率异常但里程很少，那才是信号。缺了 exposure，所有「安全不安全」的讨论都建立在错误的分母上。</p>
+<hr>
+<h2 id="s11">十一、不是所有行程都等价</h2>
+<p>节目后半段有一处立场转向，值得单独记：主持人和嘉宾都同意，<strong>空驶率作为单一指标是有缺陷的</strong>，因为行程的价值不同。</p>
+<ul><li>去看医生、复诊、无障碍出行（paratransit）这类行程，很多公交机构<strong>依法必须</strong>提供同等服务；</li><li>这类行程历史上由非常昂贵的合同运营商承担 —— 开的是「只坐一名乘客的小巴」；</li><li>把它们转到网约车/自动驾驶上，<strong>对城市省钱，对出行者体验更好</strong>。</li></ul>
+<blockquote>&quot;I could make the argument that some trips, I&#x27;m okay with a driver sitting around empty for hours on end if they take someone to a very important doctor&#x27;s appointment.&quot;</blockquote>
+<p>主持人补了另一半：周五周六晚的「派对时段」是另一种行程 —— 对一个想复兴商业中心、以经济为重的城市，这种供给反而是加分项。</p>
+<p>这就把讨论从「平均空驶率」推向了「<strong>差异化定价与差异化容忍</strong>」：如果社会确实希望某些行程更便宜、更可得，那就必须允许它们在整体账本上表现更差 —— 而这需要通过政策明示，而不是靠企业自觉。</p>
+<hr>
+<h2 id="s12">十二、私家车才是下半场</h2>
+<p>Raifman 提醒了一件容易被网约车叙事盖住的事：</p>
+<blockquote>&quot;Autonomous vehicles is not going to be a limited thing just for ride hail... The same technology that is disrupting Uber and Lyft and taxis... is going to make its way into personal vehicles.&quot;</blockquote>
+<p>他的比喻是：<strong>从同一个起点出发，走两条不同的轨迹，最后回到同一个社会影响。</strong></p>
+<p>主持人接得更狠：如果个人拥有一台 robotaxi，最理性的用法可能是让它送自己到市中心、然后<strong>绕街区转圈</strong>，而不是付 50 美元停车费 —— 他甚至提到 Tensor 在 CES 上宣称要在 2026 年底把个人拥有的 robotaxi 推上路。</p>
+<p>这意味着前面所有问题（空驶、占位、路侧、exposure）都会以更大的规模重演一遍：<strong>从「一家公司的一千台车」变成「几百万个车主的私人算法」。</strong> 如果监管只盯着运营车队，那才是真正的漏洞。</p>
+<hr>
+<h2 id="s13">结语：这期节目的真正贡献，是把「不可见」变成「可数」</h2>
+<p>回头看，Raifman 做的事其实很小：从一份被涂黑的季报里，抽出几列数字，拉成两年的曲线，再补上一个用里程反推停车时间的估算。</p>
+<p>但它的意义在于三点：</p>
+<ol><li><strong>它证明了外部监督是可能的。</strong> 在数据极度稀缺的行业里，公开数据的边际价值极高 —— 哪怕只有三列。</li><li><strong>它把「效率进步」和「够不够好」分开了。</strong> 空驶从 52% 降到 44%、等待从 40 分钟降到 20 分钟，都是真实进步；但 44% 只是人类水平，而「人类水平」不该是自动驾驶的目标函数。</li><li><strong>它把问题从企业行为推到了公共选择。</strong> 该停还是该转、要不要为某些行程容忍空驶、路侧归谁定价 —— 这些都不是 Waymo 能单方面回答的。</li></ol>
+<p>用嘉宾自己的话说，这是全社会还没开始回答的问题：</p>
+<blockquote>&quot;I&#x27;m not sure we&#x27;re at the point here yet where we are as a society answering that question and signaling to the companies what we expect them to do.&quot;</blockquote>
+<hr>
+<h2 id="s14">局限与说明</h2>
+<ul><li><strong>本稿基于该期官方转录（Substack 自动转写 + 说话人标注）整理</strong>，说话人已映射为 Matthew Raifman（嘉宾）与 Harry Campbell（主持）；转写存在少量识别错误，引用以上下文可复原的含义为准。</li><li><strong>嘉宾在节目开头明确声明</strong>：所有观点为个人意见，不代表加州大学董事会或 UC Berkeley。</li><li><strong>核心数字的可信度分层</strong>：空驶占比（52%→44%）、P1/P2 份额（30%/14%）为 CPUC 报送口径；每单等待时间（40→20 分钟）、每车每月 10–12 天、每月百万英里空驶为<strong>基于假设的估算</strong>，不宜当作精确统计引用。</li><li><strong>口径上有一处值得注意的张力</strong>：Raifman 的折算按期内加州平均约 1,000 台车估算，而主持人在对话中提到 Waymo 车队已达 3,000 台、每周 45 万单（时点更晚）。两者的差异来自时间窗口不同，但引用时应避免混用。</li><li>0:00–0:45 为赞助商 Terawatt（自动驾驶车队充电基础设施）口播，与主题无关，已在逐字稿中标注。</li><li>期数发布于 2026 年 1 月，数据截止 2025 年 9 月；此后 Waymo 的服务范围与规模均有变化，结论应视为该窗口内的截面。</li></ul></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../robotaxi-curb-dilemma/index.html"><div class="rw"><img loading="lazy" src="../robotaxi-curb-dilemma/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack</div><div class="rt">Robotaxi 的「路缘困境」：停靠、巡游，还是回库？</div></div></a><a class="relcard" href="../charterup-autonomous-group-transport-harris/index.html"><div class="rw"><img loading="lazy" src="../charterup-autonomous-group-transport-harris/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Harry Campbell</div><div class="rt">CharterUP 的赌注：自动驾驶真正的第一桶金不在轿车，在「成组出行」</div></div></a><a class="relcard" href="../europe-robotaxi-reality-check-friedel/index.html"><div class="rw"><img loading="lazy" src="../europe-robotaxi-reality-check-friedel/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</div></div></a><a class="relcard" href="../waabi-one-driver-trucks-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../waabi-one-driver-trucks-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / YouTube</div><div class="rt">Waabi 创始人兼 CEO Raquel Urtasun：从卡车到 Robotaxi，一个 Driver 通吃所有车型</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
