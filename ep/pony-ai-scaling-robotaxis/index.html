@@ -1,0 +1,442 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>小马智行的 Robotaxi 扩张手册：单位经济、车队所有权与盈亏平衡车队规模 · 总结分析</title><meta name='description' content='AV Market Strategist 对小马智行（Pony.ai）联合创始人兼 CEO 彭军（Dr. James Peng）的深度访谈，主线不是技术演示而是「账本」：单车要赚多少、单位经济里算什么不算什么、为什么越来越多车辆归丰田或 Verne 这类合作方所有、每英里成本与 Waymo 相比如何、以及多大规模才能让公司现金流转正。地图部分覆盖萨格勒布（Zagreb）、伦敦与曼彻斯特的测试计划、卢森堡（Bolt + Stellantis）、迪拜与多哈，并解释彭军为何认为德国 2021 年自动驾驶法需要先迈一小步。收尾回应投资人最关心的问题：当 Uber 与所有自驾公司合作，「虚拟司机」会不会变成大宗商品？'><meta property='og:title' content='小马智行的 Robotaxi 扩张手册：单位经济、车队所有权与盈亏平衡车队规模 · 总结分析'><meta property='og:description' content='AV Market Strategist 对小马智行（Pony.ai）联合创始人兼 CEO 彭军（Dr. James Peng）的深度访谈，主线不是技术演示而是「账本」：单车要赚多少、单位经济里算什么不算什么、为什么越来越多车辆归丰田或 Verne 这类合作方所有、每英里成本与 Waymo 相比如何、以及多大规模才能让公司现金流转正。地图部分覆盖萨格勒布（Zagreb）、伦敦与曼彻斯特的测试计划、卢森堡（Bolt + Stellantis）、迪拜与多哈，并解释彭军为何认为德国 2021 年自动驾驶法需要先迈一小步。收尾回应投资人最关心的问题：当 Uber 与所有自驾公司合作，「虚拟司机」会不会变成大宗商品？'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/pony-ai-scaling-robotaxis/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><span class="cur">总结分析</span><span class="sep dot">·</span><a href="transcript.html">逐字稿</a></nav><span class="grow"></span><a class="navlink" href="https://avmarketstrategist.substack.com/p/pony-ais-playbook-for-scaling-robotaxis" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">AV Market Strategist · Substack（Autonomy Insiders）</div><h1>小马智行的 Robotaxi 扩张手册：单位经济、车队所有权与盈亏平衡车队规模</h1><p class="sub">Pony AI&#x27;s Playbook for Scaling Robotaxis Worldwide</p><div class="tags"><span class="tag">⏱ 37:11</span><span class="tag">👤 Dr. James Peng（彭军，小马智行 Pony.ai 联合创始人兼 CEO）、Daniel（AV Market Strategist / Autonomy Insiders 主持人）</span><span class="tag">🗓 2026-11</span></div><div class="etabs"><a class="etab active" href="index.html">📊 总结分析</a><a class="etab" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="cover.jpg" alt="cover"></div></header><div class="video-wrap" style="background:#0b1220"><img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain"><a class="watchbtn" href="https://open.spotify.com/episode/5TOncPaPVC2qRgUdIqR2FB" target="_blank" rel="noopener">🎧 在 Spotify 收听本期</a></div><div class="layout"><nav class="toc"><h4>目录</h4><a href="#s0">结论先行</a><a href="#s1">一、开场：从 Google、百度到 Fremont 车库</a><a href="#s2">二、一个核心能力，三条营收线</a><a href="#s3">三、车队与「谁拥有车」：四角色模型</a><a href="#s4">四、T 型扩张：3,500 辆与 20+ 城市</a><a href="#s5">五、单位经济：算什么、不算什么，以及 5 万辆</a><a href="#s6">六、欧洲地图：四个国家，四种打法</a><a href="#s7">七、海湾：为什么是迪拜与多哈</a><a href="#s8">八、Pony World 与「商品化之问」</a><a href="#s9">九、关键数字速查</a><a href="#s10">十、存疑与局限（读这篇稿时请保留的判断）</a><a href="#s11">官方章节表（出版方提供）</a></nav><main class="content"><h1>小马智行的 Robotaxi 扩张手册：单位经济、车队所有权与盈亏平衡车队规模</h1>
+<blockquote>来源：*AV Market Strategist*（Autonomy Insiders 播客）· 对小马智行 Pony.ai 联合创始人、董事长兼 CEO 彭军（Dr. James Peng）的访谈｜发布于 2026-11-04，时长 37:11</blockquote>
+<blockquote>原始链接：[avmarketstrategist.substack.com](https://avmarketstrategist.substack.com/p/pony-ais-playbook-for-scaling-robotaxis) ｜ [Spotify 收听](https://open.spotify.com/episode/5TOncPaPVC2qRgUdIqR2FB)</blockquote>
+<blockquote></blockquote>
+<blockquote><strong>底稿说明</strong>：本期 Substack 未提供官方转录（posts API 中 <code>transcription: null</code>），英文底稿由本地 faster-whisper <code>small.en</code> 语音识别生成（460 段 → 合并为 93 段，均带真实 <code>mm:ss</code> 时间戳），中文为逐段人工翻译。已按官方节目简介与上下文校正明显误听，包括：James Bang → <strong>James Peng</strong>、Jingxua → <strong>Tsinghua（清华）</strong>、Jianqing Liu / Tian Cheng Lo → <strong>楼天城（Tiancheng Lou，CTO）</strong>、Z4X → <strong>丰田 bZ4X</strong>、Vern(e) → <strong>Verne</strong>、boat → <strong>Bolt</strong>、the Atlantis → <strong>Stellantis</strong>、Zacreb/Sacrab → <strong>Zagreb</strong>、RGA → <strong>RTA（迪拜道路交通管理局）</strong>、Mova Saleh → <strong>Mowasalat（卡塔尔最大出租车运营商）</strong>、railroad → <strong>real road（实路）</strong>、pony board → <strong>Pony World</strong>、unieconomics → <strong>unit economics</strong>、know-house → <strong>know-how</strong>、gold player → <strong>Go player</strong>、Robotech C13 → <strong>robotaxi 约 1,200 万美元 / robotruck 约 1,300 万美元</strong>。个别句子 ASR 存在歧义（详见文末「存疑与局限」），涉及关键结论处已标注。以下引文与数字均来自本期真实逐字稿。</blockquote>
+<hr>
+<h2 id="s0">结论先行</h2>
+<p>这期访谈最有价值的地方，是彭军把「robotaxi 公司什么时候能赚钱」拆成了一道可以自己验算的算术题，而不是一句「规模化后会盈利」的行业口号：</p>
+<ol><li><strong>单车已经赚钱</strong>。年初发布的 Gen 7 车型，在<strong>车辆层面已实现正毛利</strong>（&quot;owning the vehicle itself is not losing money&quot;）——这是小马智行敢把车辆从自己资产负债表上挪走的唯一前提。</li><li><strong>单位经济只剔除一项成本：研发</strong>。折旧、电费、保险、清洁维保、停车与过路费、付给 Uber 的用户获取分成、远程协助人力，全部计入。</li><li><strong>公司层面的盈亏平衡 ≈ 5 万辆</strong>。「如果只考虑全公司靠 robotaxi 一条线跑，大约需要 5 万辆 robotaxi 才能产生正现金流」；一条 robotruck 的盈利能力约等于 3–5 辆 robotaxi，所以三条业务线加总后实际门槛会低一些。</li><li><strong>成本优势是全部叙事的地基</strong>。彭军称小马智行<strong>每英里成本比 Waymo 便宜 3–5 倍</strong>（公司自述，未经独立验证），并以此回应「虚拟司机会不会商品化」：只要各家在成本、能力、安全记录上仍差这么多，Uber 就无法随意派单。</li><li><strong>组织边界比技术边界更清晰</strong>：打车业务有四个角色——用户获取、车队所有者、司机、车辆服务；小马智行<strong>只死守「司机」（虚拟司机）</strong>，其余三块在不同城市自由组合给伙伴。</li></ol>
+<p>一句话：这不是一家在卖车的公司，也不是一家在卖软件授权的公司，而是一家试图把「司机」这一个岗位从四角色价值链里单独抽出来、并把它做成可复制资产的公司。</p>
+<h2 id="s1">一、开场：从 Google、百度到 Fremont 车库</h2>
+<p>主持人 Daniel 交代背景：彭军清华本科、斯坦福博士，在 Google 与百度共 11 年，2016 年 12 月与楼天城（Tiancheng Lou，现任 CTO）在硅谷创立小马智行；公司起步于加州 Fremont，如今总部在广州，已在纳斯达克与香港两地上市。</p>
+<p>彭军给出的创业理由有两条，且都很「工程师」：</p>
+<blockquote>「大约十年前是第一波 AI 大潮，就是 AI 击败最强围棋棋手的时候。我们确实看到了 AI 改变生活的潜力，而自动驾驶在社会效益和财务回报上都是很大的领域……从硬件、软件、分布式系统到实时系统，每个角度看它都是一个极有挑战、值得投入的行业。」</blockquote>
+<p>另一条是对大公司节奏的判断：「留在大公司里，内部政治和大团队的速度，会成为我做出贡献的阻碍，不如重新开始，在创业环境里做这件事。」他也坦承当时「完全不知道会走向哪里」。</p>
+<p>关于「中国训练了硅谷给不了什么」，他分技术面与合规面作答：中国道路行人、骑行者更多、更拥挤，AI 司机必须学会与周围所有交通参与者交互；而近几年在中美之间同时运营，供应链中断、数据合规与各类法律合规让复杂度进一步上升，「自动驾驶不但不例外，反而是面临更多挑战的领域」。</p>
+<h2 id="s2">二、一个核心能力，三条营收线</h2>
+<p>主持人先摆出第二季度的账：营收约 <strong>3,600 万美元</strong>，三条业务线规模几乎相当——robotaxi 约 1,200 万、robotruck 约 1,300 万、命名为 intelligent solutions / intelligent systems 的第三条约 1,100 万。</p>
+<p>彭军的定义非常克制：</p>
+<blockquote>「可以把 Pony.ai 的核心业务理解为<strong>造一个虚拟司机</strong>——一个有能力驾驶不同车型的司机。出行行业里，人的移动和货物的移动是最大的两块，所以我们做这两块。」</blockquote>
+<ul><li><strong>robotaxi</strong>：载人。三条线里增长最快、投入时间最多。</li><li><strong>robotruck</strong>：载货，今年又加了无人轻卡（driverless light truck）。主持人提到财报电话会上说过 robotaxi 与 robotruck <strong>共享约 80% 技术栈</strong>；彭军补充差异主要在「卡车带挂车、动力学模型不同，必须补偿」，其余感知、路径规划、商业模式「基本一样」。</li><li><strong>intelligent systems</strong>：因为自研虚拟司机，顺带产出硬件组件、训练系统、仿真与软件；有客户想单买其中一部分，于是形成<strong>授权/组件销售模式</strong>（&quot;essentially a licensing model where we sell some of the components&quot;）。</li></ul>
+<p><strong>边界原则</strong>同样清楚：只做「开放道路、速度相对快、必须与周边交通交互」的大场景，因此 Robotaxi / Robotruck / Light Truck 都做，而<strong>末端配送（last-mile delivery）与 L2 应用不直接做</strong>，只通过卖组件支持。这与 WeRide 韩旭「不做不共享技术栈的生意」是同一类逻辑，只是切法不同：小马智行用「场景动力学是否共享」划线。</p>
+<h2 id="s3">三、车队与「谁拥有车」：四角色模型</h2>
+<p>这是全期最值得记的结构。主持人点出趋势：越来越多车辆<strong>不在小马智行资产负债表上</strong>；联合部署（joint deployment）模式下，伙伴出钱买车、跑本地运营甚至带来乘客，小马智行提供虚拟司机并分成；丰田是首个采用者，涉及 <strong>1,000 辆 bZ4X</strong>。</p>
+<p>彭军把演进分成两段：</p>
+<p><strong>第一段：头 1,000 辆全部自有。</strong>「这么新的商业模式，我们得先证明它真的能跑通」——自己拿牌照、自己制造、自己持有、自己用自有 App 运营、自己做用户获取。目的只有一个：拿到财务模型和真实财务数据。</p>
+<p><strong>第二段：Gen 7 证明单车正毛利后，开放联合部署。</strong> 因为单车边际为正，别人持有车辆、做服务、做用户获取也能分到钱。此时他把出租车业务抽象成四个角色：</p>
+<table><thead><tr><th>角色</th><th>干什么</th><th>谁来做</th></tr></thead><tbody><tr><td>① 用户获取</td><td>带来订单与乘客</td><td>Uber、Bolt 等平台</td></tr><tr><td>② 车队所有者</td><td>持有车辆资产</td><td>丰田、Verne、本地运营方等</td></tr><tr><td>③ 司机</td><td>驾驶车辆</td><td><strong>永远是 Pony.ai（虚拟司机）</strong></td></tr><tr><td>④ 车辆服务</td><td>清洁、充电、维保、保险</td><td>本地运营伙伴</td></tr></tbody></table>
+<blockquote>「可以把 Pony 的核心优势理解成『司机』，我们为所有车辆提供虚拟司机；其他三块都可以和伙伴合作。不同市场、不同城市我们可能自己承担不同部分，但在所有组合里，<strong>司机这一块我们都自己拿</strong>。」</blockquote>
+<p>具体组合随城市变化：与丰田的合作中丰田是车主，用户获取仍由小马智行承担；与 Uber 的合作中小马智行「只是司机」，Uber 做用户获取，另有第三方做车主。主持人也提到，伦敦由另一家伙伴持车运营，曼彻斯特则由 Verne 管车队——「逐城挑当地最强的玩家」，用户获取也<strong>不排他</strong>（卢森堡就用 Bolt）。</p>
+<h2 id="s4">四、T 型扩张：3,500 辆与 20+ 城市</h2>
+<p>主持人给出进度：6 月底 <strong>1,975 辆</strong> robotaxi，年底目标 <strong>3,500 辆以上</strong>，还差约 1,500 辆。</p>
+<p>彭军把扩张策略叫 <strong>T-shape</strong>：</p>
+<ul><li><strong>横线（更多城市）</strong>：新城市先进 20 / 30 / 50 辆，目的是「在这个城市把能力建起来」；</li><li><strong>竖线（核心城市加密）</strong>：已有城市提高密度，因为密度改善单位经济。</li></ul>
+<p>瓶颈不是单一因素，而是「复杂系统里所有齿轮必须同向转」：监管许可、制造产能、运营 know-how、城市里的停车/充电/维保场地、车辆牌照、审批流程轨迹。关于年底目标，逐字稿此句 ASR 有歧义（听作 &quot;a while off on target&quot;，但结合后文主持人复述「你说过能达成目标」及彭军「对今年进展很有信心」，应按&quot;仍在轨道上&quot;理解，见文末说明）。</p>
+<p>2027 年目标由此自然推出：车队规模<strong>每年至少翻倍</strong>，同时<strong>单位经济边际</strong>不能为冲规模而被挤薄——「可以砸钱冲市场，但 margin 被压没了，那就不是一个好生意」。</p>
+<h2 id="s5">五、单位经济：算什么、不算什么，以及 5 万辆</h2>
+<p>主持人问得极准：「广州、深圳已经做到单位经济盈亏平衡，但这个定义里到底装了什么、又漏了什么？」</p>
+<p>彭军的回答只有一句排除项：</p>
+<blockquote>「<strong>唯一排除在外的是研发成本</strong>。想想看，我们开发了十年，接近一千名软件与硬件工程师……把研发放一边，其他所有成本都算进了单位经济。」</blockquote>
+<p>计入项（按他自述的排序）：</p>
+<ul><li><strong>车辆折旧</strong>（最大项）</li><li>电费 / 燃料</li><li>保险</li><li>清洁与维保（「轮胎总得换」）</li><li>停车与收费道路的过路费</li><li><strong>用户获取</strong>：「如果和 Uber 这样的公司合作，我们要付给他们用户获取费」</li><li><strong>远程协助人力</strong>（见下）</li></ul>
+<p>收入端则是乘客每单支付的车费。「车费减掉所有成本还剩正数，那就是正的单位经济边际。」</p>
+<p>公司层面的算法被他讲得毫不含糊：<strong>单车能赚多少 × 车辆数 &gt; 研发成本 = 全公司盈亏平衡</strong>。若三条业务线只保留 robotaxi 一条，需要约 <strong>50,000 辆</strong>；而「每辆 robotruck 大致相当于 3–5 辆 robotaxi」的赚钱能力，所以真实门槛低于 5 万辆。</p>
+<p><strong>远程协助（remote assistance）</strong>：自有车队自己做，联合部署可交给伙伴；当前技术水平是 <strong>1 名远程操作员同时照看 30 辆车</strong>，这笔成本同样计入单位经济。这个「1:30」是本期少有的可直接横向对比的运营效率指标。</p>
+<h2 id="s6">六、欧洲地图：四个国家，四种打法</h2>
+<p><strong>萨格勒布（Zagreb）</strong>——今年 4 月与 Verne、Uber 推出欧洲首个商业 robotaxi 服务（车上仍有安全员），9 月开始在 <strong>22 公里机场路线</strong>上做全无人载客。彭军归因于两点：一是累计约 <strong>1.1 亿公里实路运营</strong>积累的虚拟司机底子；二是伙伴（Verne、Uber）在当地一起推动。技术上的新东西很具体：<strong>欧洲环岛特别多</strong>（中国和美国既有 ODD 里「最多也就几个」），以及<strong>有轨电车与 robotaxi 共享同一条车道</strong>。监管侧则「欧洲虽有 testbed 倡议，但部分法规并不清晰，必须逐城适配」，靠本地 know-how 推边界。</p>
+<p><strong>选城标准</strong>（彭军给的排序）：① 与伙伴共同决定，不是单边；② 城市规模要够大，太小经济价值不足；③ 监管许可友好且地方政府支持；④ 当地居民对新技术有支持度。与 Uber 计划在欧洲部署 <strong>2,000+ 辆</strong>。</p>
+<p><strong>英国</strong>——10 月 8 日伦敦、六天后曼彻斯特。「英国监管支持、出行需求健康，尤其伦敦是旅游城市，共享出行需求很大」。他顺带给出一个欧洲判断：欧洲多数值得进的城市是<strong>中等规模</strong>（萨格勒布也是），伦敦属于少数特大城市。运营结构两城不同：曼彻斯特由 Verne 管车队，伦敦另找伙伴持车运营。</p>
+<p><strong>德国</strong>——主持人指出德国 2021 年就有 L4 法（全球最早之一），却至今没有规模化无人 robotaxi。彭军的诊断值得整段记住：</p>
+<blockquote>「简短的答案是『在名单上』。展开讲，2021 年那套 L4 法规在某种意义上是<strong>有点太复杂了</strong>——高层面上它是为<strong>大规模部署</strong>写的，但我们不可能在没有小规模的情况下直接跳到大规模。德国有大规规律，现在需要一套更简化的框架来把 L4 运营<strong>启动</strong>起来。」</blockquote>
+<p>好消息是已有简化框架的动议；「德国是欧洲最大经济体，这个市场我们必须进」。</p>
+<p><strong>卢森堡</strong>——2024 年设为欧洲业务基地，6 月与 <strong>Bolt + Stellantis</strong> 启动试点：Gen 7 系统装在 Stellantis 中型 van 上，基于其 <strong>L4-ready 平台</strong>，Bolt 把它称作 living lab，目标是项目结束时达到 &quot;fully driverless readiness&quot;。彭军给出的硬定义是<strong>技术与监管两端都准备好做全无人</strong>；当前车队仍带安全员，但「从安全标准角度很快就能就绪」。选卢森堡的理由直白：国家小、监管准入相对容易，且有好的伙伴。</p>
+<p><strong>数据主权</strong>（欧洲听众最关心的部分）：「我们完全尊重数据主权问题，所有关键数据都留在本地市场」，会增加运营成本但必须做；<strong>在车端就对所有人脸与路牌做掩码，存储前即脱敏，这些数据我们甚至根本不存</strong>；客户数据严格遵循最高安全要求与 GDPR。</p>
+<h2 id="s7">七、海湾：为什么是迪拜与多哈</h2>
+<p>彭军的判断是：<strong>在中国和美国之外，中东是已经把「全无人运营」法规落地了的地区</strong>，GCC 各国对自动驾驶部署有明确且快速通道的监管支持；再加经济繁荣、需求旺盛（迪拜尤其有大量产业扶持倡议），所以「不只是 Pony.ai，很多自驾公司已经在那儿或计划去」。</p>
+<ul><li><strong>迪拜</strong>：与 RTA 做全无人测试，今年晚些时候启动<strong>数百辆规模的付费服务</strong>。</li><li><strong>多哈</strong>：当地最大出租车运营商 <strong>Mowasalat</strong> 打算「把自己的车队改造成自动驾驶」，这种自带车队与运营能力的伙伴让市场进入变得容易。</li></ul>
+<h2 id="s8">八、Pony World 与「商品化之问」</h2>
+<p>主持人引用 CTO 楼天城的说法：Pony World 2.0 世界模型让公司能「同时在几个国家上线，而不必同比例增加工程师」。彭军把它定位为<strong>仿真与验证工程工具</strong>：</p>
+<blockquote>「实路上测 10 次，在 Pony World 里可以跑几千次……它的保真度很高，能覆盖实路上发生过的各类边缘案例。进新城时把新场景加进去——比如萨格勒布的环岛，我们模型里原本没那么多环岛，现在就往里加，让车在里面以很高保真度和效率训练、完成验证，最后只需实路做最终确认。」</blockquote>
+<p>这直接解释了「多国同时上线而人力不线性增长」：把上线前的验证工作量从路测转移到仿真。</p>
+<p><strong>商品化之问</strong>是本期最尖锐的一问：Uber 已和大量自驾公司合作，如果平台与所有人都对接，虚拟司机会不会变成大宗商品？彭军先承认条件成立时的结论：</p>
+<blockquote>「如果各家能力、安全记录、成本都相对接近，你这个说法就成立，它会变成商品——因为 Uber 就能自由地把请求派给任意一辆车。」</blockquote>
+<p>但他给出三个「现在还差得远」的理由：</p>
+<ul><li><strong>成本</strong>：「我们车辆的每英里成本比 Waymo 低很多，可以便宜 3–5 倍」；</li><li><strong>能力</strong>：城市形态千差万别（窄路、环岛、有轨电车），「能去所有地方」才接得住 Uber 派来的所有订单；</li><li><strong>安全记录</strong>。</li></ul>
+<p>因此「至少在未来很多年仍有巨大优势」，至于「20 年后大家会不会趋同、变成商品，也许吧」。</p>
+<h2 id="s9">九、关键数字速查</h2>
+<table><thead><tr><th>指标</th><th>数值</th><th>出处（时间戳）</th></tr></thead><tbody><tr><td>Q2 营收</td><td>约 3,600 万美元（三条线约 12 / 13 / 11 百万）</td><td>04:34</td></tr><tr><td>Robotaxi ↔ Robotruck 技术栈共享</td><td>约 80%（主持人引财报电话会）</td><td>06:08</td></tr><tr><td>6 月底 robotaxi 车队</td><td>1,975 辆</td><td>08:37</td></tr><tr><td>年底目标</td><td>3,500+ 辆 / 20+ 城市</td><td>08:37、34:56</td></tr><tr><td>联合部署首个采用者</td><td>丰田，1,000 辆 bZ4X</td><td>11:14</td></tr><tr><td>累计实路里程</td><td>约 1.1 亿公里</td><td>14:59</td></tr><tr><td>萨格勒布全无人路线</td><td>22 公里机场线</td><td>14:20</td></tr><tr><td>欧洲规划（与 Uber）</td><td>2,000+ 辆</td><td>16:39</td></tr><tr><td>单位经济排除项</td><td>仅 R&amp;D（近千名工程师 / 十年）</td><td>26:54</td></tr><tr><td>公司级盈亏平衡</td><td>约 50,000 辆 robotaxi（单算此线）</td><td>29:18</td></tr><tr><td>Robotruck 折算</td><td>1 辆 ≈ 3–5 辆 robotaxi 盈利能力</td><td>29:18</td></tr><tr><td>远程协助比</td><td>1 名操作员 : 30 辆车</td><td>29:49</td></tr><tr><td>每英里成本 vs Waymo</td><td>便宜 3–5 倍（公司自述）</td><td>33:39</td></tr><tr><td>2027 目标</td><td>车队每年至少翻倍 + 守住单位边际</td><td>35:20</td></tr></tbody></table>
+<h2 id="s10">十、存疑与局限（读这篇稿时请保留的判断）</h2>
+<ul><li><strong>底稿来自语音识别</strong>：本期无官方转录，所有英文引文为 ASR 输出经专名校对，个别句子仍有语法破碎与歧义；涉及数字与结论处已按上下文与官方 shownotes 交叉核对，但不等于逐字精确。</li><li><strong>两处 ASR 歧义</strong>：① 10:32 关于 3,500 辆目标的一句听作 &quot;a while off on target&quot;，与 34:56 主持人复述「你说过能达成目标」及彭军「对今年进展很有信心」冲突，应为「仍在轨道上 / on track」一类表述；本稿按后者理解。② 03:31 气象一句听作 &quot;weather conditions can be more predictable&quot;，与「中国路况更具挑战」的语境矛盾，疑为 *unpredictable*，故本稿未据此展开。</li><li><strong>公司自述数据未经独立验证</strong>：每英里成本比 Waymo 便宜 3–5 倍、1:30 远程协助比、单车正毛利、1.1 亿公里实路里程、50,000 辆盈亏平衡，均为 CEO 访谈口径，非审计披露；其中「单车正毛利」与「公司级仍需 5 万辆」并不矛盾（前者不含研发，后者含）。</li><li><strong>「单位经济盈亏平衡」口径</strong>：官方节目简介写的是广州、深圳达成 break-even，逐字稿中主持人也如此表述；本稿未做二次口径核实。</li><li><strong>主持人姓名</strong>：ASR 听作 &quot;Daniel M. Brodly&quot;，本出版方往期署名习惯为 Daniel（AV Market Strategist / Autonomy Insiders），此处不强行还原全名。</li><li><strong>时间点</strong>：本期发布于 2026-11-04，访谈中涉及「今年目标」「今年晚些时候」均指 2026 年；彭军提到「只剩两个月」，与录制时间相符。</li></ul>
+<h2 id="s11">官方章节表（出版方提供）</h2>
+<table><thead><tr><th>时间</th><th>章节</th></tr></thead><tbody><tr><td>0:00</td><td>创始人故事：从 Google、百度到 Pony.ai</td></tr><tr><td>4:25</td><td>业务：三条营收线、车队与谁拥有车</td></tr><tr><td>14:20</td><td>欧洲：萨格勒布、英国、德国、卢森堡与数据主权</td></tr><tr><td>25:00</td><td>海湾：迪拜与多哈</td></tr><tr><td>26:54</td><td>数字：单位经济、远程协助与盈亏平衡车队</td></tr><tr><td>30:28</td><td>行业：Pony World、商品化之问与 2027</td></tr></tbody></table></main></div><div class="pagelinks"><a class="btn" href="transcript.html">查看中英对照逐字稿 →</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../europe-robotaxi-reality-check-friedel/index.html"><div class="rw"><img loading="lazy" src="../europe-robotaxi-reality-check-friedel/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</div></div></a><a class="relcard" href="../the-hidden-human-layer-making-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../the-hidden-human-layer-making-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Substack</div><div class="rt">Robotaxi 规模化的隐藏层：被低估的「人的系统」</div></div></a><a class="relcard" href="../charterup-autonomous-group-transport-harris/index.html"><div class="rw"><img loading="lazy" src="../charterup-autonomous-group-transport-harris/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Harry Campbell</div><div class="rt">CharterUP 的赌注：自动驾驶真正的第一桶金不在轿车，在「成组出行」</div></div></a><a class="relcard" href="../grab-autonomous-vehicle-playbook-ong/index.html"><div class="rw"><img loading="lazy" src="../grab-autonomous-vehicle-playbook-ong/cover.jpg" alt=""></div><div class="rb"><div class="rs">AV Market Strategist · Autonomy Insiders</div><div class="rt">Grab 的自动驾驶打法：东南亚不要「替代人」，要「编排人机混合车队」</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
