@@ -1,0 +1,796 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>AV 车队的数据传输瓶颈：Virewirx CEO Jason Fiber 谈 60GHz 无线与 depot 运营 · 逐字稿</title><meta name='description' content='Virewirx CEO Jason Fiber 做客 The Driverless Digest：AV 车队每天要回传 1GB 到 30TB 数据，拆硬盘、白面包车拉盘这种「原始方案」根本无法规模化；他用 60GHz 毫米波 VX60 平台把数据卸载做成 depot 里和充电、清洁并行的「自动驾驶基础设施」，并判断拐点大致在百辆级车队。'><meta property='og:title' content='AV 车队的数据传输瓶颈：Virewirx CEO Jason Fiber 谈 60GHz 无线与 depot 运营 · 逐字稿'><meta property='og:description' content='Virewirx CEO Jason Fiber 做客 The Driverless Digest：AV 车队每天要回传 1GB 到 30TB 数据，拆硬盘、白面包车拉盘这种「原始方案」根本无法规模化；他用 60GHz 毫米波 VX60 平台把数据卸载做成 depot 里和充电、清洁并行的「自动驾驶基础设施」，并判断拐点大致在百辆级车队。'><meta property='og:type' content='website'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div id="wbProgress"></div><div class="topnav"><a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a><nav class="breadcrumb" aria-label="页面切换"><span class="sep">›</span><a href="index.html">总结分析</a><span class="sep dot">·</span><span class="cur">逐字稿</span></nav><span class="grow"></span><a class="navlink" href="https://www.thedriverlessdigest.com/p/the-data-transfer-bottleneck-facing" target="_blank" rel="noopener">原文 ↗</a><button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button><button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button></div><div class='wrap'><header class="cover"><div class="cover-text"><div class="kicker">The Driverless Digest · YouTube/Substack（Harry Campbell）</div><h1>AV 车队的数据传输瓶颈：Virewirx CEO Jason Fiber 谈 60GHz 无线与 depot 运营</h1><p class="sub">中英对照逐字稿 · The Data Transfer Bottleneck Facing AV Fleets with Virewirx CEO Jason Fiber</p><div class="tags"><span class="tag">⏱ 31:46</span><span class="tag">Jason Fiber（Virewirx 联合创始人兼 CEO，前 THX Limited CEO；公司由高通前 C-suite 创立，总部圣迭戈）</span></div><div class="etabs"><a class="etab" href="index.html">📊 总结分析</a><a class="etab active" href="transcript.html">📝 逐字稿</a></div></div><div class="cover-media"><img src="https://img.youtube.com/vi/hVk8a4ARtHg/hqdefault.jpg" alt="cover"></div></header><div class="kwbar"><span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">自动驾驶</span><span class="chip" onclick="wbJumpKw(this)">AV 车队</span><span class="chip" onclick="wbJumpKw(this)">数据传输</span><span class="chip" onclick="wbJumpKw(this)">数据卸载</span><span class="chip" onclick="wbJumpKw(this)">Virewirx</span><span class="chip" onclick="wbJumpKw(this)">Jason Fiber</span><span class="chip" onclick="wbJumpKw(this)">Harry Campbell</span><span class="chip" onclick="wbJumpKw(this)">The Driverless Digest</span><span class="chip" onclick="wbJumpKw(this)">60GHz</span><span class="chip" onclick="wbJumpKw(this)">毫米波</span><span class="chip" onclick="wbJumpKw(this)">无线</span><span class="chip" onclick="wbJumpKw(this)">VX60</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">车队运营</span><span class="chip" onclick="wbJumpKw(this)">物理AI</span><span class="chip" onclick="wbJumpKw(this)">机器人</span><span class="chip" onclick="wbJumpKw(this)">边缘计算</span><span class="chip" onclick="wbJumpKw(this)">LiDAR</span><span class="chip" onclick="wbJumpKw(this)">AI 工厂</span><span class="chip" onclick="wbJumpKw(this)">充电基础设施</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button></div><div class="tbar"><div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div><div class="seg-toggle"><button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button><button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button><button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button></div><span class="count"><b id="wbTCount"></b></span></div><div class="layout"><nav class="toc"><h4>章节</h4><a href="#s0">开场：公司、嘉宾与「被忽视的 AV 基础设施」</a><a href="#s1">一、公司背景与 60GHz 技术定位</a><a href="#s2">二、AV 车队的数据挑战</a><a href="#s3">三、为什么这是行业级痛点（兼论对城市的价值）</a><a href="#s4">四、与 depot 运营整合：主题公园式流水线</a><a href="#s5">五、合作伙伴、拐点与商业化</a><a href="#s6">六、超越 robotaxi：物理 AI 与机器人</a><a href="#s7">七、规模化、展望与收尾</a></nav><main class="content"><h2 id="s0">开场：公司、嘉宾与「被忽视的 AV 基础设施」</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>主持人 Harry Campbell（The Driverless Digest）介绍本期嘉宾 Jason Fiber——Virewirx CEO</li><li>Virewirx 用 60GHz 毫米波无线技术解决 physical AI 的数据搬运问题</li><li>本期主题：AV 车队的数据传输瓶颈，一个消费者看不见、却至关重要的环节</li></ul></div>
+<p class="seg" id="seg-1"><span class="ts">[00:00 – 00:15]</span><div class="seg-body">
+<p class="en">Obviously, the kinds of data that these vehicles collect equals everything from LiDAR data, video data, sensor data, log data. And we&#x27;ve encountered companies that have upwards of like 20 or 30 terabytes of data that they collect a day. And the data that&#x27;s required in order to kind of manage that and run that, I think will be pretty extreme.</p>
+<p class="zh">显然，这些车辆采集的数据类型包罗万象——LiDAR 数据、视频数据、传感器数据、日志数据。我们遇到过一些公司，每天采集的数据量高达二三十 TB。而要管理和运转这些数据，所需的数据量级会非常惊人。</p></div></p>
+<p class="seg" id="seg-2"><span class="ts">[00:15 – 00:45]</span><div class="seg-body">
+<p class="en">And I find it hard to believe that your home Wi-Fi network will be enough. We will become a hair-on-fire problem as these companies grow and scale. And our approach is to say, solve this problem now so you don&#x27;t get caught in that kind of environment when you do scale.</p>
+<p class="zh">我很难相信你家的 Wi-Fi 网络就够了。随着这些公司成长和扩张，这会变成一个燃眉之急。我们的思路是：现在就把这个问题解决掉，这样等你要规模化的时候，就不会被它卡住。</p></div></p>
+<p class="seg" id="seg-3"><span class="ts">[00:45 – 01:04]</span><div class="seg-body">
+<p class="en">Jason E. Fiber is the CEO of Virewirx, a wireless technology company pioneering high-performance connectivity solutions for physical AI. Fiber has led the company&#x27;s strategic transformation, repositioning its advanced 60 GHz wireless technology to address the growing need for high-speed data movement in robotics, autonomous vehicles, industrial automation, and immersive entertainment.</p>
+<p class="zh">Jason E. Fiber 是 Virewirx 的 CEO，这是一家为物理 AI 开创高性能连接方案的无线技术公司。Fiber 主导了公司的战略转型，将其先进的 60GHz 无线技术重新定位，以满足机器人、自动驾驶、工业自动化和沉浸式娱乐领域对高速数据搬运日益增长的需求。</p></div></p>
+<p class="seg" id="seg-4"><span class="ts">[01:04 – 01:20]</span><div class="seg-body">
+<p class="en">Advancing its VX60 wireless platform as a solution for moving massive amounts of data quickly, reliably, and securely in environments where conventional wireless networks fall short. Previously, Jason was CEO of THX Limited. Jason, how are you doing today?</p>
+<p class="zh">他们将 VX60 无线平台推进为一套解决方案，能在传统无线网络力不从心的环境里，快速、可靠、安全地把海量数据搬来搬去。在此之前，Jason 是 THX Limited 的 CEO。Jason，今天还好吧？</p></div></p>
+<p class="seg" id="seg-5"><span class="ts">[01:20 – 01:22]</span><div class="seg-body">
+<p class="en">Good. Thank you. Nice to meet you.</p>
+<p class="zh">挺好，谢谢。很高兴见到你。</p></div></p>
+<p class="seg" id="seg-6"><span class="ts">[01:22 – 01:37]</span><div class="seg-body">
+<p class="en">Awesome. Yeah, we&#x27;ve been covering Virewirx for about a year and I was really excited to have you on the podcast because I think it&#x27;s one of those cool areas of autonomous vehicles that maybe consumers don&#x27;t see, maybe a lot of people don&#x27;t know about, but is very integral.</p>
+<p class="zh">太好了。我们对 Virewirx 关注大概有一年了，真的很高兴请到你上节目，因为我觉得这是自动驾驶里很酷的一块——消费者可能看不见，很多人也不了解，但极其关键。</p></div></p>
+<p class="seg" id="seg-7"><span class="ts">[01:37 – 01:48]</span><div class="seg-body">
+<p class="en">So before we dive into the product and everything you&#x27;re doing in the space, can you tell me a little bit about the company, where you guys are located, how the technology, what technology and what industries you&#x27;ve traditionally served?</p>
+<p class="zh">在深入探讨产品和你们在这块做的事之前，能不能先介绍一下公司：你们在哪、技术是什么、历史上主要服务哪些行业？</p></div></p>
+<h2 id="s1">一、公司背景与 60GHz 技术定位</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>Virewirx 2018 年成立，2023 年转向，圣迭戈总部，18 人、工程为主</li><li>由高通前 C-suite 创立，大量 PhD / Master 工程团队</li><li>聚焦 physical AI（robotaxi、机器人、VR、主题公园）</li></ul></div>
+<p class="seg" id="seg-8"><span class="ts">[01:48 – 02:15]</span><div class="seg-body">
+<p class="en">Sure. We&#x27;re located in San Diego. We&#x27;ve been around since 2018 in one fashion, had a bit of a shift in 2023 and really decided to exclusively focus on our 60 gigahertz millimeter wave wireless technologies. Our company was founded by the former C-suite of Qualcomm and so a significant footprint of wireless expertise lives within my company.</p>
+<p class="zh">当然。我们在圣迭戈。公司从 2018 年就以某种形式存在，2023 年有了一次转向，真正决定all-in 在我们的 60GHz 毫米波无线技术上。公司由高通的前 C-suite（核心高管）创立，所以我们内部沉淀了大量无线通信的专业积累。</p></div></p>
+<p class="seg" id="seg-9"><span class="ts">[02:15 – 02:34]</span><div class="seg-body">
+<p class="en">A lot of PhDs and master&#x27;s degree engineering team. And so we&#x27;ve been developing a product for physical AI, including robo taxis, robotics, and even things like virtual reality and theme parks for a number of years. And I&#x27;ve been working to try to find opportunities in those verticals and are now finding our way into certain opportunities that&#x27;s been good for us and seems to be indicating the growth and the visibility of the data transfer problem, the data movement problem that we&#x27;re trying to solve.</p>
+<p class="zh">团队里有很多博士和硕士工程师。几年来我们一直在为物理 AI 开发产品，包括 robotaxi、机器人，甚至 VR 和主题公园。我一直在这些垂直行业里找机会，现在我们逐渐切入了一些不错的场景，也印证了我们想解决的「数据传输 / 数据搬运」问题正在增长、正在被看见。</p></div></p>
+<p class="seg" id="seg-10"><span class="ts">[02:34 – 02:51]</span><div class="seg-body">
+<p class="en">How many people are at the company these days?</p>
+<p class="zh">公司现在有多少人？</p></div></p>
+<p class="seg" id="seg-11"><span class="ts">[02:51 – 02:54]</span><div class="seg-body">
+<p class="en">There&#x27;s 18 of us, mainly engineering with some marketing, sales and back office support.</p>
+<p class="zh">我们 18 个人，主要是工程，加上一些市场、销售和后台支持。</p></div></p>
+<p class="seg" id="seg-12"><span class="ts">[02:54 – 03:02]</span><div class="seg-body">
+<p class="en">Yeah. And I feel like it&#x27;s one of those areas where when you think data transfer, it seems to, the layman, someone like me, it seems so simplistic, but obviously you guys have built a whole company around this and are doing different verticals and industries.</p>
+<p class="zh">是啊。我觉得这个领域很有意思——外行比如我，一想到「数据传输」会觉得特别简单，但你们显然围绕它建了一整家公司，还跨了这么多垂直行业和领域。</p></div></p>
+<p class="seg" id="seg-13"><span class="ts">[03:02 – 03:13]</span><div class="seg-body">
+<p class="en">How do you, when you meet someone at a party or you tell them what you do, what are people&#x27;s reactions to the company?</p>
+<p class="zh">你在派对上遇到人、跟他们说起你是做什么的时候，大家什么反应？</p></div></p>
+<p class="seg" id="seg-14"><span class="ts">[03:13 – 03:25]</span><div class="seg-body">
+<p class="en">Well, it&#x27;s like an inverse pyramid, right? Like everyone knows what Wi-Fi is. Most people know what 5G is. By the time you get down to other wireless spectrums, the knowledge starts to drop off, particularly at parties where you&#x27;re not amongst your peers.</p>
+<p class="zh">这就像个倒金字塔，对吧？所有人都知道 Wi-Fi 是什么，多数人也知道 5G。可一旦说到别的无线频谱，认知就开始断层了，尤其在派对上——你周围都不是同行。</p></div></p>
+<p class="seg" id="seg-15"><span class="ts">[03:25 – 03:41]</span><div class="seg-body">
+<p class="en">And so people immediately think, oh, is this just a high speed way of replacing my Wi-Fi connection? Which it is not. It actually lives in the same space—you can have multiple wireless networks in the same place without interference—but it&#x27;s its own unique solution that doesn&#x27;t actually work like Wi-Fi or 5G.</p>
+<p class="zh">所以大家第一反应是：「哦，这只是个高速替代我家 Wi-Fi 的方案吗？」并不是。它的确能在同一个空间里和别的无线上网并存、互不干扰，但它是一套独特的方案，运作方式其实既不像 Wi-Fi 也不像 5G。</p></div></p>
+<p class="seg" id="seg-16"><span class="ts">[03:41 – 03:58]</span><div class="seg-body">
+<p class="en">And so it always takes a minute to kind of explain what I&#x27;m doing and why we&#x27;re doing it and what the spectrum looks like. And that usually gets people interested. And then we sort of get into the use cases and it becomes a much clearer line between what we&#x27;re doing and how we&#x27;re trying to change the way that data is moved from physical AI devices to AI factories.</p>
+<p class="zh">所以我总得花点时间解释我们在做什么、为什么做、频谱长什么样。这通常就能勾起别人的兴趣。接着聊到用例，我们做的事、以及我们想怎么改变「数据从物理 AI 设备流向 AI 工厂」的方式，就清晰多了。</p></div></p>
+<p class="seg" id="seg-17"><span class="ts">[03:58 – 04:11]</span><div class="seg-body">
+<p class="en">And so, like you mentioned, most folks are obviously familiar with wireless, Wi-Fi, 5G. How does VX60, your technology, compare? You mentioned different spectrums. Where does this fit in?</p>
+<p class="zh">就像你说的，大家显然都熟悉无线、Wi-Fi、5G。那你们的技术 VX60 怎么对比？你提到不同频谱，它处在什么位置？</p></div></p>
+<p class="seg" id="seg-18"><span class="ts">[04:11 – 04:21]</span><div class="seg-body">
+<p class="en">So with 5G, you have a very large signal. You have these outdoor towers that sometimes look like pine trees or something. It can cover a large area. They&#x27;re built for coverage, not for speed.</p>
+<p class="zh">5G 的信号很大，有那种有时像松树的户外铁塔，能覆盖很大一片区域。它是为覆盖而建，不是为了速度。</p></div></p>
+<p class="seg" id="seg-19"><span class="ts">[04:21 – 04:35]</span><div class="seg-body">
+<p class="en">And then you have Wi-Fi, which is traditionally a home-based product or an office-based product. It&#x27;s usually indoors. They can get fast, but they can&#x27;t necessarily scale. And so those are the sort of the two spectrums that most people are familiar with.</p>
+<p class="zh">然后是 Wi-Fi，传统上是家用或办公室用的产品，通常在室内。它也能快，但不一定能扩展。这大概就是大多数人熟悉的那两种频谱。</p></div></p>
+<p class="seg" id="seg-20"><span class="ts">[04:35 – 04:53]</span><div class="seg-body">
+<p class="en">60 gigahertz is a much faster but also a smaller beam spectrum. So think of a 60 gigahertz radio beam something like a park hand light, where you have a ton of coverage.</p>
+<p class="zh">60GHz 则是快得多、但波束也小得多的频谱。可以把它想象成一种手电筒似的光束——覆盖范围其实可以做得很大。</p></div></p>
+<p class="seg" id="seg-21"><span class="ts">[04:53 – 05:11]</span><div class="seg-body">
+<p class="en">And so historically, you&#x27;d be limited by the fact that you had a single radio that could only cover a relatively small area and it requires line of sight. So if you&#x27;re occluded or something blocks that, then you lose the connection. And so that&#x27;s why you haven&#x27;t seen a lot of wide scale, large area coverage conversations using 60 gigahertz.</p>
+<p class="zh">历史上它有局限：单个无线电只能覆盖相对较小的一片区域，而且需要视距（line of sight）。一旦被遮挡、或者有什么挡住，连接就断了。这就是为什么你很少看到有人用 60GHz 去聊大范围、大面积的覆盖。</p></div></p>
+<p class="seg" id="seg-22"><span class="ts">[05:11 – 05:27]</span><div class="seg-body">
+<p class="en">So that was the problem that my team set out to solve was how do we create a larger coverage area with the benefits of the higher speed and the sort of smaller beam, but also eliminate the problems that would occur when you have occlusion and some of the other things that you would traditionally find in other spectrums like latency and conflict and things like that.</p>
+<p class="zh">所以我团队要解决的问题就是：怎么在保留「更高速度、更小波束」优势的同时，做出更大的覆盖面积，并且消除遮挡带来的问题，以及传统频谱里常见的时延、冲突之类的毛病。</p></div></p>
+<p class="seg" id="seg-23"><span class="ts">[05:27 – 05:47]</span><div class="seg-body">
+<p class="en">So that&#x27;s the problem that we set out to solve. And that&#x27;s essentially what we have solved with VX60 is created a multi-radio connected environment. We call it one giant radio where we can use multiple access points and if one or two become occluded, the network within 10 milliseconds can correct and immediately reroute the traffic to an adjacent radio and continue to deliver or receive information at much higher speeds than you can with other wireless spectrums.</p>
+<p class="zh">这就是我们要解的题。而 VX60 本质上已经解了——我们造了一个多无线电互联的环境，称之为「一个巨型无线电」。我们可以用多个接入点，万一有一两个被遮挡，网络在 10 毫秒内就能纠正、并立刻把流量改道到相邻的无线电，继续以比其他无线频谱高得多的速度收发信息。</p></div></p>
+<h2 id="s2">二、AV 车队的数据挑战</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>数据量级差异极大：单日 &lt;1TB 到 20~30TB</li><li>VX60：单无线电 ~2.5Gbps（≈1TB/小时）；信道绑定 ~10Gbps（≈4TB/小时）</li><li>现有手工方案（连网线、拆硬盘、白面包车拉盘）无法规模化</li></ul></div>
+<p class="seg" id="seg-24"><span class="ts">[05:47 – 06:13]</span><div class="seg-body">
+<p class="en">Gotcha. Interesting. So I imagine that kind of works a lot better in real life. I&#x27;m sure we&#x27;ll get into the AV Fleet Depot use case, but you have vehicles moving around or people moving around, right? If you block that line of sight, I guess in the past you would have issues. Now you guys have developed a technology.</p>
+<p class="zh">明白了，有意思。我猜这在实际场景里好用得多。我们待会儿肯定要聊 AV 车队 depot 的用例，但你这有车在动、人在动，对吧？过去一旦挡住视距就会出问题，现在你们开发了这套技术。</p></div></p>
+<p class="seg" id="seg-25"><span class="ts">[06:13 – 06:29]</span><div class="seg-body">
+<p class="en">And I guess it sounds like it is still in that kind of wireless category. There&#x27;s no wires involved in any of these spectrums, right?</p>
+<p class="zh">而且听起来它还是属于无线那一类的——这些频谱都不涉及线缆，对吧？</p></div></p>
+<p class="seg" id="seg-26"><span class="ts">[06:29 – 06:44]</span><div class="seg-body">
+<p class="en">Yeah, I mean, it&#x27;s wireless in that you have an access point and a station, and the connection between the two is wireless, but fast. But of course, all of the surrounding hardware, the radio has to be wired into the vehicle, and access points have to be wired to a switch.</p>
+<p class="zh">对，说它是无线，是指你有一个接入点和一个终端，两者之间的连接是无线的、但很快。当然，周边的硬件都得有线：无线电要接到车里，接入点也要接到交换机上。</p></div></p>
+<p class="seg" id="seg-27"><span class="ts">[06:44 – 06:51]</span><div class="seg-body">
+<p class="en">But yeah, one of the core benefits of VX60 is that it works with devices that are moving. A lot of wireless requires that the device itself be in a static position to maximize the throughput, whereas we can achieve high speeds under movement and allow the device to move from one radio&#x27;s coverage to the next radio&#x27;s coverage with minimal latency in order to ensure continuous coverage.</p>
+<p class="zh">不过，VX60 的核心优势之一就是能在移动中的设备上工作。很多无线方案要求设备本身保持静止才能最大化吞吐，而我们能在运动中保持高速，让设备在多个无线电的覆盖之间切换、时延极小，从而保证连续覆盖。</p></div></p>
+<p class="seg" id="seg-28"><span class="ts">[06:51 – 07:08]</span><div class="seg-body">
+<p class="en">Yeah. All right. So I&#x27;ve teased it enough and I think I&#x27;ve teed it up, but let&#x27;s talk about the data challenge for autonomous vehicles because obviously you guys are making a lot of headway in this space. So talk to me a little bit. Let&#x27;s go high level.</p>
+<p class="zh">好。铺垫得差不多了，咱们聊正题——自动驾驶的数据挑战，因为显然你们在这块进展很大。先宏观聊聊。</p></div></p>
+<p class="seg" id="seg-29"><span class="ts">[07:08 – 07:29]</span><div class="seg-body">
+<p class="en">I mean, what types of data do AVs need to upload and download? I&#x27;m assuming it&#x27;s a lot, which is why they need you. How much data are we talking about? And what does that look like out in the real world?</p>
+<p class="zh">自动驾驶车需要上传和下载哪些数据？我猜量很大，所以才需要你们。具体是什么量级？真实世界里又是什么样子？</p></div></p>
+<p class="seg" id="seg-30"><span class="ts">[07:29 – 07:44]</span><div class="seg-body">
+<p class="en">Yeah, well, unfortunately, the answer to that question is sort of like the answer to the question of how much does a car cost? And it really varies a lot between companies and projects. So we&#x27;ve encountered companies that have, under a gigabyte worth of data that they need to transfer, excuse me, under a terabyte I meant to say.</p>
+<p class="zh">唉，可惜这个问题的答案，有点像「一辆车要花多少钱」——不同公司和项目之间差异极大。我们遇到过一些公司，需要传输的数据量不到 1TB——不好意思，我刚说错了，是「不到 1TB」。</p></div></p>
+<p class="seg" id="seg-31"><span class="ts">[07:44 – 07:56]</span><div class="seg-body">
+<p class="en">And we even encountered companies that have upwards of 20 or 30 terabytes of data that they collect a day. Our current product can transfer at about 2.5 gigabits per second, which is equating to about a terabyte per hour.</p>
+<p class="zh">我们也遇到过公司，每天采集的数据高达二三十 TB。我们当前的产品传输速率大约 2.5Gbps，相当于每小时 1TB 左右。</p></div></p>
+<p class="seg" id="seg-32"><span class="ts">[07:56 – 08:15]</span><div class="seg-body">
+<p class="en">We can also combine multiple radios and have a channel bonded solution that can combine and deliver upwards 10 gigabits per second, which would equate to four terabytes per hour. And so obviously the kinds of data that these vehicles collect equals everything from LiDAR data, video data, sensor data, log data.</p>
+<p class="zh">我们还能把多个无线电组合成一个信道绑定的方案，合计吞吐可达 10Gbps 以上，相当于每小时 4TB。而车辆采集的数据类型，显然涵盖 LiDAR、视频、传感器、日志等等。</p></div></p>
+<p class="seg" id="seg-33"><span class="ts">[08:15 – 08:34]</span><div class="seg-body">
+<p class="en">And depending upon the way the vehicle manages their data collection and their data filtering will sort of indicate how much they need to offload. So someone that needs to upload 20 terabytes in an hour, we&#x27;re not going to be the right solution for them because it&#x27;s sort of outside of the physics of what&#x27;s possible with our current generation technology.</p>
+<p class="zh">具体要卸多少，取决于车辆怎么管理采集和过滤。所以那种「一小时要传 20TB」的需求，我们不是合适的方案，因为这超出了我们当前一代技术的物理极限。</p></div></p>
+<p class="seg" id="seg-34"><span class="ts">[08:34 – 08:52]</span><div class="seg-body">
+<p class="en">But if it&#x27;s more standardized, which we&#x27;re seeing is close to like a terabyte or two and they have like a couple of hours in order to do that, then we have a pretty good solution for them, which eliminates all of the kind of current manual ways that a lot of these companies are doing it.</p>
+<p class="zh">但如果是更标准化的场景——接近 1 到 2TB、并且有几个小时的窗口，那我们就有相当不错的方案，能彻底取代很多公司现在用的那种手工方式。</p></div></p>
+<p class="seg" id="seg-35"><span class="ts">[08:52 – 09:09]</span><div class="seg-body">
+<p class="en">Whether it be connecting a wire to the vehicle when it arrives back at the depot, or the one that I find the most astounding is actually unscrewing a panel, removing a hard drive, dropping that hard drive into a server farm, getting a fresh hard drive, installing it back on the vehicle and screwing that panel back on.</p>
+<p class="zh">不管是车回 depot 后接根网线，还是最让我瞠目结舌的那种——拧开面板、拔下硬盘、把硬盘丢进服务器集群、换上新的硬盘、再装回车上、把面板拧回去。</p></div></p>
+<p class="seg" id="seg-36"><span class="ts">[09:09 – 09:22]</span><div class="seg-body">
+<p class="en">And so that works when you have a small fleet, but as you scale, that doesn&#x27;t really scale to a large deployment.</p>
+<p class="zh">小批量车队这么干还行，可一旦规模化，这种办法根本扩不上去。</p></div></p>
+<p class="seg" id="seg-37"><span class="ts">[09:22 – 09:39]</span><div class="seg-body">
+<p class="en">Yeah. It&#x27;s funny, you would think that because everyone is so used to wireless, I airdrop photos to people and send over 5G, but obviously we&#x27;re talking much bigger data packages more consistently. I&#x27;ve actually heard that same story that there are some AV fleets and some depots where actually, I think there&#x27;s white unmarked vans that come into these depots and pull all the hard drives from the AVs when they come back to the depot.</p>
+<p class="zh">是啊，挺讽刺的——大家都习惯了无线，我用 AirDrop 传照片、用 5G 发东西，但我们聊的是持续、更大得多的数据包。我还真听过一模一样的故事：有些 AV 车队和 depot，会有那种无标识的白色面包车开进来，等车一回 depot 就把车上的硬盘整箱拔走。</p></div></p>
+<p class="seg" id="seg-38"><span class="ts">[09:39 – 09:46]</span><div class="seg-body">
+<p class="en">And it&#x27;s like, very expensive hardware. So now you&#x27;re driving around with expensive hardware in a white unmarked van.</p>
+<p class="zh">而且那可是很贵的硬件。于是现在你开着一辆白色无标面包车，车里装的全是昂贵硬件到处跑。</p></div></p>
+<p class="seg" id="seg-39"><span class="ts">[09:46 – 10:01]</span><div class="seg-body">
+<p class="en">Someone told me the story and then you got to go take it somewhere because obviously there&#x27;s limited storage space on the car, right? On the hard drives on the car. And they&#x27;re collecting so much of this LiDAR and radar and sensor data that they kind of need somewhere to go, right?</p>
+<p class="zh">有人给我讲过这故事——你得把盘拉去别处，因为车上的存储显然有限，对吧？车上的硬盘就那么大。它们采集了那么多 LiDAR、雷达、传感器数据，总得有个去处，对吧？</p></div></p>
+<p class="seg" id="seg-40"><span class="ts">[10:01 – 10:13]</span><div class="seg-body">
+<p class="en">So it&#x27;s kind of interesting at, I guess how some of the more primitive solutions are out there.</p>
+<p class="zh">所以挺有意思的，有些「原始方案」居然还在外面跑。</p></div></p>
+<p class="seg" id="seg-41"><span class="ts">[10:13 – 10:30]</span><div class="seg-body">
+<p class="en">Yeah, and one of the other benefits is our solution scales. So that&#x27;s one thing about other wireless spectrums is they can&#x27;t reuse that spectrum, meaning if you were to put multiple channels in a Wi-Fi environment next to each other, you&#x27;re going to have conflict and you&#x27;re going to have some sort of level of interference.</p>
+<p class="zh">对，而且我们方案的另一大好处是可扩展。其他无线频谱做不到频谱复用——你在 Wi-Fi 环境里把多个信道紧挨着放，就会有冲突、会有某种程度的干扰。</p></div></p>
+<p class="seg" id="seg-42"><span class="ts">[10:30 – 10:35]</span><div class="seg-body">
+<p class="en">Whereas we can, because the beams are so small and because of some of the intelligence that my team has been able to develop, we can put multiple networks right next to each other, essentially from one parking space to another parking space.</p>
+<p class="zh">而我们行，因为波束很小，加上我团队开发的一些智能算法，我们可以把多个网络紧挨着放——基本上从一个车位到隔壁车位都不冲突。</p></div></p>
+<h2 id="s3">三、为什么这是行业级痛点（兼论对城市的价值）</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>频谱可复用 → 从单车位扩展到多层 depot、大停车场甚至沃尔玛空地</li><li>数据上报正被地方/州政府纳入监管，也成为城市规划的输入</li><li>Virewirx 只做管道，不碰数据内容，但保证「最快速度到达需要的人」</li></ul></div>
+<p class="seg" id="seg-43"><span class="ts">[10:35 – 10:52]</span><div class="seg-body">
+<p class="en">And to scale out to a large coverage area, whether it be a sort of multi-level depot or a large parking lot or even like unused section in a Walmart parking lot outdoors in the middle of nowhere. And so the ability to not have to compromise on the bandwidth or the amount of data that&#x27;s transferred based on the limits of the way that the spectrum is developed is another benefit.</p>
+<p class="zh">这样就能扩到很大的覆盖面积——不管是一栋多层 depot、一个大停车场，还是荒郊野外沃尔玛停车场里一块闲置地。所以，「不必因为频谱本身的开发限制而在带宽或传输量上妥协」，是另一个好处。</p></div></p>
+<p class="seg" id="seg-44"><span class="ts">[10:52 – 11:10]</span><div class="seg-body">
+<p class="en">How big of an issue do you think this is for the autonomous vehicle industry right now? Because I hear companies like Tesla and especially Tesla and Waymo and others talking all the time about all this data that they&#x27;re gathering and how valuable it is for the next model of vehicles that they have.</p>
+<p class="zh">你觉得这个问题现在对自动驾驶行业有多大？因为我总听特斯拉、尤其特斯拉和 Waymo 这些公司说，他们采集了多少数据、对下一代车型多有价值。</p></div></p>
+<p class="seg" id="seg-45"><span class="ts">[11:10 – 11:24]</span><div class="seg-body">
+<p class="en">They have all this training data or millions of data points. And now I&#x27;m thinking about all these millions of data points, probably terabytes or millions of terabytes of data. Has to be transferred, not only transferred, but also stored somewhere too.</p>
+<p class="zh">他们有海量训练数据、上百万个数据点。而我现在的想法是——这些百万级的数据点，可能是 TB、甚至是百万 TB 级的数据，不仅要传，还得存到某个地方。</p></div></p>
+<p class="seg" id="seg-46"><span class="ts">[11:24 – 11:30]</span><div class="seg-body">
+<p class="en">So I imagine, I feel like this might be a big issue, but maybe one that&#x27;s more under the radar on the tech and engineering side.</p>
+<p class="zh">所以我猜这可能是个大问题，只是它在技术和工程侧更「潜伏」在雷达之下。</p></div></p>
+<p class="seg" id="seg-47"><span class="ts">[11:30 – 11:46]</span><div class="seg-body">
+<p class="en">Yes, it&#x27;s not a sexy problem. It&#x27;s not the kind of thing that gets a lot of attention because it&#x27;s more of a utility than it is something that&#x27;s not been done before and therefore can get a lot of media attention. But it&#x27;s still an underlying problem.</p>
+<p class="zh">对，这不是个性感的问题。它不太吸睛，因为它更像水电煤这类基础设施，而不是那种「前所未有、所以能上头条」的东西。但它依然是个底层问题。</p></div></p>
+<p class="seg" id="seg-48"><span class="ts">[11:46 – 12:01]</span><div class="seg-body">
+<p class="en">Sort of the metaphor that we all like that pickaxes and shovels sort of model where we&#x27;re trying to solve a problem that exists and will scale up as the fleets grow. And so whether it be a lot of data or a little bit of data, it still has to get off the vehicle.</p>
+<p class="zh">我们都喜欢一个比喻——「卖铲子」的模式：我们想解决一个已经存在、并且会随车队扩张而放大的问题。不管数据多还是少，它总得从车上卸下来。</p></div></p>
+<p class="seg" id="seg-49"><span class="ts">[12:01 – 12:05]</span><div class="seg-body">
+<p class="en">And there&#x27;s regulations that are coming from local governments, state governments, that a lot of this data is going to need to be reported.</p>
+<p class="zh">而且地方和州政府正在出台规定，大量这类数据将需要被上报。</p></div></p>
+<p class="seg" id="seg-50"><span class="ts">[12:05 – 12:19]</span><div class="seg-body">
+<p class="en">Because obviously they&#x27;re collecting a lot of city data, a lot of civic data, a lot of neighborhood data. And they&#x27;re not going to necessarily want to sit on that exclusively as you start things like urban planning and how do you build next generation roads to accommodate this next generation of vehicle.</p>
+<p class="zh">因为它们采集了大量城市数据、市政数据、社区数据。而一旦涉及城市规划、怎么修下一代道路来适配下一代车辆，相关方不会愿意让这些数据只躺在某家公司手里。</p></div></p>
+<p class="seg" id="seg-51"><span class="ts">[12:19 – 12:37]</span><div class="seg-body">
+<p class="en">And so this data becomes a much more critical piece of that negotiating table infrastructure to be able to provide to other partners as well. Then obviously internally, as you noted, they need this data to analyze the ride, the next generation, et cetera.</p>
+<p class="zh">所以这些数据变成谈判桌上很关键的一块基础设施，也得能提供给其他合作方。当然，就像你提到的，公司内部也需要这些数据来分析这趟行程、迭代下一代等等。</p></div></p>
+<p class="seg" id="seg-52"><span class="ts">[12:37 – 12:57]</span><div class="seg-body">
+<p class="en">And so the data movement problem only scales as the size of your fleet scales. And the more manual resources you throw at it, the more it&#x27;s going to cost you in order to keep this problem at bay. And so solving a problem now that will become a much bigger problem later is where we are in terms of our evolution in being able to deliver a solution to this particular industry.</p>
+<p class="zh">所以数据搬运问题只会随车队规模同步放大。你往里砸越多人工资源，压制这个问题的成本就越高。我们现在的状态就是：在问题将来变大之前先解决它，从而有能力给这个行业交付方案。</p></div></p>
+<p class="seg" id="seg-53"><span class="ts">[12:57 – 13:14]</span><div class="seg-body">
+<p class="en">Yeah. And I&#x27;ll give you a preview of a guest post that we have coming out in a couple days that is actually about this, kind of data and actually what AV companies could give back to cities with all of this data, right? They&#x27;re collecting this radar, LiDAR sensor, though, we&#x27;ve seen we&#x27;ve seen some partnerships around potholes, right?</p>
+<p class="zh">对。我先预告一下，我们过几天会发一篇客座文章，正好讲这个——数据，以及 AV 公司能用这些数据和城市做点什么回馈。它们在采集雷达、LiDAR、传感器数据，我们已经看到一些围绕坑洼路面的合作，对吧？</p></div></p>
+<p class="seg" id="seg-54"><span class="ts">[13:14 – 13:33]</span><div class="seg-body">
+<p class="en">Providing cities with information around the roads, giving back about what they&#x27;re seeing at the curb, vehicles loading or pedestrians or whatever it might be. So actually the, I guess you would say quality and importance of this data, it can kind of be used, I&#x27;m guessing a lot for training, but also for giving back to cities.</p>
+<p class="zh">给城市提供道路周边信息、反馈它们看到的路缘情况、车辆装卸或行人等等。所以我觉得，这些数据的质量和重要性，一方面当然大量用于训练，另一方面也能回馈城市。</p></div></p>
+<p class="seg" id="seg-55"><span class="ts">[13:33 – 13:45]</span><div class="seg-body">
+<p class="en">Do you guys get as involved with what the companies do with this data or do you just know that it&#x27;s important?</p>
+<p class="zh">你们会参与到这些公司拿数据做什么里，还是只清楚「它很重要」？</p></div></p>
+<p class="seg" id="seg-56"><span class="ts">[13:45 – 14:01]</span><div class="seg-body">
+<p class="en">We are strictly the pipeline, so we don&#x27;t touch the data, we don&#x27;t look at the data, we don&#x27;t process or parse the data. We just simply ensure that it gets from point A to point B as efficiently as possible. And the other factor that you were mentioning is like about the amount of data.</p>
+<p class="zh">我们纯粹是管道，不碰数据、不看数据、不处理也不解析数据。我们只确保数据以最高效的方式从 A 点到 B 点。而你刚提到的另一点是数据的「量」。</p></div></p>
+<p class="seg" id="seg-57"><span class="ts">[14:01 – 14:19]</span><div class="seg-body">
+<p class="en">It&#x27;s also the speed, right? So the amount of data that can get to the local government or the police or whoever needs it as fast as possible because things happen immediately on the road and the faster someone can react to it, the better.</p>
+<p class="zh">还有「速度」，对吧？数据能以多快速度到达地方政府、警方或任何需要它的人——因为路上的事都是即时的，反应越快越好。</p></div></p>
+<p class="seg" id="seg-58"><span class="ts">[14:19 – 14:26]</span><div class="seg-body">
+<p class="en">Yeah. Yeah. That&#x27;s actually a good point. I didn&#x27;t think about the fact that most of these companies aren&#x27;t transmitting, right?</p>
+<p class="zh">对，对，这点说得好。我之前没想到——大部分公司其实根本没在实时传输，对吧？</p></div></p>
+<p class="seg" id="seg-59"><span class="ts">[14:26 – 14:42]</span><div class="seg-body">
+<p class="en">Because the data is so big, they&#x27;re not able to transmit some of that data in real time. So they kind of have to do it when they get back to the Depot. And then obviously if you&#x27;re the conduit to that and kind of go to whoever it might need.</p>
+<p class="zh">因为数据太大，它们没法实时传其中一部分，只能等车回 depot 再传。而如果你正是那条通道，就能把它送到任何需要的人那里。</p></div></p>
+<p class="seg" id="seg-60"><span class="ts">[14:42 – 14:57]</span><div class="seg-body">
+<p class="en">So I still think we&#x27;re a little early days in that, but I think there&#x27;s actually a lot of kind of positive opportunities for the companies, for cities, for partners, everyone to kind of get involved and everyone&#x27;s kind of on the same page there to get things moving quickly.</p>
+<p class="zh">所以我觉得这块还早，但我确实认为对公司、城市、合作方、所有人都有很多正向机会，大家目标一致，能一起把事情快速推动起来。</p></div></p>
+<h2 id="s4">四、与 depot 运营整合：主题公园式流水线</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>独立 depot 正被规划：清洁、工程、服务一体，服务 robotaxi/配送/私人 AV</li><li>多竞争性公司的车同场 → 数据安全成新课题</li><li>理想：车一进场，数据卸载与清洗、检修、充电同节拍进行</li></ul></div>
+<p class="seg" id="seg-61"><span class="ts">[14:57 – 15:09]</span><div class="seg-body">
+<p class="en">And then another interesting item that you mentioned that made me think of, kind of more on the fleet side and utilization, right, is that obviously the turnaround time and the utilization of these vehicles is very important.</p>
+<p class="zh">你提到的另一点也让我想到车队侧和利用率——显然这些车的周转时间和利用率非常重要。</p></div></p>
+<p class="seg" id="seg-62"><span class="ts">[15:09 – 15:23]</span><div class="seg-body">
+<p class="en">We know that autonomous vehicles, when they come back, obviously the vehicles have to be charged, they have to be cleaned. So are you kind of working with the partners, within that, like how important is it that it kind of lives within that life cycle, right?</p>
+<p class="zh">我们知道自动驾驶车回来后肯定要充电、要清洁。所以你们是怎么和合作方配合的？它嵌进这个生命周期里有多重要？</p></div></p>
+<p class="seg" id="seg-63"><span class="ts">[15:23 – 15:44]</span><div class="seg-body">
+<p class="en">When they come back, obviously if you only have 10 minutes for a quick inspection, probably can&#x27;t do a ton of data transfer, but if they have an hour for a deep cleaning and charging, I&#x27;m curious, how do you, how do you work in concert with other partners or other aspects of what happens at these fleet depots?</p>
+<p class="zh">车回来后，如果只有 10 分钟做快速巡检，大概传不了多少数据；但如果有整整一小时做深度清洁加充电，我就好奇了——你们怎么和其他合作方、和 depot 里的其他环节协同？</p></div></p>
+<p class="seg" id="seg-64"><span class="ts">[15:44 – 15:59]</span><div class="seg-body">
+<p class="en">Yeah, that&#x27;s kind of a new avenue that we&#x27;ve been exploring is these independent depots. And so a lot of independent depots are being planned across the country where you would have the cleaning, the engineering, the services, and they&#x27;re probably multifaceted.</p>
+<p class="zh">对，这正是我们在探索的新方向——独立 depot。全美正在规划很多独立 depot，里面会有清洁、工程、各类服务，而且很可能是复合功能的。</p></div></p>
+<p class="seg" id="seg-65"><span class="ts">[15:59 – 16:10]</span><div class="seg-body">
+<p class="en">I&#x27;ll probably take care of like delivery drones and delivery vehicles and robo taxis and personal autonomous vehicles and automated delivery vehicles and all that, sort of an entire spectrum of autonomy that&#x27;s being serviced in some fashion at an independently run and managed depot.</p>
+<p class="zh">它们大概会服务配送无人机、配送车、robotaxi、私人自动驾驶车、自动化货运车——一整个自主化的谱系，都在这种独立运营管理的 depot 里以某种形式得到服务。</p></div></p>
+<p class="seg" id="seg-66"><span class="ts">[16:10 – 16:29]</span><div class="seg-body">
+<p class="en">And so obviously things like data security become important. So if you&#x27;re collecting data from multiple vehicles from competitive companies, you&#x27;ve got to make sure you&#x27;ve got the security in place to protect the integrity of that data and protect the security of that data.</p>
+<p class="zh">所以像数据安全这类事就变得重要了。如果你从多家竞争公司的车采集数据，就必须有相应安全措施，保护数据的完整性和安全性。</p></div></p>
+<p class="seg" id="seg-67"><span class="ts">[16:29 – 16:49]</span><div class="seg-body">
+<p class="en">So I don&#x27;t have a great answer to that question, but we&#x27;re certainly talking to these guys about how we can weave our data transfer solutions into the architecture of these depots that they&#x27;re building. The idea being the minute the vehicle pulls on the lot, the data transfer begins.</p>
+<p class="zh">所以这个问题我没法给个完美答案，但我们肯定在和这些建设方聊，怎么把我们的数据卸载方案织进他们 depot 的架构里。设想是：车一进场，数据传输就开始。</p></div></p>
+<p class="seg" id="seg-68"><span class="ts">[16:49 – 17:06]</span><div class="seg-body">
+<p class="en">And it can essentially, our metaphor in our head is it sort of works like maybe a ride at a theme park where you sort of have the vehicle moving through a track and here it&#x27;s being cleaned and, or even like, think about it as like a, like a car wash, right?</p>
+<p class="zh">我们心里的比喻，大致像主题公园里的游乐设施——车沿着轨道移动，这一段在清洁；或者干脆想象成洗车线，对吧？</p></div></p>
+<p class="seg" id="seg-69"><span class="ts">[17:06 – 17:18]</span><div class="seg-body">
+<p class="en">Here it&#x27;s being cleaned and here it&#x27;s being serviced and now it&#x27;s sort of charging and now it&#x27;s being sort of moved off the lot. And so in theory, the data transfer could happen through the entire time it&#x27;s within that facility.</p>
+<p class="zh">这一段在清洁，这一段在检修，现在在充电，然后被移出场地。所以理论上，数据卸载可以在它在场内的整段时间里一直进行。</p></div></p>
+<p class="seg" id="seg-70"><span class="ts">[17:18 – 17:36]</span><div class="seg-body">
+<p class="en">The moment the first radio connects with the radio in the vehicle to the moment the vehicle drives off and the connection is severed at the completion of the data offload, which would happen in synchronicity with charging, cleaning, repairs, inspections, et cetera.</p>
+<p class="zh">从第一个无线电连上车的那刻起，到车开走、数据卸载完成、连接断开的那刻为止——而且这会和充电、清洁、维修、巡检等环节同步发生。</p></div></p>
+<p class="seg" id="seg-71"><span class="ts">[17:36 – 17:55]</span><div class="seg-body">
+<p class="en">Yeah. Well, and this was why I was so excited to chat with you, because I think the more that I&#x27;ve learned about this area of data transfer and autonomous vehicles, I kind of almost rank it up there with charging, with cleaning the vehicle. I mean, this kind of is in my top three.</p>
+<p class="zh">对。这也是我这么兴奋要和你聊的原因——我越了解数据传输这块和自动驾驶，就越觉得它能和充电、和清洁车并列，差不多是我的「前三名」。</p></div></p>
+<p class="seg" id="seg-72"><span class="ts">[17:55 – 18:07]</span><div class="seg-body">
+<p class="en">I won&#x27;t make you rank them and pick a favorite. But it&#x27;s got to be up there in the top three. And it also ties into, I think, what we&#x27;re seeing a lot. I want to talk to you about scaling and commercialization in a second here.</p>
+<p class="zh">我不会逼你排序、选个最爱。但它肯定在前三。而且我觉得它也和我们看到的很多趋势连在一起。稍后我想和你聊聊规模化与商业化。</p></div></p>
+<p class="seg" id="seg-73"><span class="ts">[18:07 – 18:19]</span><div class="seg-body">
+<p class="en">But I think it kind of ties into what we&#x27;re hearing more from AV fleets about charging strategies, right? Fleet Depot strategies. Sometimes you see companies that have a big depot right in the heart of the city that can do hundreds of vehicles.</p>
+<p class="zh">但我觉得它和我们从 AV 车队听到的充电策略是连着的，对吧？车队 depot 策略。有时你会看到公司在城市核心区搞个大 depot，能同时服务几百辆车。</p></div></p>
+<p class="seg" id="seg-74"><span class="ts">[18:19 – 18:33]</span><div class="seg-body">
+<p class="en">And then we&#x27;re seeing satellite depots. And then we&#x27;re also sometimes seeing maybe further away where the cost of real estate and access to power, sometimes in the middle of the city it&#x27;s very hard to get high capacity charging.</p>
+<p class="zh">然后我们看到卫星 depot。有时也会放在更远的地方——因为地产成本和电力接入，在市中心很难拿到高容量充电。</p></div></p>
+<p class="seg" id="seg-75"><span class="ts">[18:33 – 18:48]</span><div class="seg-body">
+<p class="en">And so if you have vehicles that are lower, you&#x27;re okay with a lower utilization, you can kind of stick them 20, 30 minutes away where real estate is cheaper, where maybe you can get faster charging, and then you can have your data upload.</p>
+<p class="zh">所以如果你的车利用率要求没那么高，可以放到 20、30 分钟外、地产更便宜、充电可能更快的地方，顺带把数据上传也做了。</p></div></p>
+<p class="seg" id="seg-76"><span class="ts">[18:48 – 19:01]</span><div class="seg-body">
+<p class="en">So it&#x27;s interesting to see the different, I think people are still figuring it out, but it&#x27;s interesting to see the different strategies and sort of be flexible amongst all of them.</p>
+<p class="zh">所以很有意思——我觉得大家还在摸索，但看到这些不同策略、在它们之间保持灵活，本身就很有意思。</p></div></p>
+<p class="seg" id="seg-77"><span class="ts">[19:01 – 19:04]</span><div class="seg-body">
+<p class="en">Yeah, I mean, you hear a lot about AI factories and the cost of the build and then, of course, the amount of energy they&#x27;re using.</p>
+<p class="zh">对，你总听到 AI 工厂、建设成本、当然还有它们的能耗。</p></div></p>
+<p class="seg" id="seg-78"><span class="ts">[19:04 – 19:19]</span><div class="seg-body">
+<p class="en">And you don&#x27;t really hear a lot about charging electric vehicles, whether they be autonomous or not. And yet that is a massive power truck. In fact, all of the depot guys we&#x27;ve talked to, the very first problem they&#x27;re solving is putting some sort of an energy transformer on the depot property.</p>
+<p class="zh">但你很少听到给电动车（不管自动与否）充电的事。然而那是个巨大的电力包袱。事实上，我们聊过的所有 depot 方，他们要解决的第一件事，就是在场站上立一台变压器。</p></div></p>
+<p class="seg" id="seg-79"><span class="ts">[19:19 – 19:41]</span><div class="seg-body">
+<p class="en">Because of the amount of energy required to charge multiple vehicles simultaneously. And what that does to the city grid and how that affects the overall power usage of a city. I don&#x27;t want to quote a statistic that I can&#x27;t back up, but I&#x27;ve heard, at least in the ether, that the amount of data that&#x27;s required to run all these data factories and robo-whatnot is going to exceed the ability for our current resource to generate it.</p>
+<p class="zh">因为多车同时充电所需的能量太大，会影响城市电网、影响整座城市的电力使用。我不想引用一个我没法核实的统计数据，但我至少听说过一种说法：运转所有这些数据中心工厂和机器人之类所需的数据量，会超过我们当前资源生成电力的能力。</p></div></p>
+<p class="seg" id="seg-80"><span class="ts">[19:41 – 19:58]</span><div class="seg-body">
+<p class="en">So clearly there&#x27;s an issue comes to power that needs to be solved, fortunately that&#x27;s not a problem we&#x27;re trying to solve. But in the context of being in that environment where the charging infrastructure is developed, it shouldn&#x27;t be a significant burden to be able to add additional radios to piggyback on that infrastructure.</p>
+<p class="zh">所以电力显然有个待解的问题，幸好那不是我们要解的。但在充电基础设施已经建起来的环境里，多加点无线电去「搭便车」复用这套基建，应该不会是多大负担。</p></div></p>
+<p class="seg" id="seg-81"><span class="ts">[19:58 – 20:16]</span><div class="seg-body">
+<p class="en">And ours is a relatively low power solution in the grand scheme of things. So it&#x27;s not like it&#x27;s adding additional great burden to it. It&#x27;s just simply piggybacking on whatever that larger infrastructure is to arrange for the data transfer.</p>
+<p class="zh">而且我们的方案整体上是相对低功耗的。所以它并不是在额外增加很大负担，只是简单地搭上那套更大的基础设施的便车，来安排数据卸载。</p></div></p>
+<h2 id="s5">五、合作伙伴、拐点与商业化</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>几乎聊遍了所有 AV / robotaxi 公司，兴趣普遍，关键是 timing</li><li>拐点经验值：&gt; ~100 辆车、停车/基建开始稀缺时，问题升级为燃眉之急</li><li>客户路径一致：初次兴奋 → 被更高优先级压下 → 数月后回邮件要规模化</li></ul></div>
+<p class="seg" id="seg-82"><span class="ts">[20:16 – 20:28]</span><div class="seg-body">
+<p class="en">Yeah. So I know, Virewirx, you have a lot of demand for your products, for your services right now. Let&#x27;s talk a little bit about some of these real world applications. Can you talk about some of the, are you working with, you mentioned these charging partners, are you working with AV companies?</p>
+<p class="zh">对。我知道 Virewirx 现在产品和服务需求很大。咱们聊聊真实世界的落地。你提到那些充电合作方，你们有在和 AV 公司合作吗？</p></div></p>
+<p class="seg" id="seg-83"><span class="ts">[20:28 – 20:44]</span><div class="seg-body">
+<p class="en">What&#x27;s your typical or, what&#x27;s your sort of, best or easiest, entry point into this ecosystem?</p>
+<p class="zh">你典型的、或者最顺、最容易的切入点是什么？</p></div></p>
+<p class="seg" id="seg-84"><span class="ts">[20:44 – 20:51]</span><div class="seg-body">
+<p class="en">Well, I mean, as you can imagine, we&#x27;ve talked to at least all, if not most of the AV slash Robotaxi guys out there. There&#x27;s all across all of them. There&#x27;s an interest.</p>
+<p class="zh">嗯，可以想象，我们差不多和所有、就算不是所有也是绝大多数 AV / robotaxi 团队都聊过。每一家都有兴趣。</p></div></p>
+<p class="seg" id="seg-85"><span class="ts">[20:51 – 21:09]</span><div class="seg-body">
+<p class="en">It&#x27;s just really a matter of timing for them and sort of where they prioritize this in the current. We&#x27;ve also talked to companies that are involved in autonomous deliveries and how that&#x27;s going to transform delivery, whether it simply be the vehicle itself or whether it be the last mile.</p>
+<p class="zh">只是对它们来说这只是个时机问题，以及它们当前把这件事排在什么优先级。我们也聊过做自动驾驶配送的公司，以及这会怎么改变配送——无论是车辆本身，还是最后一英里。</p></div></p>
+<p class="seg" id="seg-86"><span class="ts">[21:09 – 21:29]</span><div class="seg-body">
+<p class="en">And then you&#x27;re going beyond city data and then you&#x27;re into actual parking lot data and driveway data and things like that. And so really we&#x27;re open to any and all. I mean, we&#x27;ve got a sort of product that we know has the fit, but finding the specific case where it&#x27;s going to be like, yes, this is the problem.</p>
+<p class="zh">那样你就超出了城市数据，进入真正的停车场数据、车道数据之类。所以我们对任何场景都开放。我们清楚产品是匹配的，只是要找到那个具体场景：「对，这就是那个问题」。</p></div></p>
+<p class="seg" id="seg-87"><span class="ts">[21:29 – 21:43]</span><div class="seg-body">
+<p class="en">And it&#x27;s now a huge enough problem that we need to solve it right now, as opposed to just to solve it right now, as opposed to like move this to a second tier level problem because something much greater like the vehicle isn&#x27;t driving properly or it gets hung up in the rain.</p>
+<p class="zh">而且它现在大到「我们必须立刻解决」，而不是被降级成二级问题——比如因为「车没开好」或者「雨天卡住了」这种更紧要的事被挤到后面。</p></div></p>
+<p class="seg" id="seg-88"><span class="ts">[21:43 – 21:59]</span><div class="seg-body">
+<p class="en">I&#x27;m making this stuff up. But I mean, we&#x27;re yet to be kind of what is considered a hair-on-fire problem. But we will become a hair-on-fire problem as these companies grow and scale.</p>
+<p class="zh">我这是瞎举例子。但意思是，我们目前还没被当成「燃眉之急」。不过随着这些公司成长和扩张，我们终会变成燃眉之急。</p></div></p>
+<p class="seg" id="seg-89"><span class="ts">[21:59 – 22:12]</span><div class="seg-body">
+<p class="en">And our approach is to say solve this problem now so you don&#x27;t get caught in that kind of environment when you do scale. Yeah. Well, and I think like the example that you shared earlier, if a fleet has maybe five to 10 vehicles that are testing, maybe there&#x27;s a more manual process that you can do right now.</p>
+<p class="zh">我们的思路是现在就解决，免得你规模化时被它卡住。对。就像你前面举的例子——如果一支车队只有 5 到 10 辆在做测试，现在或许还能用手工流程凑合。</p></div></p>
+<p class="seg" id="seg-90"><span class="ts">[22:12 – 22:27]</span><div class="seg-body">
+<p class="en">What is the inflection point? Have you seen with the customers, the partners that you&#x27;re talking to, is there a certain number of vehicles or is it more of a, kind of profitability or process? Like what&#x27;s the inflection point where folks start really thinking about this type of solution?</p>
+<p class="zh">拐点在哪里？从你聊过的客户、合作方身上，你看到的是某个车辆数量，还是更偏向盈利性或流程？大家真正开始认真考虑这类方案的拐点是什么？</p></div></p>
+<p class="seg" id="seg-91"><span class="ts">[22:27 – 22:38]</span><div class="seg-body">
+<p class="en">I wish I had that answer because that would be a great answer to have. I don&#x27;t think anyone has denied that this is an issue that needs to be focused on. I don&#x27;t think anyone has identified this specific inflection point where this then becomes a huge problem.</p>
+<p class="zh">我要是真有这个答案就好了，那会是个很棒的答案。但没人否认这是个需要关注的问题，也没人明确指出那个「从此变成大问题」的具体拐点。</p></div></p>
+<p class="seg" id="seg-92"><span class="ts">[22:38 – 22:55]</span><div class="seg-body">
+<p class="en">I think they&#x27;re all thinking about it. I think, what we&#x27;ve seen is that we&#x27;ll have, this is just one example where we will have the initial meeting and describe the problem we&#x27;re solving. And inevitably there&#x27;s people in the room like, oh yeah, that&#x27;s a problem that we&#x27;ve got to solve.</p>
+<p class="zh">我觉得大家都在想。我们观察到一种模式——就拿一个例子说：初次开会我们描述要解的问题，屋里总会有人反应：「哦对，这是个我们得解的问题。」</p></div></p>
+<p class="seg" id="seg-93"><span class="ts">[22:55 – 23:09]</span><div class="seg-body">
+<p class="en">But then other problems become higher priority. And so the conversation kind of goes quiet for a bit as they work on other things. And then inevitably, some months later, we&#x27;ll get an email saying, hey, can we revisit this? We&#x27;re now realizing that we need to.</p>
+<p class="zh">但接着别的问题优先级更高，于是对话就安静一阵，他们去忙别的。然后 inevitably，几个月后我们会收到一封邮件：「嘿，我们能重新聊聊这个吗？我们现在意识到需要它了。」</p></div></p>
+<p class="seg" id="seg-94"><span class="ts">[23:09 – 23:28]</span><div class="seg-body">
+<p class="en">And so we&#x27;ve got a lot of companies that we started talking to that expressed sort of excitement and interest, but weren&#x27;t necessarily ready to go beyond a demo or even a small pilot that are now coming back to us and saying, all right, how can we scale this as we&#x27;re looking further down and scaling this up for us?</p>
+<p class="zh">所以我们有很多起初聊得很兴奋、但还没准备好超越 demo 甚至小范围试点的公司，现在正回来找我们：「行，随着我们往下看、要规模化了，这东西怎么扩？」</p></div></p>
+<p class="seg" id="seg-95"><span class="ts">[23:28 – 23:41]</span><div class="seg-body">
+<p class="en">So I think there is an inflection point. I just don&#x27;t know if I can put a number on it. But, the number I would apply if I had to would be something in the neighborhood of like, over 100 or, parking infrastructure starts to become more scarce.</p>
+<p class="zh">所以我觉得拐点确实存在，只是我没法给个确切数字。但如果非要给，我会说大概在「超过 100 辆」附近——这时停车基础设施开始变得稀缺。</p></div></p>
+<p class="seg" id="seg-96"><span class="ts">[23:41 – 23:58]</span><div class="seg-body">
+<p class="en">You&#x27;ve got to look at building something that&#x27;s not just reusing existing infrastructure, but now building custom infrastructure and how you can scale with that.</p>
+<p class="zh">你得开始考虑不只是复用现有基建，而是要建定制化的基建，并想清楚怎么随它扩展。</p></div></p>
+<p class="seg" id="seg-97"><span class="ts">[23:58 – 24:03]</span><div class="seg-body">
+<p class="en">Yeah, makes sense. So in the earlier part of the conversation, I think you also mentioned that you were looking to build this data transfer pipeline for physical AI and robotics.</p>
+<p class="zh">对，有道理。回到前面，我记得你也提到想为物理 AI 和机器人建这套数据搬运管道。</p></div></p>
+<h2 id="s6">六、超越 robotaxi：物理 AI 与机器人</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>人形家庭机器人还远；当前聚焦大批量机器人舰队训练</li><li>数据循环：云端训练 → 下放机器人 → 执行 → 回云更新</li><li>其他高潜：建筑/采矿/油气/航天、PC VR 大空间体验</li></ul></div>
+<p class="seg" id="seg-98"><span class="ts">[24:03 – 24:19]</span><div class="seg-body">
+<p class="en">I would love to know what are some of the other either adjacent or related use cases where you&#x27;re seeing a lot of interest? Like, I guess, I don&#x27;t know, like, home robots, do they use a lot of data? Or is it, more construction, mining defense? What are the areas that, especially if any are surprising to?</p>
+<p class="zh">我想知道还有哪些相邻或相关用例让你看到很多兴趣？比如家庭机器人，它们很耗数据吗？还是更多在建筑、采矿、国防？哪些领域让你意外？</p></div></p>
+<p class="seg" id="seg-99"><span class="ts">[24:19 – 24:29]</span><div class="seg-body">
+<p class="en">Yeah, well, I mean, I think we&#x27;re still a little ways away from home humanoid robots, which is obviously the most complicated kind of robot that&#x27;s being developed.</p>
+<p class="zh">嗯，我觉得家庭人形机器人还远着呢——那显然是最复杂的一类机器人。</p></div></p>
+<p class="seg" id="seg-100"><span class="ts">[24:29 – 24:48]</span><div class="seg-body">
+<p class="en">So our focus right now is in helping companies that are building large fleets of robots and they&#x27;re training them for whatever their initial use case will be. You can also factor your industrial where you&#x27;re going to see probably the first wave of humanoid robots coming into action.</p>
+<p class="zh">所以我们现在的重点，是帮那些在造大批量机器人舰队的公司，为它们各自的初始用例做训练。你也可以算上工业场景——第一波人形机器人很可能先在那儿上岗。</p></div></p>
+<p class="seg" id="seg-101"><span class="ts">[24:48 – 25:06]</span><div class="seg-body">
+<p class="en">And they all need to be highly trained and they have these large foundational models that need to be uploaded into the cloud, refined, downloaded. Then once they&#x27;re embedded on the robot, then the robot acts. That changes the model.</p>
+<p class="zh">它们都需要被高强度训练，有那些大模型要先上传云端、精炼、再下载；等模型嵌进机器人，机器人就行动，行动又改变模型。</p></div></p>
+<p class="seg" id="seg-102"><span class="ts">[25:06 – 25:27]</span><div class="seg-body">
+<p class="en">The model then needs to be returned to the cloud for further updating and then back to the robot. That&#x27;s the data transfer cycle, if you will, is trying to provide an environment where this data is moving quickly between the physical AI device and the data factory to be able to ensure that it&#x27;s consistently updated.</p>
+<p class="zh">然后模型要回云端进一步更新，再回到机器人。这就是数据搬运循环——我们要提供的，是一个让数据在物理 AI 设备和数据工厂之间快速流动、从而保证持续更新的环境。</p></div></p>
+<p class="seg" id="seg-103"><span class="ts">[25:27 – 25:48]</span><div class="seg-body">
+<p class="en">So I think the reality is we&#x27;ll start with the larger scale, kind of less risky in terms of things like home environment type places where the automation is already underway in some capacity. And then we get more into like the scientific. When does that become reality?</p>
+<p class="zh">所以现实是，我们会先从更大规模、风险更低的地方起步——比如自动化已经在一定程度上开展的环境，而不是家庭那种场景。然后才慢慢进入更「科学」的层面。那什么时候才成真？</p></div></p>
+<p class="seg" id="seg-104"><span class="ts">[25:48 – 26:02]</span><div class="seg-body">
+<p class="en">So I envision this similar to the deployment, the way that VR was first rolled out. So if you remember the first kind of VR deployments, there were like these large light boxes you had to set up and you kind of set up a virtual barrier and then had to live within those sensors.</p>
+<p class="zh">我设想这类似 VR 最初的铺开方式。你如果记得最早的 VR 部署，得摆那种大灯箱、设一道虚拟围栏，然后人得待在那些传感器范围内活动。</p></div></p>
+<p class="seg" id="seg-105"><span class="ts">[26:02 – 26:17]</span><div class="seg-body">
+<p class="en">For a home-based robot, I can imagine they&#x27;re going to have to have a ton of sensors to ensure that the robot is operating in the kitchen, the laundry room, wherever it&#x27;s focused on. And the data that&#x27;s required in order to kind of manage that and run that, I think will be pretty extreme.</p>
+<p class="zh">对家庭机器人，我能想象它得装一大堆传感器，确保在厨房、洗衣房、它专注的任何地方正常运转。而要管理和运转这些，所需数据我猜会相当极端。</p></div></p>
+<p class="seg" id="seg-106"><span class="ts">[26:17 – 26:35]</span><div class="seg-body">
+<p class="en">And I find it hard to believe that your home Wi-Fi network will be enough. But data, sort of channel to be able to serve that, especially when you think about the other things you&#x27;re doing with your home Wi-Fi, whether it be streaming or working or home automation devices that are present, IoT type stuff.</p>
+<p class="zh">我很难相信你家的 Wi-Fi 网络就够了。要服务那种数据通道，尤其当你还拿家庭 Wi-Fi 做流媒体、办公、各种家庭自动化 IoT 设备的时候。</p></div></p>
+<p class="seg" id="seg-107"><span class="ts">[26:35 – 26:51]</span><div class="seg-body">
+<p class="en">So I think eventually we&#x27;ll get to the point where there is a 60 gigahertz solution needed in all robotic environments. I think it&#x27;s going to take a while to get there. And so starting with things like construction and mining and factory and other kind of aerospace and oil and gas.</p>
+<p class="zh">所以我觉得终有一天，所有机器人环境都需要 60GHz 方案。只是到那一步要些时间。所以我们先从建筑、采矿、工厂，以及航天、油气这些地方起步。</p></div></p>
+<p class="seg" id="seg-108"><span class="ts">[26:51 – 27:10]</span><div class="seg-body">
+<p class="en">And all the other areas where you&#x27;re seeing a lot of kind of initial deployment of these robots is sort of where I think we will have meaning and starting with the training. And then, another use case is simply for things like high speed, reliable, scalable virtual reality.</p>
+<p class="zh">这些机器人初步部署较多的领域，就是我们认为能发挥作用、并从训练切入的地方。另一个用例就是高速、可靠、可扩展的 VR。</p></div></p>
+<p class="seg" id="seg-109"><span class="ts">[27:10 – 27:29]</span><div class="seg-body">
+<p class="en">That&#x27;s another area where data is extremely important. If you have latency or that swimming effect or glitches. And while it&#x27;s not the most sexy topic at the moment where physical AI is, it&#x27;s still an area where there&#x27;s a lot of development and a lot of use, particularly in the entertainment side.</p>
+<p class="zh">那也是数据极重要的领域——一旦有延迟、眩晕感或卡顿就不行。虽然它在物理 AI 当红话题里不算最性感，但开发和使用都很多，尤其在娱乐侧。</p></div></p>
+<p class="seg" id="seg-110"><span class="ts">[27:29 – 27:46]</span><div class="seg-body">
+<p class="en">And you&#x27;ve been limited historically with the number of people that you can squeeze into a PC VR experience. So we give the operators of these experiences an opportunity to scale significantly beyond like a smallish cage to like a football field environment.</p>
+<p class="zh">历史上 PC VR 体验能塞下的人数很有限。而我们让这些体验的运营方，能从「小笼子」扩展到「足球场」量级的空间。</p></div></p>
+<p class="seg" id="seg-111"><span class="ts">[27:46 – 28:06]</span><div class="seg-body">
+<p class="en">And retain the quality of a PC VR experience as opposed to kind of the more limited ones that have, it might be an onboard independent, but you can&#x27;t get the graphics quality and the performance that you can with a high speed streaming PC VR experience. And we&#x27;re finding interest from that sector as well.</p>
+<p class="zh">同时保留 PC VR 的画质——而不是那种机载独立方案，画质和性能都上不去。高速流式的 PC VR 体验才能给到那种质量，我们在那个行业也看到了兴趣。</p></div></p>
+<h2 id="s7">七、规模化、展望与收尾</h2>
+<div class="secnotecard"><div class="secnote-title">📌 章节要点</div><ul><li>更快的无线卸载 → 更高运营效率 + 更快周转 + 更好训练数据</li><li>这是「自主基础设施」，是自动驾驶车辆的补充</li><li>展望：更快速度、更远距离、更多车型；本质是「anything that moves 都需要」</li></ul></div>
+<p class="seg" id="seg-112"><span class="ts">[28:06 – 28:26]</span><div class="seg-body">
+<p class="en">Makes sense. Yeah. So I guess as these physical AI and autonomous vehicle fleets scale, how do you sort of see this, kind of faster, faster wireless data transfer? How does it help them scale? Because I think this is kind of like this recurring theme.</p>
+<p class="zh">有道理。随着物理 AI 和 AV 车队扩张，你如何看待这种更快的无线数据卸载？它怎么帮它们规模化？我觉得这是个反复出现的主题。</p></div></p>
+<p class="seg" id="seg-113"><span class="ts">[28:26 – 28:35]</span><div class="seg-body">
+<p class="en">Is it just more efficient operations or they get to turn over the vehicles quickly, better training, more and better training data? How do you sort of, because I feel like we&#x27;re getting into the scaling phase now for a lot of the top companies in this space.</p>
+<p class="zh">是单纯运营更高效、车周转更快、训练更好、训练数据更多更好吗？因为我觉得这个领域头部公司已经步入规模化阶段了。</p></div></p>
+<p class="seg" id="seg-114"><span class="ts">[28:35 – 28:51]</span><div class="seg-body">
+<p class="en">Yeah, I think you sort of answered the question the way you asked it. I think it&#x27;s all of those things. I think it&#x27;s training. I think it&#x27;s all of the information that these vehicles can provide allows the company to operate more efficiently and allows them to scale.</p>
+<p class="zh">对，你其实已经自己答了。我觉得以上全是。是训练，是这些车能提供的全部信息，让公司运营更高效、得以扩张。</p></div></p>
+<p class="seg" id="seg-115"><span class="ts">[28:51 – 29:08]</span><div class="seg-body">
+<p class="en">So anything that slows these companies down is a detriment to their ability to grow and scale. And so anything they can do to both scale in terms of speed, but also scale in terms of automation. So the more they can just simply pull the vehicle into the depot and then let it do what it does without needing a ton of humans to intervene.</p>
+<p class="zh">所以任何拖慢公司的事，都会损害它成长和扩张的能力。因此凡是能帮它们在「速度」上、也在「自动化」上扩展的事都值得做。车一进 depot，尽量少靠人干预、让车自己该干嘛干嘛。</p></div></p>
+<p class="seg" id="seg-116"><span class="ts">[29:08 – 29:22]</span><div class="seg-body">
+<p class="en">The more of an autonomous industry it is than just strictly the vehicle itself. So I think you&#x27;re looking at autonomous infrastructure as a complement to the autonomous vehicle.</p>
+<p class="zh">这样整个行业才更「自主」，而不只是车本身自主。所以我认为你看到的是：自主基础设施，作为自动驾驶车的补充。</p></div></p>
+<p class="seg" id="seg-117"><span class="ts">[29:22 – 29:33]</span><div class="seg-body">
+<p class="en">Makes sense. So finishing up here, what is next for Virewirx? Where do you see the biggest opportunities in the AV and robotics industries as we grow here?</p>
+<p class="zh">有道理。收个尾——Virewirx 接下来怎么走？在 AV 和机器人行业增长的过程中，你看最大的机会在哪？</p></div></p>
+<p class="seg" id="seg-118"><span class="ts">[29:33 – 29:48]</span><div class="seg-body">
+<p class="en">I think we just need to get further along with the companies we&#x27;re talking to as they shift their focus from the problems they&#x27;ve been solving to the problems that they need to solve. So I don&#x27;t think there&#x27;s a huge change, although we&#x27;re certainly going to continue to develop the technology stack.</p>
+<p class="zh">我觉得就是和我们聊的这些公司走得更远——当它们把焦点从「一直在解的问题」转向「需要解的问题」。所以不会有大转向，不过我们当然会持续推进技术栈。</p></div></p>
+<p class="seg" id="seg-119"><span class="ts">[29:48 – 30:09]</span><div class="seg-body">
+<p class="en">We want to be able to accommodate faster speeds. We want to accommodate greater distances. We want to be able to accommodate different kinds of vehicles, not just sort of the traditional four-wheeled or trucking type vehicles. So anything that requires a sensor where that vehicle is moving around.</p>
+<p class="zh">我们想支持更快的速度、更远的距离、更多类型的车，不只是传统的四轮或卡车。任何「带传感器、且处于移动中」的载体都算。</p></div></p>
+<p class="seg" id="seg-120"><span class="ts">[30:09 – 30:27]</span><div class="seg-body">
+<p class="en">Be it a cleaning robot in a factory or a humanoid robot on a construction site or an autonomous delivery vehicle or an autonomous construction vehicle or a robo taxi, essentially get in front of all of these different kinds of companies where we know that the data is a critical component to evolving their ability to develop new solutions.</p>
+<p class="zh">无论是工厂里的清洁机器人、工地上的通用人形机器人、自动驾驶配送车、自动驾驶工程机械，还是 robotaxi——本质上就是去触达所有这些不同公司，因为我们清楚：数据是它们迭代「开发新方案的能力」的关键组件。</p></div></p>
+<p class="seg" id="seg-121"><span class="ts">[30:27 – 30:40]</span><div class="seg-body">
+<p class="en">To evolving their ability to develop new solutions and their ability to refine their product. We just want to get in front of all of them and tell them how we&#x27;re helping them solve their problems and hopefully have them agree.</p>
+<p class="zh">是迭代开发新方案、打磨产品的能力的关键。我们就是想触达所有这些公司，告诉它们我们怎么帮它们解问题，希望它们认同。</p></div></p>
+<p class="seg" id="seg-122"><span class="ts">[30:40 – 30:58]</span><div class="seg-body">
+<p class="en">Yeah, no, I think that sounds great. And definitely a lot of opportunity out there. Really anything that moves, I think is going to need this sort of type of service in the future. So really appreciate you coming on and sharing all that background.</p>
+<p class="zh">对，听起来很棒，外面的机会确实很多。真的，任何会动的东西，我觉得未来都需要这类服务。非常感谢你上节目分享这些背景。</p></div></p>
+<p class="seg" id="seg-123"><span class="ts">[30:58 – 31:13]</span><div class="seg-body">
+<p class="en">I like how we got a little into the weeds and the technology also. Some of my listeners know that I&#x27;m a retired aerospace engineer. So occasionally I dabble into the engineering side of these things, but it&#x27;s been a while since I used my degree. So I appreciate you coming on, Jason.</p>
+<p class="zh">我很喜欢我们稍微钻进了技术和细节里。有些听众知道我是个退役航天工程师，所以偶尔会涉足这些事的工程侧，不过我用上学位已经是好久以前了。Jason，谢谢你来。</p></div></p>
+<p class="seg" id="seg-124"><span class="ts">[31:13 – 31:18]</span><div class="seg-body">
+<p class="en">We&#x27;ll leave a link to Virewirx in the show notes, maybe a link to your LinkedIn. Anything else folks should know or you want to let them know about the company?</p>
+<p class="zh">我们会在节目笔记里放 Virewirx 的链接，也许还有你的 LinkedIn。还有什么大家该知道、或者你想让听众了解的吗？</p></div></p>
+<p class="seg" id="seg-125"><span class="ts">[31:18 – 31:31]</span><div class="seg-body">
+<p class="en">No, we&#x27;re just excited to meet with everyone. We go to a lot of trade shows and try to meet and mingle there. So anyone that&#x27;s interested in reaching out to us that understands or at least wants to learn more about, A, the problem they&#x27;re going to have or are having or how we will be solving it, please reach out.</p>
+<p class="zh">没有，我们就是很兴奋能见到大家。我们跑很多展会，在那儿认识人、交流。所以任何有兴趣联系我们的人——只要理解、或至少想多了解「你将遇到或正遇到的问题，以及我们会怎么解」——请随时联系。</p></div></p>
+<p class="seg" id="seg-126"><span class="ts">[31:31 – 31:35]</span><div class="seg-body">
+<p class="en">We&#x27;d be happy to talk to you.</p>
+<p class="zh">我们很乐意聊。</p></div></p>
+<p class="seg" id="seg-127"><span class="ts">[31:35 – 31:46]</span><div class="seg-body">
+<p class="en">Yeah, no, it was great to meet some of the team at ATS in San Diego. And I know you guys often go to CES in Vegas, which is coming up. So lots of opportunities. So thank you, Jason.</p>
+<p class="zh">对，之前在圣迭戈的 ATS 见到你们团队一些成员，真的很棒。我知道你们常去拉斯维加斯的 CES，马上又要开了，机会很多。所以谢谢你，Jason。</p></div></p>
+<p class="seg" id="seg-128"><span class="ts">[31:46 – 31:46]</span><div class="seg-body">
+<p class="en">Thank you. Nice to meet you. And thanks for having me on your podcast.</p>
+<p class="zh">谢谢。很高兴认识你。也谢谢邀请我上节目。</p></div></p></main></div><div class="pagelinks"><a class="btn" href="index.html">← 返回本集总结分析</a> <a class="btn ghost" href="../../index.html">全部视频</a></div><section class="relwrap"><h2>📚 更多收藏</h2><div class="relgrid"><a class="relcard" href="../charterup-autonomous-group-transport-harris/index.html"><div class="rw"><img loading="lazy" src="../charterup-autonomous-group-transport-harris/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Harry Campbell</div><div class="rt">CharterUP 的赌注：自动驾驶真正的第一桶金不在轿车，在「成组出行」</div></div></a><a class="relcard" href="../europe-robotaxi-reality-check-friedel/index.html"><div class="rw"><img loading="lazy" src="../europe-robotaxi-reality-check-friedel/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest Podcast</div><div class="rt">欧洲 Robotaxi 的现实检验：不缺试点，缺「平台」——Uber、Bolt 与走出去的价值链</div></div></a><a class="relcard" href="../waabi-one-driver-trucks-robotaxis/index.html"><div class="rw"><img loading="lazy" src="../waabi-one-driver-trucks-robotaxis/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / YouTube</div><div class="rt">Waabi 创始人兼 CEO Raquel Urtasun：从卡车到 Robotaxi，一个 Driver 通吃所有车型</div></div></a><a class="relcard" href="../nvidia-alpamayo-accelerating/index.html"><div class="rw"><img loading="lazy" src="../nvidia-alpamayo-accelerating/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / Podcast</div><div class="rt">NVIDIA Alpamayo 如何加速自动驾驶：与 Matt Cragun 的对谈</div></div></a></div></section><footer>本站点由 WorkBuddy 自动整理 · 英文为 Whisper 语音识别、中文为机器翻译并经专有名词校对，仅供学习与参考。</footer></div><div id="wbTop" class="fabwrap"><a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a><button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button></div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["自动驾驶", "AV 车队", "数据传输", "数据卸载", "Virewirx", "Jason Fiber", "Harry Campbell", "The Driverless Digest", "60GHz", "毫米波", "无线", "VX60", "depot", "车队运营", "物理AI", "机器人", "边缘计算", "LiDAR", "AI 工厂", "充电基础设施"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
