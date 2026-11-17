@@ -1,0 +1,1030 @@
+<!doctype html><html lang='zh-CN'><head><meta charset='utf-8'><meta name='viewport' content='width=device-width,initial-scale=1'><title>把 Robotaxi 带到欧洲：Bolt CEO Markus Villig 谈准入壁垒与 2035 年 10 万辆目标 · 逐字稿</title><meta name='description' content='Bolt 创始人 Markus Villig 拆解欧洲 Robotaxi 的真正门槛：欧盟型式认证加逐国逐城审批、地缘政治与数据主权、成本领先飞轮，以及为什么 10 万辆只是「底线」。真正的瓶颈不是软件，而是能通过欧洲监管的车。'><meta property='og:title' content='把 Robotaxi 带到欧洲：Bolt CEO Markus Villig 谈准入壁垒与 2035 年 10 万辆目标 · 逐字稿'><meta property='og:description' content='Bolt 创始人 Markus Villig 拆解欧洲 Robotaxi 的真正门槛：欧盟型式认证加逐国逐城审批、地缘政治与数据主权、成本领先飞轮，以及为什么 10 万辆只是「底线」。真正的瓶颈不是软件，而是能通过欧洲监管的车。'><meta property='og:type' content='website'><meta property='og:image' content='https://yangtongxueruc.github.io/yang-collection/ep/waymo-dolgov-seven-lessons/cover.jpg'><meta name='twitter:card' content='summary_large_image'><link rel='canonical' href='https://yangtongxueruc.github.io/yang-collection'><link rel='preconnect' href='https://fonts.googleapis.cn' crossorigin><link href='https://fonts.googleapis.cn/css2?family=Ubuntu:wght@400;500;700;800&display=swap' rel='stylesheet'><style>
+:root{
+  --bg:#f4f3f0; --surface:#ffffff; --surface-2:#f1f3f6;
+  --ink:#16181d; --ink-2:#3a3e47; --muted:#6b7280;
+  --line:#e5e8ec; --line-soft:#eef0f3;
+  --accent:#2f5fff; --accent-ink:#ffffff; --accent-soft:rgba(47,95,255,.10);
+  --teal:#0e9f9a; --amber:#b4730a;
+  --mark:#ffe08a; --mark-ink:#3a2c00;
+  --shadow-sm:0 1px 2px rgba(22,24,29,.05);
+  --shadow:0 1px 2px rgba(22,24,29,.04),0 12px 30px rgba(22,24,29,.07);
+  --shadow-lg:0 20px 50px rgba(22,24,29,.12);
+  --radius:18px; --radius-sm:12px;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,"Songti SC","SimSun",serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",Helvetica,Arial,sans-serif;
+  --mono:"SFMono-Regular",ui-monospace,Menlo,Consolas,monospace;
+  --maxw:1200px;
+  --title-font:"Ubuntu",var(--sans);
+  --ease:cubic-bezier(.2,.7,.3,1);
+}
+[data-theme="dark"]{
+  --bg:#0b0e14; --surface:#12151b; --surface-2:#161a21;
+  --ink:#eceef2; --ink-2:#c8ccd4; --muted:#9aa3b2;
+  --line:#232833; --line-soft:#1c2029;
+  --accent:#6f8dff; --accent-ink:#0c0d10; --accent-soft:rgba(111,141,255,.16);
+  --teal:#34d6c8; --amber:#e0a64b;
+  --mark:#7a5b12; --mark-ink:#ffe9b0;
+  --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  --shadow:0 1px 2px rgba(0,0,0,.35),0 12px 30px rgba(0,0,0,.4);
+  --shadow-lg:0 20px 50px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:16.5px;line-height:1.8;-webkit-font-smoothing:antialiased;
+  transition:background .3s ease,color .3s ease}
+img{max-width:100%}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.ecard:focus-visible{outline-offset:3px}
+
+#wbProgress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
+  background:linear-gradient(90deg,var(--accent),var(--teal));transition:width .1s linear}
+
+.topnav{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:12px;
+  padding:12px 26px;background:color-mix(in srgb,var(--surface) 82%,transparent);
+  backdrop-filter:saturate(160%) blur(14px);-webkit-backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line)}
+.topnav .brand{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:700;font-size:15px;text-decoration:none}
+.topnav .brand .mark{width:22px;height:22px;border-radius:7px;
+  background:linear-gradient(135deg,var(--accent),var(--teal));box-shadow:var(--shadow-sm)}
+.topnav .grow{flex:1}
+.topnav a.navlink{color:var(--ink-2);font-weight:600;font-size:14px;padding:6px 4px}
+.topnav a.navlink:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb{display:flex;align-items:center;gap:8px;font-size:13.5px;min-width:0;margin-left:4px}
+.topnav .breadcrumb .sep{color:var(--muted);opacity:.55;font-weight:400;flex:0 0 auto}
+.topnav .breadcrumb a{color:var(--ink-2);font-weight:600;text-decoration:none;white-space:nowrap;flex:0 0 auto}
+.topnav .breadcrumb a:hover{color:var(--accent);text-decoration:none}
+.topnav .breadcrumb .cur{color:var(--accent);font-weight:700;white-space:nowrap;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{flex:0 0 auto;height:38px;padding:0 13px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.icon-btn:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:var(--shadow-sm);color:var(--accent)}
+.theme-btn{width:38px;padding:0;justify-content:center;font-size:16px}
+.etab{font-size:13.5px;font-weight:660;padding:7px 15px;border-radius:11px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);text-decoration:none;transition:.18s;display:inline-flex;align-items:center;gap:6px}
+.etab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.wrap{max-width:var(--maxw);margin:0 auto;padding:40px 24px 90px}
+
+.cover{position:relative;overflow:hidden;border-radius:24px;padding:40px;margin-bottom:30px;
+  color:#fff;background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg);
+  display:flex;gap:34px;align-items:center}
+[data-theme="dark"] .cover{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.cover::after{content:"";position:absolute;inset:0;
+  background:radial-gradient(120% 120% at 85% -10%,rgba(52,214,200,.22),transparent 55%),
+             radial-gradient(90% 90% at 0% 120%,rgba(111,141,255,.20),transparent 50%);pointer-events:none}
+.cover>*{position:relative;z-index:1}
+.cover .cover-text{flex:1;min-width:0}
+.cover .cover-media{flex:0 0 36%;max-width:360px}
+.cover .cover-media img{width:100%;height:auto;border-radius:14px;display:block;
+  box-shadow:0 14px 40px rgba(0,0,0,.45);background:#0b1220}
+.cover .kicker{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:14px}
+.cover .kicker::before{content:"";width:22px;height:2px;background:var(--teal);display:inline-block}
+.cover h1{margin:0 0 10px;font-size:clamp(27px,4.4vw,42px);line-height:1.22;font-weight:780;letter-spacing:-.01em}
+.cover .sub{margin:0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.86);font-family:var(--serif);font-style:italic}
+.cover .tags{margin-top:20px;display:flex;flex-wrap:wrap;gap:8px}
+.tag{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
+  border:1px solid rgba(255,255,255,.22);color:#fff;padding:5px 12px;border-radius:999px;font-size:13px;backdrop-filter:blur(4px)}
+.cover .etabs{margin-top:18px;display:flex;gap:9px;flex-wrap:wrap}
+.cover .etab{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff}
+.cover .etab:hover{border-color:var(--teal);color:#fff;text-decoration:none}
+.cover .etab.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+
+.layout{display:flex;gap:34px;align-items:flex-start}
+nav.toc{position:sticky;top:78px;flex:0 0 244px;background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--radius-sm);padding:18px 16px;
+  max-height:calc(100vh - 100px);overflow:auto;box-shadow:var(--shadow-sm);
+  scrollbar-width:thin;scrollbar-color:var(--accent-soft) transparent}
+nav.toc h4{margin:0 0 12px;font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+nav.toc a{display:block;color:var(--ink-2);text-decoration:none;padding:7px 10px;border-radius:9px;
+  font-size:13.5px;line-height:1.5;border-left:2px solid transparent;transition:.18s}
+nav.toc a:hover{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);text-decoration:none}
+nav.toc a.active{background:var(--accent-soft);color:var(--accent);border-left-color:var(--accent);font-weight:700}
+main.content{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:30px 34px;box-shadow:var(--shadow)}
+
+/* 滚动条美化（全局：适用于章节列表、逐字稿区、整页等所有滚动区域） */
+html{scrollbar-width:thin;scrollbar-color:rgba(125,150,170,.45) transparent}
+[data-theme="dark"] html{scrollbar-color:rgba(180,200,215,.28) transparent}
+html{overflow-y:scroll}
+html::-webkit-scrollbar{width:10px;height:10px}
+html::-webkit-scrollbar-track{background:transparent}
+html::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] html::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+html::-webkit-scrollbar-corner{background:transparent}
+nav.toc::-webkit-scrollbar{width:8px;height:8px}
+nav.toc::-webkit-scrollbar-track{background:transparent}
+nav.toc::-webkit-scrollbar-thumb{background:rgba(125,150,170,.35);border-radius:999px;
+  border:2px solid transparent;background-clip:content-box;transition:background .2s}
+nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.60);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb{background:rgba(180,200,215,.22);background-clip:content-box}
+[data-theme="dark"] nav.toc::-webkit-scrollbar-thumb:hover{background:rgba(52,214,200,.55);background-clip:content-box}
+
+.content h1{font-size:clamp(22px,2.4vw,27px);margin:0 0 14px;color:var(--ink);line-height:1.3}
+.content h2{font-size:clamp(20px,2.2vw,24px);margin:32px 0 12px;color:var(--ink);font-weight:720;
+  padding-left:14px;border-left:4px solid var(--accent);scroll-margin-top:84px;line-height:1.4}
+.content h3{font-size:clamp(16px,1.7vw,19px);margin:22px 0 8px;color:var(--accent);scroll-margin-top:84px}
+.content p{margin:12px 0;color:var(--ink-2)}
+.content strong{color:var(--ink);font-weight:700}
+.content code{font-family:var(--mono);font-size:.9em;background:var(--surface-2);
+  border:1px solid var(--line);padding:1px 6px;border-radius:6px;color:var(--accent)}
+.content blockquote{margin:16px 0;padding:12px 18px;border-left:4px solid var(--teal);
+  background:var(--surface-2);border-radius:0 12px 12px 0;color:var(--muted);font-style:italic}
+.content blockquote p{margin:0;color:var(--muted)}
+.content ul{margin:12px 0;padding-left:22px;color:var(--ink-2)}
+.content ol{margin:12px 0;padding-left:26px;color:var(--ink-2)}
+.content ol li{margin:11px 0;line-height:1.8}
+.content li{margin:6px 0}
+.content hr{border:none;border-top:1px solid var(--line);margin:26px 0}
+.content table{border-collapse:collapse;width:100%;margin:18px 0;font-size:14.5px;overflow:hidden;border-radius:12px;box-shadow:var(--shadow-sm)}
+.content th,.content td{border:1px solid var(--line);padding:10px 13px;text-align:left;vertical-align:top}
+.content th{background:var(--surface-2);color:var(--ink);font-weight:680}
+.content tr:nth-child(even) td{background:var(--surface-2)}
+
+.seg{display:grid;grid-template-columns:96px 1fr;gap:18px;padding:16px 0;border-bottom:1px solid var(--line-soft);scroll-margin-top:84px}
+.seg .ts{font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700;color:var(--accent);padding-top:3px;letter-spacing:.01em}
+.seg .ts[data-slide]{cursor:pointer;text-decoration:none;border-bottom:1px dashed var(--accent)}
+.seg .ts[data-slide]:hover{color:var(--teal);border-bottom-color:var(--teal)}
+.seg-body{display:flex;flex-direction:column;gap:8px;min-width:0}
+.seg .en{margin:0;font-size:14.5px;line-height:1.7;color:var(--muted)}
+.seg .zh{margin:0;font-size:16.5px;line-height:1.9;color:var(--ink)}
+mark.kw{background:var(--mark);color:var(--mark-ink);padding:0 3px;border-radius:4px;font-weight:600;box-shadow:0 0 0 1px rgba(0,0,0,.04)}
+body.no-kw mark.kw{background:transparent;color:inherit;box-shadow:none;padding:0}
+body.lang-zh .seg .en{display:none}
+body.lang-en .seg .zh{display:none}
+
+.video-wrap{position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:16px;
+  margin:0 0 26px;box-shadow:var(--shadow);background:#000;border:1px solid var(--line)}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.watchbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);background:var(--accent);color:var(--accent-ink);
+  padding:12px 22px;border-radius:12px;font-weight:700;font-size:15px;box-shadow:var(--shadow);text-decoration:none;display:inline-flex;gap:8px;align-items:center}
+.watchbtn:hover{text-decoration:none;opacity:.92}
+.slidecard{margin:20px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface-2);box-shadow:var(--shadow-sm);scroll-margin-top:84px}
+.slidecard img{display:block;width:100%;height:auto;background:#0b1220}
+.slidecap{padding:10px 16px 14px}
+.slidecap .en{margin:0;font-size:13px;color:var(--muted);font-style:italic}
+.slidecap .zh{margin:3px 0 0;font-size:15px;line-height:1.7;color:var(--ink-2)}
+
+.secnotecard{margin:22px 0;padding:18px 20px 16px;border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:12px;background:linear-gradient(180deg,var(--surface-2),var(--surface));box-shadow:var(--shadow-sm)}
+.secnote-title{font-weight:700;font-size:13.5px;letter-spacing:.5px;color:var(--accent);
+  text-transform:uppercase;margin-bottom:10px}
+.secnotecard ul{margin:0;padding-left:22px}
+.secnotecard ul li{margin:6px 0;line-height:1.75;font-size:15.2px;color:var(--ink-2)}
+.secnotecard ul li::marker{color:var(--accent)}
+
+.pagelinks{display:flex;gap:12px;flex-wrap:wrap;margin-top:26px}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--accent);color:var(--accent-ink);
+  text-decoration:none;padding:11px 18px;border-radius:12px;font-weight:680;font-size:14.5px;box-shadow:var(--shadow-sm);transition:.2s}
+.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);text-decoration:none;opacity:1}
+.btn.ghost{background:transparent;color:var(--accent);border:1px solid var(--accent)}
+.btn.ghost:hover{background:var(--accent-soft)}
+
+.hero{position:relative;overflow:hidden;border-radius:26px;padding:50px 44px;margin-bottom:22px;color:#fff;
+  background:linear-gradient(135deg,#0b1220 0%,#1b2c5e 55%,#0b3b3a 100%);box-shadow:var(--shadow-lg)}
+[data-theme="dark"] .hero{background:linear-gradient(135deg,#070b14 0%,#142246 55%,#082b2a 100%)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background-image:radial-gradient(rgba(255,255,255,.06) 1px,transparent 1.4px);background-size:22px 22px;
+  -webkit-mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent);
+  mask-image:linear-gradient(120deg,transparent,#000 40%,#000 70%,transparent)}
+.hero::after{content:"";position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 140% at 88% -20%,rgba(52,214,200,.30),transparent 55%),
+             radial-gradient(90% 120% at 0% 130%,rgba(111,141,255,.28),transparent 52%)}
+.hero>*{position:relative;z-index:1}
+.hero .hero-top{display:flex;align-items:center;gap:13px;margin-bottom:18px}
+.hero .hero-glyph{width:46px;height:46px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;
+  font-size:23px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.30);box-shadow:var(--shadow-sm);backdrop-filter:blur(4px)}
+.hero .kicker{font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.78);margin-bottom:0}
+.hero h1{margin:0;font-size:clamp(30px,5vw,48px);line-height:1.12;font-weight:800;letter-spacing:-.015em;font-family:var(--title-font)}
+.hero p{margin:14px 0 0;font-size:clamp(15px,2vw,19px);color:rgba(255,255,255,.88);max-width:680px;font-family:var(--title-font)}
+.hero-stats{display:flex;gap:30px;margin-top:28px;flex-wrap:wrap}
+.hero-stat{display:flex;flex-direction:column;gap:3px}
+.hero-stat b{font-size:23px;font-weight:800;font-family:var(--title-font);letter-spacing:-.01em;color:#fff;line-height:1.1}
+.hero-stat span{font-size:12.5px;color:rgba(255,255,255,.72);letter-spacing:.04em}
+.hero-stat+.hero-stat{padding-left:30px;border-left:1px solid rgba(255,255,255,.18)}
+
+.searchbar{display:flex;align-items:center;gap:10px;margin:0 0 26px}
+.searchbar .field{position:relative;flex:1;max-width:520px}
+.searchbar input{width:100%;height:46px;border-radius:13px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:15px;padding:0 16px 0 44px;outline:none;transition:.2s;font-family:var(--sans)}
+.searchbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.searchbar .ico{position:absolute;left:15px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:16px;pointer-events:none}
+.searchbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.searchbar .count b{color:var(--accent)}
+
+.tagfilter{display:flex;gap:9px;flex-wrap:wrap;margin:0 0 20px;align-items:center}
+.tagfilter .lab{font-size:13px;color:var(--muted);font-weight:600;margin-right:2px}
+.tchip{font-size:13px;font-weight:600;padding:7px 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;transition:.18s}
+.tchip:hover{border-color:var(--accent);color:var(--accent)}
+.tchip.active{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.ecard .tags{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:0 0 10px}
+.ecard .tags .tagpill{margin:0;align-self:auto}
+.ecard .timepill{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:600;
+  color:var(--muted);background:var(--surface-2);border:1px solid var(--line);padding:4px 10px;border-radius:999px}
+.ecard .tagpill{display:inline-flex;align-items:center;justify-content:center;gap:5px;font-size:12px;font-weight:700;
+  color:var(--teal);background:var(--accent-soft);padding:4px 12px;border-radius:999px;margin:0 0 10px;align-self:flex-start;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}
+.ecard{position:relative;display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--line);
+  border-radius:20px;overflow:hidden;color:var(--ink);box-shadow:var(--shadow-sm);
+  transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s var(--ease)}
+.ecard:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:color-mix(in srgb,var(--accent) 45%,var(--line));text-decoration:none}
+.ecard.hidden{display:none}
+.ecard .thumbwrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;
+  border-left:3px solid hsl(var(--cat,210) 60% 52% / .9)}
+.ecard .thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.ecard:hover .thumb{transform:scale(1.045)}
+.ecard .thumbwrap::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(0,0,0,.45))}
+.ecard .durbadge{position:absolute;top:10px;right:10px;z-index:2;background:rgba(8,10,16,.62);color:#fff;
+  font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;backdrop-filter:blur(3px);letter-spacing:.02em;
+  font-variant-numeric:tabular-nums;pointer-events:none}
+.ecard .tagpill .catdot{width:8px;height:8px;border-radius:50%;background:hsl(var(--cat,210) 65% 48%);display:inline-block;margin-right:6px;vertical-align:middle}
+.ecard .tagpill .catdot+.txt{margin-left:0}
+.ecard .play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:56px;height:56px;border-radius:50%;
+  background:rgba(255,255,255,.92);box-shadow:0 6px 20px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;font-size:19px;color:#0b1220;transition:.22s}
+.ecard:hover .play{background:var(--accent);color:#fff}
+.ecard .body{padding:18px 20px 22px;background:linear-gradient(180deg,var(--surface),var(--surface-2));flex:1;display:flex;flex-direction:column}
+.ecard .src{font-size:12px;letter-spacing:.04em;color:var(--teal);font-weight:700;text-transform:uppercase}
+.ecard h3{margin:8px 0 4px;font-size:18.5px;color:var(--ink);line-height:1.35}
+.ecard .en{margin:0;font-size:13.5px;color:var(--muted);font-style:italic;font-family:var(--serif)}
+.ecard .meta{margin:10px 0 0;font-size:12.5px;color:var(--muted)}
+.ecard .one{margin:10px 0 14px;font-size:14px;color:var(--ink-2);line-height:1.65}
+.ecard .cta{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;font-weight:680;color:var(--accent);margin-top:auto;padding-top:6px}
+.noresult{display:none;text-align:center;color:var(--muted);padding:48px 0 36px}
+.noresult.show{display:flex;flex-direction:column;align-items:center;gap:14px}
+.noresult .nr-ico{width:64px;height:64px;color:var(--muted);opacity:.8}
+.noresult .nr-title{font-size:17px;font-weight:700;color:var(--ink);margin:0}
+.noresult .nr-sub{font-size:14px;color:var(--muted);margin:0;max-width:420px;line-height:1.7}
+.noresult .nr-btn{margin-top:4px;border:1px solid var(--line);background:var(--surface);color:var(--accent);
+  font-weight:650;font-size:13.5px;padding:9px 18px;border-radius:11px;cursor:pointer;transition:.18s}
+.noresult .nr-btn:hover{border-color:var(--accent);background:var(--accent-soft)}
+
+.relwrap{margin:30px 0 0}
+.relwrap h2{font-size:19px;margin:0 0 14px;color:var(--ink);padding-left:14px;border-left:4px solid var(--teal)}
+.relgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.relcard{display:block;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;
+  color:var(--ink);box-shadow:var(--shadow-sm);transition:.2s}
+.relcard:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:color-mix(in srgb,var(--accent) 40%,var(--line));text-decoration:none}
+.relcard .rw{aspect-ratio:16/9;overflow:hidden;background:#000}
+.relcard .rw img{width:100%;height:100%;object-fit:cover;display:block}
+.relcard .rb{padding:11px 13px 14px}
+.relcard .rs{font-size:11px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+.relcard .rt{font-size:14.5px;color:var(--ink);line-height:1.35;margin:4px 0 0;font-weight:600}
+
+.kwbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 22px;
+  background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.kwbar .lead{font-size:13px;color:var(--muted);font-weight:600}
+.kwbar .chip{font-size:12.5px;padding:4px 11px;border-radius:999px;background:var(--surface);
+  border:1px solid var(--line);color:var(--ink-2);cursor:pointer;transition:.15s}
+.kwbar .chip:hover{border-color:var(--accent);color:var(--accent)}
+.kwbar .toggle{margin-left:auto}
+
+.tbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 22px}
+.tbar .field{position:relative;flex:1;min-width:220px;max-width:460px}
+.tbar input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);font-size:14.5px;padding:0 14px 0 42px;outline:none;transition:.2s;font-family:var(--sans)}
+.tbar input:focus{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.tbar .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted);font-size:15px;pointer-events:none}
+.seg-toggle{display:inline-flex;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.seg-toggle .tbtn{border:0;background:transparent;color:var(--ink-2);font-size:13px;font-weight:600;
+  padding:9px 15px;cursor:pointer;transition:.15s;font-family:var(--sans)}
+.seg-toggle .tbtn:hover{color:var(--accent)}
+.seg-toggle .tbtn.active{background:var(--accent);color:var(--accent-ink)}
+.tbar .count{font-size:13px;color:var(--muted);white-space:nowrap}
+.tbar .count b{color:var(--accent)}
+
+.fabwrap{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.25s}
+.fabwrap.show{opacity:1;pointer-events:auto;transform:translateY(0)}
+.fab{height:44px;padding:0 16px;border-radius:999px;border:1px solid var(--line);
+  background:var(--surface);color:var(--ink);cursor:pointer;font-size:13.5px;font-weight:600;line-height:1;
+  display:inline-flex;align-items:center;gap:6px;box-shadow:var(--shadow);text-decoration:none;transition:.2s}
+.fab:hover{border-color:var(--accent);color:var(--accent);text-decoration:none}
+.fab:active{transform:translateY(-1px)}
+
+footer{color:var(--muted);font-size:13px;text-align:center;margin-top:40px;line-height:1.7}
+
+#wbToast{position:fixed;left:50%;bottom:34px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:var(--bg);padding:11px 20px;border-radius:12px;font-size:14px;font-weight:600;
+  box-shadow:var(--shadow-lg);opacity:0;pointer-events:none;transition:.25s;z-index:80}
+#wbToast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+@media (prefers-reduced-motion: no-preference){
+  .ecard{opacity:0;transform:translateY(14px);animation:wbCardIn .55s var(--ease) both}
+  .ecard:nth-child(1){animation-delay:.04s}
+  .ecard:nth-child(2){animation-delay:.09s}
+  .ecard:nth-child(3){animation-delay:.14s}
+  .ecard:nth-child(4){animation-delay:.19s}
+  .ecard:nth-child(5){animation-delay:.24s}
+  .ecard:nth-child(6){animation-delay:.29s}
+  .ecard:nth-child(7){animation-delay:.34s}
+  .ecard:nth-child(8){animation-delay:.39s}
+  .ecard:nth-child(9){animation-delay:.44s}
+  .ecard:nth-child(10){animation-delay:.49s}
+  .ecard:nth-child(11){animation-delay:.54s}
+  .ecard:nth-child(12){animation-delay:.59s}
+  .ecard:nth-child(13){animation-delay:.64s}
+  .ecard:nth-child(14){animation-delay:.69s}
+  .ecard:nth-child(15){animation-delay:.74s}
+  .ecard:nth-child(16){animation-delay:.79s}
+  .ecard:nth-child(17){animation-delay:.84s}
+  .ecard:nth-child(18){animation-delay:.89s}
+}
+@keyframes wbCardIn{to{opacity:1;transform:none}}
+@media (max-width:860px){
+  .layout{flex-direction:column}
+  nav.toc{position:static;flex:none;width:100%;max-height:none}
+  .seg{grid-template-columns:74px 1fr;gap:12px}
+  main.content{padding:22px 18px}
+  .cover,.hero{padding:34px 24px}
+  .cover{flex-direction:column;align-items:stretch}
+  .cover .cover-media{flex:none;max-width:none;margin-top:18px}
+  .wrap{padding:26px 16px 70px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:560px){
+  .grid{grid-template-columns:1fr}
+}
+</style><script>(function(){try{var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script></head><body><div class="topnav">
+<a class="brand" href="../../index.html"><span class="mark"></span>🐑的收藏库</a>
+<nav class="breadcrumb" aria-label="页面切换">
+<span class="sep">›</span>
+<a href="index.html">总结分析</a>
+<span class="sep dot">·</span>
+
+
+<span class="cur">逐字稿</span>
+</nav>
+<span class="grow"></span>
+<a class="navlink" href="https://www.thedriverlessdigest.com/p/bringing-robotaxis-to-europe-with" target="_blank" rel="noopener">原文 ↗</a>
+<button class="icon-btn" onclick="wbCopyLink()" aria-label="复制本页链接">🔗 复制链接</button>
+<button id="wbThemeBtn" class="icon-btn theme-btn" onclick="wbToggleTheme()" aria-label="切换深浅色主题"></button>
+</div>
+<div class='wrap'>
+<header class="cover">
+<div class="cover-text">
+<div class="kicker">The Driverless Digest · Substack / YouTube（Harry Campbell）</div>
+<h1>把 Robotaxi 带到欧洲：Bolt CEO Markus Villig 谈准入壁垒与 2035 年 10 万辆目标</h1>
+<p class="sub">中英对照逐字稿 · Bringing Robotaxis to Europe with Bolt CEO Markus Villig</p>
+<div class="tags">
+<span class="tag">⏱ 30:33</span>
+<span class="tag">👤 Markus Villig（Bolt 创始人兼 CEO）</span>
+<span class="tag">🗓 2026-11-16</span>
+</div>
+<div class="etabs">
+<a class="etab" href="index.html">📊 总结分析</a>
+<a class="etab active" href="transcript.html">📝 逐字稿</a>
+</div>
+</div>
+<div class="cover-media"><img src="cover.jpg" alt="cover"></div>
+</header>
+<div class="video-wrap" style="background:#1a1410">
+<img src="cover.jpg" alt="poster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain">
+<a class="watchbtn" href="https://youtu.be/aw80zeCSayg" target="_blank" rel="noopener">▶ 在 YouTube 观看</a>
+</div><div class="kwbar">
+<span class="lead">关键词高亮</span><span class="chip" onclick="wbJumpKw(this)">Bolt</span><span class="chip" onclick="wbJumpKw(this)">Markus Villig</span><span class="chip" onclick="wbJumpKw(this)">Harry Campbell</span><span class="chip" onclick="wbJumpKw(this)">Robotaxi</span><span class="chip" onclick="wbJumpKw(this)">小马智行</span><span class="chip" onclick="wbJumpKw(this)">Pony AI</span><span class="chip" onclick="wbJumpKw(this)">Stellantis</span><span class="chip" onclick="wbJumpKw(this)">Lucid</span><span class="chip" onclick="wbJumpKw(this)">英伟达</span><span class="chip" onclick="wbJumpKw(this)">NVIDIA</span><span class="chip" onclick="wbJumpKw(this)">欧洲</span><span class="chip" onclick="wbJumpKw(this)">监管</span><span class="chip" onclick="wbJumpKw(this)">L4</span><span class="chip" onclick="wbJumpKw(this)">OEM</span><span class="chip" onclick="wbJumpKw(this)">车队</span><span class="chip" onclick="wbJumpKw(this)">depot</span><span class="chip" onclick="wbJumpKw(this)">标准化</span><span class="chip" onclick="wbJumpKw(this)">型式认证</span><span class="chip" onclick="wbJumpKw(this)">单位经济性</span><span class="chip" onclick="wbJumpKw(this)">10 万辆</span><span class="chip" onclick="wbJumpKw(this)">FSD</span><span class="chip" onclick="wbJumpKw(this)">劳动力</span><span class="chip" onclick="wbJumpKw(this)">数据主权</span><span class="chip" onclick="wbJumpKw(this)">混合市场</span><button class="icon-btn toggle" onclick="wbToggleKw()">隐藏高亮</button>
+</div>
+<div class="tbar">
+<div class="field"><span class="ico">⌕</span><input id="wbTSearch" type="search" placeholder="在逐字稿中搜索关键词…" oninput="wbTFilter()" autocomplete="off"></div>
+<div class="seg-toggle">
+<button class="tbtn active" data-lang="all" onclick="wbLang('all')">全部</button>
+<button class="tbtn" data-lang="zh" onclick="wbLang('zh')">仅中文</button>
+<button class="tbtn" data-lang="en" onclick="wbLang('en')">仅英文</button>
+</div>
+</div>
+<div class="layout">
+<nav class="toc"><h4>章节导航</h4>
+<a href="#seg-1">00:00 开场预告</a><a href="#seg-3">01:08 介绍 Bolt</a><a href="#seg-9">03:20 上市与盈利</a>
+<a href="#seg-19">07:33 AV 战略定位</a><a href="#seg-23">09:34 不做 L4 的理由</a><a href="#seg-29">11:25 合作伙伴进展</a>
+<a href="#seg-37">14:24 欧洲准入壁垒</a><a href="#seg-45">17:11 小规模试点</a><a href="#seg-49">18:25 地缘政治</a>
+<a href="#seg-55">20:40 少数深伙伴</a><a href="#seg-60">22:15 人机共存</a><a href="#seg-72">26:55 10 万辆的由来</a>
+<a href="#seg-75">28:12 车辆供给与标准化</a><a href="#seg-78">29:40 结尾回答</a>
+</nav>
+<main class="content">
+<h1>中英对照逐字稿 · 把 Robotaxi 带到欧洲</h1>
+<blockquote>英文来源：Substack 官方 transcription.json（speaker_map 已还原为 Markus Villig / Harry Campbell）· 中文为机器翻译并经专有名词校对。时间戳为片段起始位置。</blockquote>
+<p class="seg" id="seg-1" data-text="i think there's genuinely opportunity in europe to deploy millions of autonomous vehicles for passengers. we genuinely think you could easily deploy 100,000 robot taxis across europe, and this would all be incremental volume. this would barely cannibalize the demand for human drivers. i suspect the software is going to be ready in a couple of years from many providers, but i think cars are going to be the limitation, especially cars that can clear the european regulatory bar. 我认为欧洲确实存在部署数百万辆载客自动驾驶汽车的机会。我们真的认为，在全欧洲轻松部署 10 万辆 Robotaxi 是可行的，而且这几乎全是增量需求，基本不会蚕食人类司机的订单。我猜软件会在几年后由多家供应商准备就绪，但瓶颈会出在车上——尤其是那些能通过欧洲监管门槛的车。">
+<span class="ts">[00:00] Markus Villig</span>
+<div class="seg-body">
+<p class="en">I think there's genuinely opportunity in Europe to deploy millions of autonomous vehicles for passengers. We genuinely think you could easily deploy 100,000 robot taxis across Europe, and this would all be incremental volume. This would barely cannibalize the demand for human drivers. I suspect the software is going to be ready in a couple of years from many providers, but I think cars are going to be the limitation, especially cars that can clear the European regulatory bar.</p>
+<p class="zh">我认为欧洲确实存在部署数百万辆载客自动驾驶汽车的机会。我们真的认为，在全欧洲轻松部署 10 万辆 Robotaxi 是可行的，而且这几乎全是增量需求，基本不会蚕食人类司机的订单。我猜软件会在几年后由多家供应商准备就绪，但瓶颈会出在车上——尤其是那些能通过欧洲监管门槛的车。</p>
+</div>
+</p>
+<p class="seg" id="seg-2" data-text="[music] [音乐]">
+<span class="ts">[00:30] Markus Villig</span>
+<div class="seg-body">
+<p class="en">[music]</p>
+<p class="zh">[音乐]</p>
+</div>
+</p>
+<p class="seg" id="seg-3" data-text="marcus willig is the founder and ceo of bolt, one of the world's largest mobility platforms, serving more than 200 million customers across over 50 countries. he started bolt in tallinn, estonia at just 19, building the first ride-hailing software himself and recruiting its first 50 drivers. today, he's leading bolt's push into autonomy, working with partners including pony ai, stellantis, lucid, and nvidia, and they have a goal of 100,000 autonomous vehicles on its platform by 2035. marcus, how are you doing today? Markus Villig 是 Bolt 的创始人兼 CEO。Bolt 是全球最大的出行平台之一，在 50 多个国家服务超过 2 亿用户。他 19 岁时在爱沙尼亚塔林创办了 Bolt，亲自写出第一版网约车软件，并招募了最初 50 名司机。如今，他正带领 Bolt 进军自动驾驶领域，合作伙伴包括小马智行（Pony AI）、Stellantis、Lucid 和英伟达；公司的目标是到 2035 年在平台上投放 10 万辆自动驾驶汽车。Markus，今天过得怎么样？">
+<span class="ts">[00:40] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Marcus Willig is the founder and CEO of Bolt, one of the world's largest mobility platforms, serving more than 200 million customers across over 50 countries. He started Bolt in Tallinn, Estonia at just 19, building the first ride-hailing software himself and recruiting its first 50 drivers. Today, he's leading Bolt's push into autonomy, working with partners including Pony AI, Stellantis, Lucid, and NVIDIA, and they have a goal of 100,000 autonomous vehicles on its platform by 2035. Marcus, how are you doing today?</p>
+<p class="zh">Markus Villig 是 Bolt 的创始人兼 CEO。Bolt 是全球最大的出行平台之一，在 50 多个国家服务超过 2 亿用户。他 19 岁时在爱沙尼亚塔林创办了 Bolt，亲自写出第一版网约车软件，并招募了最初 50 名司机。如今，他正带领 Bolt 进军自动驾驶领域，合作伙伴包括小马智行（Pony AI）、Stellantis、Lucid 和英伟达；公司的目标是到 2035 年在平台上投放 10 万辆自动驾驶汽车。Markus，今天过得怎么样？</p>
+</div>
+</p>
+<p class="seg" id="seg-4" data-text="really, really well. thanks for having me on the show. 非常好，非常感谢你邀请我来上节目。">
+<span class="ts">[01:08] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Really, really well. Thanks for having me on the show.</p>
+<p class="zh">非常好，非常感谢你邀请我来上节目。</p>
+</div>
+</p>
+<p class="seg" id="seg-5" data-text="yeah i'm excited to have you on, excited to dig in, and maybe i'll even ask you at the end, what will happen if you don't hit that 100,000 number? but before we get into all of that, i'm here in los angeles. i've been focusing a lot on my coverage in the states. meanwhile, bolt is a massive rydale company in europe and across the globe. for those of us who may not be as familiar with the brand, can you tell me a little bit about the company, where you operate, the services you offer, and also how you compare with other ride hailing platforms? 我也很高兴能请到你，很期待深入聊聊。也许最后我还要问问你：如果没达成 10 万辆这个目标会怎样？不过在进入正题之前——我现在人在洛杉矶，过去一段时间我的报道重心主要在美国。与此同时，Bolt 是欧洲乃至全球规模很大的出行公司。对于我们这些对你们品牌不太熟悉的人，能否简单介绍一下公司：你们在哪里运营、提供哪些服务，以及和其他网约车平台相比有什么不同？">
+<span class="ts">[01:10] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah I'm excited to have you on, excited to dig in, and maybe I'll even ask you at the end, what will happen if you don't hit that 100,000 number? But before we get into all of that, I'm here in Los Angeles. I've been focusing a lot on my coverage in the States. Meanwhile, Bolt is a massive Rydale company in Europe and across the globe. For those of us who may not be as familiar with the brand, can you tell me a little bit about the company, where you operate, the services you offer, and also how you compare with other ride hailing platforms?</p>
+<p class="zh">我也很高兴能请到你，很期待深入聊聊。也许最后我还要问问你：如果没达成 10 万辆这个目标会怎样？不过在进入正题之前——我现在人在洛杉矶，过去一段时间我的报道重心主要在美国。与此同时，Bolt 是欧洲乃至全球规模很大的出行公司。对于我们这些对你们品牌不太熟悉的人，能否简单介绍一下公司：你们在哪里运营、提供哪些服务，以及和其他网约车平台相比有什么不同？</p>
+</div>
+</p>
+<p class="seg" id="seg-6" data-text="sure. happy. let's start there. so in a very short summary, i started the business back in 2013 as a 19-year-old kid straight from high school. our original vision was that we want to replace the private car and build a true ecosystem of services across ride-hailing, bikes, scooters, rentals, food delivery, anything you might need in an urban setting so you don't need to own a car. and we've largely held true to that mission all this time. so personally, i don't even own a driver's license. i'm an avid user of our products every single day. and we operate now in more than 50 countries around the world with more 当然，就从这里说起吧。简单概括一下：2013 年，我还是个刚高中毕业的 19 岁少年，就创办了这家公司。我们最初的愿景是取代私家车，围绕出行打造一个真正完整的服务生态——网约车、单车、滑板车、租车、外卖，城市生活里你可能需要的一切，让你不必拥有一辆车。这些年来我们基本一直坚守着这个使命。就我个人而言，我甚至没有驾照，每天都是自家产品的重度用户。现在我们业务遍及全球 50 多个国家，拥有超过 2 亿用户。">
+<span class="ts">[01:43] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Sure. Happy. Let's start there. So in a very short summary, I started the business back in 2013 as a 19-year-old kid straight from high school. Our original vision was that we want to replace the private car and build a true ecosystem of services across ride-hailing, bikes, scooters, rentals, food delivery, anything you might need in an urban setting so you don't need to own a car. And we've largely held true to that mission all this time. So personally, I don't even own a driver's license. I'm an avid user of our products every single day. And we operate now in more than 50 countries around the world with more</p>
+<p class="zh">当然，就从这里说起吧。简单概括一下：2013 年，我还是个刚高中毕业的 19 岁少年，就创办了这家公司。我们最初的愿景是取代私家车，围绕出行打造一个真正完整的服务生态——网约车、单车、滑板车、租车、外卖，城市生活里你可能需要的一切，让你不必拥有一辆车。这些年来我们基本一直坚守着这个使命。就我个人而言，我甚至没有驾照，每天都是自家产品的重度用户。现在我们业务遍及全球 50 多个国家，拥有超过 2 亿用户。</p>
+</div>
+</p>
+<p class="seg" id="seg-7" data-text="than 200 million customers. and i think one of the core things that really set us apart is our cost efficiency and our obsession over operational excellence. so we realized very early on that this is an industry more similar to e-commerce than maybe saas in the sense that it's a mass product that everybody's using on a frequent basis. it's a huge part of people's monthly spending. and therefore, costs really matter. because at the end of the day, if you're the cost leader, you can also offer customers better service. you can pay the drivers more, which attracts more drivers to you. that gives you the better pickup times and you get into this positive flywheel. 我认为真正让我们脱颖而出的一点，是对成本效率的执着和对运营卓越的偏执。我们很早就意识到，这个行业更像电商而不是 SaaS——它是人人都高频使用的大众产品，在人们每月开支中占比可观。所以成本真的重要。说到底，如果你是成本领先者，你就能给顾客更好的服务，也能给司机更高的收入，从而吸引更多司机加入，接驾时间更短，于是进入一个正向飞轮。">
+<span class="ts">[02:21] Markus Villig</span>
+<div class="seg-body">
+<p class="en">than 200 million customers. And I think one of the core things that really set us apart is our cost efficiency and our obsession over operational excellence. So we realized very early on that this is an industry more similar to e-commerce than maybe SaaS in the sense that it's a mass product that everybody's using on a frequent basis. It's a huge part of people's monthly spending. And therefore, costs really matter. Because at the end of the day, if you're the cost leader, you can also offer customers better service. You can pay the drivers more, which attracts more drivers to you. That gives you the better pickup times and you get into this positive flywheel.</p>
+<p class="zh">我认为真正让我们脱颖而出的一点，是对成本效率的执着和对运营卓越的偏执。我们很早就意识到，这个行业更像电商而不是 SaaS——它是人人都高频使用的大众产品，在人们每月开支中占比可观。所以成本真的重要。说到底，如果你是成本领先者，你就能给顾客更好的服务，也能给司机更高的收入，从而吸引更多司机加入，接驾时间更短，于是进入一个正向飞轮。</p>
+</div>
+</p>
+<p class="seg" id="seg-8" data-text="and ultimately that results in you being able to offer better rates for customers as well. so that's been the common thread across all of our products of how do we operate this more operationally effectively than anybody else and pass on those savings to our customers and drivers. 最终，这也会让你能为顾客提供更好的价格。这一直是我们所有产品共同的主线：如何比任何人都更高效地运营，并把省下来的成本回馈给顾客和司机。">
+<span class="ts">[03:01] Markus Villig</span>
+<div class="seg-body">
+<p class="en">And ultimately that results in you being able to offer better rates for customers as well. So that's been the common thread across all of our products of how do we operate this more operationally effectively than anybody else and pass on those savings to our customers and drivers.</p>
+<p class="zh">最终，这也会让你能为顾客提供更好的价格。这一直是我们所有产品共同的主线：如何比任何人都更高效地运营，并把省下来的成本回馈给顾客和司机。</p>
+</div>
+</p>
+<p class="seg" id="seg-9" data-text="got it. is the company profitable or are you guys public yet? 明白了。公司盈利了吗？是否已经上市？">
+<span class="ts">[03:16] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Got it. Is the company profitable or are you guys public yet?</p>
+<p class="zh">明白了。公司盈利了吗？是否已经上市？</p>
+</div>
+</p>
+<p class="seg" id="seg-10" data-text="not public yet. we are still private. and actually, we do want to get to the other side of the av transition before we go public. i think that's actually probably to be a very good decision looking at our public peers at the moment and the investor sentiment there. but the business has now been profitable for a while. we're fairly large. we're doing about $15 billion of gross bookings on top line, more than $3 billion of revenue, growing, compounding, profitable, and now ready for the next era. 还没有上市，我们依然是私营公司。事实上，我们确实想先跨过自动驾驶转型的这一关再上市。看看目前那些已上市的同行的处境和市场情绪，我觉得这会是个相当正确的决定。不过公司已经盈利有一段时间了。我们规模不小： Top line 约 150 亿美元的总交易额（Gross Bookings），超过 30 亿美元营收，还在持续增长、复合增长、保持盈利，现在已经为下一个时代做好了准备。">
+<span class="ts">[03:20] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Not public yet. We are still private. And actually, we do want to get to the other side of the AV transition before we go public. I think that's actually probably to be a very good decision looking at our public peers at the moment and the investor sentiment there. But the business has now been profitable for a while. We're fairly large. We're doing about $15 billion of gross bookings on top line, more than $3 billion of revenue, growing, compounding, profitable, and now ready for the next era.</p>
+<p class="zh">还没有上市，我们依然是私营公司。事实上，我们确实想先跨过自动驾驶转型的这一关再上市。看看目前那些已上市的同行的处境和市场情绪，我觉得这会是个相当正确的决定。不过公司已经盈利有一段时间了。我们规模不小： Top line 约 150 亿美元的总交易额（Gross Bookings），超过 30 亿美元营收，还在持续增长、复合增长、保持盈利，现在已经为下一个时代做好了准备。</p>
+</div>
+</p>
+<p class="seg" id="seg-11" data-text="yeah. well, because when you were talking a lot about the cost efficiency, and i mean, i think even i imagine, i've listened to some interviews in your roots being in tallinn and estonia, i think very well known for, having high talent, on the engineering side, but lower costs. so i imagine that's a big thing. and i was just thinking in my head, oh, this sounds like prime and ready to go public and, sort of show investors what you can do. but you mentioned a key line, until you get onto the other side of the av transition. and i think it's an interesting inflection point where, i mean, 嗯，因为你一直在讲成本效率——我想即使是我，也听过一些关于你成长背景的采访：塔林、爱沙尼亚，那里以工程人才素质高、成本低而闻名。所以我想这一定是很大一个因素。我刚才脑子里还在想：这听起来像是做好了上市准备，要向投资者展示实力的时候了。但你提到了一句关键的话——「直到跨过自动驾驶转型的另一边」。我觉得这是个很有意思的拐点。我的意思是，">
+<span class="ts">[03:48] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. Well, because when you were talking a lot about the cost efficiency, and I mean, I think even I imagine, I've listened to some interviews in your roots being in Tallinn and Estonia, I think very well known for, having high talent, on the engineering side, but lower costs. So I imagine that's a big thing. And I was just thinking in my head, oh, this sounds like prime and ready to go public and, sort of show investors what you can do. But you mentioned a key line, Until you get onto the other side of the AV transition. And I think it's an interesting inflection point where, I mean,</p>
+<p class="zh">嗯，因为你一直在讲成本效率——我想即使是我，也听过一些关于你成长背景的采访：塔林、爱沙尼亚，那里以工程人才素质高、成本低而闻名。所以我想这一定是很大一个因素。我刚才脑子里还在想：这听起来像是做好了上市准备，要向投资者展示实力的时候了。但你提到了一句关键的话——「直到跨过自动驾驶转型的另一边」。我觉得这是个很有意思的拐点。我的意思是，</p>
+</div>
+</p>
+<p class="seg" id="seg-12" data-text="i guess you can tell me where a lot of companies have say 99 or 99.5% of their business is coming from human rideshare or human delivery or their existing business, but investors and media and people like me kind of care about the future. they care about they care about autonomous. i think on uber's recent earnings call, 70% of the questions from investors were all about autonomous vehicles, even though 99.5% of their business is human rideshare and delivery. so how do you think about that inflection point that we're at right now as the ceo? 我想你可以谈谈：很多公司 99% 甚至 99.5% 的业务仍来自人工网约车、人工配送或现有业务，但投资者、媒体以及像我这样的人关心的是未来，他们关心自动驾驶。我记得 Uber 最近一次财报电话会上，投资者 70% 的问题都是关于自动驾驶汽车的，尽管他们 99.5% 的业务仍是人工网约车和配送。作为 CEO，你如何看待我们当下所处的这个拐点？">
+<span class="ts">[04:20] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">I guess you can tell me where a lot of companies have say 99 or 99.5% of their business is coming from human rideshare or human delivery or their existing business, but investors and media and people like me kind of care about the future. They care about They care about autonomous. I think on Uber's recent earnings call, 70% of the questions from investors were all about autonomous vehicles, even though 99.5% of their business is human rideshare and delivery. So how do you think about that inflection point that we're at right now as the CEO?</p>
+<p class="zh">我想你可以谈谈：很多公司 99% 甚至 99.5% 的业务仍来自人工网约车、人工配送或现有业务，但投资者、媒体以及像我这样的人关心的是未来，他们关心自动驾驶。我记得 Uber 最近一次财报电话会上，投资者 70% 的问题都是关于自动驾驶汽车的，尽管他们 99.5% 的业务仍是人工网约车和配送。作为 CEO，你如何看待我们当下所处的这个拐点？</p>
+</div>
+</p>
+<p class="seg" id="seg-13" data-text="that's obviously the largest opportunity and existential risk for most ridesharing companies around the world. i'd say, first of all, bolt is fairly well insulated against that in the short term for a few reasons. one is that, again, we operate products from micro mobility in terms of scooters to food delivery and grocery delivery and car rental services to ride sharing. so on one hand, we have a broader product mix. and the other thing is, we've got to keep in mind, we operate in more than 50 countries. many of those are fairly what we would consider sort of low asp markets, emerging markets, all the way from south africa to nigeria to thailand. 显然，这对全球大多数网约车公司来说，既是最大的机会，也是生死攸关的风险。我想说，首先，Bolt 在短期内对此有相当强的免疫力，原因有几个。一是如前所述，我们的产品线从滑板车等微出行，到外卖、生鲜配送、租车，再到网约车，覆盖面很广。所以一方面，我们的产品组合更多元。另一方面要记住，我们在 50 多个国家运营，其中很多是我们所说的低客单价（low ASP）市场、新兴市场——从南非、尼日利亚一直到泰国。">
+<span class="ts">[04:51] Markus Villig</span>
+<div class="seg-body">
+<p class="en">That's obviously the largest opportunity and existential risk for most ridesharing companies around the world. I'd say, first of all, Bolt is fairly well insulated against that in the short term for a few reasons. One is that, again, we operate products from micro mobility in terms of scooters to food delivery and grocery delivery and car rental services to ride sharing. So on one hand, we have a broader product mix. And the other thing is, we've got to keep in mind, we operate in more than 50 countries. Many of those are fairly what we would consider sort of low ASP markets, emerging markets, all the way from South Africa to Nigeria to Thailand.</p>
+<p class="zh">显然，这对全球大多数网约车公司来说，既是最大的机会，也是生死攸关的风险。我想说，首先，Bolt 在短期内对此有相当强的免疫力，原因有几个。一是如前所述，我们的产品线从滑板车等微出行，到外卖、生鲜配送、租车，再到网约车，覆盖面很广。所以一方面，我们的产品组合更多元。另一方面要记住，我们在 50 多个国家运营，其中很多是我们所说的低客单价（low ASP）市场、新兴市场——从南非、尼日利亚一直到泰国。</p>
+</div>
+</p>
+<p class="seg" id="seg-14" data-text="so as you can imagine, the labor costs in those markets are very low. we're talking about... in the range of 50 cents per kilometer. so it's going to take a long time before avs are going to get to that price point. so we think that's going to be a long transition. and even in the western european markets, which do have some of the highest labor costs in the world, specifically on the taxi sector, we're talking about more than two euros per kilometer. even in those markets, we think that the regulation is going to be quite a large inhibitor. it's not going to be that these sectors overnight are going to be switching 所以你可以想象，那些市场的劳动力成本非常低，大概在每公里 50 美分这个量级。自动驾驶汽车要降到这个价位还需要很长时间。所以我们认为这会是一个漫长的过渡。即便在西欧市场——那里的出租车行业劳动力成本属于全球最高之列，每公里超过 2 欧元——即便在这些市场，我们认为监管也会是相当大的抑制因素。这些行业不会一夜之间从人类司机切换成自动驾驶汽车，">
+<span class="ts">[05:27] Markus Villig</span>
+<div class="seg-body">
+<p class="en">So as you can imagine, the labor costs in those markets are very low. We're talking about... In the range of 50 cents per kilometer. So it's going to take a long time before AVs are going to get to that price point. So we think that's going to be a long transition. And even in the Western European markets, which do have some of the highest labor costs in the world, specifically on the taxi sector, we're talking about more than two euros per kilometer. Even in those markets, we think that the regulation is going to be quite a large inhibitor. It's not going to be that these sectors overnight are going to be switching</p>
+<p class="zh">所以你可以想象，那些市场的劳动力成本非常低，大概在每公里 50 美分这个量级。自动驾驶汽车要降到这个价位还需要很长时间。所以我们认为这会是一个漫长的过渡。即便在西欧市场——那里的出租车行业劳动力成本属于全球最高之列，每公里超过 2 欧元——即便在这些市场，我们认为监管也会是相当大的抑制因素。这些行业不会一夜之间从人类司机切换成自动驾驶汽车，</p>
+</div>
+</p>
+<p class="seg" id="seg-15" data-text="over from human drivers to self-driving cars, but rather we think that's going to be incremental volume on top. 而是我们认为，那会是叠加在现有需求之上的增量。">
+<span class="ts">[05:58] Markus Villig</span>
+<div class="seg-body">
+<p class="en">over from human drivers to self-driving cars, but rather we think that's going to be incremental volume on top.</p>
+<p class="zh">而是我们认为，那会是叠加在现有需求之上的增量。</p>
+</div>
+</p>
+<p class="seg" id="seg-16" data-text="got it. i mean, is it fair to say most of your revenue is more from rideshare, the transportation of humans and then also the more mature and western markets? and i guess it's also sounding like, maybe a good thing that bolt isn't in the united states because that's kind of this prime autonomous vehicle market. i guess it allows you for a slower transition to autonomous vehicles, if i'm hearing you correctly. 明白。这么说公平吗：你们大部分收入其实来自网约车、也就是载人出行，而且更多来自较成熟和较西化的市场？我猜这也意味着——听起来也许是件好事——Bolt 不在美国，因为美国是自动驾驶的黄金市场。如果我没理解错的话，这反而让你们在向自动驾驶过渡时能从容一些。">
+<span class="ts">[06:04] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Got it. I mean, is it fair to say most of your revenue is more from rideshare, the transportation of humans and then also the more mature and Western markets? And I guess it's also sounding like, maybe a good thing that Bolt isn't in the United States because that's kind of this prime autonomous vehicle market. I guess it allows you for a slower transition to autonomous vehicles, if I'm hearing you correctly.</p>
+<p class="zh">明白。这么说公平吗：你们大部分收入其实来自网约车、也就是载人出行，而且更多来自较成熟和较西化的市场？我猜这也意味着——听起来也许是件好事——Bolt 不在美国，因为美国是自动驾驶的黄金市场。如果我没理解错的话，这反而让你们在向自动驾驶过渡时能从容一些。</p>
+</div>
+</p>
+<p class="seg" id="seg-17" data-text="sure. maybe a brief word on volta composition. first of all, so high level, vast majority of our business is still in ride-hailing. vast majority of that is in europe. but again, even within europe, as you can imagine, i mean, the gdp rates and the labor costs are vastly different across the countries, right? so what you observe in romania versus norway, we think there's going to be a many-year lag before the unit economics start to make sense in most of our central eastern european markets, for example. so in that sense, i mean, it's not a homogenous market. some will get self-driving faster, rather slower. but in your us comment, high level, 可以这么说。先简单讲一下 Bolt 的收入构成。总体上，我们绝大部分业务仍是网约车，其中绝大部分在欧洲。但即便在欧洲内部，你也可以想象，各国的 GDP 水平和劳动力成本差异巨大——罗马尼亚和挪威的情况完全不同。所以我们认为，在我们很多中东欧市场，单位经济性要开始成立，还需要好几年的时间。从这个意义上说，这不是一个同质化市场，有些地方会更快实现自动驾驶，有些则慢得多。至于你提到美国的那一点，整体上，">
+<span class="ts">[06:27] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Sure. Maybe a brief word on Volta composition. First of all, so high level, vast majority of our business is still in ride-hailing. Vast majority of that is in Europe. But again, even within Europe, as you can imagine, I mean, the GDP rates and the labor costs are vastly different across the countries, right? So what you observe in Romania versus Norway, we think there's going to be a many-year lag before the unit economics start to make sense in most of our Central Eastern European markets, for example. So in that sense, I mean, it's not a homogenous market. Some will get self-driving faster, rather slower. But in your US comment, high level,</p>
+<p class="zh">可以这么说。先简单讲一下 Bolt 的收入构成。总体上，我们绝大部分业务仍是网约车，其中绝大部分在欧洲。但即便在欧洲内部，你也可以想象，各国的 GDP 水平和劳动力成本差异巨大——罗马尼亚和挪威的情况完全不同。所以我们认为，在我们很多中东欧市场，单位经济性要开始成立，还需要好几年的时间。从这个意义上说，这不是一个同质化市场，有些地方会更快实现自动驾驶，有些则慢得多。至于你提到美国的那一点，整体上，</p>
+</div>
+</p>
+<p class="seg" id="seg-18" data-text="us ride-sharing does remain the least competitive ride-sharing market in the world. so i think that's something most people maybe don't take, like haven't internalized it. but when we just look at the margin profile of lyft and uber, i mean, it's clearly much higher profit pools than it is anywhere else in the world. and that's why we think it's ripe for disruption and why we think autonomous driving is going to make the most sense there at first. 美国网约车市场仍然是全球竞争最不激烈的网约车市场。我认为这一点很多人还没有真正意识到。只要看看 Lyft 和 Uber 的利润率结构，就会明白那里的利润池明显高于世界其他任何地方。这就是为什么我们认为它已经成熟、等待被颠覆（ripe for disruption），也是为什么我们认为自动驾驶最先在美国最说得通。">
+<span class="ts">[07:02] Markus Villig</span>
+<div class="seg-body">
+<p class="en">US ride-sharing does remain the least competitive ride-sharing market in the world. So I think that's something most people maybe don't take, like haven't internalized it. But when we just look at the margin profile of Lyft and Uber, I mean, it's clearly much higher profit pools than it is anywhere else in the world. And that's why we think it's ripe for disruption and why we think autonomous driving is going to make the most sense there at first.</p>
+<p class="zh">美国网约车市场仍然是全球竞争最不激烈的网约车市场。我认为这一点很多人还没有真正意识到。只要看看 Lyft 和 Uber 的利润率结构，就会明白那里的利润池明显高于世界其他任何地方。这就是为什么我们认为它已经成熟、等待被颠覆（ripe for disruption），也是为什么我们认为自动驾驶最先在美国最说得通。</p>
+</div>
+</p>
+<p class="seg" id="seg-19" data-text="yeah, got it. so let's talk a bit about bolt's av strategy. what role do you see the company playing in the autonomous future? 是的，明白了。那我们聊聊 Bolt 的自动驾驶战略吧。你希望公司在这个自动驾驶的未来里扮演什么角色？">
+<span class="ts">[07:24] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah, got it. So let's talk a bit about Bolt's AV strategy. What role do you see the company playing in the autonomous future?</p>
+<p class="zh">是的，明白了。那我们聊聊 Bolt 的自动驾驶战略吧。你希望公司在这个自动驾驶的未来里扮演什么角色？</p>
+</div>
+</p>
+<p class="seg" id="seg-20" data-text="so we want to win the autonomous driving market across our footprint, which means europe, middle east, africa, the markets where we're the strongest in and the market leaders in. and we think we're the best positioned operator to do that because we're as you can imagine, we have massive consumer base. we do more than 6 million trips a day. that's almost double the count of some of our friends around the world in the same sector. some of that is in the very highest labor cost markets again. so the unit economics are very appealing. and we think we can provide these vehicles much better utilization than them starting from scratch. 我们希望在自己的经营版图上赢得自动驾驶市场——也就是欧洲、中东和非洲，那些我们实力最强、处于市场领先地位的市场。我们认为我们是最有能力的运营商，理由如下：你有理由相信，我们拥有庞大的用户基础。我们每天完成超过 600 万次行程，这差不多是全球同行业一些同行数量的两倍。其中相当一部分还处在劳动力成本最高的市场，所以单位经济性非常有吸引力。我们认为，相比从零开始，我们能让这些车辆获得高得多的利用率。">
+<span class="ts">[07:33] Markus Villig</span>
+<div class="seg-body">
+<p class="en">So we want to win the autonomous driving market across our footprint, which means Europe, Middle East, Africa, the markets where we're the strongest in and the market leaders in. And we think we're the best positioned operator to do that because we're As you can imagine, we have massive consumer base. We do more than 6 million trips a day. That's almost double the count of some of our friends around the world in the same sector. Some of that is in the very highest labor cost markets again. So the unit economics are very appealing. And we think we can provide these vehicles much better utilization than them starting from scratch.</p>
+<p class="zh">我们希望在自己的经营版图上赢得自动驾驶市场——也就是欧洲、中东和非洲，那些我们实力最强、处于市场领先地位的市场。我们认为我们是最有能力的运营商，理由如下：你有理由相信，我们拥有庞大的用户基础。我们每天完成超过 600 万次行程，这差不多是全球同行业一些同行数量的两倍。其中相当一部分还处在劳动力成本最高的市场，所以单位经济性非常有吸引力。我们认为，相比从零开始，我们能让这些车辆获得高得多的利用率。</p>
+</div>
+</p>
+<p class="seg" id="seg-21" data-text="so that's the first point of our strategy. the other thing where i think we're also quite differentiated is that we are... not afraid to get our hands dirty and get into operations. we're not just a pure software company. for the last seven years, we've become one of the largest operators of electric vehicles across europe. we have our own internal hardware team. we've designed scooters and bikes. we have a team in china to build them. we run more than 200 warehouses across europe. so as you can imagine, i mean, we've already got quite a lot of experience of how do you actually build hardware, operate hardware, get the local regulatory license, etc. 这是我们战略的第一点。另一点让我们相当与众不同的，是我们不怕「弄脏双手」、真正深入运营。我们不只是家纯软件公司。过去七年，我们已成为欧洲最大的电动汽车运营商之一。我们有自己的内部硬件团队，设计过滑板车和单车，还在中国有团队负责制造；我们在欧洲运营着 200 多个仓库。所以你可以想象，对于如何真正造出硬件、运营硬件、拿到当地监管许可等等，我们已经积累了相当多的经验。">
+<span class="ts">[08:09] Markus Villig</span>
+<div class="seg-body">
+<p class="en">So that's the first point of our strategy. The other thing where I think we're also quite differentiated is that we are... Not afraid to get our hands dirty and get into operations. We're not just a pure software company. For the last seven years, we've become one of the largest operators of electric vehicles across Europe. We have our own internal hardware team. We've designed scooters and bikes. We have a team in China to build them. We run more than 200 warehouses across Europe. So as you can imagine, I mean, we've already got quite a lot of experience of How do you actually build hardware, operate hardware, get the local regulatory license, etc.</p>
+<p class="zh">这是我们战略的第一点。另一点让我们相当与众不同的，是我们不怕「弄脏双手」、真正深入运营。我们不只是家纯软件公司。过去七年，我们已成为欧洲最大的电动汽车运营商之一。我们有自己的内部硬件团队，设计过滑板车和单车，还在中国有团队负责制造；我们在欧洲运营着 200 多个仓库。所以你可以想象，对于如何真正造出硬件、运营硬件、拿到当地监管许可等等，我们已经积累了相当多的经验。</p>
+</div>
+</p>
+<p class="seg" id="seg-22" data-text="and that's the experience we're also bringing here in terms of building our own depots, av infrastructure, owning the fleets. that's the layer where we think we can provide tremendous value to the av companies as well. and lastly, we have great collaborations already with many of them, whether that's now pony, nvidia, and then a few others we plan to announce. i think we're just bringing this ecosystem together and being the integrator across europe. 而这些经验正是我们要带进这件事的：建设自己的 depot（运维车库）、自动驾驶基础设施、拥有车队。这一层正是我们认为能给自动驾驶公司创造巨大价值的地方。最后，我们已经与其中很多公司建立了很好的合作，无论是现在的小马智行、英伟达，还是我们计划后续公布的其他几家。我想我们就是在把这些生态要素聚拢起来，成为欧洲的整合者（integrator）。">
+<span class="ts">[08:47] Markus Villig</span>
+<div class="seg-body">
+<p class="en">And that's the experience we're also bringing here in terms of building our own depots, AV infrastructure, owning the fleets. That's the layer where we think we can provide tremendous value to the AV companies as well. And lastly, we have great collaborations already with many of them, whether that's now Pony, NVIDIA, and then a few others we plan to announce. I think we're just bringing this ecosystem together and being the integrator across Europe.</p>
+<p class="zh">而这些经验正是我们要带进这件事的：建设自己的 depot（运维车库）、自动驾驶基础设施、拥有车队。这一层正是我们认为能给自动驾驶公司创造巨大价值的地方。最后，我们已经与其中很多公司建立了很好的合作，无论是现在的小马智行、英伟达，还是我们计划后续公布的其他几家。我想我们就是在把这些生态要素聚拢起来，成为欧洲的整合者（integrator）。</p>
+</div>
+</p>
+<p class="seg" id="seg-23" data-text="yeah. so interesting that, i think a lot of companies like to position themselves as just software, right? and for the higher margins. and you talk about the operations and owning and operate evs. have you thought about launching your own sort of autonomous vehicle division or, sort of, i guess, your own avs, really? i know you guys have autonomous driving solutions. maybe you tell me about that, too. but what about launching your own avs? 很有意思。我觉得很多公司都喜欢把自己定位成纯软件公司，对吧？为了更高的利润率。但你讲的是运营、拥有并运营电动车。你有没有想过成立自己的自动驾驶部门，或者说，真正做自己的自动驾驶汽车？我知道你们有自动驾驶解决方案，也许你也可以顺便讲讲。但关于自己做 Robotaxi，你怎么想？">
+<span class="ts">[09:09] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. So interesting that, I think a lot of companies like to position themselves as just software, right? And for the higher margins. And you talk about the operations and owning and operate EVs. Have you thought about launching your own sort of autonomous vehicle division or, sort of, I guess, your own AVs, really? I know you guys have autonomous driving solutions. Maybe you tell me about that, too. But what about launching your own AVs?</p>
+<p class="zh">很有意思。我觉得很多公司都喜欢把自己定位成纯软件公司，对吧？为了更高的利润率。但你讲的是运营、拥有并运营电动车。你有没有想过成立自己的自动驾驶部门，或者说，真正做自己的自动驾驶汽车？我知道你们有自动驾驶解决方案，也许你也可以顺便讲讲。但关于自己做 Robotaxi，你怎么想？</p>
+</div>
+</p>
+<p class="seg" id="seg-24" data-text="so high level, how we think about it is that we want to stick to what we're world-class at, which is, again, in most of these domains means the operations, the customer layer, the regulatory access we have, and being genuinely the only european mobility company left at any meaningful scale. so we think those are magnificent strengths to build on. and then we can partner with the best l4 stack providers across the world, the best oems in the world and bring that technology to market in europe. and we think the margin pool is going to be very large. so there's sort of plenty of gross profit dollars to go around across the stack. 总体上，我们的想法是坚持做自己世界级擅长的事——在大多数这些领域，指的就是运营、用户层、我们拥有的监管渠道，以及作为真正意义上唯一还具备相当规模的欧洲出行公司。我们认为这些是可以依托的巨大优势。然后我们可以与全球最好的 L4 技术栈供应商、最好的 OEM 合作，把技术带到欧洲市场。我们认为利润池会非常大，整条技术栈里有足够多的毛利可以分。">
+<span class="ts">[09:34] Markus Villig</span>
+<div class="seg-body">
+<p class="en">So high level, how we think about it is that we want to stick to what we're world-class at, which is, again, in most of these domains means the operations, the customer layer, the regulatory access we have, and being genuinely the only European mobility company left at any meaningful scale. So we think those are magnificent strengths to build on. And then we can partner with the best L4 stack providers across the world, the best OEMs in the world and bring that technology to market in Europe. And we think the margin pool is going to be very large. So there's sort of plenty of gross profit dollars to go around across the stack.</p>
+<p class="zh">总体上，我们的想法是坚持做自己世界级擅长的事——在大多数这些领域，指的就是运营、用户层、我们拥有的监管渠道，以及作为真正意义上唯一还具备相当规模的欧洲出行公司。我们认为这些是可以依托的巨大优势。然后我们可以与全球最好的 L4 技术栈供应商、最好的 OEM 合作，把技术带到欧洲市场。我们认为利润池会非常大，整条技术栈里有足够多的毛利可以分。</p>
+</div>
+</p>
+<p class="seg" id="seg-25" data-text="got it. so no, you haven't woken up in the middle of the night and thought maybe we should build our own l4 system anytime soon. 明白了。所以你并没有在半夜惊醒，想着「也许我们该尽快自己造一套 L4 系统」？">
+<span class="ts">[10:10] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Got it. So no, you haven't woken up in the middle of the night and thought maybe we should build our own L4 system anytime soon.</p>
+<p class="zh">明白了。所以你并没有在半夜惊醒，想着「也许我们该尽快自己造一套 L4 系统」？</p>
+</div>
+</p>
+<p class="seg" id="seg-26" data-text="i think that when you look at the progress across ai and specifically in field of coding, machine learning, etc., it might be the case that a couple of years down the line, it becomes very affordable to build your own l4 stack. and specifically when you talk to the chinese l4 companies, many of them think the technology will be a commodity a couple of years down the line. so if we enter into that era, then there's no real necessity for us to even build it ourselves because there might be plenty of providers we can partner with. 我认为，当你看看 AI 领域的进展，尤其是编程、机器学习等方向，几年后自己搭建一套 L4 技术栈可能会变得非常便宜。特别是当你和中国那些 L4 公司聊时，其中很多都认为这项技术几年后会变成大宗商品（commodity）。如果真进入那个时代，我们甚至没有真正的必要自己去做，因为可能会有大量供应商可以合作。">
+<span class="ts">[10:19] Markus Villig</span>
+<div class="seg-body">
+<p class="en">I think that when you look at the progress across AI and specifically in field of coding, machine learning, etc., it might be the case that a couple of years down the line, it becomes very affordable to build your own L4 stack. And specifically when you talk to the Chinese L4 companies, many of them think the technology will be a commodity a couple of years down the line. So if we enter into that era, then there's no real necessity for us to even build it ourselves because there might be plenty of providers we can partner with.</p>
+<p class="zh">我认为，当你看看 AI 领域的进展，尤其是编程、机器学习等方向，几年后自己搭建一套 L4 技术栈可能会变得非常便宜。特别是当你和中国那些 L4 公司聊时，其中很多都认为这项技术几年后会变成大宗商品（commodity）。如果真进入那个时代，我们甚至没有真正的必要自己去做，因为可能会有大量供应商可以合作。</p>
+</div>
+</p>
+<p class="seg" id="seg-27" data-text="right. and obviously, with everything you describe that you're good at, there's a much bigger moat there than, i guess with the av technology in the future, if there are multiple players and it is a commodity. and i guess that's what partners, like nvidia are, trying to help with, by making a lot of their code and work open source, right? 对。显然，就你所描述的那些你们擅长的东西而言，那里的护城河比未来的 AV 技术要深得多——如果未来有多家玩家、技术变成大宗商品的话。我猜这正是英伟达这样的合作伙伴想帮忙推动的：把大量代码和工作开源，对吧？">
+<span class="ts">[10:47] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Right. And obviously, with everything you describe that you're good at, there's a much bigger moat there than, I guess with the AV technology in the future, if there are multiple players and it is a commodity. And I guess that's what partners, like NVIDIA are, trying to help with, by making a lot of their code and work open source, right?</p>
+<p class="zh">对。显然，就你所描述的那些你们擅长的东西而言，那里的护城河比未来的 AV 技术要深得多——如果未来有多家玩家、技术变成大宗商品的话。我猜这正是英伟达这样的合作伙伴想帮忙推动的：把大量代码和工作开源，对吧？</p>
+</div>
+</p>
+<p class="seg" id="seg-28" data-text="exactly. and we expect that might be the case from many other providers around the world who have an interest that l4 technology would not just be controlled by one or two companies. 正是如此。我们也预期，全球很多其他供应商会有同样的动机——他们也不希望 L4 技术只被一两家公司所掌控。">
+<span class="ts">[11:07] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Exactly. And we expect that might be the case from many other providers around the world who have an interest that L4 technology would not just be controlled by one or two companies.</p>
+<p class="zh">正是如此。我们也预期，全球很多其他供应商会有同样的动机——他们也不希望 L4 技术只被一两家公司所掌控。</p>
+</div>
+</p>
+<p class="seg" id="seg-29" data-text="so you mentioned a few of your av partners, how do they fit together and what are you learning from each? 你提到了几家合作伙伴。它们之间如何分工？你从每一家身上学到了什么？">
+<span class="ts">[11:17] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">So you mentioned a few of your AV partners, how do they fit together and what are you learning from each?</p>
+<p class="zh">你提到了几家合作伙伴。它们之间如何分工？你从每一家身上学到了什么？</p>
+</div>
+</p>
+<p class="seg" id="seg-30" data-text="sure. so specifically, we've announced a few partners so far. one is a partnership with pony and stellantis in luxembourg. we have vehicles on the roads. we're currently in the phase where we're testing the rides. there's a driver behind the wheel as a safety driver. we expect to move out to commercial services down the line. and we've also announced now we're looking at the next cities with nvidia and lucid in madrid. we were just awarded the first access to deploy cars in paris over the next two years and so on. so there's a lot of interest from european cities to bring the technology to market. what they're looking for is a partner they can trust and we've built up 可以。目前我们已经公布了几家合作伙伴。一是与小马智行和 Stellantis 在卢森堡的合作，车辆已经上路，目前处在测试载客阶段，方向盘后还有安全员。我们预期后续会走向商业运营。另外我们刚宣布，正与英伟达和 Lucid 考察下一个城市——马德里。我们也刚刚拿到首批在巴黎部署车辆的许可，未来两年内推进，等等。欧洲城市对把这项技术推向市场有很大兴趣，他们想要的是一个可以信任的合作伙伴，而我们">
+<span class="ts">[11:25] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Sure. So specifically, we've announced a few partners so far. One is a partnership with Pony and Stellantis in Luxembourg. We have vehicles on the roads. We're currently in the phase where we're testing the rides. There's a driver behind the wheel as a safety driver. We expect to move out to commercial services down the line. And we've also announced now we're looking at the next cities with NVIDIA and Lucid in Madrid. We were just awarded the first access to deploy cars in Paris over the next two years and so on. So there's a lot of interest from European cities to bring the technology to market. What they're looking for is a partner they can trust and we've built up</p>
+<p class="zh">可以。目前我们已经公布了几家合作伙伴。一是与小马智行和 Stellantis 在卢森堡的合作，车辆已经上路，目前处在测试载客阶段，方向盘后还有安全员。我们预期后续会走向商业运营。另外我们刚宣布，正与英伟达和 Lucid 考察下一个城市——马德里。我们也刚刚拿到首批在巴黎部署车辆的许可，未来两年内推进，等等。欧洲城市对把这项技术推向市场有很大兴趣，他们想要的是一个可以信任的合作伙伴，而我们</p>
+</div>
+</p>
+<p class="seg" id="seg-31" data-text="that reputation across europe for the last 13 years. 在过去 13 年里，在整个欧洲建立起了这样的声誉。">
+<span class="ts">[12:06] Markus Villig</span>
+<div class="seg-body">
+<p class="en">that reputation across Europe for the last 13 years.</p>
+<p class="zh">在过去 13 年里，在整个欧洲建立起了这样的声誉。</p>
+</div>
+</p>
+<p class="seg" id="seg-32" data-text="yeah. and so it sounds like in these partnerships, you need a ride hail operator. that would be bolt. you need an l4 av operator. that would be someone like pony. and then i guess like where would stellantis fit in? they're actually providing the vehicle and pony is providing the technology. is it just those three that you need or am i missing anything? 是的。听起来在这些合作里，需要一家网约车运营商——那就是 Bolt；需要一家 L4 自动驾驶运营商——比如小马智行。那 Stellantis 扮演什么角色？他们是提供车辆，小马智行提供技术。是只需要这三方，还是我漏掉了什么？">
+<span class="ts">[12:09] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. And so it sounds like in these partnerships, you need a ride hail operator. That would be Bolt. You need an L4 AV operator. That would be someone like Pony. And then I guess like where would Stellantis fit in? They're actually providing the vehicle and Pony is providing the technology. Is it just those three that you need or am I missing anything?</p>
+<p class="zh">是的。听起来在这些合作里，需要一家网约车运营商——那就是 Bolt；需要一家 L4 自动驾驶运营商——比如小马智行。那 Stellantis 扮演什么角色？他们是提供车辆，小马智行提供技术。是只需要这三方，还是我漏掉了什么？</p>
+</div>
+</p>
+<p class="seg" id="seg-33" data-text="exactly. those are the three main components. of course, over time, there's going to be quite a large layer across the av infrastructure. we envision there's going to be a need to build billions of dollars worth of infrastructure across europe, across charging, cleaning, maintenance. that is something that we're now setting up as well. and of course, the fleet ownership and fleet operating is going to be quite a massive industry on its own. we expect there might be tens of billions of dollars of funding required over time to build up the fleet. so again, that's something where we're building up the financial muscle and expertise of how do you finance and operate these fleets to scale. 没错，就是这三个主要组成部分。当然，随着时间推移，自动驾驶基础设施这一层会变得相当庞大。我们设想，整个欧洲需要建设价值数十亿美元的基础设施，涵盖充电、清洁、维护等。这些我们现在也在着手搭建。当然，车队拥有和车队运营本身也会成为一个相当大的产业。我们预计，随着时间推移，建立车队可能需要数百亿美元的资金。所以这同样是一个我们正在积累金融实力和专业知识、学习如何融资并规模化运营车队的领域。">
+<span class="ts">[12:29] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Exactly. Those are the three main components. Of course, over time, there's going to be quite a large layer across the AV infrastructure. We envision there's going to be a need to build billions of dollars worth of infrastructure across Europe, across charging, cleaning, maintenance. That is something that we're now setting up as well. And of course, the fleet ownership and fleet operating is going to be quite a massive industry on its own. We expect there might be Tens of billions of dollars of funding required over time to build up the fleet. So again, that's something where we're building up the financial muscle and expertise of how do you finance and operate these fleets to scale.</p>
+<p class="zh">没错，就是这三个主要组成部分。当然，随着时间推移，自动驾驶基础设施这一层会变得相当庞大。我们设想，整个欧洲需要建设价值数十亿美元的基础设施，涵盖充电、清洁、维护等。这些我们现在也在着手搭建。当然，车队拥有和车队运营本身也会成为一个相当大的产业。我们预计，随着时间推移，建立车队可能需要数百亿美元的资金。所以这同样是一个我们正在积累金融实力和专业知识、学习如何融资并规模化运营车队的领域。</p>
+</div>
+</p>
+<p class="seg" id="seg-34" data-text="yeah. and since you do some of those operations today, you mentioned that you own and operate a fleet of evs already. do you envision kind of you taking on that full role of owning and operating the fleet or looking more of a hybrid? maybe some cities you do it, partner in other cities. how are you thinking? what sort of helps you guys stand out the most? 明白。既然你们现在已经做了其中一些运营——你提到你们已经拥有并运营电动车队——你设想自己是承担完整的拥有和运营角色，还是更倾向于混合模式？比如某些城市自己做，另一些城市找伙伴。你们怎么想？什么样的安排最能凸显你们的优势？">
+<span class="ts">[13:06] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. And since you do some of those operations today, you mentioned that you own and operate a fleet of EVs already. Do you envision kind of you taking on that full role of owning and operating the fleet or looking more of a hybrid? Maybe some cities you do it, partner in other cities. How are you thinking? What sort of helps you guys stand out the most?</p>
+<p class="zh">明白。既然你们现在已经做了其中一些运营——你提到你们已经拥有并运营电动车队——你设想自己是承担完整的拥有和运营角色，还是更倾向于混合模式？比如某些城市自己做，另一些城市找伙伴。你们怎么想？什么样的安排最能凸显你们的优势？</p>
+</div>
+</p>
+<p class="seg" id="seg-35" data-text="our current view is that in phase one of the market, it makes sense for us to own and operate it ourselves for a couple of reasons. first of all, we need to be the ones to first demonstrate the technologies actually performing as expected. the regulators want us to take the responsibility there, demonstrate it safe, and we think there's really nobody else, at least on the european landscape, who has the financial muscle and the operational skills to do that. so that's how we expect this going to play out the first few years. down the line, it might be that the technology is well proven, there's enough residual values proven, economics are proven, 我们目前的看法是，在市场第一阶段，由我们自己拥有并运营是合理的，有几个原因。首先，我们需要成为第一个证明技术表现符合预期的人。监管者希望我们承担责任、证明它是安全的；而我们认为，至少在欧洲范围内，没有其他人既有这种财务实力、又有这种运营能力来做这件事。所以我们预计头几年会是这样。再往后，技术可能已经被充分验证，残值也被证明，经济性也得到验证，">
+<span class="ts">[13:27] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Our current view is that in phase one of the market, it makes sense for us to own and operate it ourselves for a couple of reasons. First of all, we need to be the ones to first demonstrate the technologies actually performing as expected. The regulators want us to take the responsibility there, demonstrate it safe, and we think there's really nobody else, at least on the European landscape, who has the financial muscle and the operational skills to do that. So that's how we expect this going to play out the first few years. Down the line, it might be that the technology is well proven, there's enough residual values proven, economics are proven,</p>
+<p class="zh">我们目前的看法是，在市场第一阶段，由我们自己拥有并运营是合理的，有几个原因。首先，我们需要成为第一个证明技术表现符合预期的人。监管者希望我们承担责任、证明它是安全的；而我们认为，至少在欧洲范围内，没有其他人既有这种财务实力、又有这种运营能力来做这件事。所以我们预计头几年会是这样。再往后，技术可能已经被充分验证，残值也被证明，经济性也得到验证，</p>
+</div>
+</p>
+<p class="seg" id="seg-36" data-text="and then you can partner with various fleets, and then the fleets are going to own the vehicles as they do today in many european markets. but we just envision that's going to be sort of the act two of the industry. 那时你就可以与各种车队合作，由车队来拥有车辆，就像今天欧洲很多市场的做法一样。但我们认为那会是这个行业的「第二幕」。">
+<span class="ts">[14:01] Markus Villig</span>
+<div class="seg-body">
+<p class="en">and then you can partner with various fleets, and then the fleets are going to own the vehicles as they do today in many European markets. But we just envision that's going to be sort of the act two of the industry.</p>
+<p class="zh">那时你就可以与各种车队合作，由车队来拥有车辆，就像今天欧洲很多市场的做法一样。但我们认为那会是这个行业的「第二幕」。</p>
+</div>
+</p>
+<p class="seg" id="seg-37" data-text="yeah. is there anything that stands out about the european market that maybe folks don't understand or is, kind of overlooked as a big challenge that, we're not aware of? 是的。欧洲市场有没有什么特别之处，是 outsiders 不了解、或者作为一个重大挑战被忽视的？">
+<span class="ts">[14:12] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. Is there anything that stands out about the European market that maybe folks don't understand or is, kind of overlooked as a big challenge that, we're not aware of?</p>
+<p class="zh">是的。欧洲市场有没有什么特别之处，是 outsiders 不了解、或者作为一个重大挑战被忽视的？</p>
+</div>
+</p>
+<p class="seg" id="seg-38" data-text="there's many. i think that first of all, we got to recognize that europe is a big place, but it's very, very unique. and even every country and city has their own requirements. first of all, i think the barriers to entry are significantly higher than anywhere else around the world, which is one of the reasons we still today in 2026 don't have any commercial robot taxi services live in europe, while there are many live in now servicing people in the us and in china. so first of all, you have to pass the bar on eu-level homologation, which is a very, very tricky process to go through. 有很多。首先，我们必须认识到欧洲是个大地方，但又非常非常特殊，甚至每个国家、每个城市都有自己的要求。首先，我认为这里的准入门槛显著高于世界其他任何地方——这也是为什么到了 2026 年的今天，欧洲仍然没有任何商业 Robotaxi 服务上线，而美国和中国已经有不少在为人们提供服务。首先，你必须跨过欧盟层面的整车型式认证（homologation）这道门槛，这是极其棘手的过程。">
+<span class="ts">[14:24] Markus Villig</span>
+<div class="seg-body">
+<p class="en">There's many. I think that first of all, we got to recognize that Europe is a big place, but it's very, very unique. And even every country and city has their own requirements. First of all, I think the barriers to entry are significantly higher than anywhere else around the world, which is one of the reasons we still today in 2026 don't have any commercial robot taxi services live in Europe, while there are many live in now servicing people in the US and in China. So first of all, you have to pass the bar on EU-level homologation, which is a very, very tricky process to go through.</p>
+<p class="zh">有很多。首先，我们必须认识到欧洲是个大地方，但又非常非常特殊，甚至每个国家、每个城市都有自己的要求。首先，我认为这里的准入门槛显著高于世界其他任何地方——这也是为什么到了 2026 年的今天，欧洲仍然没有任何商业 Robotaxi 服务上线，而美国和中国已经有不少在为人们提供服务。首先，你必须跨过欧盟层面的整车型式认证（homologation）这道门槛，这是极其棘手的过程。</p>
+</div>
+</p>
+<p class="seg" id="seg-39" data-text="and nobody has even started that process. so just to give you a sense of scale or timelines, tesla, fsd, it took them about four years later to go live in europe than it did in the us. and that is not even an l4 system, as. so as you can imagine, we expect this to be similarly delayed. 而且目前没有人真正启动了这个流程。让你感受一下规模和 timelines：特斯拉的 FSD，在欧洲上线比美国晚了大约四年。而这甚至还不是 L4 系统。所以你可以想象，我们预计类似的时间延迟会上演。">
+<span class="ts">[14:59] Markus Villig</span>
+<div class="seg-body">
+<p class="en">And nobody has even started that process. So just to give you a sense of scale or timelines, Tesla, FSD, it took them about four years later to go live in Europe than it did in the US. And that is not even an L4 system, as. So as you can imagine, we expect this to be similarly delayed.</p>
+<p class="zh">而且目前没有人真正启动了这个流程。让你感受一下规模和 timelines：特斯拉的 FSD，在欧洲上线比美国晚了大约四年。而这甚至还不是 L4 系统。所以你可以想象，我们预计类似的时间延迟会上演。</p>
+</div>
+</p>
+<p class="seg" id="seg-40" data-text="you're not allowed to call it fsd in europe anymore, right? 在欧洲你们不能再把它叫 FSD 了，对吧？">
+<span class="ts">[15:18] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">You're not allowed to call it FSD in Europe anymore, right?</p>
+<p class="zh">在欧洲你们不能再把它叫 FSD 了，对吧？</p>
+</div>
+</p>
+<p class="seg" id="seg-41" data-text="exactly. and also keep in mind, it's only now approved in the first seven out of 27 european states. so even if you get eu level approval, you still need to go state by state, and in some cases, city by city. so just, i think we got to recognize the barrier to entry is much higher. it's a much more burdensome process. and that's why, again, we think we're well positioned as the only local payer who knows most of these member states, regulators, mayors, and can be the sort of trusted partner to bring the technology to market here. 没错。还要记住，它现在才刚在 27 个欧盟成员国中的前 7 个获批。所以即便你拿到了欧盟层面的批准，你仍然需要逐国推进，有些情况下还要逐城推进。所以我想说，我们必须认识到这里的准入门槛要高得多，流程负担也重得多。这也正是我们认为自己处境有利的原因——作为唯一本地的参与者，我们熟悉这些成员国的大多数监管机构、市长，能成为把技术带到这里的值得信赖的伙伴。">
+<span class="ts">[15:21] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Exactly. And also keep in mind, it's only now approved in the first seven out of 27 European states. So even if you get EU level approval, you still need to go state by state, and in some cases, city by city. So just, I think we got to recognize the barrier to entry is much higher. It's a much more burdensome process. And that's why, again, we think we're well positioned as the only local payer who knows most of these member states, regulators, mayors, and can be the sort of trusted partner to bring the technology to market here.</p>
+<p class="zh">没错。还要记住，它现在才刚在 27 个欧盟成员国中的前 7 个获批。所以即便你拿到了欧盟层面的批准，你仍然需要逐国推进，有些情况下还要逐城推进。所以我想说，我们必须认识到这里的准入门槛要高得多，流程负担也重得多。这也正是我们认为自己处境有利的原因——作为唯一本地的参与者，我们熟悉这些成员国的大多数监管机构、市长，能成为把技术带到这里的值得信赖的伙伴。</p>
+</div>
+</p>
+<p class="seg" id="seg-42" data-text="yeah. i mean, one of the frameworks i've been thinking about deployments of level four av systems lately is, is it a technological hurdle or is it a regulatory hurdle? and, in europe, my impression is that it's more regulatory, right? because you look at companies, i mean, your partners, pony ai is operating in many other places and doing l4 service. is that assessment accurate or, basically what's holding up the process in europe in your mind? 是的。我最近在思考 L4 自动驾驶部署的一个框架：它到底是技术障碍，还是监管障碍？在欧洲，我的印象是更多是监管障碍，对吧？因为你看看一些公司——比如你的合作伙伴小马智行，在其他很多地方都在运营 L4 服务。这个判断准确吗？或者说在你看来，到底是什么拖住了欧洲的进程？">
+<span class="ts">[15:48] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. I mean, one of the frameworks I've been thinking about deployments of level four AV systems lately is, is it a technological hurdle or is it a regulatory hurdle? And, in Europe, my impression is that it's more regulatory, right? Because you look at companies, I mean, your partners, Pony AI is operating in many other places and doing L4 service. Is that assessment accurate or, basically what's holding up the process in Europe in your mind?</p>
+<p class="zh">是的。我最近在思考 L4 自动驾驶部署的一个框架：它到底是技术障碍，还是监管障碍？在欧洲，我的印象是更多是监管障碍，对吧？因为你看看一些公司——比如你的合作伙伴小马智行，在其他很多地方都在运营 L4 服务。这个判断准确吗？或者说在你看来，到底是什么拖住了欧洲的进程？</p>
+</div>
+</p>
+<p class="seg" id="seg-43" data-text="yes, it's just hard to disaggregate the two in the sense that i think the bar that the european regulators are requiring in terms of consumer safety, road safety is significantly higher than in almost anywhere else around the world. and that obviously means the technology needs to be more mature as well. so just what we observe, what's being accepted in the us and china to do first pilots and carry passengers, that's not enough to clear the bar in europe. so i'd say that's the first element, which is that most of these companies yet haven't gotten to the level that they would pass the bar. and then the other thing is, even once they have done that, it's a very rigorous process. 是的，很难把两者分开。我认为欧洲监管者对消费者安全、道路安全所要求的门槛，显著高于世界几乎任何其他地方。这显然也意味着技术必须更成熟。我们在美国和中国看到的、被允许做首批试点并载客水平，在欧洲不足以跨过门槛。所以我想说，这是第一个因素：大多数公司还没有达到能过门槛的水平。第二点是，即便他们做到了，流程依然非常严格。">
+<span class="ts">[16:16] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Yes, it's just hard to disaggregate the two in the sense that I think the bar that the European regulators are requiring in terms of consumer safety, road safety is significantly higher than in almost anywhere else around the world. And that obviously means the technology needs to be more mature as well. So just what we observe, what's being accepted in the US and China to do first pilots and carry passengers, that's not enough to clear the bar in Europe. So I'd say that's the first element, which is that most of these companies yet haven't gotten to the level that they would pass the bar. And then the other thing is, even once they have done that, it's a very rigorous process.</p>
+<p class="zh">是的，很难把两者分开。我认为欧洲监管者对消费者安全、道路安全所要求的门槛，显著高于世界几乎任何其他地方。这显然也意味着技术必须更成熟。我们在美国和中国看到的、被允许做首批试点并载客水平，在欧洲不足以跨过门槛。所以我想说，这是第一个因素：大多数公司还没有达到能过门槛的水平。第二点是，即便他们做到了，流程依然非常严格。</p>
+</div>
+</p>
+<p class="seg" id="seg-44" data-text="it might again take one, two, or even three years to demonstrate all the evidence that it's truly safe before you can do a mass deployment. 可能还需要一到三年，来拿出所有证据证明它真的安全，然后你才能进行大规模部署。">
+<span class="ts">[16:49] Markus Villig</span>
+<div class="seg-body">
+<p class="en">It might again take one, two, or even three years to demonstrate all the evidence that it's truly safe before you can do a mass deployment.</p>
+<p class="zh">可能还需要一到三年，来拿出所有证据证明它真的安全，然后你才能进行大规模部署。</p>
+</div>
+</p>
+<p class="seg" id="seg-45" data-text="got it. so how close do you think you are to operating a fully driverless commercial service where i can go to a city and where bolt is operating and pay for a ride and someone car will show up with no driver in the front seat? 明白。那你觉得离运营真正的无人驾驶商业服务还有多远——就是我到一个城市，在 Bolt 上叫车付钱，然后来了一辆车、前排没有司机？">
+<span class="ts">[16:57] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Got it. So how close do you think you are to operating a fully driverless commercial service where I can go to a city and where Bolt is operating and pay for a ride and someone car will show up with no driver in the front seat?</p>
+<p class="zh">明白。那你觉得离运营真正的无人驾驶商业服务还有多远——就是我到一个城市，在 Bolt 上叫车付钱，然后来了一辆车、前排没有司机？</p>
+</div>
+</p>
+<p class="seg" id="seg-46" data-text="actually, we think that the first trips are going to happen fairly quickly, call it over the next 12 months or so, barring any major surprises. however, we have to distinguish between two things. member states in europe can allow you to do small exemptions. so they can, for example, put 10 cars on the road to demonstrate something. it's a very different thing to go from there to a mass deployment of thousands of vehicles, which requires a whole different level of process. so unfortunately, that's going to take many years. 实际上，我们认为首批行程会来得相当快，大概在未来 12 个月左右，除非出现重大意外。但我们必须区分两件事。欧洲的成员国可以允许你做一些小范围豁免，比如放 10 辆车在路上做展示。从那里走到数千辆车的大规模部署，是完全不同的另一回事，需要完全不同层级的流程。所以很遗憾，那还要很多年。">
+<span class="ts">[17:11] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Actually, we think that the first trips are going to happen fairly quickly, call it over the next 12 months or so, barring any major surprises. However, we have to distinguish between two things. Member states in Europe can allow you to do small exemptions. So they can, for example, put 10 cars on the road to demonstrate something. It's a very different thing to go from there to a mass deployment of thousands of vehicles, which requires a whole different level of process. So unfortunately, that's going to take many years.</p>
+<p class="zh">实际上，我们认为首批行程会来得相当快，大概在未来 12 个月左右，除非出现重大意外。但我们必须区分两件事。欧洲的成员国可以允许你做一些小范围豁免，比如放 10 辆车在路上做展示。从那里走到数千辆车的大规模部署，是完全不同的另一回事，需要完全不同层级的流程。所以很遗憾，那还要很多年。</p>
+</div>
+</p>
+<p class="seg" id="seg-47" data-text="got it. yeah. i mean, so 10 cars that i guess, do you see much value in launching a fleet of 10 cars? you're a private company. so, maybe you don't need as much of the marketing hype or, sort of the show or the media. do you see value there or what do you what do you kind of want your initial deployment to look like? 明白。10 辆车——你觉得投放 10 辆车的车队有多大价值？你们是私营公司，也许不需要那么多营销炒作、表演或媒体关注。你觉得这有价值吗？或者说，你希望最初的部署是什么样子？">
+<span class="ts">[17:40] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Got it. Yeah. I mean, so 10 cars that I guess, do you see much value in launching a fleet of 10 cars? you're a private company. So, maybe you don't need as much of the marketing hype or, sort of the show or the media. Do you see value there or what do you what do you kind of want your initial deployment to look like?</p>
+<p class="zh">明白。10 辆车——你觉得投放 10 辆车的车队有多大价值？你们是私营公司，也许不需要那么多营销炒作、表演或媒体关注。你觉得这有价值吗？或者说，你希望最初的部署是什么样子？</p>
+</div>
+</p>
+<p class="seg" id="seg-48" data-text="i do think there's value in limited deployments, even at the small fleet sizes, for a couple of reasons. one is that at the end of the day, you've got to convince the regulators this is a good thing. you've got to convince the public that this is safe. so we do think even if the deployments are small, in order for you to unlock the bigger opportunity, it's well worth the effort. 我确实认为小规模部署有价值，即便车队规模很小，原因有几个。一是说到底，你得说服监管者这是件好事，你得说服公众它是安全的。所以我们认为，即便部署规模小，为了解锁更大的机会，这绝对值得投入。">
+<span class="ts">[17:59] Markus Villig</span>
+<div class="seg-body">
+<p class="en">I do think there's value in limited deployments, even at the small fleet sizes, for a couple of reasons. One is that at the end of the day, you've got to convince the regulators this is a good thing. You've got to convince the public that this is safe. So we do think even if the deployments are small, in order for you to unlock the bigger opportunity, it's well worth the effort.</p>
+<p class="zh">我确实认为小规模部署有价值，即便车队规模很小，原因有几个。一是说到底，你得说服监管者这是件好事，你得说服公众它是安全的。所以我们认为，即便部署规模小，为了解锁更大的机会，这绝对值得投入。</p>
+</div>
+</p>
+<p class="seg" id="seg-49" data-text="yeah, got it. makes sense. so are there any other hurdles that bolt faces in bringing robotaxes to market in europe? 是的，明白，很有道理。那么，Bolt 把 Robotaxi 推向欧洲市场还面临其他障碍吗？">
+<span class="ts">[18:16] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah, got it. Makes sense. So are there any other hurdles that Bolt faces in bringing robotaxes to market in Europe?</p>
+<p class="zh">是的，明白，很有道理。那么，Bolt 把 Robotaxi 推向欧洲市场还面临其他障碍吗？</p>
+</div>
+</p>
+<p class="seg" id="seg-50" data-text="the biggest one is that the european requirements are extremely high. and most of these other software vendors, i mean, they're clearly focused on different markets. when you look at the us opportunity, first of all, it's larger in absolute dollar amount. second, the regulatory bar is easier. so it's clear that most of these companies want to focus on the us first. and the second thing is, unfortunately, we do got to look at the geopolitics and then the ceo sovereignty at play, which is that most of these european regulators don't really like it that they're going to be held at the mercy of just us or chinese technology. 最大的一个，是欧洲的要求极其高。而大多数其他软件供应商——显然，他们的重心在别的市场。看看美国的机遇，首先它的绝对金额更大，其次监管门槛更低。所以很清楚，大多数公司都想先聚焦美国。第二点是，很遗憾，我们还得审视地缘政治以及主权问题：大多数欧洲监管者并不真的乐意受制于纯粹是美国或中国的技术。">
+<span class="ts">[18:25] Markus Villig</span>
+<div class="seg-body">
+<p class="en">The biggest one is that the European requirements are extremely high. And most of these other software vendors, I mean, they're clearly focused on different markets. When you look at the US opportunity, first of all, it's larger in absolute dollar amount. Second, the regulatory bar is easier. So it's clear that most of these companies want to focus on the US first. And the second thing is, unfortunately, we do got to look at the geopolitics and then the CEO sovereignty at play, which is that Most of these European regulators don't really like it that they're going to be held at the mercy of just US or Chinese technology.</p>
+<p class="zh">最大的一个，是欧洲的要求极其高。而大多数其他软件供应商——显然，他们的重心在别的市场。看看美国的机遇，首先它的绝对金额更大，其次监管门槛更低。所以很清楚，大多数公司都想先聚焦美国。第二点是，很遗憾，我们还得审视地缘政治以及主权问题：大多数欧洲监管者并不真的乐意受制于纯粹是美国或中国的技术。</p>
+</div>
+</p>
+<p class="seg" id="seg-51" data-text="and they like to see some operational control and data not leaving europe and so on, which is quite a big technology architecture change for many of these companies if they actually want to get market clearance. 他们希望看到某种运营控制权、数据不离开欧洲等等——对这些公司来说，如果真想获得市场准入，这是相当重大的技术架构改造。">
+<span class="ts">[19:00] Markus Villig</span>
+<div class="seg-body">
+<p class="en">And they like to see some operational control and data not leaving Europe and so on, which is quite a big technology architecture change for many of these companies if they actually want to get market clearance.</p>
+<p class="zh">他们希望看到某种运营控制权、数据不离开欧洲等等——对这些公司来说，如果真想获得市场准入，这是相当重大的技术架构改造。</p>
+</div>
+</p>
+<p class="seg" id="seg-52" data-text="yeah, i mean, when you look out at the landscape of l4 av operators that are, waymo in the u.s., zoox, and all of the three companies coming out of china, i guess there isn't really a strong european av level four leader. i guess moya, maybe a couple other smaller ones. but is that something that you think will slow things down or hold back or it just it's the way it is? 是的。看看 L4 运营商的格局——美国的 Waymo、Zoox，还有来自中国的三家公司——我想欧洲并没有真正强大的 L4 领军者。也许是 Moya，可能还有几家小公司。但这是不是会拖慢进程、形成阻碍？还是说这就是现状？">
+<span class="ts">[19:10] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah, I mean, when you look out at the landscape of L4 AV operators that are, Waymo in the U.S., Zoox, and all of the three companies coming out of China, I guess there isn't really a strong European AV level four leader. I guess Moya, maybe a couple other smaller ones. But is that something that you think will slow things down or hold back or it just it's the way it is?</p>
+<p class="zh">是的。看看 L4 运营商的格局——美国的 Waymo、Zoox，还有来自中国的三家公司——我想欧洲并没有真正强大的 L4 领军者。也许是 Moya，可能还有几家小公司。但这是不是会拖慢进程、形成阻碍？还是说这就是现状？</p>
+</div>
+</p>
+<p class="seg" id="seg-53" data-text="we do expect that over time there will be more european providers as well, just given the tailwinds in the industry. we think the cost to build a capable l4 system is drastically coming down every year, thanks to the wider advancements and tailwinds in the llm industry as well. so because of that, we think there's going to be more providers in five years, but today it's a major obstacle. 我们确实预计，随着时间推移，由于行业的顺风，会出现更多欧洲本土供应商。我们认为，得益于 LLM 行业更广泛的进步和顺风，打造一套有能力的 L4 系统的成本正在每年大幅下降。因此我们认为，五年后供应商会更多，但今天就现状而言，这是一个主要障碍。">
+<span class="ts">[19:36] Markus Villig</span>
+<div class="seg-body">
+<p class="en">We do expect that over time there will be more European providers as well, just given the tailwinds in the industry. We think the cost to build a capable L4 system is drastically coming down every year, thanks to the wider advancements and tailwinds in the LLM industry as well. So because of that, we think there's going to be more providers in five years, but today it's a major obstacle.</p>
+<p class="zh">我们确实预计，随着时间推移，由于行业的顺风，会出现更多欧洲本土供应商。我们认为，得益于 LLM 行业更广泛的进步和顺风，打造一套有能力的 L4 系统的成本正在每年大幅下降。因此我们认为，五年后供应商会更多，但今天就现状而言，这是一个主要障碍。</p>
+</div>
+</p>
+<p class="seg" id="seg-54" data-text="yeah. so zooming out on your av strategy, it sounds like you've made a strong case for where bolt kind of provides a lot of value and kind of really the only company doing it. and then also on the thesis that there will be many, that this av technology will be more of a commodity product in the future. how does that kind of tie into your larger av strategy? i mean, i guess the company, that i analyze carefully is uber, where they have many different av partners. do you kind of see them yourself kind of in a similar position where you have a bunch of av partners and you aggregate demand and provide a lot of value 是的。拉远一点看你的自动驾驶战略：听起来你已经很有力地论证了 Bolt 在哪里能创造巨大价值、并且几乎是唯一在做这件事的公司；同时也论证了这个命题——自动驾驶技术未来会更像大宗商品。这两点如何与你更大的自动驾驶战略相衔接？我想，我仔细研究的公司是 Uber，他们有很多不同的自动驾驶合作伙伴。你是否把自己也看成类似的角色——拥有一批 AV 合作伙伴，聚合需求，并在车队运营上提供大量价值？">
+<span class="ts">[19:57] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. So zooming out on your AV strategy, it sounds like you've made a strong case for where Bolt kind of provides a lot of value and kind of really the only company doing it. And then also on the thesis that there will be many, that this AV technology will be more of a commodity product in the future. How does that kind of tie into your larger AV strategy? I mean, I guess the company, that I analyze carefully is Uber, where they have many different AV partners. Do you kind of see them yourself kind of in a similar position where you have a bunch of AV partners and you aggregate demand and provide a lot of value</p>
+<p class="zh">是的。拉远一点看你的自动驾驶战略：听起来你已经很有力地论证了 Bolt 在哪里能创造巨大价值、并且几乎是唯一在做这件事的公司；同时也论证了这个命题——自动驾驶技术未来会更像大宗商品。这两点如何与你更大的自动驾驶战略相衔接？我想，我仔细研究的公司是 Uber，他们有很多不同的自动驾驶合作伙伴。你是否把自己也看成类似的角色——拥有一批 AV 合作伙伴，聚合需求，并在车队运营上提供大量价值？</p>
+</div>
+</p>
+<p class="seg" id="seg-55" data-text="on fleet ops? like, do you think about, other competitors like uber or are you kind of focused on your own? 你会考虑 Uber 这样的竞争对手，还是专注于自己的路？">
+<span class="ts">[20:31] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">on fleet ops? Like, do you think about, other competitors like Uber or are you kind of focused on your own?</p>
+<p class="zh">你会考虑 Uber 这样的竞争对手，还是专注于自己的路？</p>
+</div>
+</p>
+<p class="seg" id="seg-56" data-text="of course, we study what others in the industry are doing. but as mentioned, the european landscape is quite different. so we don't think in europe it makes sense to have the broader strategy of trying to partner with 15 different self-driving car companies. but i think you got to pick a few partners and really go very deep with them, which means that you really are the system integrator. you take the technology, you take the vehicle, you go to the european regulator, you demonstrate it safe and then you go city by city and you explain to every mayor and every member state that this is the right technology and how you're going 当然，我们会研究行业中其他人在做什么。但如前所述，欧洲格局相当不同。所以在欧洲，我们认为「与 15 家不同自动驾驶公司合作」这种更宽泛的策略并不合理。我认为你得挑几家伙伴，真正深入地合作——这意味着你才是真正的系统集成商。">
+<span class="ts">[20:40] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Of course, we study what others in the industry are doing. But as mentioned, the European landscape is quite different. So we don't think in Europe it makes sense to have the broader strategy of trying to partner with 15 different self-driving car companies. But I think you got to pick a few partners and really go very deep with them, which means that you really are the system integrator. You take the technology, you take the vehicle, you go to the European regulator, You demonstrate it safe and then you go city by city and you explain to every mayor and every member state that this is the right technology and how you're going</p>
+<p class="zh">当然，我们会研究行业中其他人在做什么。但如前所述，欧洲格局相当不同。所以在欧洲，我们认为「与 15 家不同自动驾驶公司合作」这种更宽泛的策略并不合理。我认为你得挑几家伙伴，真正深入地合作——这意味着你才是真正的系统集成商。</p>
+</div>
+</p>
+<p class="seg" id="seg-57" data-text="to operate it and who's going to manage the liabilities and so on. we just don't think it's feasible for you to do that with 15 companies in parallel. it rather makes sense to double down on the handful. and i think that's the core distinction in the strategy where i think in the us that's more feasible path to do. 你拿来技术、拿来车辆，去见欧洲监管者，证明它安全，然后逐城推进，向每位市长、每个成员国解释这是正确的技术、你将如何运营它、谁来承担法律责任等等。我们就是认为，你不可能同时和 15 家公司并行完成这些。更合理的做法是把资源集中押注在少数几家上。我认为这是战略上的核心区别——在美国，那条路径可能更可行。">
+<span class="ts">[21:13] Markus Villig</span>
+<div class="seg-body">
+<p class="en">to operate it and who's going to manage the liabilities and so on. We just don't think it's feasible for you to do that with 15 companies in parallel. It rather makes sense to double down on the handful. And I think that's the core distinction in the strategy where I think in the US that's more feasible path to do.</p>
+<p class="zh">你拿来技术、拿来车辆，去见欧洲监管者，证明它安全，然后逐城推进，向每位市长、每个成员国解释这是正确的技术、你将如何运营它、谁来承担法律责任等等。我们就是认为，你不可能同时和 15 家公司并行完成这些。更合理的做法是把资源集中押注在少数几家上。我认为这是战略上的核心区别——在美国，那条路径可能更可行。</p>
+</div>
+</p>
+<p class="seg" id="seg-58" data-text="yeah. so how are you picking your av partners and what are you looking for specifically? 是的。那你们如何选择自动驾驶合作伙伴，具体看重什么？">
+<span class="ts">[21:27] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. So how are you picking your AV partners and what are you looking for specifically?</p>
+<p class="zh">是的。那你们如何选择自动驾驶合作伙伴，具体看重什么？</p>
+</div>
+</p>
+<p class="seg" id="seg-59" data-text="ultimately, it just comes down to the performance is the most important first thing. they need to demonstrate the technology actually works on european roads, meaning it's safe. the unit economics are compelling versus human drivers. they can actually pass the regulatory bar and so on. so those are the first few factors we look at. and reality is, i think there's not too many players in the world today who can clear that bar in europe. we expect, again, there might be many more a few years down the line, but just nobody has really prioritized the european market's requirements and they are pretty distinct. 归根结底，性能是第一位的，也是最重要的。他们需要证明这项技术在欧洲道路上确实有效，也就是安全；相比人类司机，单位经济性要有吸引力；他们要能真正跨过监管门槛等等。这些都是我们最初看的几个因素。而现实是，我认为今天全球能跨过欧洲门槛的玩家并不多。我们预计，几年后可能会多很多，但目前还没有谁真正把欧洲市场的要求作为优先事项——而这些要求相当独特。">
+<span class="ts">[21:33] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Ultimately, it just comes down to the performance is the most important first thing. They need to demonstrate the technology actually works on European roads, meaning it's safe. The unit economics are compelling versus human drivers. They can actually pass the regulatory bar and so on. So those are the first few factors we look at. And reality is, I think there's not too many players in the world today who can clear that bar in Europe. We expect, again, there might be many more a few years down the line, but just nobody has really prioritized the European market's requirements and they are pretty distinct.</p>
+<p class="zh">归根结底，性能是第一位的，也是最重要的。他们需要证明这项技术在欧洲道路上确实有效，也就是安全；相比人类司机，单位经济性要有吸引力；他们要能真正跨过监管门槛等等。这些都是我们最初看的几个因素。而现实是，我认为今天全球能跨过欧洲门槛的玩家并不多。我们预计，几年后可能会多很多，但目前还没有谁真正把欧洲市场的要求作为优先事项——而这些要求相当独特。</p>
+</div>
+</p>
+<p class="seg" id="seg-60" data-text="yeah. so with such a large existing ride-hale business in europe and around the world, have you thought much about how human drivers and autonomous fleets might coexist on bolt? yeah. 是的。鉴于你们在欧洲和全球已经有这么大的网约车业务，你有没有认真想过人类司机和自动驾驶车队如何在 Bolt 上共存？">
+<span class="ts">[22:04] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. So with such a large existing ride-hale business in Europe and around the world, have you thought much about how human drivers and autonomous fleets might coexist on Bolt? Yeah.</p>
+<p class="zh">是的。鉴于你们在欧洲和全球已经有这么大的网约车业务，你有没有认真想过人类司机和自动驾驶车队如何在 Bolt 上共存？</p>
+</div>
+</p>
+<p class="seg" id="seg-61" data-text="absolutely. it's something that's very much top of mind for us. again, we're headquartered in europe. we're the largest european operator. we have hundreds of thousands of drivers, millions of drivers on the network. and of course, their long-term income is very important for us. we need to manage that transition carefully, especially considering the european political landscape, which i think is much more sensitive to this labor displacement than most other parts of the world. so what i'd first say is that the european market is vastly underpenetrated in ride-share versus the us. and it isn't that europeans don't want to take ride-share services. the bigger reason is that there's these archaic taxi regulations. 当然，这是我们非常挂在心上的事。我们总部在欧洲，是欧洲最大的运营商，平台上有数十万、数百万司机，他们的长期收入对我们非常重要。我们需要谨慎管理这个过渡，尤其考虑到欧洲的政治环境——我认为那里对劳动力被取代的敏感度远高于世界大多数其他地方。首先要说的是，欧洲网约车市场的渗透率远低于美国。这并不是因为欧洲人不想用网约车，更大的原因是那些陈旧的出租车法规。">
+<span class="ts">[22:15] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Absolutely. It's something that's very much top of mind for us. Again, we're headquartered in Europe. We're the largest European operator. We have hundreds of thousands of drivers, millions of drivers on the network. And of course, their long-term income is very important for us. We need to manage that transition carefully, especially considering the European political landscape, which I think is much more sensitive to this labor displacement than most other parts of the world. So what I'd first say is that the European market is vastly underpenetrated in ride-share versus the US. And it isn't that Europeans don't want to take ride-share services. The bigger reason is that there's these archaic taxi regulations.</p>
+<p class="zh">当然，这是我们非常挂在心上的事。我们总部在欧洲，是欧洲最大的运营商，平台上有数十万、数百万司机，他们的长期收入对我们非常重要。我们需要谨慎管理这个过渡，尤其考虑到欧洲的政治环境——我认为那里对劳动力被取代的敏感度远高于世界大多数其他地方。首先要说的是，欧洲网约车市场的渗透率远低于美国。这并不是因为欧洲人不想用网约车，更大的原因是那些陈旧的出租车法规。</p>
+</div>
+</p>
+<p class="seg" id="seg-62" data-text="in reality, it's a regulatory capture, which is limiting the supply in the market drastically. so most european cities, unfortunately the big ones, they still operate under similar regimes as used to have in new york with the taxi medallions. so as you can imagine, it's very heavily constraining the supply side and therefore the entire market. and that has its good and bad things, but what it means is there's plenty of unserved demand in the market. so once you bring self-driving cars into the market, you're just mainly actually going to be servicing demand that today isn't served. so it's not necessarily going to cannibalize human drivers in the first phase of this. 实际上，这是一种监管俘获（regulatory capture），严重限制了市场供给。欧洲大多数大城市——很遗憾——仍在沿用类似纽约出租车牌照（medallion）的旧制度。你可以想象，这极大约束了供给侧，也就约束了整个市场。这有好有坏，但意味着市场上存在大量未被满足的需求。所以一旦你把自动驾驶汽车引进来，实际上主要服务的是当下根本没被服务的需求。因此在这个阶段，它未必会蚕食人类司机的生意。">
+<span class="ts">[22:55] Markus Villig</span>
+<div class="seg-body">
+<p class="en">In reality, it's a regulatory capture, which is limiting the supply in the market drastically. So most European cities, unfortunately the big ones, they still operate under similar regimes as used to have in New York with the taxi medallions. So as you can imagine, it's very heavily constraining the supply side and therefore the entire market. And that has its good and bad things, but what it means is there's plenty of unserved demand in the market. So once you bring self-driving cars into the market, you're just mainly actually going to be servicing demand that today isn't served. So it's not necessarily going to cannibalize human drivers in the first phase of this.</p>
+<p class="zh">实际上，这是一种监管俘获（regulatory capture），严重限制了市场供给。欧洲大多数大城市——很遗憾——仍在沿用类似纽约出租车牌照（medallion）的旧制度。你可以想象，这极大约束了供给侧，也就约束了整个市场。这有好有坏，但意味着市场上存在大量未被满足的需求。所以一旦你把自动驾驶汽车引进来，实际上主要服务的是当下根本没被服务的需求。因此在这个阶段，它未必会蚕食人类司机的生意。</p>
+</div>
+</p>
+<p class="seg" id="seg-63" data-text="and we think that therefore there's going to be a hybrid market for an extended period of time in europe and the gradual transition to avs over the next two decades. 因此我们认为，欧洲会在相当长一段时间里是一个混合市场，并在未来二十年里逐步向自动驾驶过渡。">
+<span class="ts">[23:31] Markus Villig</span>
+<div class="seg-body">
+<p class="en">And we think that therefore there's going to be a hybrid market for an extended period of time in Europe and the gradual transition to AVs over the next two decades.</p>
+<p class="zh">因此我们认为，欧洲会在相当长一段时间里是一个混合市场，并在未来二十年里逐步向自动驾驶过渡。</p>
+</div>
+</p>
+<p class="seg" id="seg-64" data-text="yeah, that's interesting. i think i haven't thought about, i guess, in the markets that are sort of demand constrained. i think there's a stronger case to be made that, when you add avs, you're really, kind of tapping. i think a lot of av companies have talked about, when we add these onto the platform, we're going to expand the tam greatly, which i have more questions about. but i think if it's under, kind of, i guess, demand constraint, right, adding avs, sort of creates a lot more opportunity, it sounds like. 很有意思。我想我之前没往这个角度想——在那些需求受限的市场里，有一个更强的论点：当你加入自动驾驶汽车，你其实是在开拓新的需求。很多自动驾驶公司都说过，把这些车加上平台会大幅扩大 TAM，我对此有更多疑问。但如果是在供给受限、需求被压制的情况下，加入 AV 似乎会创造很多机会，对吧？">
+<span class="ts">[23:39] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah, that's interesting. I think I haven't thought about, I guess, in the markets that are sort of demand constrained. I think there's a stronger case to be made that, when you add AVs, you're really, kind of tapping. I think a lot of AV companies have talked about, when we add these onto the platform, we're going to expand the TAM greatly, which I have more questions about. But I think if it's under, kind of, I guess, demand constraint, right, adding AVs, sort of creates a lot more opportunity, it sounds like.</p>
+<p class="zh">很有意思。我想我之前没往这个角度想——在那些需求受限的市场里，有一个更强的论点：当你加入自动驾驶汽车，你其实是在开拓新的需求。很多自动驾驶公司都说过，把这些车加上平台会大幅扩大 TAM，我对此有更多疑问。但如果是在供给受限、需求被压制的情况下，加入 AV 似乎会创造很多机会，对吧？</p>
+</div>
+</p>
+<p class="seg" id="seg-65" data-text="yes. and again, that's where we also is one of the inputs for our 100,000 vehicle figure. we genuinely think you could easily deploy 100,000 robot taxis across europe, and this would all be incremental volume. this would barely cannibalize the demand for human drivers. interesting. 是的。这也是我们得出 10 万辆这个数字的其中一个依据。我们真的认为，在全欧洲轻松部署 10 万辆 Robotaxi 是可行的，而且这几乎全是增量，基本不会蚕食人类司机的需求。有意思。">
+<span class="ts">[24:08] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Yes. And again, that's where we also is one of the inputs for our 100,000 vehicle figure. We genuinely think you could easily deploy 100,000 robot taxis across Europe, and this would all be incremental volume. This would barely cannibalize the demand for human drivers. Interesting.</p>
+<p class="zh">是的。这也是我们得出 10 万辆这个数字的其中一个依据。我们真的认为，在全欧洲轻松部署 10 万辆 Robotaxi 是可行的，而且这几乎全是增量，基本不会蚕食人类司机的需求。有意思。</p>
+</div>
+</p>
+<p class="seg" id="seg-66" data-text="and so do you imagine that regulators will be more okay? i mean, they've been limiting demand, i guess, for a reason up until this point, right? they have some reasons for it. do you think they'll be more okay with adding robo taxis in the future since, they weren't okay with, adding more human drivers? 那么你是否认为监管者会更容易接受？我的意思是，他们迄今为止限制需求总有原因，对吧？他们有他们的理由。你觉得他们会更容易接受未来加入 Robotaxi 吗——既然他们此前不接受增加更多人类司机？">
+<span class="ts">[24:25] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">And so do you imagine that regulators will be more okay? I mean, they've been limiting demand, I guess, for a reason up until this point, right? They have some reasons for it. Do you think they'll be more okay with adding robo taxis in the future since, they weren't okay with, adding more human drivers?</p>
+<p class="zh">那么你是否认为监管者会更容易接受？我的意思是，他们迄今为止限制需求总有原因，对吧？他们有他们的理由。你觉得他们会更容易接受未来加入 Robotaxi 吗——既然他们此前不接受增加更多人类司机？</p>
+</div>
+</p>
+<p class="seg" id="seg-67" data-text="well, at least that's the signal we're seeing in many of these cities that have been very strict about having human supply. i think there's also political reasons and so on. and they now seem to be more open to having autonomous vehicle licenses. so it remains to be seen. european politics has always remained very unpredictable. 至少，从我们看到的信号而言，许多此前对人类司机供给非常严格的城市，现在似乎更愿意发放自动驾驶牌照了。这背后大概也有政治原因。但仍有待观察。欧洲政治向来非常难以预测。">
+<span class="ts">[24:43] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Well, at least that's the signal we're seeing in many of these cities that have been very strict about having human supply. I think there's also political reasons and so on. And they now seem to be more open to having autonomous vehicle licenses. So it remains to be seen. European politics has always remained very unpredictable.</p>
+<p class="zh">至少，从我们看到的信号而言，许多此前对人类司机供给非常严格的城市，现在似乎更愿意发放自动驾驶牌照了。这背后大概也有政治原因。但仍有待观察。欧洲政治向来非常难以预测。</p>
+</div>
+</p>
+<p class="seg" id="seg-68" data-text="yeah. well, you also mentioned on the labor piece, right, that europe has traditionally been much stronger on labor. i like to joke every time i go to europe, somebody's on strike, train operators, airport traffic control, bus drivers, someone is always on strike. and, i think part of the reason why maybe they've limited, the number of drivers is because of that tight labor. so, i guess i've been a little surprised, in places like london where we're seeing a lot of companies announce and launch and get ready to move forward. i've been a little surprised that there hasn't been more pushback yet from labor, from human drivers. 是的。你还提到了劳动力这一块——欧洲传统上在劳工方面非常强势。我每次去欧洲都喜欢开个玩笑：总有人在罢工，火车司机、机场空管、公交司机，总有人在罢工。我想，限制司机数量某种程度上也是因为劳动力市场紧张。所以，我一直有点惊讶的是，在伦敦这样的地方，很多公司宣布、启动并准备推进，却还没有看到来自劳工界、来自人类司机的更多反弹。">
+<span class="ts">[25:01] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. Well, you also mentioned on the labor piece, right, that Europe has traditionally been much stronger on labor. I like to joke every time I go to Europe, somebody's on strike, train operators, airport traffic control, bus drivers, someone is always on strike. And, I think part of the reason why maybe they've limited, the number of drivers is because of that tight labor. So, I guess I've been a little surprised, in places like London where we're seeing a lot of companies announce and launch and get ready to move forward. I've been a little surprised that there hasn't been more pushback yet from labor, from human drivers.</p>
+<p class="zh">是的。你还提到了劳动力这一块——欧洲传统上在劳工方面非常强势。我每次去欧洲都喜欢开个玩笑：总有人在罢工，火车司机、机场空管、公交司机，总有人在罢工。我想，限制司机数量某种程度上也是因为劳动力市场紧张。所以，我一直有点惊讶的是，在伦敦这样的地方，很多公司宣布、启动并准备推进，却还没有看到来自劳工界、来自人类司机的更多反弹。</p>
+</div>
+</p>
+<p class="seg" id="seg-69" data-text="i feel like i've been covering the rydell industry for over a decade and we saw some really early, huge, crazy protests around uber launching and maybe bolt saw some of this. but i haven't really seen too much resistance to avs yet. i'm curious if you have any thoughts on that. 我感觉我报道网约车行业已经十多年了，当年 Uber 上线时我们见过一些非常早期、规模巨大、激烈 crazy 的抗议，也许 Bolt 也经历过一些。但我还没真正看到对自动驾驶有多少阻力。我很好奇你有什么看法。">
+<span class="ts">[25:36] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">I feel like I've been covering the Rydell industry for over a decade and we saw some really early, huge, crazy protests around Uber launching and maybe Bolt saw some of this. But I haven't really seen too much resistance to AVs yet. I'm curious if you have any thoughts on that.</p>
+<p class="zh">我感觉我报道网约车行业已经十多年了，当年 Uber 上线时我们见过一些非常早期、规模巨大、激烈 crazy 的抗议，也许 Bolt 也经历过一些。但我还没真正看到对自动驾驶有多少阻力。我很好奇你有什么看法。</p>
+</div>
+</p>
+<p class="seg" id="seg-70" data-text="well, first, we must start from the facts. there's literally zero self-driving commercial trips happening today in europe where a human being isn't behind the wheel, right? so we're at just the... early innings of the industry may be comparable to where us was four years ago, five years ago. so i think that we're only going to see any major pushback from labor advocates over the next couple of years once we truly get into larger scale deployment. and also i think more in the cities where it's truly going to displace human labor. but again, as mentioned, in many of these european cities, there's so much unmet demand, you could almost double the supply base. 首先，我们必须从事实出发。今天欧洲真正发生的、方向盘后没有人的商业自动驾驶行程，实际上是零，对吧？我们正处在行业的极早期，或许可以和四五年年前的美国相提并论。所以我认为，只有在未来几年我们真正进入大规模部署后，才会看到劳工倡导者的重大反弹；而且更多会出现在那些真正会取代人力的城市。但如前所述，在欧洲很多城市，未被满足的需求如此之多，你几乎可以把供给规模翻一倍。">
+<span class="ts">[25:54] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Well, first, we must start from the facts. There's literally zero self-driving commercial trips happening today in Europe where a human being isn't behind the wheel, right? So we're at just the... Early innings of the industry may be comparable to where US was four years ago, five years ago. So I think that we're only going to see any major pushback from labor advocates over the next couple of years once we truly get into larger scale deployment. And also I think more in the cities where it's truly going to displace human labor. But again, as mentioned, in many of these European cities, there's so much unmet demand, you could almost double the supply base.</p>
+<p class="zh">首先，我们必须从事实出发。今天欧洲真正发生的、方向盘后没有人的商业自动驾驶行程，实际上是零，对吧？我们正处在行业的极早期，或许可以和四五年年前的美国相提并论。所以我认为，只有在未来几年我们真正进入大规模部署后，才会看到劳工倡导者的重大反弹；而且更多会出现在那些真正会取代人力的城市。但如前所述，在欧洲很多城市，未被满足的需求如此之多，你几乎可以把供给规模翻一倍。</p>
+</div>
+</p>
+<p class="seg" id="seg-71" data-text="and it's proportioned to also going to double the market size. 而且这也会相应地把市场规模翻倍。">
+<span class="ts">[26:32] Markus Villig</span>
+<div class="seg-body">
+<p class="en">And it's proportioned to also going to double the market size.</p>
+<p class="zh">而且这也会相应地把市场规模翻倍。</p>
+</div>
+</p>
+<p class="seg" id="seg-72" data-text="yeah, great. so i think a good topic to end on, maybe we can talk about that 100,000 autonomous vehicles number by 2035. so i guess that's, about seven or eight more years. and so i guess, number one point you made was that there's a lot of untapped demand. what else has to happen in order for bolt to reach that number? 很好。我想用一个好话题收尾——我们可以谈谈 2035 年 10 万辆自动驾驶汽车这个目标。我猜那还有七八年。那么第一点你说的是有大量未开发需求。除此之外，Bolt 要达成这个数字还需要发生什么？">
+<span class="ts">[26:35] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah, great. So I think a good topic to end on, maybe we can talk about that 100,000 autonomous vehicles number by 2035. So I guess that's, about seven or eight more years. And so I guess, number one point you made was that there's a lot of untapped demand. What else has to happen in order for Bolt to reach that number?</p>
+<p class="zh">很好。我想用一个好话题收尾——我们可以谈谈 2035 年 10 万辆自动驾驶汽车这个目标。我猜那还有七八年。那么第一点你说的是有大量未开发需求。除此之外，Bolt 要达成这个数字还需要发生什么？</p>
+</div>
+</p>
+<p class="seg" id="seg-73" data-text="well, first of all, i'd say that that's in my mind more the lower bar or the floor of where we want to get to. i think there's genuinely opportunity in europe to deploy millions of autonomous vehicles for passengers. just looking at the size of the continent, we're nearly half a billion people with very high income levels. where we started with 100,000 is just again mainly because of the regulatory limitations that we're facing here. so that's a more realistic number that we think you can truly deploy due to the regulatory constraints, just how hard it is to get market accesses and so on. and we also expect there's going to be limitations from the labor replacement side. 首先我想说，在我心里这更像是我们要达到的下限、底线。我认为欧洲确实存在部署数百万辆载客自动驾驶汽车的机会。看看这个大陆的体量，我们接近 5 亿人口，收入水平很高。我们从 10 万辆开始，主要还是因为这里面临的监管限制。考虑到拿到市场准入有多难等等，这是我们真正能部署的、更现实的数字。我们还预计，劳动力替代方面也会存在限制。">
+<span class="ts">[26:55] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Well, first of all, I'd say that that's in my mind more the lower bar or the floor of where we want to get to. I think there's genuinely opportunity in Europe to deploy millions of autonomous vehicles for passengers. Just looking at the size of the continent, we're nearly half a billion people with very high income levels. Where we started with 100,000 is just again mainly because of the regulatory limitations that we're facing here. So that's a more realistic number that we think you can truly deploy due to the regulatory constraints, just how hard it is to get market accesses and so on. And we also expect there's going to be limitations from the labor replacement side.</p>
+<p class="zh">首先我想说，在我心里这更像是我们要达到的下限、底线。我认为欧洲确实存在部署数百万辆载客自动驾驶汽车的机会。看看这个大陆的体量，我们接近 5 亿人口，收入水平很高。我们从 10 万辆开始，主要还是因为这里面临的监管限制。考虑到拿到市场准入有多难等等，这是我们真正能部署的、更现实的数字。我们还预计，劳动力替代方面也会存在限制。</p>
+</div>
+</p>
+<p class="seg" id="seg-74" data-text="so yeah, that's effectively how we arrived at the figure, but we would like to do much more. 所以基本上我们就是这样得出这个数字的，但我们希望做得远不止于此。">
+<span class="ts">[27:35] Markus Villig</span>
+<div class="seg-body">
+<p class="en">So yeah, that's effectively how we arrived at the figure, but we would like to do much more.</p>
+<p class="zh">所以基本上我们就是这样得出这个数字的，但我们希望做得远不止于此。</p>
+</div>
+</p>
+<p class="seg" id="seg-75" data-text="yeah. well, to me, i feel like one of the biggest constraints on the industry right now is vehicle supply. if you look at a company like waymo, they've got 4,000 cars and maybe another 5,000 on the way over the next year or two. even a company like them would need to scale up pretty quickly. how do you see the av industry really achieving that scale that we saw early on with rydale companies like uber and bolt? i guess you're the right person to ask. how do you really pour gas on the fire here? 是的。对我来说，我觉得目前行业最大的约束之一是车辆供给。看看 Waymo 这样的公司，他们有 4000 辆车，未来一两年可能还有 5000 辆在路上。即便是这样的公司，也需要快速扩大规模。你如何看待自动驾驶行业真正实现我们在 Uber、Bolt 这样的网约车公司早期见过的那种规模？我想你正是合适的人来回答：怎样真正给这把火浇上油？">
+<span class="ts">[27:40] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Yeah. Well, to me, I feel like one of the biggest constraints on the industry right now is vehicle supply. If you look at a company like Waymo, they've got 4,000 cars and maybe another 5,000 on the way over the next year or two. Even a company like them would need to scale up pretty quickly. How do you see the AV industry really achieving that scale that we saw early on with Rydale companies like Uber and Bolt? I guess you're the right person to ask. How do you really pour gas on the fire here?</p>
+<p class="zh">是的。对我来说，我觉得目前行业最大的约束之一是车辆供给。看看 Waymo 这样的公司，他们有 4000 辆车，未来一两年可能还有 5000 辆在路上。即便是这样的公司，也需要快速扩大规模。你如何看待自动驾驶行业真正实现我们在 Uber、Bolt 这样的网约车公司早期见过的那种规模？我想你正是合适的人来回答：怎样真正给这把火浇上油？</p>
+</div>
+</p>
+<p class="seg" id="seg-76" data-text="absolutely great point. i think the vehicle layer is not getting nearly enough attention. and the reality is it's been honestly behind the sort of chicken and egg problem, which is that many of the first players who have developed l4 technology have had a very proprietary vehicle requirement stack. and as you can imagine, especially for the legacy car makers, it's a very high bar to invest in half a billion dollars to design a custom vehicle just for one customer, set up the production line, and oftentimes they're not even willing to give you meaningful volume commitments. so it's just very hard to justify the upfront investment on one singular customer. 说得非常好。我认为车辆这一层得到的关注远远不够。而现实是，它一直陷在先有鸡还是先有蛋的问题里：许多最早开发 L4 技术的玩家，对车辆有着非常专有的、定制化的要求栈。你可以想象，尤其对传统车企来说，为单一客户投入 5 亿美元设计一款定制车、建立生产线，门槛极高，而且他们往往甚至不愿给出有意义的量产承诺。所以很难为单一客户的前期投资提供合理性。">
+<span class="ts">[28:12] Markus Villig</span>
+<div class="seg-body">
+<p class="en">Absolutely great point. I think the vehicle layer is not getting nearly enough attention. And the reality is it's been honestly behind the sort of chicken and egg problem, which is that many of the first players who have developed L4 technology have had a very proprietary vehicle requirement stack. And as you can imagine, especially for the legacy car makers, it's a very high bar to invest in Half a billion dollars to design a custom vehicle just for one customer, set up the production line, and oftentimes they're not even willing to give you meaningful volume commitments. So it's just very hard to justify the upfront investment on one singular customer.</p>
+<p class="zh">说得非常好。我认为车辆这一层得到的关注远远不够。而现实是，它一直陷在先有鸡还是先有蛋的问题里：许多最早开发 L4 技术的玩家，对车辆有着非常专有的、定制化的要求栈。你可以想象，尤其对传统车企来说，为单一客户投入 5 亿美元设计一款定制车、建立生产线，门槛极高，而且他们往往甚至不愿给出有意义的量产承诺。所以很难为单一客户的前期投资提供合理性。</p>
+</div>
+</p>
+<p class="seg" id="seg-77" data-text="so i think where the industry needs to get to is standardization. we've seen that in many industries. that's one of the things nvidia is trying to put for and then where we're partnering with them, which is to define a standard in terms of the compute, electrical systems, central stack, etc. and then oems can know that if they build against that standard, it's going to be a standard that many l4 providers can build on. and i think that's going to solve the chicken and egg problem. and that's what's ultimately going to get the oems to be willing to make the investments required to get to production volumes. 所以我认为行业需要走向标准化。我们在很多行业都看到过这一点。这也是英伟达试图推动的方向之一——我们与他们合作，就是要在算力、电气系统、中央计算栈等方面定义一个标准。这样 OEM 就知道，如果按这个标准造车，就能被许多 L4 供应商所用。我认为这会解决先有鸡还是先有蛋的问题，也最终会让 OEM 愿意做出达到量产规模所需的投资。">
+<span class="ts">[28:51] Markus Villig</span>
+<div class="seg-body">
+<p class="en">So I think where the industry needs to get to is standardization. We've seen that in many industries. That's one of the things NVIDIA is trying to put for and then where we're partnering with them, which is to define a standard in terms of the compute, electrical systems, central stack, etc. And then OEMs can know that if they build against that standard, it's going to be a standard that many L4 providers can build on. And I think that's going to solve the chicken and egg problem. And that's what's ultimately going to get the OEMs to be willing to make the investments required to get to production volumes.</p>
+<p class="zh">所以我认为行业需要走向标准化。我们在很多行业都看到过这一点。这也是英伟达试图推动的方向之一——我们与他们合作，就是要在算力、电气系统、中央计算栈等方面定义一个标准。这样 OEM 就知道，如果按这个标准造车，就能被许多 L4 供应商所用。我认为这会解决先有鸡还是先有蛋的问题，也最终会让 OEM 愿意做出达到量产规模所需的投资。</p>
+</div>
+</p>
+<p class="seg" id="seg-78" data-text="great, makes sense. so final question for you, if you could snap your fingers and change one thing about the industry, your company, or even the regulatory environment to accelerate av adoption, what would it be? 很好，很有道理。最后一个问题：如果你能打个响指，改变行业、你们公司甚至监管环境中的一件事来加速自动驾驶普及，你会改变什么？">
+<span class="ts">[29:26] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Great, makes sense. So final question for you, if you could snap your fingers and change one thing about the industry, your company, or even the regulatory environment to accelerate AV adoption, what would it be?</p>
+<p class="zh">很好，很有道理。最后一个问题：如果你能打个响指，改变行业、你们公司甚至监管环境中的一件事来加速自动驾驶普及，你会改变什么？</p>
+</div>
+</p>
+<p class="seg" id="seg-79" data-text="i'd probably accelerate the production of vehicles first and foremost, because today we still see that's a major inhibitor to the sector where oems aren't willing to take the risks required and start the development work today. and we think that's ultimately going to major bottleneck. i suspect the software is going to be ready in a couple of years from many providers, but i think cars are going to be the limitation, especially cars that can clear the european regulatory bar. interesting. 我大概会首先加快车辆的生产，因为今天我们仍然看到这是行业的主要抑制因素——OEM 不愿承担所需风险、今天就开始研发工作。我们认为这最终会成为主要瓶颈。我猜软件会在几年后由多家供应商准备就绪，但瓶颈会出在车上——尤其是能通过欧洲监管门槛的车。很有意思。">
+<span class="ts">[29:40] Markus Villig</span>
+<div class="seg-body">
+<p class="en">I'd probably accelerate the production of vehicles first and foremost, because today we still see that's a major inhibitor to the sector where OEMs aren't willing to take the risks required and start the development work today. And we think that's ultimately going to major bottleneck. I suspect the software is going to be ready in a couple of years from many providers, but I think cars are going to be the limitation, especially cars that can clear the European regulatory bar. Interesting.</p>
+<p class="zh">我大概会首先加快车辆的生产，因为今天我们仍然看到这是行业的主要抑制因素——OEM 不愿承担所需风险、今天就开始研发工作。我们认为这最终会成为主要瓶颈。我猜软件会在几年后由多家供应商准备就绪，但瓶颈会出在车上——尤其是能通过欧洲监管门槛的车。很有意思。</p>
+</div>
+</p>
+<p class="seg" id="seg-80" data-text="well, i really appreciate all of the insight you shared and sort of talk about how you're thinking about the av landscape. and i'm excited to see bolt grow. we'll be doing our urban autonomy summit in london in june. so if you're launching in london by june, let me know and we can test it out there. otherwise, we'll look forward to covering everything in the future. marcus, thanks for coming on. absolutely. thank you. [music] 嗯，非常感谢你分享这些洞见，以及你对自动驾驶格局的思考。我很期待看到 Bolt 继续成长。我们将在 6 月于伦敦举办 Urban Autonomy Summit。所以如果你在 6 月前在伦敦上线了，告诉我一声，我们可以在那里体验一下。否则，我们期待未来继续报道一切。Markus，谢谢你今天来做客。非常感谢。">
+<span class="ts">[30:08] Harry Campbell</span>
+<div class="seg-body">
+<p class="en">Well, I really appreciate all of the insight you shared and sort of talk about how you're thinking about the AV landscape. And I'm excited to see Bolt grow. We'll be doing our Urban Autonomy Summit in London in June. So if you're launching in London by June, let me know and we can test it out there. Otherwise, we'll look forward to covering everything in the future. Marcus, thanks for coming on. Absolutely. Thank you. [music]</p>
+<p class="zh">嗯，非常感谢你分享这些洞见，以及你对自动驾驶格局的思考。我很期待看到 Bolt 继续成长。我们将在 6 月于伦敦举办 Urban Autonomy Summit。所以如果你在 6 月前在伦敦上线了，告诉我一声，我们可以在那里体验一下。否则，我们期待未来继续报道一切。Markus，谢谢你今天来做客。非常感谢。</p>
+</div>
+</p>
+</main>
+</div>
+<section class="relwrap">
+<h2>📚 更多收藏</h2>
+<div class="relgrid">
+<a class="relcard" href="../tdd-virewirx-data-bottleneck-fiber/index.html"><div class="rw"><img loading="lazy" src="https://img.youtube.com/vi/hVk8a4ARtHg/hqdefault.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Substack / YouTube</div><div class="rt">AV 车队的数据传输瓶颈：Virewirx CEO Jason Fiber 谈 60GHz 无线与 depot 运营</div></div></a>
+<a class="relcard" href="../uber-av-strategy-rojas/index.html"><div class="rw"><img loading="lazy" src="../uber-av-strategy-rojas/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Uber AV 战略负责人 Rojas：平台如何同时对接多家自动驾驶供应商</div></div></a>
+<a class="relcard" href="../uber-ceo-ai-av/index.html"><div class="rw"><img loading="lazy" src="../uber-ceo-ai-av/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">Uber CEO 谈 AI 与自动驾驶：需求聚合平台的长期价值</div></div></a>
+<a class="relcard" href="../uk-av-permit/index.html"><div class="rw"><img loading="lazy" src="../uk-av-permit/cover.jpg" alt=""></div><div class="rb"><div class="rs">The Driverless Digest · Podcast</div><div class="rt">英国自动驾驶许可制度：监管如何决定 Robotaxi 落地速度</div></div></a>
+</div>
+</section><footer>本站点由 WorkBuddy 自动整理 · 英文来自 Substack 官方逐字稿，中文为机器翻译并经专有名词校对，仅供学习与参考。</footer>
+</div>
+<div id="wbTop" class="fabwrap">
+<a class="fab" href="../../index.html" aria-label="返回主页">↩ 返回主页</a>
+<button class="fab" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="回到顶部">↑ 回到顶部</button>
+</div><script>
+function wbToggleTheme(){var h=document.documentElement;var c=h.getAttribute('data-theme');var n=c==='dark'?'light':'dark';h.setAttribute('data-theme',n);try{localStorage.setItem('wb_theme',n);}catch(e){}wbThemeIcon();}
+function wbThemeIcon(){var b=document.getElementById('wbThemeBtn');if(!b)return;var c=document.documentElement.getAttribute('data-theme');b.textContent=c==='dark'?'☀':'☾';}
+function wbCopyLink(){var u=location.href;var done=function(){wbToast('链接已复制到剪贴板');};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(u).then(done,function(){wbFallbackCopy(u,done);});}else{wbFallbackCopy(u,done);}}
+function wbFallbackCopy(u,done){var t=document.createElement('textarea');t.value=u;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);done();}
+function wbToast(msg){var el=document.getElementById('wbToast');if(!el)return;el.textContent=msg;el.classList.add('show');clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove('show');},1900);}
+function wbGoSlide(name){var el=document.getElementById(name);if(!el)return;el.scrollIntoView({behavior:'smooth',block:'center'});}
+wbThemeIcon();
+var wbBar=document.getElementById('wbProgress');
+if(wbBar){var wbUpd=function(){var d=document.documentElement;var s=d.scrollTop,mx=d.scrollHeight-d.clientHeight;wbBar.style.width=(mx>0?(s/mx*100):0)+'%';};window.addEventListener('scroll',wbUpd,{passive:true});wbUpd();}
+var wbTop=document.getElementById('wbTop');
+if(wbTop){var wbTopUp=function(){if(window.scrollY>600)wbTop.classList.add('show');else wbTop.classList.remove('show');};window.addEventListener('scroll',wbTopUp,{passive:true});wbTopUp();}
+</script><script>
+var WB_KW=["Waymo", "Dmitri Dolgov", "物理世界 AI", "自动驾驶", "端到端", "苦涩的教训", "世界模型", "仿真器", "可靠性", "评估指标", "多模态感知", "Startup School"];
+function wbEscape(s){return s.replace(/[.*+?^${}()|[\]\\]/g,'\\\\$&');}
+function wbHighlight(){var bodies=document.querySelectorAll('.seg-body');
+  WB_KW.forEach(function(raw){var re=new RegExp('('+wbEscape(raw)+')','gi');
+    bodies.forEach(function(b){var w=document.createTreeWalker(b,NodeFilter.SHOW_TEXT,null,false);
+      var nodes=[];while(w.nextNode())nodes.push(w.currentNode);
+      nodes.forEach(function(tn){var s=tn.nodeValue;if(!re.test(s))return;re.lastIndex=0;var frag=document.createDocumentFragment();var last=0,m;
+        while((m=re.exec(s))){if(m.index>last)frag.appendChild(document.createTextNode(s.slice(last,m.index)));
+          var mk=document.createElement('mark');mk.className='kw';mk.textContent=m[0];frag.appendChild(mk);last=m.index+m[0].length;}
+        if(last<s.length)frag.appendChild(document.createTextNode(s.slice(last)));tn.parentNode.replaceChild(frag,tn);});});});}
+function wbToggleKw(){var b=document.body;var on=b.classList.toggle('no-kw');
+  document.querySelector('.kwbar .toggle').textContent=on?'显示高亮':'隐藏高亮';}
+function wbJumpKw(el){var k=el.textContent;wbHighlight();var marks=document.querySelectorAll('mark.kw');
+  for(var i=0;i<marks.length;i++){if(marks[i].textContent===k){marks[i].scrollIntoView({behavior:'smooth',block:'center'});break;}}
+  if(document.body.classList.contains('no-kw'))wbToggleKw();}
+wbHighlight();
+</script><script>
+function wbLang(l){document.body.classList.toggle('lang-zh',l==='zh');document.body.classList.toggle('lang-en',l==='en');
+  document.querySelectorAll('.seg-toggle .tbtn').forEach(function(b){b.classList.toggle('active',b.getAttribute('data-lang')===l);});wbTCount();}
+function wbTFilter(){wbTCount();}
+function wbTCount(){var q=(document.getElementById('wbTSearch')?document.getElementById('wbTSearch').value:'').trim().toLowerCase();
+  var segs=document.querySelectorAll('.seg');var n=0;
+  segs.forEach(function(s){var txt=s.textContent.toLowerCase();var hit=!q||txt.indexOf(q)>=0;s.style.display=hit?'':'none';if(hit)n++;});
+  var c=document.getElementById('wbTCount');if(c)c.textContent=n+' / '+segs.length+' 段';}
+wbTCount();
+</script><script>
+function wbTocSpy(){var links=[].slice.call(document.querySelectorAll('nav.toc a'));if(!links.length)return;var map={};links.forEach(function(a){var h=(a.getAttribute('href')||'').replace(/^#/,'');if(h)map[h]=a;});var heads=[].slice.call(document.querySelectorAll('main.content h2[id],main.content h3[id]'));if(!heads.length)return;function upd(){var y=window.scrollY+150,cur=heads[0].id;for(var i=0;i<heads.length;i++){if(heads[i].offsetTop<=y)cur=heads[i].id;}links.forEach(function(a){a.classList.remove('active');});if(map[cur])map[cur].classList.add('active');}window.addEventListener('scroll',upd,{passive:true});window.addEventListener('resize',upd,{passive:true});upd();}
+wbTocSpy();
+</script><div id='wbToast'></div></body></html>
